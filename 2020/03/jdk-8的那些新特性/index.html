@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        JDK 8 的那些新特性 - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="转载 · 原文链接：https://www.runoob.com/java/java8-new-features.html java 8 新特性 Java8 新增了非常" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>JDK 8 的那些新特性 - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="JDK 8 的那些新特性" />
+<meta property="og:description" content="转载 · 原文链接：https://www.runoob.com/java/java8-new-features.html java 8 新特性 Java8 新增了非常" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2020/03/jdk-8%E7%9A%84%E9%82%A3%E4%BA%9B%E6%96%B0%E7%89%B9%E6%80%A7/" />
+<meta property="article:published_time" content="2020-03-28T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-03-28T00:00:00+00:00" />
+<meta itemprop="name" content="JDK 8 的那些新特性">
+<meta itemprop="description" content="转载 · 原文链接：https://www.runoob.com/java/java8-new-features.html java 8 新特性 Java8 新增了非常">
+<meta itemprop="datePublished" content="2020-03-28T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-03-28T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="3983">
+
+
+
+<meta itemprop="keywords" content="jdk8," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="JDK 8 的那些新特性"/>
+<meta name="twitter:description" content="转载 · 原文链接：https://www.runoob.com/java/java8-new-features.html java 8 新特性 Java8 新增了非常"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>中国加油！武汉加油！</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/springboot/" class="category-list-link">springboot</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="category-list-link">数据结构与算法</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">8</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/" class="category-list-link">面试题</a><span class="category-list-count">3</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/charset/" class="tag-list-link">charset</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springboot/" class="tag-list-link">springboot</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E5%AD%97%E7%AC%A6%E9%9B%86/" class="tag-list-link">字符集</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99/" class="tag-list-link">数据库双写</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="tag-list-link">数据结构</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%AE%97%E6%B3%95/" class="tag-list-link">算法</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/05/hibernate%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" class="title">Hibernate常见问题</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-05-01 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-05-01</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/05/%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98%E5%8F%8A%E6%9C%80%E4%BD%B3%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="title">缓存与数据库双写一致性问题及最佳解决方案</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-05-01 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-05-01</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/04/springboot%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE/" class="title">Springboot日志配置</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-04-29 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-04-29</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/04/navicat-1251%E9%94%99%E8%AF%AF/" class="title">Navicat连接MySQL出现1251错误</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-04-16 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-04-16</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/04/mavengradle%E4%BE%9D%E8%B5%96/" class="title">Maven,Gradle依赖</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-04-15 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-04-15</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2020/03/jdk-8%E7%9A%84%E9%82%A3%E4%BA%9B%E6%96%B0%E7%89%B9%E6%80%A7/"
+    >JDK 8 的那些新特性</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2020/03/jdk-8%E7%9A%84%E9%82%A3%E4%BA%9B%E6%96%B0%E7%89%B9%E6%80%A7/" class="article-date">
+  <time datetime="2020-03-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-03-28</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/"> 笔记 </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/jdk8/"> jdk8 </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2020/03/jdk-8%E7%9A%84%E9%82%A3%E4%BA%9B%E6%96%B0%E7%89%B9%E6%80%A7/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 3983字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 8分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<blockquote>
+<p>转载 · 原文链接：https://www.runoob.com/java/java8-new-features.html</p>
+</blockquote>
+<h2 id="java-8-新特性">java 8 新特性</h2>
+<p>Java8 新增了非常多的特性，我们主要讨论以下几个：</p>
+<ul>
+<li><strong>Lambda 表达式</strong> − Lambda 允许把函数作为一个方法的参数（函数作为参数传递到方法中）。</li>
+<li><strong>方法引用</strong> − 方法引用提供了非常有用的语法，可以直接引用已有Java类或对象（实例）的方法或构造器。与lambda联合使用，方法引用可以使语言的构造更紧凑简洁，减少冗余代码。</li>
+<li><strong>默认方法</strong> − 默认方法就是一个在接口里面有了一个实现的方法。</li>
+<li><strong>新工具</strong> − 新的编译工具，如：Nashorn引擎 jjs、 类依赖分析器jdeps。</li>
+<li><strong>Stream API</strong> −新添加的Stream API（java.util.stream） 把真正的函数式编程风格引入到Java中。</li>
+<li><strong>Date Time API</strong> − 加强对日期与时间的处理。</li>
+<li><strong>Optional 类</strong> − Optional 类已经成为 Java 8 类库的一部分，用来解决空指针异常。</li>
+<li><strong>Nashorn, JavaScript 引擎</strong> − Java 8提供了一个新的Nashorn javascript引擎，它允许我们在JVM上运行特定的javascript应用</li>
+</ul>
+<p>先来看看排序方式的对比把</p>
+<pre><code class="language-java">   // 使用 java 7 排序
+   private void sortUsingJava7(List&lt;String&gt; names){   
+      Collections.sort(names, new Comparator&lt;String&gt;() {
+         @Override
+         public int compare(String s1, String s2) {
+            return s1.compareTo(s2);
+         }
+      });
+   }
+   
+   // 使用 java 8 排序
+   private void sortUsingJava8(List&lt;String&gt; names){
+      Collections.sort(names, (s1, s2) -&gt; s1.compareTo(s2));
+   }
+</code></pre>
+<p>怎么样，是不是感觉代码简化了不少，让我们继续深入学习java8的那些新特性</p>
+<h3 id="lambda-表达式实例"><strong>Lambda 表达式实例</strong></h3>
+<p>Lambda 表达式的简单例子:</p>
+<pre><code>// 1. 不需要参数,返回值为 5  
+() -&gt; 5  
+  
+// 2. 接收一个参数(数字类型),返回其2倍的值  
+x -&gt; 2 * x  
+  
+// 3. 接受2个参数(数字),并返回他们的差值  
+(x, y) -&gt; x – y  
+  
+// 4. 接收2个int型整数,返回他们的和  
+(int x, int y) -&gt; x + y  
+  
+// 5. 接受一个 string 对象,并在控制台打印,不返回任何值(看起来像是返回void)  
+(String s) -&gt; System.out.print(s)
+</code></pre>
+<p>使用 Lambda 表达式需要注意以下两点：</p>
+<ul>
+<li>Lambda 表达式主要用来定义行内执行的方法类型接口，例如，一个简单方法接口。在上面例子中，我们使用各种类型的Lambda表达式来定义MathOperation接口的方法。然后我们定义了sayMessage的执行。</li>
+<li>Lambda 表达式免去了使用匿名方法的麻烦，并且给予Java简单但是强大的函数化的编程能力。</li>
+</ul>
+<h3 id="java-8-方法引用"><strong>Java 8 方法引用</strong></h3>
+<p>方法引用通过方法的名字来指向一个方法。</p>
+<p>方法引用可以使语言的构造更紧凑简洁，减少冗余代码。</p>
+<p>方法引用使用一对冒号 <strong>::</strong> 。</p>
+<ul>
+<li>**构造器引用：**它的语法是Class::new，或者更一般的Class&lt; T &gt;::new实例如下：</li>
+</ul>
+<pre><code>final Car car = Car.create( Car::new );
+final List&lt; Car &gt; cars = Arrays.asList( car );
+</code></pre>
+<ul>
+<li>**静态方法引用：**它的语法是Class::static_method，实例如下：</li>
+</ul>
+<pre><code>cars.forEach( Car::collide );
+</code></pre>
+<ul>
+<li>**特定类的任意对象的方法引用：**它的语法是Class::method实例如下：</li>
+</ul>
+<pre><code>cars.forEach( Car::repair );
+</code></pre>
+<ul>
+<li>**特定对象的方法引用：**它的语法是instance::method实例如下：</li>
+</ul>
+<pre><code>final Car police = Car.create( Car::new );
+cars.forEach( police::follow );
+</code></pre>
+<h3 id="java-8-stream">Java 8 Stream</h3>
+<p>Java 8 API添加了一个新的抽象称为流Stream，可以让你以一种声明的方式处理数据。</p>
+<p>Stream 使用一种类似用 SQL 语句从数据库查询数据的直观方式来提供一种对 Java 集合运算和表达的高阶抽象。</p>
+<p>Stream API可以极大提高Java程序员的生产力，让程序员写出高效率、干净、简洁的代码。</p>
+<p>这种风格将要处理的元素集合看作一种流， 流在管道中传输， 并且可以在管道的节点上进行处理， 比如筛选， 排序，聚合等。</p>
+<p>元素流在管道中经过中间操作（intermediate operation）的处理，最后由最终操作(terminal operation)得到前面处理的结果。</p>
+<p><strong>生成流</strong></p>
+<p>在 Java 8 中, 集合接口有两个方法来生成流：</p>
+<ul>
+<li><strong>stream()</strong> − 为集合创建串行流。</li>
+<li><strong>parallelStream()</strong> − 为集合创建并行流。</li>
+</ul>
+<pre><code class="language-java">List&lt;String&gt; strings = Arrays.asList(&quot;abc&quot;, &quot;&quot;, &quot;bc&quot;, &quot;efg&quot;, &quot;abcd&quot;,&quot;&quot;, &quot;jkl&quot;);
+List&lt;String&gt; filtered = strings.stream().filter(string -&gt; !string.isEmpty()).collect(Collectors.toList());
+</code></pre>
+<hr>
+<p><strong>forEach</strong></p>
+<p>Stream 提供了新的方法 &lsquo;forEach&rsquo; 来迭代流中的每个数据。以下代码片段使用 forEach 输出了10个随机数：</p>
+<pre><code class="language-java">Random random = new Random();
+random.ints().limit(10).forEach(System.out::println);
+</code></pre>
+<hr>
+<p><strong>map</strong></p>
+<p>map 方法用于映射每个元素到对应的结果，以下代码片段使用 map 输出了元素对应的平方数：</p>
+<pre><code class="language-java">List&lt;Integer&gt; numbers = Arrays.asList(3, 2, 2, 3, 7, 3, 5);
+// 获取对应的平方数
+List&lt;Integer&gt; squaresList = numbers.stream().map( i -&gt; i*i).distinct().collect(Collectors.toList());
+</code></pre>
+<hr>
+<p><strong>filter</strong></p>
+<p>filter 方法用于通过设置的条件过滤出元素。以下代码片段使用 filter 方法过滤出空字符串：</p>
+<pre><code class="language-java">List&lt;String&gt;strings = Arrays.asList(&quot;abc&quot;, &quot;&quot;, &quot;bc&quot;, &quot;efg&quot;, &quot;abcd&quot;,&quot;&quot;, &quot;jkl&quot;);
+// 获取空字符串的数量
+long count = strings.stream().filter(string -&gt; string.isEmpty()).count();
+</code></pre>
+<hr>
+<p><strong>limit</strong></p>
+<p>limit 方法用于获取指定数量的流。 以下代码片段使用 limit 方法打印出 10 条数据：</p>
+<pre><code class="language-java">Random random = new Random();
+random.ints().limit(10).forEach(System.out::println);
+</code></pre>
+<hr>
+<p><strong>sorted</strong></p>
+<p>sorted 方法用于对流进行排序。以下代码片段使用 sorted 方法对输出的 10 个随机数进行排序：</p>
+<pre><code>Random random = new Random();
+random.ints().limit(10).sorted().forEach(System.out::println);
+</code></pre>
+<hr>
+<p><strong>并行（parallel）程序</strong></p>
+<p>parallelStream 是流并行处理程序的代替方法。以下实例我们使用 parallelStream 来输出空字符串的数量：</p>
+<pre><code class="language-java">List&lt;String&gt; strings = Arrays.asList(&quot;abc&quot;, &quot;&quot;, &quot;bc&quot;, &quot;efg&quot;, &quot;abcd&quot;,&quot;&quot;, &quot;jkl&quot;);
+// 获取空字符串的数量
+int count = strings.parallelStream().filter(string -&gt; string.isEmpty()).count();
+</code></pre>
+<p>我们可以很容易的在顺序运行和并行直接切换。</p>
+<hr>
+<p><strong>Collectors</strong></p>
+<p>Collectors 类实现了很多归约操作，例如将流转换成集合和聚合元素。Collectors 可用于返回列表或字符串：</p>
+<pre><code class="language-java">List&lt;String&gt; strings = Arrays.asList(&quot;abc&quot;, &quot;&quot;, &quot;bc&quot;, &quot;efg&quot;, &quot;abcd&quot;,&quot;&quot;, &quot;jkl&quot;);
+List&lt;String&gt; filtered = strings.stream().filter(string -&gt; !string.isEmpty()).collect(Collectors.toList());
+ 
+System.out.println(&quot;筛选列表: &quot; + filtered);
+String mergedString = strings.stream().filter(string -&gt; !string.isEmpty()).collect(Collectors.joining(&quot;, &quot;));
+System.out.println(&quot;合并字符串: &quot; + mergedString);
+</code></pre>
+<hr>
+<p><strong>统计</strong></p>
+<p>另外，一些产生统计结果的收集器也非常有用。它们主要用于int、double、long等基本类型上，它们可以用来产生类似如下的统计结果。</p>
+<pre><code class="language-java">List&lt;Integer&gt; numbers = Arrays.asList(3, 2, 2, 3, 7, 3, 5);
+ 
+IntSummaryStatistics stats = numbers.stream().mapToInt((x) -&gt; x).summaryStatistics();
+ 
+System.out.println(&quot;列表中最大的数 : &quot; + stats.getMax());
+System.out.println(&quot;列表中最小的数 : &quot; + stats.getMin());
+System.out.println(&quot;所有数之和 : &quot; + stats.getSum());
+System.out.println(&quot;平均数 : &quot; + stats.getAverage());
+</code></pre>
+<h3 id="默认方法">默认方法</h3>
+<p>Java 8 新增了接口的默认方法。</p>
+<p>简单说，默认方法就是接口可以有实现方法，而且不需要实现类去实现其方法。</p>
+<p>我们只需在方法名前面加个 default 关键字即可实现默认方法。</p>
+<p><strong>语法</strong></p>
+<p>默认方法语法格式如下：</p>
+<pre><code class="language-java">public interface Vehicle {
+   default void print(){
+      System.out.println(&quot;我是一辆车!&quot;);
+   }
+}
+</code></pre>
+<h3 id="java-8-函数式接口">Java 8 函数式接口</h3>
+<p>函数式接口(Functional Interface)就是一个有且仅有一个抽象方法，但是可以有多个非抽象方法的接口。</p>
+<p>函数式接口可以被隐式转换为 lambda 表达式。</p>
+<p>Lambda 表达式和方法引用（实际上也可认为是Lambda表达式）上。</p>
+<p>如定义了一个函数式接口如下：</p>
+<pre><code class="language-java">@FunctionalInterface
+interface GreetingService 
+{
+    void sayMessage(String message);
+}
+</code></pre>
+<p>那么就可以使用Lambda表达式来表示该接口的一个实现(注：JAVA 8 之前一般是用匿名类实现的)：</p>
+<pre><code class="language-java">GreetingService greetService1 = message -&gt; System.out.println(&quot;Hello &quot; + message);
+</code></pre>
+<h3 id="java-8-optional-类">Java 8 Optional 类</h3>
+<p>Optional 类是一个可以为null的容器对象。如果值存在则isPresent()方法会返回true，调用get()方法会返回该对象。</p>
+<p>Optional 是个容器：它可以保存类型T的值，或者仅仅保存null。Optional提供很多有用的方法，这样我们就不用显式进行空值检测。</p>
+<p>Optional 类的引入很好的解决空指针异常。</p>
+<h3 id="类方法">类方法</h3>
+<table>
+<thead>
+<tr>
+<th align="left">序号</th>
+<th align="left">方法 &amp; 描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">1</td>
+<td align="left"><strong>static  Optional empty()</strong> 返回空的 Optional 实例。</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left"><strong>boolean equals(Object obj)</strong> 判断其他对象是否等于 Optional。</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left"><strong>Optional filter(Predicate predicate)</strong> 如果值存在，并且这个值匹配给定的 predicate，返回一个Optional用以描述这个值，否则返回一个空的Optional。</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left"><strong>Optional flatMap(Function&gt; mapper)</strong> 如果值存在，返回基于Optional包含的映射方法的值，否则返回一个空的Optional</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left"><strong>T get()</strong> 如果在这个Optional中包含这个值，返回值，否则抛出异常：NoSuchElementException</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left"><strong>int hashCode()</strong> 返回存在值的哈希码，如果值不存在 返回 0。</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left"><strong>void ifPresent(Consumer consumer)</strong> 如果值存在则使用该值调用 consumer , 否则不做任何事情。</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left"><strong>boolean isPresent()</strong> 如果值存在则方法会返回true，否则返回 false。</td>
+</tr>
+<tr>
+<td align="left">9</td>
+<td align="left"><strong>Optional map(Function mapper)</strong> 如果有值，则对其执行调用映射函数得到返回值。如果返回值不为 null，则创建包含映射返回值的Optional作为map方法返回值，否则返回空Optional。</td>
+</tr>
+<tr>
+<td align="left">10</td>
+<td align="left">s<strong>tatic  Optional of(T value)</strong> 返回一个指定非null值的Optional。</td>
+</tr>
+<tr>
+<td align="left">11</td>
+<td align="left"><strong>static  Optional ofNullable(T value)</strong> 如果为非空，返回 Optional 描述的指定值，否则返回空的 Optional。</td>
+</tr>
+<tr>
+<td align="left">12</td>
+<td align="left"><strong>T orElse(T other)</strong> 如果存在该值，返回值， 否则返回 other。</td>
+</tr>
+<tr>
+<td align="left">13</td>
+<td align="left"><strong>T orElseGet(Supplier other)</strong> 如果存在该值，返回值， 否则触发 other，并返回 other 调用的结果。</td>
+</tr>
+<tr>
+<td align="left">14</td>
+<td align="left"><strong>T orElseThrow(Supplier exceptionSupplier)</strong> 如果存在该值，返回包含的值，否则抛出由 Supplier 继承的异常</td>
+</tr>
+<tr>
+<td align="left">15</td>
+<td align="left"><strong>String toString()</strong> 返回一个Optional的非空字符串，用来调试</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意：</strong> 这些方法是从 <strong>java.lang.Object</strong> 类继承来的。</p>
+<h3 id="java-8-日期时间-api">Java 8 日期时间 API</h3>
+<p>Java 8通过发布新的Date-Time API (JSR 310)来进一步加强对日期与时间的处理。</p>
+<p>在旧版的 Java 中，日期时间 API 存在诸多问题，其中有：</p>
+<ul>
+<li><strong>非线程安全</strong> − java.util.Date 是非线程安全的，所有的日期类都是可变的，这是Java日期类最大的问题之一。</li>
+<li><strong>设计很差</strong> − Java的日期/时间类的定义并不一致，在java.util和java.sql的包中都有日期类，此外用于格式化和解析的类在java.text包中定义。java.util.Date同时包含日期和时间，而java.sql.Date仅包含日期，将其纳入java.sql包并不合理。另外这两个类都有相同的名字，这本身就是一个非常糟糕的设计。</li>
+<li><strong>时区处理麻烦</strong> − 日期类并不提供国际化，没有时区支持，因此Java引入了java.util.Calendar和java.util.TimeZone类，但他们同样存在上述所有的问题。</li>
+</ul>
+<p>Java 8 在 <strong>java.time</strong> 包下提供了很多新的 API。以下为两个比较重要的 API：</p>
+<ul>
+<li><strong>Local(本地)</strong> − 简化了日期时间的处理，没有时区的问题。</li>
+<li><strong>Zoned(时区)</strong> − 通过制定的时区处理日期时间。</li>
+</ul>
+<p>新的java.time包涵盖了所有处理日期，时间，日期/时间，时区，时刻（instants），过程（during）与时钟（clock）的操作。</p>
+<p><strong>本地化日期时间 API</strong></p>
+<p>LocalDate/LocalTime 和 LocalDateTime 类可以在处理时区不是必须的情况。代码如下：</p>
+<p><strong>Java8Tester.java 文件</strong></p>
+<pre><code class="language-java">import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.Month;
+ 
+public class Java8Tester {
+   public static void main(String args[]){
+      Java8Tester java8tester = new Java8Tester();
+      java8tester.testLocalDateTime();
+   }
+    
+   public void testLocalDateTime(){
+    
+      // 获取当前的日期时间
+      LocalDateTime currentTime = LocalDateTime.now();
+      System.out.println(&quot;当前时间: &quot; + currentTime);
+        
+      LocalDate date1 = currentTime.toLocalDate();
+      System.out.println(&quot;date1: &quot; + date1);
+        
+      Month month = currentTime.getMonth();
+      int day = currentTime.getDayOfMonth();
+      int seconds = currentTime.getSecond();
+        
+      System.out.println(&quot;月: &quot; + month +&quot;, 日: &quot; + day +&quot;, 秒: &quot; + seconds);
+        
+      LocalDateTime date2 = currentTime.withDayOfMonth(10).withYear(2012);
+      System.out.println(&quot;date2: &quot; + date2);
+        
+      // 12 december 2014
+      LocalDate date3 = LocalDate.of(2014, Month.DECEMBER, 12);
+      System.out.println(&quot;date3: &quot; + date3);
+        
+      // 22 小时 15 分钟
+      LocalTime date4 = LocalTime.of(22, 15);
+      System.out.println(&quot;date4: &quot; + date4);
+        
+      // 解析字符串
+      LocalTime date5 = LocalTime.parse(&quot;20:15:30&quot;);
+      System.out.println(&quot;date5: &quot; + date5);
+   }
+}
+</code></pre>
+<p>执行以上脚本，输出结果为：</p>
+<pre><code>$ javac Java8Tester.java 
+$ java Java8Tester
+当前时间: 2016-04-15T16:55:48.668
+date1: 2016-04-15
+月: APRIL, 日: 15, 秒: 48
+date2: 2012-04-10T16:55:48.668
+date3: 2014-12-12
+date4: 22:15
+date5: 20:15:30
+</code></pre>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2020/03/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/" title="原码、反码和补码"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2020/03/mybatis%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E6%B1%87%E6%80%BB/"
+                    title="Mybatis常用语法汇总"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2020
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>
