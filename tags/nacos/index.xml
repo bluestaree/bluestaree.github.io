@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nacos on AzkeepToo个人博客</title>
+    <link>https://bluestaree.github.io/tags/nacos/</link>
+    <description>Recent content in Nacos on AzkeepToo个人博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 31 May 2020 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://bluestaree.github.io/tags/nacos/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>SpringCloud Alibaba-Nacos 注册与配置中心</title>
+      <link>https://bluestaree.github.io/2020/05/springcloud-alibaba-nacos-%E6%B3%A8%E5%86%8C%E4%B8%8E%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/</link>
+      <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/springcloud-alibaba-nacos-%E6%B3%A8%E5%86%8C%E4%B8%8E%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/</guid>
+      <description>由于Spring Cloud Eureka已经宣布停止开源计划，不再继续维护，这怎么行，还能愉快的使用吗。 今天在空闲之余了解了下另外一个功能更加强大的注</description>
+    </item>
+    
+    <item>
+      <title>TCP粘包和拆包问题</title>
+      <link>https://bluestaree.github.io/2020/05/tcp%E7%B2%98%E5%8C%85%E5%92%8C%E6%8B%86%E5%8C%85%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Mon, 25 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/tcp%E7%B2%98%E5%8C%85%E5%92%8C%E6%8B%86%E5%8C%85%E9%97%AE%E9%A2%98/</guid>
+      <description>前言：TCP是面向连接的，面向流的，提供高可靠性服务。收发两端(客户端和服务器端)都要有一一成对的socket，因此发送端为了将多个发给接收</description>
+    </item>
+    
+    <item>
+      <title>Netty编解码器</title>
+      <link>https://bluestaree.github.io/2020/05/netty%E7%9A%84%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8/</link>
+      <pubDate>Wed, 20 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/netty%E7%9A%84%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8/</guid>
+      <description>Netty的编解码器 当Netty发送或者接受一个消息的时候，就将会发生一次数据转换。入站消息会被解码：从字节转换为另一种格式(比如java对</description>
+    </item>
+    
+    <item>
+      <title>Handler链的调用机制</title>
+      <link>https://bluestaree.github.io/2020/05/handler%E9%93%BE%E7%9A%84%E8%B0%83%E7%94%A8%E6%9C%BA%E5%88%B6/</link>
+      <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/handler%E9%93%BE%E7%9A%84%E8%B0%83%E7%94%A8%E6%9C%BA%E5%88%B6/</guid>
+      <description>前言：Netty中ChannelHandler 的作用就是处理IO事件或拦截IO事件，并将其处理结果转发给下一个Handler，那么Handl</description>
+    </item>
+    
+    <item>
+      <title>Netty基础组件</title>
+      <link>https://bluestaree.github.io/2020/05/netty%E7%BB%84%E4%BB%B6%E4%BB%8B%E7%BB%8D/</link>
+      <pubDate>Sun, 17 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/netty%E7%BB%84%E4%BB%B6%E4%BB%8B%E7%BB%8D/</guid>
+      <description>总览 Bootstrap or ServerBootstrap EventLoop or EventLoopGroup ChannelInitializer ChannelHandler ChannelPipeline ChannelHandlerContext Future or ChannelFuture Bootstrap or ServerBootstrap 都是用来启动一个Netty应用的配置类，它主要作用是配置整个Netty程序，串联起各个组件。 EventLoop or EventLoopGroup EventLoopGroup 是一</description>
+    </item>
+    
+    <item>
+      <title>Netty初体验</title>
+      <link>https://bluestaree.github.io/2020/05/netty%E5%88%9D%E4%BD%93%E9%AA%8C/</link>
+      <pubDate>Thu, 14 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/netty%E5%88%9D%E4%BD%93%E9%AA%8C/</guid>
+      <description>前言：通过Netty完成一个简单的多客户端与单服务端交互的demo Netty初体验 服务端 public class NettyServer { public static void main(String[] args) throws Exception { //1. 创建两个线程组 bossGroup 和 workerGroup //2. bossGroup 只</description>
+    </item>
+    
+    <item>
+      <title>零拷贝</title>
+      <link>https://bluestaree.github.io/2020/05/%E9%9B%B6%E6%8B%B7%E8%B4%9D/</link>
+      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/%E9%9B%B6%E6%8B%B7%E8%B4%9D/</guid>
+      <description>转载 · 原文链接：https://www.jianshu.com/p/275602182f39 前言 零拷贝这三个字，一直是服务器网络编程的关键字</description>
+    </item>
+    
+    <item>
+      <title>Netty的IO模型</title>
+      <link>https://bluestaree.github.io/2020/05/io%E6%A8%A1%E5%9E%8B/</link>
+      <pubDate>Sat, 09 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/io%E6%A8%A1%E5%9E%8B/</guid>
+      <description>前言 IO模型：就是用什么样的通道进行数据的发送和接收,很大程度上决定了程序通信的性能 而netty是一款基于NIO(Nonblocking I/</description>
+    </item>
+    
+    <item>
+      <title>Netty线程模型</title>
+      <link>https://bluestaree.github.io/2020/05/netty%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/</link>
+      <pubDate>Fri, 08 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/netty%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/</guid>
+      <description>前言 不同的线程模型，对程序的性能有很大的影响，Netty线程模型主要基于主从Reactor多线程模型做了一定的改进 目前存在的线程模型有： 传统</description>
+    </item>
+    
+    <item>
+      <title>正向代理与方向代理</title>
+      <link>https://bluestaree.github.io/2020/05/%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%8E%E6%96%B9%E5%90%91%E4%BB%A3%E7%90%86/</link>
+      <pubDate>Tue, 05 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%8E%E6%96%B9%E5%90%91%E4%BB%A3%E7%90%86/</guid>
+      <description>所谓的正向与反向，都是对于我们自己的电脑来说 正向代理：帮助客户端访问外部资源的， 举个例子：如科学上网。如果我们需要访问谷歌，就需要代理服务器</description>
+    </item>
+    
+    <item>
+      <title>Object划分</title>
+      <link>https://bluestaree.github.io/2020/05/object%E5%88%92%E5%88%86/</link>
+      <pubDate>Sat, 02 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/object%E5%88%92%E5%88%86/</guid>
+      <description>1.PO(Persistant Object) 持久对象 PO就是对应数据库中某个表中的一条记录,多个记录可以用PO的集合。PO中应该不包含任何对数据库的操作。 2.DO(Domain object) 领域对象 就是从现实世界</description>
+    </item>
+    
+    <item>
+      <title>使用JSR303规范标准进行数据校验</title>
+      <link>https://bluestaree.github.io/2020/04/%E4%BD%BF%E7%94%A8jsr303%E8%A7%84%E8%8C%83%E6%A0%87%E5%87%86%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C/</link>
+      <pubDate>Tue, 28 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/%E4%BD%BF%E7%94%A8jsr303%E8%A7%84%E8%8C%83%E6%A0%87%E5%87%86%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C/</guid>
+      <description>前言 现在的项目大多都是前后端分离的项目，那么对于一些重要数据的校验，单单使用前端控制是不行的，我们可以使用一些http请求工具如 Postman ，就可以轻</description>
+    </item>
+    
+    <item>
+      <title>Hibernate常见问题</title>
+      <link>https://bluestaree.github.io/2020/04/hibernate%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Thu, 23 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/hibernate%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</guid>
+      <description>转载 · 原文链接：https://blog.csdn.net/wu1317581750/java/article/details/816629</description>
+    </item>
+    
+    <item>
+      <title>缓存与数据库双写一致性问题及最佳解决方案</title>
+      <link>https://bluestaree.github.io/2020/04/%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98%E5%8F%8A%E6%9C%80%E4%BD%B3%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</link>
+      <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98%E5%8F%8A%E6%9C%80%E4%BD%B3%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</guid>
+      <description>转载 · 原文链接：https://www.jianshu.com/p/dc1e5091a0d8 在大型互联网应用当中如果你的应用引入了缓存机制，</description>
+    </item>
+    
+    <item>
+      <title>Navicat连接MySQL出现1251错误</title>
+      <link>https://bluestaree.github.io/2020/04/navicat-1251%E9%94%99%E8%AF%AF/</link>
+      <pubDate>Thu, 16 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/navicat-1251%E9%94%99%E8%AF%AF/</guid>
+      <description>记录一个坑，我现在所用的MySQL数据库的版本是8.019，在尝试使用Navicat连接数据库时，出现1251错误 解决方法： 进入docker</description>
+    </item>
+    
+    <item>
+      <title>hashCode和equals的相关问题</title>
+      <link>https://bluestaree.github.io/2020/04/hashcode%E5%92%8Cequals%E7%9A%84%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Sat, 11 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/hashcode%E5%92%8Cequals%E7%9A%84%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/</guid>
+      <description>转载 · 原文链接：https://blog.csdn.net/CSDN_Ty/article/details/98877883 本文的内容主要想</description>
+    </item>
+    
+    <item>
+      <title>字符集编码</title>
+      <link>https://bluestaree.github.io/2020/04/%E5%AD%97%E7%AC%A6%E9%9B%86%E7%BC%96%E7%A0%81/</link>
+      <pubDate>Sat, 11 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/%E5%AD%97%E7%AC%A6%E9%9B%86%E7%BC%96%E7%A0%81/</guid>
+      <description>字符集 先来说说什么是字符集把，字符集就是将二进制字节码转换为某种特殊字符的映射集合，每个字符集都有其特定的校验规则 TIP : 1 Byte = 8 bit 常见的字符集</description>
+    </item>
+    
+    <item>
+      <title>Feign重试机制</title>
+      <link>https://bluestaree.github.io/2020/04/feign%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6/</link>
+      <pubDate>Wed, 08 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/feign%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6/</guid>
+      <description>Feign调用流程 构造请求对象，将对象转为json 发送执行请求(执行成功会解码响应得数据) 获取结果 从代码中可以看出，如何请求出现异常，就会执</description>
+    </item>
+    
+    <item>
+      <title>SpringSecurity流程与配置</title>
+      <link>https://bluestaree.github.io/2020/04/spring-security%E6%B5%81%E7%A8%8B%E4%B8%8E%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/spring-security%E6%B5%81%E7%A8%8B%E4%B8%8E%E9%85%8D%E7%BD%AE/</guid>
+      <description>Spring Security 是spring项目之中的一个安全模块，可以非常方便与spring项目无缝集成。特别是在spring boot项目中加入spring secu</description>
+    </item>
+    
+    <item>
+      <title>Maven,Gradle依赖</title>
+      <link>https://bluestaree.github.io/2020/04/mavengradle%E4%BE%9D%E8%B5%96/</link>
+      <pubDate>Thu, 02 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/mavengradle%E4%BE%9D%E8%B5%96/</guid>
+      <description>最近在学习中遇到了新的包管理工具 - Gradle 。 上网查询了下Gradle 的依赖方式，方便与Maven区分对比 。 转载 · 原文链接：https://blog</description>
+    </item>
+    
+  </channel>
+</rss>

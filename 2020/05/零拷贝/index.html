@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        零拷贝 - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="转载 · 原文链接：https://www.jianshu.com/p/275602182f39 前言 零拷贝这三个字，一直是服务器网络编程的关键字" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>零拷贝 - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="零拷贝" />
+<meta property="og:description" content="转载 · 原文链接：https://www.jianshu.com/p/275602182f39 前言 零拷贝这三个字，一直是服务器网络编程的关键字" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2020/05/%E9%9B%B6%E6%8B%B7%E8%B4%9D/" />
+<meta property="article:published_time" content="2020-05-12T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-12T00:00:00+00:00" />
+<meta itemprop="name" content="零拷贝">
+<meta itemprop="description" content="转载 · 原文链接：https://www.jianshu.com/p/275602182f39 前言 零拷贝这三个字，一直是服务器网络编程的关键字">
+<meta itemprop="datePublished" content="2020-05-12T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-05-12T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1863">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="零拷贝"/>
+<meta name="twitter:description" content="转载 · 原文链接：https://www.jianshu.com/p/275602182f39 前言 零拷贝这三个字，一直是服务器网络编程的关键字"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/springboot/" class="category-list-link">springboot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="category-list-link">数据结构与算法</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">15</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/" class="category-list-link">面试题</a><span class="category-list-count">3</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springboot/" class="tag-list-link">springboot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springcloud/" class="tag-list-link">springcloud</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99/" class="tag-list-link">数据库双写</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="tag-list-link">数据结构</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%AE%97%E6%B3%95/" class="tag-list-link">算法</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/05/springcloud-alibaba-nacos-%E6%B3%A8%E5%86%8C%E4%B8%8E%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/" class="title">SpringCloud Alibaba-Nacos 注册与配置中心</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-05-31 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-05-31</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/05/tcp%E7%B2%98%E5%8C%85%E5%92%8C%E6%8B%86%E5%8C%85%E9%97%AE%E9%A2%98/" class="title">TCP粘包和拆包问题</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-05-25 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-05-25</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/05/netty%E7%9A%84%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8/" class="title">Netty编解码器</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-05-20 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-05-20</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/05/handler%E9%93%BE%E7%9A%84%E8%B0%83%E7%94%A8%E6%9C%BA%E5%88%B6/" class="title">Handler链的调用机制</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-05-18 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-05-18</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/05/netty%E7%BB%84%E4%BB%B6%E4%BB%8B%E7%BB%8D/" class="title">Netty基础组件</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-05-17 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-05-17</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2020/05/%E9%9B%B6%E6%8B%B7%E8%B4%9D/"
+    >零拷贝</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2020/05/%E9%9B%B6%E6%8B%B7%E8%B4%9D/" class="article-date">
+  <time datetime="2020-05-12 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-05-12</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/"> 笔记 </a>
+</span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2020/05/%E9%9B%B6%E6%8B%B7%E8%B4%9D/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1863字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 4分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<blockquote>
+<p>转载 · 原文链接：https://www.jianshu.com/p/275602182f39</p>
+</blockquote>
+<h2 id="前言">前言</h2>
+<p>零拷贝这三个字，一直是服务器网络编程的关键字，任何性能优化都离不开。在 Java 程序员的世界，常用的零拷贝有 mmap 和 sendFile。那么，他们在 OS 里，到底是怎么样的一个的设计？本文将简单聊聊 mmap 和 sendFile 这两个零拷贝。</p>
+<h2 id="传统数据读写的劣势">传统数据读写的劣势</h2>
+<p>初学 Java 时，我们在学习 IO 和 网络编程时，会使用以下代码：</p>
+<pre><code class="language-java">        File file = new File(&quot;index.html&quot;);
+        RandomAccessFile raf = new RandomAccessFile(file, &quot;rw&quot;);
+
+        byte[] arr = new byte[(int) file.length()];
+        raf.read(arr);
+
+        Socket socket = new ServerSocket(8080).accept();
+        socket.getOutputStream().write(arr);
+</code></pre>
+<p>我们会调用 read 方法读取 index.html 的内容—— 变成字节数组，然后调用 write 方法，将 index.html 字节流写到 socket 中，那么，我们调用这两个方法，在 OS 底层发生了什么呢？我这里借鉴了一张其他文字的图片，尝试解释这个过程。</p>
+<p><img src="https://images.weserv.nl/?url=http://upload-images.jianshu.io/upload_images/4236553-174b8d9cc6119e67.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
+<p>传统 IO 操作</p>
+<p>上图中，上半部分表示用户态和内核态的上下文切换。下半部分表示数据复制操作。下面说说他们的步骤：</p>
+<ol>
+<li>read 调用导致用户态到内核态的一次变化，同时，第一次复制开始：DMA（Direct Memory Access，直接内存存取，即不使用 CPU 拷贝数据到内存，而是 DMA 引擎传输数据到内存，用于解放 CPU） 引擎从磁盘读取 index.html 文件，并将数据放入到内核缓冲区。</li>
+<li>发生第二次数据拷贝，即：将内核缓冲区的数据拷贝到用户缓冲区，同时，发生了一次用内核态到用户态的上下文切换。</li>
+<li>发生第三次数据拷贝，我们调用 write 方法，系统将用户缓冲区的数据拷贝到 Socket 缓冲区。此时，又发生了一次用户态到内核态的上下文切换。</li>
+<li>第四次拷贝，数据异步的从 Socket 缓冲区，使用 DMA  引擎拷贝到网络协议引擎。这一段，不需要进行上下文切换。</li>
+<li>write 方法返回，再次从内核态切换到用户态。</li>
+</ol>
+<p>如你所见，复制拷贝操作太多了。如何优化这些流程？</p>
+<h2 id="mmap-优化">mmap 优化</h2>
+<p>mmap 通过内存映射，将文件映射到内核缓冲区，同时，用户空间可以共享内核空间的数据。这样，在进行网络传输时，就可以减少内核空间到用户控件的拷贝次数。如下图：</p>
+<p><img src="https://images.weserv.nl/?url=http://upload-images.jianshu.io/upload_images/4236553-c5ea00b78e1b93fd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
+<p>mmap 流程</p>
+<p>如上图，user buffer 和 kernel buffer 共享 index.html。如果你想把硬盘的 index.html 传输到网络中，再也不用拷贝到用户空间，再从用户空间拷贝到 Socket 缓冲区。</p>
+<p>现在，你只需要从内核缓冲区拷贝到 Socket 缓冲区即可，这将减少一次内存拷贝（从 4 次变成了 3 次），但不减少上下文切换次数。</p>
+<h2 id="sendfile">sendFile</h2>
+<p>那么，我们还能继续优化吗？ Linux 2.1 版本 提供了 sendFile 函数，其基本原理如下：数据根本不经过用户态，直接从内核缓冲区进入到 Socket Buffer，同时，由于和用户态完全无关，就减少了一次上下文切换。</p>
+<p><img src="https://images.weserv.nl/?url=http://upload-images.jianshu.io/upload_images/4236553-695904d24edc2fd5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
+<p>snedFile 2.1 版本</p>
+<p>如上图，我们进行 sendFile 系统调用时，数据被 DMA 引擎从文件复制到内核缓冲区，然后调用，然后掉一共 write 方法时，从内核缓冲区进入到 Socket，这时，是没有上下文切换的，因为在一个用户空间。</p>
+<p>最后，数据从 Socket 缓冲区进入到协议栈。</p>
+<p>此时，数据经过了 3 次拷贝，3 次上下文切换。</p>
+<p>那么，还能不能再继续优化呢？ 例如直接从内核缓冲区拷贝到网络协议栈？</p>
+<p>实际上，Linux 在 2.4 版本中，做了一些修改，避免了从内核缓冲区拷贝到 Socket buffer 的操作，直接拷贝到协议栈，从而再一次减少了数据拷贝。具体如下图：</p>
+<p><img src="https://images.weserv.nl/?url=http://upload-images.jianshu.io/upload_images/4236553-00c3e47936ecea25.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
+<p>sendFile 在 2.4 版本的再一次优化</p>
+<p>现在，index.html 要从文件进入到网络协议栈，只需 2 次拷贝：第一次使用 DMA  引擎从文件拷贝到内核缓冲区，第二次从内核缓冲区将数据拷贝到网络协议栈；内核缓存区只会拷贝一些 offset 和 length 信息到 SocketBuffer，基本无消耗。</p>
+<p>等一下，不是说零拷贝吗？为什么还是要 2 次拷贝？</p>
+<p>答：首先我们说零拷贝，是从操作系统的角度来说的。因为内核缓冲区之间，没有数据是重复的（只有 kernel buffer 有一份数据，sendFile 2.1 版本实际上有 2 份数据，算不上零拷贝）。例如我们刚开始的例子，内核缓存区和 Socket 缓冲区的数据就是重复的。</p>
+<p>而零拷贝不仅仅带来更少的数据复制，还能带来其他的性能优势，例如更少的上下文切换，更少的  CPU 缓存伪共享以及无 CPU 校验和计算。</p>
+<p>再稍微讲讲 mmap 和 sendFile 的区别。</p>
+<ol>
+<li>mmap 适合小数据量读写，sendFile 适合大文件传输。</li>
+<li>mmap 需要 4 次上下文切换，3 次数据拷贝；sendFile 需要 3 次上下文切换，最少 2 次数据拷贝。</li>
+<li>sendFile 可以利用 DMA 方式，减少 CPU 拷贝，mmap 则不能（必须从内核拷贝到 Socket 缓冲区）。</li>
+</ol>
+<p>在这个选择上：rocketMQ 在消费消息时，使用了 mmap。kafka 使用了 sendFile。</p>
+<h2 id="java-世界的例子">Java 世界的例子</h2>
+<p>kafka 在客户端和 broker 进行数据传输时，会使用 transferTo 和 transferFrom 方法，即对应 Linux 的 sendFile。</p>
+<p><img src="https://images.weserv.nl/?url=http://upload-images.jianshu.io/upload_images/4236553-702a0577fcf0f78a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
+<p>tomcat 内部在进行文件拷贝的时候，也会使用 transferto 方法。</p>
+<p><img src="https://images.weserv.nl/?url=http://upload-images.jianshu.io/upload_images/4236553-4334d181982acbf1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
+<p>tomcat 在处理一下心跳保活时，也会调用该 sendFile 方法。</p>
+<p><img src="https://images.weserv.nl/?url=http://upload-images.jianshu.io/upload_images/4236553-4cd8bde5a9db4630.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
+<p>在 pulsar 项目中，下载文件时，也会使用 sendFile。如下图：</p>
+<p><img src="https://images.weserv.nl/?url=http://upload-images.jianshu.io/upload_images/4236553-6d950980cf16017d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img"></p>
+<p>所以，如果你需要优化网络传输的性能，或者文件读写的速度，请尽量使用零拷贝。他不仅能较少复制拷贝次数，还能较少上下文切换，缓存行污染。</p>
+<p>作者：莫那一鲁道
+来源：简书</p>
+<hr>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2020/05/io%E6%A8%A1%E5%9E%8B/" title="Netty的IO模型"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2020/05/netty%E5%88%9D%E4%BD%93%E9%AA%8C/"
+                    title="Netty初体验"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2020
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>
