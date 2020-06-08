@@ -5,10 +5,28 @@
     <link>https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/</link>
     <description>Recent content in 笔记 on AzkeepToo个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 31 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Maven,Gradle依赖</title>
+      <link>https://bluestaree.github.io/2020/04/mavengradle%E4%BE%9D%E8%B5%96/</link>
+      <pubDate>Thu, 02 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/mavengradle%E4%BE%9D%E8%B5%96/</guid>
+      <description>最近在学习中遇到了新的包管理工具 - Gradle 。 上网查询了下Gradle 的依赖方式，方便与Maven区分对比 。 转载 · 原文链接：https://blog</description>
+    </item>
+    
+    <item>
+      <title>Mybatis常用语法汇总</title>
+      <link>https://bluestaree.github.io/2020/03/mybatis%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E6%B1%87%E6%80%BB/</link>
+      <pubDate>Mon, 30 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/03/mybatis%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E6%B1%87%E6%80%BB/</guid>
+      <description>转载 · 原文链接：https://blog.csdn.net/qw463800202/article/details/103221651 一、动</description>
+    </item>
     
     <item>
       <title>JDK 8 的那些新特性</title>
