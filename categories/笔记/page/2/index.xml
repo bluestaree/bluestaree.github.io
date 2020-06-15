@@ -5,10 +5,19 @@
     <link>https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/</link>
     <description>Recent content in 笔记 on AzkeepToo个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 08 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>SpringSecurity流程与配置</title>
+      <link>https://bluestaree.github.io/2020/04/spring-security%E6%B5%81%E7%A8%8B%E4%B8%8E%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/spring-security%E6%B5%81%E7%A8%8B%E4%B8%8E%E9%85%8D%E7%BD%AE/</guid>
+      <description>Spring Security 是spring项目之中的一个安全模块，可以非常方便与spring项目无缝集成。特别是在spring boot项目中加入spring secu</description>
+    </item>
     
     <item>
       <title>Maven,Gradle依赖</title>

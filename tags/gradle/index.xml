@@ -11,6 +11,24 @@
     
     
     <item>
+      <title>Spring Cache使用</title>
+      <link>https://bluestaree.github.io/2020/06/springcache%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Sat, 13 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/06/springcache%E4%BD%BF%E7%94%A8/</guid>
+      <description>转载 · 原文链接：https://www.jianshu.com/p/6db623355e11 一、概述 SpringCache本身是一个缓存体系</description>
+    </item>
+    
+    <item>
+      <title>缓存与数据库一致性问题及最佳解决方案</title>
+      <link>https://bluestaree.github.io/2020/06/%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98%E5%8F%8A%E6%9C%80%E4%BD%B3%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</link>
+      <pubDate>Tue, 09 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/06/%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98%E5%8F%8A%E6%9C%80%E4%BD%B3%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</guid>
+      <description>前言：现在互联网高并发的背景下，为了有效的提高服务应用的响应速度，相信大家都会想到采用缓存技术。然而如果你的应用引入了缓存机制，那么有一个问</description>
+    </item>
+    
+    <item>
       <title>分布式锁实现-Redisson</title>
       <link>https://bluestaree.github.io/2020/06/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%AE%9E%E7%8E%B0-redisson/</link>
       <pubDate>Mon, 08 Jun 2020 00:00:00 +0000</pubDate>
@@ -25,7 +43,7 @@
       <pubDate>Sat, 06 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://bluestaree.github.io/2020/06/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E7%9A%84%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88%E9%97%AE%E9%A2%98/</guid>
-      <description>缓存穿透 指查询一个一定不存在的数据，由于缓存是不命中，将去查询数据库，但是数据库也无此记录，我们没有将这次查 询的nulI写入缓存，这将导致这</description>
+      <description>概览：在高并发场景下，缓存在读模式下所存在的问题 缓存穿透 缓存雪崩 缓存击穿 缓存穿透 指查询一个一定不存在的数据，由于缓存是不命中，将去查询数据库</description>
     </item>
     
     <item>
@@ -146,15 +164,6 @@
     </item>
     
     <item>
-      <title>缓存与数据库双写一致性问题及最佳解决方案</title>
-      <link>https://bluestaree.github.io/2020/04/%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98%E5%8F%8A%E6%9C%80%E4%BD%B3%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</link>
-      <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/04/%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98%E5%8F%8A%E6%9C%80%E4%BD%B3%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</guid>
-      <description>转载 · 原文链接：https://www.jianshu.com/p/dc1e5091a0d8 在大型互联网应用当中如果你的应用引入了缓存机制，</description>
-    </item>
-    
-    <item>
       <title>Navicat连接MySQL出现1251错误</title>
       <link>https://bluestaree.github.io/2020/04/navicat-1251%E9%94%99%E8%AF%AF/</link>
       <pubDate>Thu, 16 Apr 2020 00:00:00 +0000</pubDate>
@@ -179,15 +188,6 @@
       
       <guid>https://bluestaree.github.io/2020/04/feign%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6/</guid>
       <description>Feign调用流程 构造请求对象，将对象转为json 发送执行请求(执行成功会解码响应得数据) 获取结果 从代码中可以看出，如何请求出现异常，就会执</description>
-    </item>
-    
-    <item>
-      <title>SpringSecurity流程与配置</title>
-      <link>https://bluestaree.github.io/2020/04/spring-security%E6%B5%81%E7%A8%8B%E4%B8%8E%E9%85%8D%E7%BD%AE/</link>
-      <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/04/spring-security%E6%B5%81%E7%A8%8B%E4%B8%8E%E9%85%8D%E7%BD%AE/</guid>
-      <description>Spring Security 是spring项目之中的一个安全模块，可以非常方便与spring项目无缝集成。特别是在spring boot项目中加入spring secu</description>
     </item>
     
   </channel>
