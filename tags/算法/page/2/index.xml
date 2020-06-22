@@ -11,6 +11,15 @@
     
     
     <item>
+      <title>Feign重试机制</title>
+      <link>https://bluestaree.github.io/2020/04/feign%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6/</link>
+      <pubDate>Wed, 08 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/feign%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6/</guid>
+      <description>Feign调用流程 构造请求对象，将对象转为json 发送执行请求(执行成功会解码响应得数据) 获取结果 从代码中可以看出，如何请求出现异常，就会执</description>
+    </item>
+    
+    <item>
       <title>SpringSecurity流程与配置</title>
       <link>https://bluestaree.github.io/2020/04/spring-security%E6%B5%81%E7%A8%8B%E4%B8%8E%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>

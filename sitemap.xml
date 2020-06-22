@@ -4,14 +4,28 @@
   
   <url>
     <loc>https://bluestaree.github.io/categories/</loc>
-    <lastmod>2020-06-13T00:00:00+00:00</lastmod>
+    <lastmod>2020-06-22T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://bluestaree.github.io/2020/06/completablefuture-%E5%BC%82%E6%AD%A5%E7%BC%96%E6%8E%92/</loc>
+    <lastmod>2020-06-22T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://bluestaree.github.io/posts/</loc>
-    <lastmod>2020-06-13T00:00:00+00:00</lastmod>
+    <lastmod>2020-06-22T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2020-06-22T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -32,13 +46,6 @@
   
   <url>
     <loc>https://bluestaree.github.io/tags/</loc>
-    <lastmod>2020-06-13T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2020-06-13T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>

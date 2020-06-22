@@ -5,10 +5,19 @@
     <link>https://bluestaree.github.io/posts/</link>
     <description>Recent content in Posts on AzkeepToo个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 13 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jun 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://bluestaree.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>CompletableFuture-异步编排</title>
+      <link>https://bluestaree.github.io/2020/06/completablefuture-%E5%BC%82%E6%AD%A5%E7%BC%96%E6%8E%92/</link>
+      <pubDate>Mon, 22 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/06/completablefuture-%E5%BC%82%E6%AD%A5%E7%BC%96%E6%8E%92/</guid>
+      <description>前言：在一些业务复杂的场景中，往往会涉及多个业务之间的相互调用，通过线程池性能稳定，也可以获取执行结果，并捕获异常。但是，在业务复杂情况下，</description>
+    </item>
     
     <item>
       <title>Spring Cache使用</title>
@@ -179,15 +188,6 @@
       
       <guid>https://bluestaree.github.io/2020/04/hashcode%E5%92%8Cequals%E7%9A%84%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/</guid>
       <description>转载 · 原文链接：https://blog.csdn.net/CSDN_Ty/article/details/98877883 本文的内容主要想</description>
-    </item>
-    
-    <item>
-      <title>Feign重试机制</title>
-      <link>https://bluestaree.github.io/2020/04/feign%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6/</link>
-      <pubDate>Wed, 08 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/04/feign%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6/</guid>
-      <description>Feign调用流程 构造请求对象，将对象转为json 发送执行请求(执行成功会解码响应得数据) 获取结果 从代码中可以看出，如何请求出现异常，就会执</description>
     </item>
     
   </channel>
