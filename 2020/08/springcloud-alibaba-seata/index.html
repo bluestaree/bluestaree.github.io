@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        分布式解决方案-Seata - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="简介：Seata是一款阿里巴巴开源的分布式事务解决方案，致力于提供高性能和简单易用的分布式事务服务。Seata 将为用户提供了AT、TCC、S" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>分布式解决方案-Seata - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="分布式解决方案-Seata" />
+<meta property="og:description" content="简介：Seata是一款阿里巴巴开源的分布式事务解决方案，致力于提供高性能和简单易用的分布式事务服务。Seata 将为用户提供了AT、TCC、S" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2020/08/springcloud-alibaba-seata/" />
+<meta property="article:published_time" content="2020-08-04T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-08-04T00:00:00+00:00" />
+<meta itemprop="name" content="分布式解决方案-Seata">
+<meta itemprop="description" content="简介：Seata是一款阿里巴巴开源的分布式事务解决方案，致力于提供高性能和简单易用的分布式事务服务。Seata 将为用户提供了AT、TCC、S">
+<meta itemprop="datePublished" content="2020-08-04T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-08-04T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1847">
+
+
+
+<meta itemprop="keywords" content="Seata," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="分布式解决方案-Seata"/>
+<meta name="twitter:description" content="简介：Seata是一款阿里巴巴开源的分布式事务解决方案，致力于提供高性能和简单易用的分布式事务服务。Seata 将为用户提供了AT、TCC、S"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">25</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8Bvolatile%E5%85%B3%E9%94%AE%E5%AD%97%E8%A7%A3%E6%9E%90/" class="title">Java中Volatile关键字</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-28</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/springcloud-alibaba-sentinel/" class="title">高并发下保证服务稳定性-Sentinel</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-22 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-22</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/" class="title">接口幂等性问题与解决方案</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-10 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-10</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/springcloud-alibaba-seata/" class="title">分布式解决方案-Seata</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-04</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" class="title">本地事务与分布式事务</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-03 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-03</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2020/08/springcloud-alibaba-seata/"
+    >分布式解决方案-Seata</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2020/08/springcloud-alibaba-seata/" class="article-date">
+  <time datetime="2020-08-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-04</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/spring-cloud-alibaba/"> Spring Cloud Alibaba </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/seata/"> Seata </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2020/08/springcloud-alibaba-seata/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1847字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 4分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<blockquote>
+<p>简介：Seata是一款阿里巴巴开源的分布式事务解决方案，致力于提供高性能和简单易用的分布式事务服务。Seata 将为用户提供了AT、TCC、SAGA 和XA事务模式,为用户打造一站式的分布式解决方案。</p>
+</blockquote>
+<h2 id="使用seata-atauto-transaction-模式控制分布式事务">使用Seata AT(Auto Transaction) 模式控制分布式事务</h2>
+<h3 id="整体机制">整体机制</h3>
+<p>两阶段提交协议的演变：</p>
+<ul>
+<li>一阶段：业务数据和回滚日志记录在同一个本地事务中提交，释放本地锁和连接资源。</li>
+<li>二阶段：
+<ul>
+<li>提交异步化，非常快速地完成。</li>
+<li>回滚通过一阶段的回滚日志进行反向补偿。</li>
+</ul>
+</li>
+</ul>
+<h3 id="案例演示">案例演示</h3>
+<p>用户下订单的部分业务逻辑，由2个微服务组成</p>
+<p>订单服务：创建订单</p>
+<p>库存服务：从订单商品信息中，锁定相应库存</p>
+<h3 id="环境搭建">环境搭建</h3>
+<p><strong>数据库</strong></p>
+<p>订单表</p>
+<pre><code class="language-scheme">CREATE TABLE `orders` (
+  `order_number` varchar(32) NOT NULL COMMENT '订单号',
+  `initial_price` float(8,2) DEFAULT NULL COMMENT '定价',
+  `price` float(8,2) DEFAULT NULL COMMENT '交易价',
+  `start_time` datetime NOT NULL COMMENT '起始时间',
+  `end_time` datetime NOT NULL COMMENT '结束时间',
+  `status` varchar(32) DEFAULT NULL COMMENT '交易状态',
+  `user_id` varchar(32) DEFAULT NULL COMMENT '用户id',
+  `details` varchar(1000) DEFAULT NULL COMMENT '订单明细',
+  PRIMARY KEY (`order_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</code></pre>
+<p>库存表</p>
+<pre><code class="language-scheme">CREATE TABLE `ware` (
+  `id` bigint(20) NOT NULL COMMENT '库存id',
+  `sku_id` bigint(20) DEFAULT NULL COMMENT 'sku_id',
+  `ware_id` bigint(20) DEFAULT NULL COMMENT '仓库id',
+  `stock` int DEFAULT NULL COMMENT '库存数量',
+  `sku_name` varchar(255) DEFAULT NULL COMMENT 'sku名称',
+  `stock_locked` int DEFAULT NULL COMMENT '锁定库存量',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</code></pre>
+<h3 id="主要业务逻辑">主要业务逻辑</h3>
+<p>订单服务</p>
+<pre><code class="language-java">    @Transactional
+    public void submitOrder() {
+        //生成订单
+        Orders orders = new Orders();
+        orders.setOrderNumber(UUID.randomUUID().toString().replace(&quot;-&quot;, &quot;&quot;));
+        orders.setDetails(&quot;测试订单&quot;);
+        orders.setStartTime(new Date());
+        orders.setEndTime(new Date());
+        ordersRepository.save(orders);
+        //远程减库存
+        wareClient.updateWareStockLockedBySkuId(16,10);
+        //TODO 其他微服务业务调用
+        //模拟异常发生
+        //int num = 1/0;
+    }
+</code></pre>
+<h3 id="测试"><strong>测试</strong></h3>
+<p><strong>无异常情况</strong></p>
+<p>订单表</p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDGEbSwWM8X7i6mT.FhwNSXuSmd3orBV2cbh0CAbNG.wY5ggTR7IM5Yabw9uzFmWrJnNSHpJxBrDAXWWLfDRuYqk!/r" alt="测试-1"></p>
+<p>库存表</p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDOJ6gMwKapzMPY8JwHsqG2U1yPnHnxvr.3O6LXCOfdvLLWC36B8MAQWwldymPUjqjFcbBwfwyzBm2OYOoexawWo!/r" alt="测试-2"></p>
+<p>两个事务动能正常提交，没有问题。</p>
+<p>接下来演示失败情况，手动操作数据库，将订单表的记录和锁定的库存数量重置</p>
+<p><strong>异常情况</strong></p>
+<p>打开异常代码注释</p>
+<p>可以看到，订单表事务正常回滚，而库存表事务却未回滚，因为spring 控制的是本地事务，无法对远程事务进行控制，造成了数据不一致的情况</p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDMOTVLpw*XFbxxBZdUR*gTaNLbf.dFi3zXIcvkVYdM9JIpFtP4k9d9bX0xuZyqF962Y6x1yXnVX2EsMOJ8BbLUE!/r" alt="测试-3"></p>
+<h3 id="引入seata进行分布式事务控制">引入Seata进行分布式事务控制</h3>
+<h4 id="1-为每一个需要控制事务的数据库都创捷一个-undo_log-表"><strong>1. 为每一个需要控制事务的数据库都创捷一个 UNDO_LOG 表</strong></h4>
+<pre><code class="language-scheme">-- 注意此处0.3.0+ 增加唯一索引 ux_undo_log
+CREATE TABLE `undo_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `branch_id` bigint(20) NOT NULL,
+  `xid` varchar(100) NOT NULL,
+  `context` varchar(128) NOT NULL,
+  `rollback_info` longblob NOT NULL,
+  `log_status` int(11) NOT NULL,
+  `log_created` datetime NOT NULL,
+  `log_modified` datetime NOT NULL,
+  `ext` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ux_undo_log` (`xid`,`branch_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+</code></pre>
+<p>当事务需要回滚时，Seata 会根据此表的记录，魔改数据库，将改变的数据再次复原</p>
+<h4 id="2下载seata-service软件包就是全局事务协调器"><strong>2.下载Seata-Service软件包，就是全局事务协调器。</strong></h4>
+<p><a href="https://github.com/seata/seata/releases">https://github.com/seata/seata/releases</a></p>
+<p><strong>配置Seata-Service</strong></p>
+<p>下载完Seata-Service软件包后，解压次压缩包。配置文件就位于conf文件夹下</p>
+<p>主要修改已下配置文件设置</p>
+<p><strong>registry.conf</strong></p>
+<pre><code class="language-json">registry { 
+  # file 、nacos 、eureka、redis、zk、consul、etcd3、sofa 
+  type = &quot;eureka&quot;  #指定Seata-Service注册中心
+  #各个服务器的配置，指定地址
+  nacos {
+    serverAddr = &quot;localhost&quot;
+    namespace = &quot;public&quot;
+    cluster = &quot;default&quot;
+  }
+  eureka {
+    serviceUrl = &quot;http://localhost:60101/eureka&quot;
+    application = &quot;seata-server&quot;	#应用名称
+    weight = &quot;1&quot;
+  }
+  redis {
+    serverAddr = &quot;localhost:6379&quot;
+    db = &quot;0&quot;
+  }
+  zk {
+    cluster = &quot;default&quot;
+    serverAddr = &quot;127.0.0.1:2181&quot;
+    session.timeout = 6000
+    connect.timeout = 2000
+  }
+  consul {
+    cluster = &quot;default&quot;
+    serverAddr = &quot;127.0.0.1:8500&quot;
+  }
+  etcd3 {
+    cluster = &quot;default&quot;
+    serverAddr = &quot;http://localhost:2379&quot;
+  }
+  sofa {
+    serverAddr = &quot;127.0.0.1:9603&quot;
+    application = &quot;default&quot;
+    region = &quot;DEFAULT_ZONE&quot;
+    datacenter = &quot;DefaultDataCenter&quot;
+    cluster = &quot;default&quot;
+    group = &quot;SEATA_GROUP&quot;
+    addressWaitTime = &quot;3000&quot;
+  }
+  file {
+    name = &quot;file.conf&quot;
+  }
+}
+
+config {
+  # file、nacos 、apollo、zk、consul、etcd3
+  type = &quot;file&quot; #设置seata配置的存储位置 ,默认为当前目录下的file.conf
+
+  nacos {
+    serverAddr = &quot;localhost&quot;
+    namespace = &quot;public&quot;
+    cluster = &quot;default&quot;
+  }
+  consul {
+    serverAddr = &quot;127.0.0.1:8500&quot;
+  }
+  apollo {
+    app.id = &quot;seata-server&quot;
+    apollo.meta = &quot;http://192.168.1.204:8801&quot;
+  }
+  zk {
+    serverAddr = &quot;127.0.0.1:2181&quot;
+    session.timeout = 6000
+    connect.timeout = 2000
+  }
+  etcd3 {
+    serverAddr = &quot;http://localhost:2379&quot;
+  }
+  file {
+    name = &quot;file.conf&quot;
+  }
+}
+</code></pre>
+<p>在bin目录下，根据操作系统<strong>启动Seata-Service</strong></p>
+<p>可以看到在eurek中Seata-Service已经注册成功</p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDHo4SlLZJmytqj31sjvb1yz0oyJjVeJqo80pc2etWAxYE*WJa68za5HsO7MZpbFRtJpMHcp5GiVvrSmf921DIyk!/r" alt="eureka"></p>
+<h4 id="3导入seata依赖"><strong>3.导入Seata依赖</strong></h4>
+<pre><code class="language-xml">&lt;dependency&gt;
+	&lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
+	&lt;artifactId&gt;spring-cloud-alibaba-seata&lt;/artifactId&gt;
+	&lt;version&gt;2.0.0.RELEASE&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h4 id="4添加globaltransactional-注解"><strong>4.添加@GlobalTransactional 注解</strong></h4>
+<p>在分布式大事务方法上添加<code>@GlobalTransactional</code> 注解 ，其他远程分支事务保持<code>@Transactional</code>注解即可</p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDG0ffk2iSLl2BIbbbVFeKg5xrdhmG.77mn96rSTfP*SzdHN2lBkjVxJn8e8sQDsE1rHN0rXy.L2RGlKLXe1vgak!/r" alt="测试-6"></p>
+<h4 id="5使用seata-datasourceproxy代理自己的数据源"><strong>5.使用seata DataSourceProxy代理自己的数据源</strong></h4>
+<p>所有需要使用seata控制事务的微服务都需要进行配置</p>
+<pre><code class="language-java">@Configuration
+public class MySeataConfig {
+
+    @Autowired
+    DataSourceProperties dataSourceProperties;
+
+    @Bean
+    public DataSource dataSource(DataSourceProperties dataSourceProperties) {
+        HikariDataSource dataSource = dataSourceProperties.initializeDataSourceBuilder().type(HikariDataSource.class).build();
+        if (StringUtils.hasText(dataSourceProperties.getName())) {
+            dataSource.setPoolName(dataSourceProperties.getName());
+        }
+        return new DataSourceProxy(dataSource);
+    }
+}
+</code></pre>
+<h4 id="6导入registryconf和fileconf文件"><strong>6.导入registry.conf和file.conf文件</strong></h4>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDIDYixSU57yAcH*TUM2bfhj7X7IZEveyxf7tmXCrGtZl4*YvV0rdzgouHdl8QWfarY9xwXg9ZeNr*rZ23htp3ms!/r" alt="测试-4"></p>
+<p>每一个服务，都必须导入Seata-Service的conf目录下的registry.conf和file.conf</p>
+<p>其中<code>file.conf</code>的<code>service.vgroup_ mapping</code>配置必须和<code>spring. application.name</code>一致。否则会提示<strong>no available server to connect</strong>错误</p>
+<p>格式</p>
+<p><code>vgroup_mapping.{application.name}-fescar-service-group = &quot;default&quot;</code></p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDADNdHD.nz7z5X*QW841Ed4KyrTRSHN9PKLBKAUi2oxK7EZWiSLILYb64CFMbMLXYfhxHXVtrhXTmWWRQ1flIUY!/r" alt="测试-5"></p>
+<h4 id="7启动测试"><strong>7.启动测试</strong></h4>
+<p>测试之前，为了方便查看结果，记得把数据库中的数据手动重置下</p>
+<p><strong>先看正常情况</strong></p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDMNOJ0U9siII709TNhaCzTvmlKcJzYmwvaR0YwpTwm6DDZLBnHcBdt*JDBny.r9hCI6xAtLUNq*PpJqighPOIug!/r" alt="测试-8"></p>
+<p><strong>异常情况</strong></p>
+<p>在加入Seata控制事务后</p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDLy4OjbAEvKbLp3O6bB3OHQP24OpSaXBQNW5HbK.6gCGcfMul92THCytTkdhZTMu2INeTd9*eWPSy7k19*FIIds!/r" alt="测试-7"></p>
+<p>两个事务都能够进行回滚。成功解决了分布式事务控制问题</p>
+<blockquote>
+<p>注意：AT模式并不适合超高并发的情况。在控制事务的过程中，会使用各种锁机制来进行事务控制，在高并发情况下，就会变成串行化。</p>
+<p>在高并发下可以采用消息队列 + 最终一致性的方案</p>
+</blockquote>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2020/08/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" title="本地事务与分布式事务"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2020/08/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/"
+                    title="接口幂等性问题与解决方案"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2020
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

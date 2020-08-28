@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        本地事务与分布式事务 - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="本地事务 事务的基本性质 数据库事务的几个特性:原子性(Atomicity)、一致性( Consistency )、隔离性或独立性( Isolation )和持久性( Durabilily )，简称就是ACID" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>本地事务与分布式事务 - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="本地事务与分布式事务" />
+<meta property="og:description" content="本地事务 事务的基本性质 数据库事务的几个特性:原子性(Atomicity)、一致性( Consistency )、隔离性或独立性( Isolation )和持久性( Durabilily )，简称就是ACID" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2020/08/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" />
+<meta property="article:published_time" content="2020-08-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-08-03T00:00:00+00:00" />
+<meta itemprop="name" content="本地事务与分布式事务">
+<meta itemprop="description" content="本地事务 事务的基本性质 数据库事务的几个特性:原子性(Atomicity)、一致性( Consistency )、隔离性或独立性( Isolation )和持久性( Durabilily )，简称就是ACID">
+<meta itemprop="datePublished" content="2020-08-03T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-08-03T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="4453">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="本地事务与分布式事务"/>
+<meta name="twitter:description" content="本地事务 事务的基本性质 数据库事务的几个特性:原子性(Atomicity)、一致性( Consistency )、隔离性或独立性( Isolation )和持久性( Durabilily )，简称就是ACID"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">25</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8Bvolatile%E5%85%B3%E9%94%AE%E5%AD%97%E8%A7%A3%E6%9E%90/" class="title">Java中Volatile关键字</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-28</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/springcloud-alibaba-sentinel/" class="title">高并发下保证服务稳定性-Sentinel</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-22 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-22</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/" class="title">接口幂等性问题与解决方案</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-10 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-10</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/springcloud-alibaba-seata/" class="title">分布式解决方案-Seata</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-04</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" class="title">本地事务与分布式事务</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-03 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-03</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2020/08/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/"
+    >本地事务与分布式事务</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2020/08/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" class="article-date">
+  <time datetime="2020-08-03 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-03</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/"> 笔记 </a>
+</span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2020/08/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 4453字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 9分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<h2 id="本地事务">本地事务</h2>
+<h3 id="事务的基本性质">事务的基本性质</h3>
+<p>数据库事务的几个特性:原子性(Atomicity)、一致性( Consistency )、隔离性或独立性( Isolation )和持久性( Durabilily )，简称就是ACID：</p>
+<table>
+<thead>
+<tr>
+<th>ACID</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原子性</td>
+<td>一系列的操作整体不可拆分，要么同时成功，要么同时失败。</td>
+</tr>
+<tr>
+<td>一致性</td>
+<td>数据在事务的前后，业务整体一致。例 A:1000; B:1000;   转200  事务成功 -&gt; A:800  B:1200</td>
+</tr>
+<tr>
+<td>隔离性</td>
+<td>事务之间互相隔离。</td>
+</tr>
+<tr>
+<td>持久性</td>
+<td>一旦事务成功，数据-定会落盘在数据库。</td>
+</tr>
+</tbody>
+</table>
+<p>在以往的单体应用中，我们多个业务操作使用<strong>同一条连接</strong>操作不同的数据表，一旦有异常，我们可以很容易的整体回滚;</p>
+<h3 id="事务的隔离级别">事务的隔离级别</h3>
+<ul>
+<li>
+<p><strong>READ UNCOMMITED (读未提交)</strong>
+该隔离级别的事务会读到其它未提交事务的数据，此现象也称之为脏读。</p>
+</li>
+<li>
+<p><strong>READ COMMITTED (读已提交)</strong></p>
+<p>一个事务可以读取另一个已提交的事务，多次读取会造成不一样的结果，此现象称为不可重复读问题，Oracle 和SQL Server的默认隔离级别。</p>
+</li>
+<li>
+<p><strong>REPEATABLE READ (可重复读)</strong>
+该隔离级别是 MySQL 默认的隔离级别，在同一个事务里，select 的结果是事务开始时时间点的状态，因此，同样的 select 操作读到的结果会是一致的， 但是，会有幻读现象。MySQL 的 InnoDB 引擎可以通过 next-key locks 机制来避免幻读。</p>
+</li>
+<li>
+<p><strong>SERIALIZABLE (序列化)</strong>
+在该隔离级别下事务都是串行顺序执行的，MySQL 数据库的 InnoDB 引擎会给读操作隐式加一把读共享锁，从而避免了脏读、不可重读复读和幻读问题。</p>
+</li>
+</ul>
+<p>在spring事务控制中，指定隔离级别</p>
+<pre><code class="language-java">@Transactional(isolation = Isolation.READ_COMMITTED)
+  public void submit(Order order) {
+      //TODO ....
+  }
+</code></pre>
+<h3 id="事务的传播行为">事务的传播行为</h3>
+<table>
+<thead>
+<tr>
+<th>传播行为</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PROPAGATION_REQUIRED</td>
+<td>如果当前没有事务，就创建一个新事务， 如果当前存在事务，就加入该事务，该设置是最常用的设置。</td>
+</tr>
+<tr>
+<td>PROPAGATION _SUPPORTS</td>
+<td>支持当前事务，如果当前存在事务，就加入该事务，如果当前不存在事务，就以非事务执行。</td>
+</tr>
+<tr>
+<td>PROPAGATION_MANDATORY</td>
+<td>支持当前事务，如果当前存在事务，就加入该事务，如果当前不存在事务，就抛出异常。</td>
+</tr>
+<tr>
+<td>PROPAGATION_REQUIRES_NEW</td>
+<td>创建新事务，无论当前存不存在事务，都创建新事务</td>
+</tr>
+<tr>
+<td>PROPAGATION_NOT_SUPPORTED</td>
+<td>以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。</td>
+</tr>
+<tr>
+<td>PROPAGATION_NEVER</td>
+<td>以非事务方式执行，如果当前存在事务，则抛出异常。</td>
+</tr>
+<tr>
+<td>PROPAGATION_NESTED</td>
+<td>如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则执行与PROPAGATION_REQUIRED 类似的操作。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>举个栗子：</strong>
+先看下面的伪代码。</p>
+<pre><code class="language-java">@Transactional(timeout = 30)
+public void a(){
+	b();//使用a事务
+	c();//新开一个事务,(后续如果出现异常，不回滚)
+    //模拟异常情况
+    int num = 2/0; 
+}
+//默认为PROPAGATION_REQUIRED
+@Transactional(propagation = Propagation.REQUIRED，timeout = 10) 
+public void b(){
+}
+@Transactional(propagation = Propagation.REQUIRES_NEW)
+public void c(){
+}
+
+</code></pre>
+<blockquote>
+<p>假定存在a、b、c三个事务方法，其中a调用了b、c方法。（可以理解为一个大事务中包含了其他小事务）</p>
+<p>b事务所设置的是默认传播行为，表示需要一个事务即可，这里会与a方法共用一个事务,并且a事务的所有设置都会传播给和他公用一个事务的方法，（上面的情况，b事务的 timeout = 10会失效）</p>
+<p>c事务的传播行为，表示无论是否存在事务，都会创建一个新事务.</p>
+</blockquote>
+<p>如果a方法能够顺利执行，中途没有任何异常情况，那么所有事务都会正常提交，无事发生。</p>
+<p>如果b和c方法都顺利执行，但在a方法最后出现了异常，这时只有a和b会进行回滚(同一个事务控制)，而c由于是另外一个事务控制，不会回滚。</p>
+<p>我们可以更改事务的传播行为来控制多事务嵌套的情况</p>
+<p><strong>SpringBoot事务控制的一个坑</strong></p>
+<p>在同一个类里面，编写两个方法，内部调用的时候，会导致事务设置失效。原因是没有用到代理对象的缘故。</p>
+<p>在上面的伪代码中，如果a、b、c三个方法都是在同一个类中定义的，那么在SpringBoot事务控制下，这些事务设置都不会生效</p>
+<p><strong>原因：</strong> 事务是使用代理对象来控制的，在同一个对象内进行方法相互调用，就相当于直接将b、c方法中的代码复制到a中，</p>
+<p><strong>解决：</strong> 通过aspectJ 获取当前类的代理对象，或者将方法抽取出来。</p>
+<ol>
+<li>引入aop-starter，主要为了使用aspectj</li>
+</ol>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<ol start="2">
+<li>
+<p>使用 <code>@EnableAspectJAutoProxy(exposeProxy = true)</code> 注解;开启aspectj动态代理功能。以后所有的动态代理都是aspectj创建的(即使没有接口也可以创建动态代理)，默认使用的是jdk动态代理,必须要有接口，设置exposeProxy = true，对外暴露代理对象</p>
+</li>
+<li>
+<p>使用 <code>AopContext.currentProxy()</code>; 获取当前对象的代理对象.</p>
+<pre><code class="language-java">@Transactional
+public void a(){
+    TsService tsService = (TsService) AopContext.currentProxy() ;
+    tsService.b();
+    tsService.c();
+    int num = 2/0; 
+}
+</code></pre>
+</li>
+</ol>
+<h2 id="分布式事务">分布式事务</h2>
+<p>分布式系统经常出现的异常机器宕机、网络异常、消息丢失、消息乱序、数据错误、不可靠的TCP、存储数据丢失等问题&hellip;导致服务器之前无法及时感知对方的状态。</p>
+<p>因此要协调多个系统之间来控制整体事务就非常困难。</p>
+<h3 id="cap定理与base理论">CAP定理与BASE理论</h3>
+<h4 id="cap定理">CAP定理</h4>
+<table>
+<thead>
+<tr>
+<th>CAP定理</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一致性  (Consistency)</td>
+<td>在分布式系统中的所有数据备份，在同一时刻是否同样的值。(等同于所有节点访问同一份最新的数据副本)</td>
+</tr>
+<tr>
+<td>可用性(Availability)</td>
+<td>在集群中一部分节点故障后， 集群整体是否还能响应客户端的读写请求。(对数据更新具备高可用性)</td>
+</tr>
+<tr>
+<td>分区容错性 (Partition tolerance)</td>
+<td>大多数分布式系统都分布在多个子网络。每个子网络就叫做一个区(partition)。分区容错的意思是，区间通信可能失败。比如，一台服务器放在中国，另一台服务器放在美国，这就是两个区，它们之间可能无法通信。</td>
+</tr>
+</tbody>
+</table>
+<p>CAP原则指的是，这三个要素最多只能同时实现两点，<strong>不可能三者兼顾。</strong></p>
+<p>一般来说，分区容错无法避免，因此可以认为CAP的P总是成立。CAP定理告诉我们，剩下的C和A无法同时做到。</p>
+<p>CA其实就是本地项目（无网络情况），CP就需要通过一些算法raft,paxos等来保证数据一致性</p>
+<p><a href="http://thesecretlivesofdata.com/raft/">Raft算法动画演示地址</a></p>
+<p>核心：领导选取，日志复制。通过这些操作来保证数据的一致性</p>
+<hr>
+<p>对于多数大型互联网应用的场景，主机众多、部署分散，而且现在的集群规模越来越大，所以节点故障、网络故障是常态，而且要保证服务可用性达到99.9999% (N个9)，即保证p和A,舍弃C。</p>
+<h4 id="base理论">BASE理论</h4>
+<p>是对CAP理论的延伸，思想是即使无法做到强一致性(CAP的一致性就是强一致性)，但可以采用适当的采取弱一致性，即最终一致性。</p>
+<table>
+<thead>
+<tr>
+<th>BASE理论</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基本可用 (Basically  Available)</td>
+<td>基本可用是指分布式系统在 出现故障的时候,允许损失部分可用性(例如响应时间、功能上的可用性)，允许损失部分可用性。需要注意的是，基本可用绝不等价于系统不可用。</td>
+</tr>
+<tr>
+<td>软状态 (Soft State)</td>
+<td>软状态是指允许系统存在中间状态，而该中间状态不会影响系统整体可用性。分布式存储中一般一份数据会有多个副本，允许不同副本同步的延时就是软状态的体现。mysql replication的异步复制也是一种体现。</td>
+</tr>
+<tr>
+<td>最终一致性 ( Eventual Consistency)</td>
+<td>最终一致性是指系统中的所有数据副本经过一定时间后，最终能够达到一致的状态。弱一致性和强一致性相反，最终一致性是弱一致性的一种特殊情况。</td>
+</tr>
+</tbody>
+</table>
+<p>从客户端角度，多进程并发访问时，更新过的数据在不同进程如何获取的不同策略，决定了不同的一致性。对于关系型数据库，要求更新过的数据能被后续的访问都能看到，这是<strong>强一致性</strong>。如果能容忍后续的部分或者全部访问不到，则是<strong>弱一致性</strong>。如果经过一段时间后要求能访问到更新后的数据，则是<strong>最终一致性</strong></p>
+<h3 id="分布式事务的几种解决方案">分布式事务的几种解决方案</h3>
+<h4 id="2pc模式">2PC模式</h4>
+<p>数据库支持的2PC [2 phase commit 二阶提交]，又叫做XA Transactions。
+MySQL从5.5版本开始支持，SQL Server 2005开始支持，Oracle7 开始支持。
+其中，XA 是一个两阶段提交协议，该协议分为以下两个阶段:</p>
+<ol>
+<li>第一阶段: 事务协调器要求每个涉及到事务的数据库预提交 (precommit) 此操作，并反映是否可以提交.</li>
+<li>第二阶段: 事务协调器要求每个数据库提交数据。</li>
+</ol>
+<p>其中，如果有任何一个数据库否决此次提交，那么所有数据库都会被要求回滚它们在此事务中的那部分信息。</p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDLNOp6wH3qNYS2rhmjNqjTzuE1qPrWJXiwpWNOtAfWNdzdk*7tzvDm0y5amelWyvn6TyipZkoJptinD*.TMLno4!/r" alt="两阶段提交"></p>
+<p>也有3PC,引入了超时机制(无论协调者还是参与者，在向对方发送请求后，若长时间未收到回应则做出相应处理)</p>
+<h4 id="柔性事务---tcc事务补偿">柔性事务 - TCC事务补偿</h4>
+<p>刚性事务: 遵循ACID原则，强一致性。</p>
+<p>柔性事务: 遵循BASE理论，最终一致性;</p>
+<p>与刚性事务不同，柔性事务允许一定时间内， 不同节点的数据不一致，但要求最终一致。</p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDEWoTQfOOFVNMsQRc4ePyn6Tks9kOiZ.qmP5NU.k3JY70yB*C2370TBRYm1ZXgF7.bAYI9ywHdr0qGj*cPIhDvA!/r" alt="TCC事务补偿"></p>
+<p><code>一阶段 prepare 行为: 调用自定义的try逻辑。</code></p>
+<p><code>二阶段 commit 行为: 调用自定义的commit逻辑。</code></p>
+<p><code>三阶段 rollback 行为: 调用自定义的rollback逻辑</code>。</p>
+<p>所谓TCC 模式，是指支持把自定义的分支事务纳入到全局事务的管理中。</p>
+<h4 id="柔性事务---最大努力通知型方案">柔性事务 - 最大努力通知型方案</h4>
+<p>按规律进行通知，不保证数据一定能通知成功， 但会提供可查询操作接口进行核对。这种方案主要用在与第三方系统通讯时，</p>
+<p>比如: 调用微信或支付宝支付后的支付结果通知。这种方案也是结合MQ进行实现，例如: 通过MQ发送http请求，设置最大通知次数。达到通知次数后即不再通知。</p>
+<p>案例: 银行通知、商户通知等(各大交易业务平台间的商户通知: 多次通知、查询校对、对账文件)，支付宝的支付成功异步回调</p>
+<h4 id="柔性事务---可靠消息--最终一致性方案-异步确保型">柔性事务 - 可靠消息 + 最终一致性方案 (异步确保型)</h4>
+<p>实现: 业务处理服务在业务事务提交之前，向实时消息服务请求发送消息，实时消息服务只记录消息数据，而不是真正的发送。业务处理服务在业务事务提交之后，向实时消息服务确认发送。只有在得到确认发送指令后，实时消息服务才会真正发送。</p>
+<h5 id="方案问题和解决"><strong>方案问题和解决：</strong></h5>
+<h5 id="1保证消息可靠性---消息丢失"><strong>1.保证消息可靠性 - 消息丢失</strong></h5>
+<ul>
+<li>
+<p>消息发送出去，由于网络问题没有抵达服务器</p>
+<ul>
+<li>做好<strong>容错方法</strong>(try-catch) ，发送消息可能会网络失败，失败后要有重试机制，可记录到数据库，采用<strong>定期扫描重发</strong>的方式</li>
+</ul>
+<p>表结构示例：</p>
+<pre><code class="language-scheme">CREATE TABLE 'mq_ message' (
+  'message_id' CHAR(32) NOT NULL COMMENT '消息id',
+  'content' TEXT COMMENT '消息内容，json数据',
+  'to_exchane' VARCHAR(255) COMMENT '目标交换机',
+  'routing_key' VARCHAR(255) DEFAULT NULL COMMENT '路由key',
+  'class_type' VARCHAR(255) DEFAULT NULL COMMENT '消息类型',
+  'message_status' INT(1) DEFAULT '0' COMMENT '状态 0-新建 1-已发送 2-错误抵达 3-已抵达',
+  'create_time' DATETIME DEFAULT NULL,
+  'update_time' DATETIME DEFAULT NULL,
+  PRIMARY KEY ('message_id')
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4
+</code></pre>
+<ul>
+<li>做好日志记录，每个消息状态是否都被服务器收到都应该记录</li>
+<li>做好定期重发，如果消息没有发送成功，定期去数据库扫描未成功的消息进行重发</li>
+</ul>
+</li>
+<li>
+<p>消息抵达Broker, Broker要将消息写入磁盘(持久化)才算成功。此时Broker尚未持久化完成，宕机。</p>
+</li>
+<li>
+<p>publisher也必须<strong>加入确认回调机制</strong>(returnCallback)，确认消息成功进入目标队列后，修改数据库消息状态。</p>
+</li>
+<li>
+<p>自动ACK的状态下。消费者收到消息，但没来得及消息然后宕机</p>
+<ul>
+<li>开启<strong>手动ACK</strong>，消费成功才移除，失败或者没来得及处理就noAck并重新入队</li>
+</ul>
+</li>
+</ul>
+<h5 id="2保证消息可靠性---消息重复"><strong>2.保证消息可靠性 - 消息重复</strong></h5>
+<ul>
+<li>
+<p>消息消费成功，事务已经提交，ack时，机器宕机。导致没有ack成功，Broker的消息重新由unack变为ready，并发送给其他消费者</p>
+</li>
+<li>
+<p>消息消费失败，由于重试机制，自动又将消息发送出去</p>
+</li>
+<li>
+<p>成功消费，ack时宕机，消息由unack变为ready，Broker又重新发送</p>
+<ul>
+<li>
+<p>消费者的业务消费接口应该设计为<strong>幂等性</strong>的。比如扣库存有工作单的状态标志</p>
+</li>
+<li>
+<p>使用<strong>防重表</strong>(redis/mysql)，发送消息每一个都有业务的唯一标识，处理过就不用处理，类似上述方法</p>
+</li>
+<li>
+<p>rabbitMQ的每一个消息都有<strong>redelivered</strong>字段, 可以获取<strong>是否是被重新投递过来的</strong>，而不是第一次投递过来的</p>
+</li>
+</ul>
+<p><code>Boolean redelivered = message.getMessageProperties().getRedelivered();</code></p>
+<blockquote>
+<p>注意：也可能是因为上一个业务没有处理成功，将消息重新入队，而被标识已接收</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="3保证消息可靠性---消息积压"><strong>3.保证消息可靠性 - 消息积压</strong></h5>
+<ul>
+<li>
+<p>消费者宕机积压</p>
+</li>
+<li>
+<p>消费者消费能力不足积压</p>
+</li>
+<li>
+<p>发送者发送流量太大</p>
+<ul>
+<li>
+<p>上线更多的消费者，进行正常消费</p>
+</li>
+<li>
+<p>上线专门的队列消费服务，将消息先批量取出来，记录数据库，离线慢慢处理</p>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2020/07/spring-session%E4%B8%8Eredis%E6%95%B4%E5%90%88/" title="Spring Session与Redis整合"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2020/08/springcloud-alibaba-seata/"
+                    title="分布式解决方案-Seata"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2020
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        Netty初体验 - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="前言：通过Netty完成一个简单的多客户端与单服务端交互的demo Netty初体验 服务端 public class NettyServer { public static void main(String[] args) throws Exception { //1. 创建两个线程组 bossGroup 和 workerGroup //2. bossGroup 只" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>Netty初体验 - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="Netty初体验" />
+<meta property="og:description" content="前言：通过Netty完成一个简单的多客户端与单服务端交互的demo Netty初体验 服务端 public class NettyServer { public static void main(String[] args) throws Exception { //1. 创建两个线程组 bossGroup 和 workerGroup //2. bossGroup 只" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2020/06/netty%E5%88%9D%E4%BD%93%E9%AA%8C/" />
+<meta property="article:published_time" content="2020-06-14T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-06-14T00:00:00+00:00" />
+<meta itemprop="name" content="Netty初体验">
+<meta itemprop="description" content="前言：通过Netty完成一个简单的多客户端与单服务端交互的demo Netty初体验 服务端 public class NettyServer { public static void main(String[] args) throws Exception { //1. 创建两个线程组 bossGroup 和 workerGroup //2. bossGroup 只">
+<meta itemprop="datePublished" content="2020-06-14T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-06-14T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1676">
+
+
+
+<meta itemprop="keywords" content="Netty," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Netty初体验"/>
+<meta name="twitter:description" content="前言：通过Netty完成一个简单的多客户端与单服务端交互的demo Netty初体验 服务端 public class NettyServer { public static void main(String[] args) throws Exception { //1. 创建两个线程组 bossGroup 和 workerGroup //2. bossGroup 只"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">25</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8Bvolatile%E5%85%B3%E9%94%AE%E5%AD%97%E8%A7%A3%E6%9E%90/" class="title">Java中Volatile关键字</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-28</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/springcloud-alibaba-sentinel/" class="title">高并发下保证服务稳定性-Sentinel</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-22 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-22</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/" class="title">接口幂等性问题与解决方案</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-10 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-10</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/springcloud-alibaba-seata/" class="title">分布式解决方案-Seata</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-04</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" class="title">本地事务与分布式事务</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-03 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-03</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2020/06/netty%E5%88%9D%E4%BD%93%E9%AA%8C/"
+    >Netty初体验</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2020/06/netty%E5%88%9D%E4%BD%93%E9%AA%8C/" class="article-date">
+  <time datetime="2020-06-14 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-06-14</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/netty/"> Netty </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/netty/"> Netty </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2020/06/netty%E5%88%9D%E4%BD%93%E9%AA%8C/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1676字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 4分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<blockquote>
+<p>前言：通过Netty完成一个简单的多客户端与单服务端交互的demo</p>
+</blockquote>
+<h3 id="netty初体验">Netty初体验</h3>
+<p><strong>服务端</strong></p>
+<pre><code class="language-java">public class NettyServer {
+    public static void main(String[] args) throws Exception {
+        //1. 创建两个线程组 bossGroup 和 workerGroup
+        //2. bossGroup 只是处理连接请求 , 真正的和客户端业务处理，会交给 workerGroup完成
+        //3. 两个都是无限循环
+        //4. bossGroup 和 workerGroup 含有的子线程(NioEventLoop)的个数可以在参数中指定
+        //   默认数量为实际 cpu核数 * 2
+        EventLoopGroup bossGroup = new NioEventLoopGroup(1);//通常bossGroup只需要1个
+        EventLoopGroup workerGroup = new NioEventLoopGroup(); 
+        try {
+            //创建服务器端的启动引导类对象，可以配置服务器参数
+            ServerBootstrap bootstrap = new ServerBootstrap();
+            //使用链式编程来进行设置
+            bootstrap.group(bossGroup, workerGroup) //设置两个线程组
+                	//使用NioSocketChannel 作为服务器的通道实现
+                    .channel(NioServerSocketChannel.class) 
+                    .option(ChannelOption.SO_BACKLOG, 128) // 设置线程队列得到连接个数
+                    .childOption(ChannelOption.SO_KEEPALIVE, true) //设置保持活动连接状态
+                //  .handler(null) // 该 handler对应 bossGroup设置 , childHandler 对应 workerGroup
+                    .childHandler(new ChannelInitializer&lt;SocketChannel&gt;() {//创建一个通道初始化对象(匿名对象)
+                        //给pipeline 设置处理器
+                        @Override
+                        protected void initChannel(SocketChannel ch) throws Exception {
+							//这里的SocketChannel 是客户端通道实例
+							//获取当前通道对应的管道,在末尾添加一个自定义的处理器
+                            ch.pipeline().addLast(new NettyServerHandler()); 
+                        }
+                    }); // 给我们的workerGroup 的 EventLoop 对应的管道设置处理器
+
+            //绑定一个端口，同步执行(阻塞当前线程), 返回一个 ChannelFuture 对象(netty的异步模型)，
+     	    //可通过此对象获取方法执行结果
+            //启动服务器(并绑定端口)
+            ChannelFuture cf = bootstrap.bind(6668).sync();
+            //服务端管道关闭的监听器,并同步阻塞,直到channel关闭,线程才会往下执行,进入finally关闭通道结束进程
+            cf.channel().closeFuture().sync();
+        }finally {
+			//优r雅的关闭
+            bossGroup.shutdownGracefully();
+            workerGroup.shutdownGracefully();
+        }
+    }
+}
+</code></pre>
+<p><strong>自定义服务端Handler</strong></p>
+<pre><code class="language-java">public class NettyServerHandler extends SimpleChannelInboundHandler&lt;String&gt; {
+    //通道一旦链接，此方法第一个执行
+    @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+       	//通过上线文获取通道信息
+		Channel channel = ctx.channel();
+		//业务处理
+    }
+
+    //断开链接
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+    }
+
+    //通道处于活跃状态
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    }
+
+    //非活跃状态
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+    }
+
+    //异常处理,一般是需要关闭通道
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        ctx.close();
+    }
+
+    //通道有数据可读，第二个参数是消息内容
+    @Override
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, String s) throws Exception {
+ 	//writeAndFlush 是 write + flush
+        //将数据写入到缓存，并刷新
+        //一般，我们会对这个发送的数据进行编码
+        ctx.writeAndFlush(Unpooled.copiedBuffer(&quot;hello, 客户端~&quot;, CharsetUtil.UTF_8));
+    }
+}
+</code></pre>
+<p><strong>客户端</strong></p>
+<pre><code class="language-java">public class NettyClient {
+    public static void main(String[] args) throws Exception {
+        //客户端需要一个事件循环组
+        EventLoopGroup group = new NioEventLoopGroup();
+
+        try {
+            //创建客户端启动对象
+            //注意客户端使用的不是 ServerBootstrap 而是 Bootstrap
+            Bootstrap bootstrap = new Bootstrap();
+
+            //设置相关参数
+            bootstrap.group(group) //设置线程组
+                    .channel(NioSocketChannel.class) // 设置客户端通道的实现类
+                    .handler(new ChannelInitializer&lt;SocketChannel&gt;() {
+                        @Override
+                        protected void initChannel(SocketChannel ch) throws Exception {
+                            //这里可以加入自己的处理器
+                            ch.pipeline().addLast(new NettyClientHandler()); 
+                        }
+                    });
+            //启动客户端去连接服务器端
+            ChannelFuture channelFuture = bootstrap.connect(&quot;127.0.0.1&quot;, 6668).sync();
+            //给关闭通道进行监听
+            channelFuture.channel().closeFuture().sync();
+        }finally {
+            group.shutdownGracefully();
+        }
+    }
+}
+</code></pre>
+<p><strong>自定义客户端Handler</strong></p>
+<pre><code class="language-java">public class NettyClientHandler extends ChannelInboundHandlerAdapter {
+    //当通道就绪就会触发该方法
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        System.out.println(&quot;client &quot; + ctx);
+        ctx.writeAndFlush(Unpooled.copiedBuffer(&quot;hello, server&quot;, CharsetUtil.UTF_8));
+    }
+    //当通道有读取事件时，会触发
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        ByteBuf buf = (ByteBuf) msg;
+        System.out.println(&quot;服务器回复的消息:&quot; + buf.toString(CharsetUtil.UTF_8));
+        System.out.println(&quot;服务器的地址： &quot;+ ctx.channel().remoteAddress());
+    }
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        cause.printStackTrace();
+        ctx.close();
+    }
+}
+</code></pre>
+<p><strong>关于Channel类型设置</strong></p>
+<p>不同协议、不同的阻塞类型的连接都有不同的 Channel类型与之对应,常用的Channel类型:</p>
+<ul>
+<li><strong>NioSocketChannel</strong>,异步的客户端 TCP Socket连接</li>
+<li><strong>NioServerSocketChannel</strong>,异步的服务器端 TCP Socket连接。</li>
+<li><strong>NioDatagramChannel</strong>,异步的UDP连接。</li>
+<li><strong>NioSctpChannel</strong>,异步的客户端Sctp连接。</li>
+<li><strong>NioSctpServerChannel</strong>,异步的Sctp服务器端连接,这些通道涵盖了UDP和TCP网络IO以及文件IO。</li>
+</ul>
+<p><strong>关于ChannelOption参数设置</strong></p>
+<p>参数如下</p>
+<ul>
+<li><strong>ChannelOption.SO_BACKLOG</strong></li>
+</ul>
+<p>对应TCP/IP协议listen函数中的backlog参数，用来初始化服务器可连接队列大小。服务端处理客户端连接请求是顺序处理的，所以同一时间只能处理一个客户端连接。 多个客户端来的时候，服务端将不能处理的客户端连接请求放在队列中等待处理，backlog 参数指定了队列的大小。</p>
+<ul>
+<li><strong>ChannelOption.SO_KEEPALIVE</strong></li>
+</ul>
+<p>一直保持连接活动状态</p>
+<p>相关代码API</p>
+<pre><code class="language-java">bootstrap.group(bossGroup, workerGroup) 
+                .channel(NioServerSocketChannel.class) 
+                .option(ChannelOption.SO_BACKLOG, 128) //给bossGroup通道设置参数
+      		    .childOption(ChannelOption.SO_KEEPALIVE, true) //给workerGroup通道设置参数
+</code></pre>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2020/06/%E9%9B%B6%E6%8B%B7%E8%B4%9D/" title="零拷贝"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2020/06/netty%E7%BB%84%E4%BB%B6%E4%BB%8B%E7%BB%8D/"
+                    title="Netty基础组件"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2020
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

@@ -5,141 +5,168 @@
     <link>https://bluestaree.github.io/tags/mybatis/</link>
     <description>Recent content in Mybatis on AzkeepToo个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 30 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Apr 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://bluestaree.github.io/tags/mybatis/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Feign重试机制</title>
-      <link>https://bluestaree.github.io/2020/04/feign%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6/</link>
-      <pubDate>Wed, 08 Apr 2020 00:00:00 +0000</pubDate>
+      <title>Netty线程模型</title>
+      <link>https://bluestaree.github.io/2020/06/netty%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/</link>
+      <pubDate>Mon, 08 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://bluestaree.github.io/2020/04/feign%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6/</guid>
+      <guid>https://bluestaree.github.io/2020/06/netty%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/</guid>
+      <description>前言 不同的线程模型，对程序的性能有很大的影响，Netty线程模型主要基于主从Reactor多线程模型做了一定的改进 目前存在的线程模型有： 传统</description>
+    </item>
+    
+    <item>
+      <title>正向代理与方向代理</title>
+      <link>https://bluestaree.github.io/2020/06/%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%8E%E6%96%B9%E5%90%91%E4%BB%A3%E7%90%86/</link>
+      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/06/%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%8E%E6%96%B9%E5%90%91%E4%BB%A3%E7%90%86/</guid>
+      <description>所谓的正向与反向，都是对于我们自己的电脑来说 正向代理：帮助客户端访问外部资源的， 举个例子：如科学上网。如果我们需要访问谷歌，就需要代理服务器</description>
+    </item>
+    
+    <item>
+      <title>Object划分</title>
+      <link>https://bluestaree.github.io/2020/06/object%E5%88%92%E5%88%86/</link>
+      <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/06/object%E5%88%92%E5%88%86/</guid>
+      <description>1.PO(Persistant Object) 持久对象 PO就是对应数据库中某个表中的一条记录,多个记录可以用PO的集合。PO中应该不包含任何对数据库的操作。 2.DO(Domain object) 领域对象 就是从现实世界</description>
+    </item>
+    
+    <item>
+      <title>使用JSR303规范标准进行数据校验</title>
+      <link>https://bluestaree.github.io/2020/05/%E4%BD%BF%E7%94%A8jsr303%E8%A7%84%E8%8C%83%E6%A0%87%E5%87%86%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C/</link>
+      <pubDate>Thu, 28 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/%E4%BD%BF%E7%94%A8jsr303%E8%A7%84%E8%8C%83%E6%A0%87%E5%87%86%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C/</guid>
+      <description>前言 现在的项目大多都是前后端分离的项目，那么对于一些重要数据的校验，单单使用前端控制是不行的，我们可以使用一些http请求工具如 Postman ，就可以轻</description>
+    </item>
+    
+    <item>
+      <title>Hibernate常见问题</title>
+      <link>https://bluestaree.github.io/2020/05/hibernate%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Sat, 23 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/hibernate%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</guid>
+      <description>转载 · 原文链接：https://blog.csdn.net/wu1317581750/java/article/details/816629</description>
+    </item>
+    
+    <item>
+      <title>Navicat连接MySQL出现1251错误</title>
+      <link>https://bluestaree.github.io/2020/05/navicat-1251%E9%94%99%E8%AF%AF/</link>
+      <pubDate>Sat, 16 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/navicat-1251%E9%94%99%E8%AF%AF/</guid>
+      <description>记录一个坑，我现在所用的MySQL数据库的版本是8.019，在尝试使用Navicat连接数据库时，出现1251错误 解决方法： 进入docker</description>
+    </item>
+    
+    <item>
+      <title>hashCode和equals的相关问题</title>
+      <link>https://bluestaree.github.io/2020/05/hashcode%E5%92%8Cequals%E7%9A%84%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Mon, 11 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/hashcode%E5%92%8Cequals%E7%9A%84%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/</guid>
+      <description>转载 · 原文链接：https://blog.csdn.net/CSDN_Ty/article/details/98877883 本文的内容主要想</description>
+    </item>
+    
+    <item>
+      <title>Feign重试机制</title>
+      <link>https://bluestaree.github.io/2020/05/feign%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6/</link>
+      <pubDate>Fri, 08 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/feign%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6/</guid>
       <description>Feign调用流程 构造请求对象，将对象转为json 发送执行请求(执行成功会解码响应得数据) 获取结果 从代码中可以看出，如何请求出现异常，就会执</description>
     </item>
     
     <item>
       <title>SpringSecurity流程与配置</title>
-      <link>https://bluestaree.github.io/2020/04/spring-security%E6%B5%81%E7%A8%8B%E4%B8%8E%E9%85%8D%E7%BD%AE/</link>
-      <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
+      <link>https://bluestaree.github.io/2020/05/spring-security%E6%B5%81%E7%A8%8B%E4%B8%8E%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://bluestaree.github.io/2020/04/spring-security%E6%B5%81%E7%A8%8B%E4%B8%8E%E9%85%8D%E7%BD%AE/</guid>
+      <guid>https://bluestaree.github.io/2020/05/spring-security%E6%B5%81%E7%A8%8B%E4%B8%8E%E9%85%8D%E7%BD%AE/</guid>
       <description>Spring Security 是spring项目之中的一个安全模块，可以非常方便与spring项目无缝集成。特别是在spring boot项目中加入spring secu</description>
     </item>
     
     <item>
       <title>Maven,Gradle依赖</title>
-      <link>https://bluestaree.github.io/2020/04/mavengradle%E4%BE%9D%E8%B5%96/</link>
-      <pubDate>Thu, 02 Apr 2020 00:00:00 +0000</pubDate>
+      <link>https://bluestaree.github.io/2020/05/mavengradle%E4%BE%9D%E8%B5%96/</link>
+      <pubDate>Sat, 02 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://bluestaree.github.io/2020/04/mavengradle%E4%BE%9D%E8%B5%96/</guid>
+      <guid>https://bluestaree.github.io/2020/05/mavengradle%E4%BE%9D%E8%B5%96/</guid>
       <description>最近在学习中遇到了新的包管理工具 - Gradle 。 上网查询了下Gradle 的依赖方式，方便与Maven区分对比 。 转载 · 原文链接：https://blog</description>
     </item>
     
     <item>
-      <title>Mybatis常用语法汇总</title>
-      <link>https://bluestaree.github.io/2020/03/mybatis%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E6%B1%87%E6%80%BB/</link>
-      <pubDate>Mon, 30 Mar 2020 00:00:00 +0000</pubDate>
+      <title>Mybatis中Mapper标签总结大全</title>
+      <link>https://bluestaree.github.io/2020/04/mybatis%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E6%B1%87%E6%80%BB/</link>
+      <pubDate>Thu, 30 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://bluestaree.github.io/2020/03/mybatis%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E6%B1%87%E6%80%BB/</guid>
+      <guid>https://bluestaree.github.io/2020/04/mybatis%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E6%B1%87%E6%80%BB/</guid>
       <description>转载 · 原文链接：https://blog.csdn.net/qw463800202/article/details/103221651 一、动</description>
     </item>
     
     <item>
       <title>JDK 8 的那些新特性</title>
-      <link>https://bluestaree.github.io/2020/03/jdk-8%E7%9A%84%E9%82%A3%E4%BA%9B%E6%96%B0%E7%89%B9%E6%80%A7/</link>
-      <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
+      <link>https://bluestaree.github.io/2020/04/jdk-8%E7%9A%84%E9%82%A3%E4%BA%9B%E6%96%B0%E7%89%B9%E6%80%A7/</link>
+      <pubDate>Tue, 28 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://bluestaree.github.io/2020/03/jdk-8%E7%9A%84%E9%82%A3%E4%BA%9B%E6%96%B0%E7%89%B9%E6%80%A7/</guid>
+      <guid>https://bluestaree.github.io/2020/04/jdk-8%E7%9A%84%E9%82%A3%E4%BA%9B%E6%96%B0%E7%89%B9%E6%80%A7/</guid>
       <description>转载 · 原文链接：https://www.runoob.com/java/java8-new-features.html java 8 新特性 Java8 新增了非常</description>
     </item>
     
     <item>
       <title>原码、反码和补码</title>
-      <link>https://bluestaree.github.io/2020/03/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/</link>
-      <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
+      <link>https://bluestaree.github.io/2020/04/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/</link>
+      <pubDate>Tue, 28 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://bluestaree.github.io/2020/03/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/</guid>
+      <guid>https://bluestaree.github.io/2020/04/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/</guid>
       <description>原反补的相互转换 今天在学习算法时遇到了这个问题，然后大脑就突然宕机。什么情况w(ﾟДﾟ)w！ 在此上网查询资料后记录下， 转载 · 原文链接：htt</description>
     </item>
     
     <item>
-      <title>排序算法</title>
-      <link>https://bluestaree.github.io/2020/03/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</link>
-      <pubDate>Wed, 25 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/03/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</guid>
-      <description>排序分类 内部排序：将所有需要处理的数据加载到内部存储器中进行排序 (使用内存) 插入排序 直接插入排 希尔排序 选择排序 简单选择排序 堆排序 交换排序 冒泡</description>
-    </item>
-    
-    <item>
-      <title>查找算法</title>
-      <link>https://bluestaree.github.io/2020/03/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/</link>
-      <pubDate>Mon, 23 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/03/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/</guid>
-      <description>常用的查找算法： 1）顺序(线性)查找 - 有序与无序数组均可。逐一比对，发现相同值，就返回 2）二分查找/折半查找 前提：必须为有序数组 二分查找的思</description>
-    </item>
-    
-    <item>
-      <title>图的遍历方式</title>
-      <link>https://bluestaree.github.io/2020/03/%E5%9B%BE%E7%9A%84%E9%81%8D%E5%8E%86%E6%96%B9%E5%BC%8F/</link>
-      <pubDate>Sat, 21 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/03/%E5%9B%BE%E7%9A%84%E9%81%8D%E5%8E%86%E6%96%B9%E5%BC%8F/</guid>
-      <description>图的遍历方式 ： 深度优先(DFS) 广度优先(BFS) 代码实现 首先创建一个自定义的Graph对象，其中包含一个二维数组表示图结构 //创建图对象 Graph</description>
-    </item>
-    
-    <item>
-      <title>数据结构</title>
-      <link>https://bluestaree.github.io/2020/03/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
-      <pubDate>Fri, 20 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/03/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
-      <description>前言 数据结构是计算机存储、组织数据的方式 数据结构包括，线性结构和非线性结构 线性结构：特点是数据元素之间存在一对一的线性关系，如数据a[0]与</description>
-    </item>
-    
-    <item>
       <title>SpringBoot应用程序启动过程</title>
-      <link>https://bluestaree.github.io/2020/03/springboot%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/</link>
-      <pubDate>Thu, 19 Mar 2020 00:00:00 +0000</pubDate>
+      <link>https://bluestaree.github.io/2020/04/springboot%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/</link>
+      <pubDate>Sun, 19 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://bluestaree.github.io/2020/03/springboot%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/</guid>
+      <guid>https://bluestaree.github.io/2020/04/springboot%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/</guid>
       <description>转载 · 原文链接：https://www.codesheep.cn/2018/09/04/springboot-startup-process</description>
     </item>
     
     <item>
       <title>@SpringBootApplication注解</title>
-      <link>https://bluestaree.github.io/2020/03/springbootapplication%E6%B3%A8%E8%A7%A3/</link>
-      <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
+      <link>https://bluestaree.github.io/2020/04/springbootapplication%E6%B3%A8%E8%A7%A3/</link>
+      <pubDate>Sat, 18 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://bluestaree.github.io/2020/03/springbootapplication%E6%B3%A8%E8%A7%A3/</guid>
+      <guid>https://bluestaree.github.io/2020/04/springbootapplication%E6%B3%A8%E8%A7%A3/</guid>
       <description>转载 · 原文链接：https://www.codesheep.cn/2018/07/30/at-SpringBootApplication-z</description>
     </item>
     
     <item>
       <title>Docker常用命令</title>
-      <link>https://bluestaree.github.io/2020/03/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
-      <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
+      <link>https://bluestaree.github.io/2020/04/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Sat, 18 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://bluestaree.github.io/2020/03/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+      <guid>https://bluestaree.github.io/2020/04/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
       <description>查看当前所有镜像 docker images 查看所有容器 docker ps -a 根据一个镜像创建一个容器并运行 (windows环境) docker run -d &amp;ndash;name mysql_3308 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=tdt123 -p 3307:3306 -v //f/docker/mysql_3308:/var/lib/mysql mysql:5.5 &amp;ndash;name mysql_3308 &amp;hellip; mysql:5.5 设置容器名，及</description>
     </item>
     
     <item>
       <title>SpringBoot应用部署于外置Tomcat容器</title>
-      <link>https://bluestaree.github.io/2020/03/springboot%E5%BA%94%E7%94%A8%E9%83%A8%E7%BD%B2%E4%BA%8E%E5%A4%96%E7%BD%AEtomcat%E5%AE%B9%E5%99%A8/</link>
-      <pubDate>Tue, 17 Mar 2020 00:00:00 +0000</pubDate>
+      <link>https://bluestaree.github.io/2020/04/springboot%E5%BA%94%E7%94%A8%E9%83%A8%E7%BD%B2%E4%BA%8E%E5%A4%96%E7%BD%AEtomcat%E5%AE%B9%E5%99%A8/</link>
+      <pubDate>Fri, 17 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://bluestaree.github.io/2020/03/springboot%E5%BA%94%E7%94%A8%E9%83%A8%E7%BD%B2%E4%BA%8E%E5%A4%96%E7%BD%AEtomcat%E5%AE%B9%E5%99%A8/</guid>
-      <description>转载 · 原文链接：https://www.codesheep.cn/2018/06/05/SpringBoot%E5%BA%94%E7%94%</description>
+      <guid>https://bluestaree.github.io/2020/04/springboot%E5%BA%94%E7%94%A8%E9%83%A8%E7%BD%B2%E4%BA%8E%E5%A4%96%E7%BD%AEtomcat%E5%AE%B9%E5%99%A8/</guid>
+      <description>转载 · 原文链接：SpringBoot应用部署于外置Tomcat容器 0x01. 概述 SpringBoot平时我们用的爽歪歪，爽到它自己连Tomcat都自</description>
     </item>
     
     <item>
       <title>关于我</title>
       <link>https://bluestaree.github.io/about/</link>
-      <pubDate>Thu, 05 Mar 2020 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 05 Apr 2020 00:00:00 +0000</pubDate>
       
       <guid>https://bluestaree.github.io/about/</guid>
       <description>本人90后小白一枚，code，从hello开始。慢慢的，谈不上热爱，但也能渐渐体会到其中的乐趣 目前的主要学习方向：java后端开发 博客内容以</description>

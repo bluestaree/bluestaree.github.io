@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        高并发下保证服务稳定性-Sentinel - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="简介：Sentinel-哨兵，是Spring Cloud Alibaba 的开源项目，是面向微服务的轻量级流量控制框架，从流量控制、熔断降级、系统负载保护等多个维度保" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>高并发下保证服务稳定性-Sentinel - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="高并发下保证服务稳定性-Sentinel" />
+<meta property="og:description" content="简介：Sentinel-哨兵，是Spring Cloud Alibaba 的开源项目，是面向微服务的轻量级流量控制框架，从流量控制、熔断降级、系统负载保护等多个维度保" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2020/08/springcloud-alibaba-sentinel/" />
+<meta property="article:published_time" content="2020-08-22T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-08-22T00:00:00+00:00" />
+<meta itemprop="name" content="高并发下保证服务稳定性-Sentinel">
+<meta itemprop="description" content="简介：Sentinel-哨兵，是Spring Cloud Alibaba 的开源项目，是面向微服务的轻量级流量控制框架，从流量控制、熔断降级、系统负载保护等多个维度保">
+<meta itemprop="datePublished" content="2020-08-22T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-08-22T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2485">
+
+
+
+<meta itemprop="keywords" content="Sentinel," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="高并发下保证服务稳定性-Sentinel"/>
+<meta name="twitter:description" content="简介：Sentinel-哨兵，是Spring Cloud Alibaba 的开源项目，是面向微服务的轻量级流量控制框架，从流量控制、熔断降级、系统负载保护等多个维度保"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">25</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8Bvolatile%E5%85%B3%E9%94%AE%E5%AD%97%E8%A7%A3%E6%9E%90/" class="title">Java中Volatile关键字</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-28</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/springcloud-alibaba-sentinel/" class="title">高并发下保证服务稳定性-Sentinel</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-22 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-22</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/" class="title">接口幂等性问题与解决方案</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-10 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-10</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/springcloud-alibaba-seata/" class="title">分布式解决方案-Seata</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-04</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" class="title">本地事务与分布式事务</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-03 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-03</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2020/08/springcloud-alibaba-sentinel/"
+    >高并发下保证服务稳定性-Sentinel</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2020/08/springcloud-alibaba-sentinel/" class="article-date">
+  <time datetime="2020-08-22 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-22</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/spring-cloud-alibaba/"> Spring Cloud Alibaba </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/sentinel/"> Sentinel </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2020/08/springcloud-alibaba-sentinel/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2485字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<blockquote>
+<p><strong>简介</strong>：Sentinel-哨兵，是Spring Cloud Alibaba 的开源项目，是面向微服务的轻量级流量控制框架，从流量控制、熔断降级、系统负载保护等多个维度保护服务的稳定性。</p>
+<p><a href="https://github.com/alibaba/Sentinel/wiki/%E4%BB%8B%E7%BB%8D">官方文档</a></p>
+</blockquote>
+<h2 id="服务熔断">服务熔断</h2>
+<p>A服务调用B服务的某个功能，由于网络不稳定问题，或者B服务卡机，导致功能时间超长。如果这样子的次数太多。我们就可以直接将B断路了<code>(A不再请求B接口)</code>，凡是调用B的直接返回降级数据，不必等待B的超长执行。这样 B的故障问题，就不会级联影响到A。</p>
+<h2 id="服务降级">服务降级</h2>
+<p>整个网站处于流量高峰期，服务器压力剧增,根据当前业务情况及流量，对一些服务和页面进行有策略的降级，停止服务，所有的调用直接返回降级数据 <code>(服务器繁忙，请稍后再试)</code> 。以此缓解服务器资源的的压力，以保证核心业务的正常运行，同时也保持了客户和大部分客户的得到正确的相应。</p>
+<h4 id="异同">异同:</h4>
+<p><strong>相同点:</strong></p>
+<ol>
+<li>为了保证集群大部分服务的可用性和可靠性，防止崩溃，牺牲小我</li>
+<li>用户最终都是体验到某个功能不可用</li>
+</ol>
+<p><strong>不同点:</strong></p>
+<ol>
+<li>熔断是被调用方故障，触发的系统主动规则</li>
+<li>降级是基于全局考虑，停止一些正常服务，释放资源</li>
+</ol>
+<h2 id="限流">限流</h2>
+<p>对打入服务的请求流量进行控制，使服务能够承担不超过自己能力的流量压力</p>
+<h2 id="sentinel基本概念">Sentinel基本概念</h2>
+<h4 id="资源"><strong>资源</strong></h4>
+<p>资源是 Sentinel 的关键概念。它可以是Java 应用程序中的任何内容，例如，由应用程序提供的服务，或由应用程序调用的其它应用提供的服务，甚至可以是一段代码。</p>
+<p>只要通过 Sentinel API 定义的代码，就是资源，能够被 Sentinel 保护起来。大部分情况下，可以使用方法签名，URL，甚至服务名称作为资源名来标示资源。</p>
+<h4 id="规则">规则</h4>
+<p>围绕资源的实时状态设定的规则，可以包括流量控制规则、熔断降级规则以及系统保护规则。所有规则可以动态实时调整。</p>
+<h2 id="sentinel简单使用">Sentinel简单使用</h2>
+<h4 id="1导入依赖"><strong>1.导入依赖</strong></h4>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-alibaba-sentinel&lt;/artifactId&gt;
+    &lt;version&gt;2.0.2.RELEASE&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h4 id="2sentinel-控制台"><strong>2.sentinel 控制台</strong></h4>
+<p>sentinel 控制台提供了一个可视化界面，通过它我们可以很轻松的对各个规则进行添加、查询和修改，也可以查看到实时监控，机器列表等信息。  <a href="https://github.com/alibaba/Sentinel/releases">github地址</a></p>
+<blockquote>
+<p>注：优先选择对应版本的控制台，版本的不同可能会出现数据无法传输等问题</p>
+</blockquote>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDBYseNXcf6McMMuQYiT7MLNcXOfzxODYFJ8XileBGsIzxhKkeFKgIyJS88ukAEY48M7n.oHg*71aWOgzwOdDoBw!/r" alt="sentinel版本"></p>
+<p><strong>启动控制台</strong></p>
+<p>sentinel 控制台是一个Spring boot 项目打成的jar包 ，我们可以直接在使用命令行启动这个jar包</p>
+<p><code>java -jar .\sentinel-dashboard-1.7.1.jar</code></p>
+<blockquote>
+<p>注：如果端口被占用，可以添加启动参数，修改默认运行端口</p>
+<p>默认用户密码：sentinel</p>
+</blockquote>
+<p>初始化界面</p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDJ778WdS.mADaFWO16TVHdYhWpq14bG44WTIIjOQy037cLDEeU8BfwRHRdofzveMa.OWDcArk40eHUyfX5q6PSs!/r" alt=""></p>
+<h4 id="3启动服务"><strong>3.启动服务</strong></h4>
+<p><strong>配置文件</strong></p>
+<p>application.yml</p>
+<pre><code class="language-yaml">spring:
+  cloud:
+    sentinel:
+      transport:
+        port: 8719  #本项目与sentinel控制台数据传输端口，
+        dashboard: localhost:8080 #控制台端口
+</code></pre>
+<p>默认 sentinel 与spring cloud整合，会将所有请求都标识为受保护的资源</p>
+<p>在服务启动后，我们先访问一个测试请求，之后就可以在sentinel的控制台中查看到本次请求情况</p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDAg.BSHa5PwrdLHy.9L*ACVWY2IuGtce9B29wbOMNVhUPVJQ5gUuRatiCccwIbzfv6kZGYhQckZPo8SWzOtlLY4!/r" alt=""></p>
+<p>可以看到，在控制台中，我们能很方便的给指定请求设置一些规则</p>
+<p>这里我们尝试先添加一个流量控制规则 ， <a href="https://github.com/alibaba/Sentinel/wiki/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8#%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6%E8%A7%84%E5%88%99-flowrule">sentinel 流量规则定义</a></p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDHSpHVDgB0KXHyOmlQjHpivx7vszDiS65f6By*6Lw54C3AOIMfEGYhFtF7JkNnkwGda4y0HWpAz.pDeKWBkcQsk!/r" alt="流控设置"></p>
+<p>这里设置 QPS = 1 (每秒只允许一个请求进行访问)，其他请求会被限制</p>
+<blockquote>
+<p>注意：默认所有的规则设置保存在服务内存中，这些配置会在服务重启后失效</p>
+</blockquote>
+<p><strong>效果测试</strong></p>
+<p>超过规则限制，sentinel 默认的返回数据</p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDPn8FL89HFc9CX4ftWOGlXK.fPrCVZACOR7rYhwLltCcO4xvLK.I5m6EX7Y81abxwbh6i1hHQ6dNKPboTRHm4Zc!/r" alt=""></p>
+<h3 id="sentinel-实时监控">sentinel 实时监控</h3>
+<p><strong>Spring Boot Actuator</strong> 可以帮助你监控和管理Spring Boot应用，比如健康检查、审计、统计和HTTP追踪等。所有的这些特性可以通过JMX或者HTTP endpoints来获得。</p>
+<p>Sentinel 可以通过获取 Actuator 的信息来达到对服务各项数据的实时监控</p>
+<h4 id="集成actuator"><strong>集成Actuator</strong></h4>
+<p><strong>导入依赖</strong></p>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p><strong>配置文件</strong></p>
+<pre><code class="language-properties">management.endpoints.web.exposure.include:*
+</code></pre>
+<p>对外暴露Actuator统计的审计端点信息，让Sentinel能够获取到这些信息</p>
+<p>重新启动服务后，</p>
+<p>结合上面 QPS = 1 的流控设置测试，可以直观的看到 Sentinel 控制台中显示的实时监控数据：</p>
+<p>每秒只允许1个请求访问，其它多余请求都被限制了</p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDKAvwh.G4QrbJv5Wmrv4zNRTVMAzujQzyIZXGPo3ITO8BiDb0VF9YRS7SrDqDk6VW7LHy9f6LzQIjqw*2lh7*Tg!/r" alt=""></p>
+<h3 id="自定义统一处理">自定义统一处理</h3>
+<p><strong>设置url请求统一处理:WebCallbackManager</strong></p>
+<p><strong>导入依赖</strong></p>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;com.alibaba.csp&lt;/groupId&gt;
+    &lt;artifactId&gt;sentinel-web-servlet&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p><strong>配置类</strong></p>
+<pre><code class="language-java">@Configuration
+public class MySentinelConfig {
+    @PostConstruct
+    public void init() {
+        WebCallbackManager.setUrlBlockHandler(new UrlBlockHandler() {
+              @Override
+              public void blocked(HttpServletRequest httpServletRequest, HttpServletResponse response, BlockException e) throws IOException {
+                  response.setCharacterEncoding(&quot;utf-8&quot;);
+                  response.setContentType(&quot;application/json&quot;);
+                  response.getWriter().write(&quot;服务器繁忙，亲稍后再试&quot;);
+              }
+          }
+        );
+    }
+}
+</code></pre>
+<p>也可以单独实现 <strong>UrlBlockHandler</strong> 接口实现类，根据异常信息执行相对应的业务，之后再注册到 <strong>WebCallbackManager</strong> 中</p>
+<blockquote>
+<p>注：对于一些特殊业务，可以单独进行配置</p>
+</blockquote>
+<h3 id="自定义受保护的资源">自定义受保护的资源</h3>
+<p>常用的几种 sentinel  定义资源方式使用</p>
+<h4 id="1抛出异常"><strong>1.抛出异常</strong></h4>
+<p>测试方法</p>
+<pre><code class="language-java">public String getProductById(Integer id) {
+    //自定义搜保护的资源
+    try (Entry entry = SphU.entry(&quot;getproduct&quot;)) {
+        return &quot;ok, get product : &quot; + id;
+    } catch ( BlockException e) {
+        //资源访问受限，相应的处理操作
+        log.info(&quot;请求getproduct资源过多，&quot;,e.getMessage());
+        //return &quot;亲，你点的太快了~&quot;;
+    }
+    return &quot;error&quot;;
+}
+</code></pre>
+<p>对自定义受保护资源添加流控规则，同上设置QPS=1，方便测试</p>
+<p>多次访问该请求，控制台输出内容</p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDD.ZjNzAyzK0dn7tB02Segso7qjw39RVsZ9qUmYpppghatBdh2pY7alEn40V7*jhXCTrxo6Ma9HBzg3zeu2Y65Y!/r" alt=""></p>
+<h4 id="2基于注解"><strong>2.基于注解</strong></h4>
+<pre><code class="language-java">//定义资源，以及访问受限时调用的方法
+@SentinelResource(value = &quot;getProductById&quot;,blockHandler = &quot;blockHandlerForGetProduct&quot;)
+public String getProductById(Integer id) {
+    return &quot;ok, get product : &quot; + id;
+}
+
+public String blockHandlerForGetProduct(BlockException e) {
+    return &quot;亲，你点的太快了~&quot;;
+}
+</code></pre>
+<blockquote>
+<p>其他资源定义方式：<a href="https://github.com/alibaba/Sentinel/wiki/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8#%E5%AE%9A%E4%B9%89%E8%B5%84%E6%BA%90">Sentinel 定义资源</a></p>
+</blockquote>
+<h3 id="使用sentinel来保护feign远程调用">使用Sentinel来保护feign远程调用</h3>
+<p>以往我们在使用feign进行远程服务调用时，如果忘记启动远程服务了，那么肯定会出现服务不可用500异常。Sentinel能够整合feign对远程服务添加默认熔断处理，来处理这种问题</p>
+<p><strong>1.配置文件</strong></p>
+<p>添加 Sentinel 对 Feign 的支持</p>
+<pre><code class="language-yaml">feign:
+  sentinel:
+    enabled: true
+</code></pre>
+<p><strong>2.定义Feign远程测试接口</strong></p>
+<pre><code class="language-java">@FeignClient(name = &quot;test-sentinel-product&quot;,fallback = ProductFeignClientFallback.class)
+public interface ProductFeignClient {
+    @GetMapping(&quot;/product/get&quot;)
+    public String getProductById(@RequestParam(&quot;pid&quot;) Integer pid);
+
+}
+</code></pre>
+<p><strong>3.定义sentinel熔断回调方法</strong></p>
+<pre><code class="language-java">@Component
+public class ProductFeignClientFallback implements ProductFeignClient {
+    @Override
+    public String getProductById(Integer pid) {
+        return &quot;亲，你点的太快了~&quot;;
+    }
+}
+</code></pre>
+<p><strong>4.关闭远程服务（模拟宕机情况）</strong></p>
+<p><strong>5.请求资源</strong></p>
+<p>controller</p>
+<pre><code class="language-java">@GetMapping(&quot;/relation/product/{pid}&quot;)
+    public String buildOrder(@PathVariable(&quot;pid&quot;) Integer pid) {
+        return productFeignClient.getProductById(pid);
+    }
+</code></pre>
+<p><strong>响应结果</strong></p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDKsfSkz1UlnqHgXa8ye2y3ZcbiEp*gsWkquAdQAbgNLSCMC9dco9BC.olEBi17yvUWft1lq31swcbzga3Fsvq9E!/r" alt=""></p>
+<p>虽然我们没有启动远程服务，但是由于我们配置了 sentinel 熔断处理，没有出现服务异常，返回了默认数据。</p>
+<p>对feign添加熔断保护，就相当于加了一个保险。如果远程服务宕机，我们还能够响应默认数据给客户端，而不会因为feign远程调用失败，而导致服务不可用。</p>
+<hr>
+<p>当然，我们也可以对远程服务添加<strong>降级规则</strong>，当feign请求超过规则限制，同样会触发我们刚刚设置的熔断回调方法</p>
+<p><strong>对远程服务设置降级规则</strong></p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDHQCPaJQVP6.hScZxJafvtRlDC3BhmMa.GeKN9p8VROUjX5Qc091xF.3ASkuwPrVDcJOUrK0FTx5s1j.TTBSxfY!/r" alt=""></p>
+<p><strong>远程服务</strong></p>
+<p>这里为了测试效果，我们可以让线程小睡一会</p>
+<pre><code class="language-java">public String getProductById(Integer id) {
+    try {
+    	Thread.sleep(300);
+    } catch (InterruptedException e) {
+    	return &quot;error&quot;;
+    }
+    return &quot;ok, get product : &quot; + id;
+}
+</code></pre>
+<p><strong>正常启动远程服务</strong></p>
+<p>测试时，远程服务启动，访问相同资源是可以得到正常数据的。但如果你刷新的足够快，触发了服务降级，调用方就会执行我们设置的默认方法，将默认数据返回</p>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2020/08/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/" title="接口幂等性问题与解决方案"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2020/08/java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8Bvolatile%E5%85%B3%E9%94%AE%E5%AD%97%E8%A7%A3%E6%9E%90/"
+                    title="Java中Volatile关键字"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2020
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

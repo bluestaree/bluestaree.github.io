@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        Spring Cloud Alibaba-Nacos 注册与配置中心 - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="由于Spring Cloud Eureka已经宣布停止开源计划，不再继续维护，这怎么行，还能愉快的使用吗。 今天在空闲之余了解了下另外一个功能更加强大的注" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>Spring Cloud Alibaba-Nacos 注册与配置中心 - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="Spring Cloud Alibaba-Nacos 注册与配置中心" />
+<meta property="og:description" content="由于Spring Cloud Eureka已经宣布停止开源计划，不再继续维护，这怎么行，还能愉快的使用吗。 今天在空闲之余了解了下另外一个功能更加强大的注" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2020/07/springcloud-alibaba-nacos-%E6%B3%A8%E5%86%8C%E4%B8%8E%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/" />
+<meta property="article:published_time" content="2020-07-01T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-07-01T00:00:00+00:00" />
+<meta itemprop="name" content="Spring Cloud Alibaba-Nacos 注册与配置中心">
+<meta itemprop="description" content="由于Spring Cloud Eureka已经宣布停止开源计划，不再继续维护，这怎么行，还能愉快的使用吗。 今天在空闲之余了解了下另外一个功能更加强大的注">
+<meta itemprop="datePublished" content="2020-07-01T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-07-01T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1261">
+
+
+
+<meta itemprop="keywords" content="Nacos," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Spring Cloud Alibaba-Nacos 注册与配置中心"/>
+<meta name="twitter:description" content="由于Spring Cloud Eureka已经宣布停止开源计划，不再继续维护，这怎么行，还能愉快的使用吗。 今天在空闲之余了解了下另外一个功能更加强大的注"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">25</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8Bvolatile%E5%85%B3%E9%94%AE%E5%AD%97%E8%A7%A3%E6%9E%90/" class="title">Java中Volatile关键字</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-28</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/springcloud-alibaba-sentinel/" class="title">高并发下保证服务稳定性-Sentinel</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-22 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-22</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/" class="title">接口幂等性问题与解决方案</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-10 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-10</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/springcloud-alibaba-seata/" class="title">分布式解决方案-Seata</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-04</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" class="title">本地事务与分布式事务</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-03 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-03</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2020/07/springcloud-alibaba-nacos-%E6%B3%A8%E5%86%8C%E4%B8%8E%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/"
+    >Spring Cloud Alibaba-Nacos 注册与配置中心</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2020/07/springcloud-alibaba-nacos-%E6%B3%A8%E5%86%8C%E4%B8%8E%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/" class="article-date">
+  <time datetime="2020-07-01 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-07-01</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/spring-cloud-alibaba/"> Spring Cloud Alibaba </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/nacos/"> Nacos </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2020/07/springcloud-alibaba-nacos-%E6%B3%A8%E5%86%8C%E4%B8%8E%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1261字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 3分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<blockquote>
+<p>由于Spring Cloud Eureka已经宣布<strong>停止开源</strong>计划，不再继续维护，这怎么行，还能愉快的使用吗。 今天在空闲之余了解了下另外一个功能更加强大的注册中心，那就是SpringCloud Alibaba的Nacos</p>
+</blockquote>
+<h2 id="springcloud-alibaba">SpringCloud Alibaba</h2>
+<p>Spring Cloud Alibaba致力于提供微服务开发的一站式解决方案。此项目包含开发分布式应用微服务的必需组件,方</p>
+<p>便开发者通过 Spring Cloud编程模型轻松使用这些组件来开发分布式应用服务。</p>
+<p>依托 Spring Cloud Alibaba,您只需要添加一些注解和少量配置,就可以将 Spring Cloud应用接入阿里微服务解决方</p>
+<p>案,通过阿里中间件来迅速搭建分布式应用系统。<a href="https://github.com/alibaba/spring-cloud-alibaba">GitHub地址</a></p>
+<p>本文主要介绍Spring Cloud Alibaba项目下的Nacos组件基本使用。</p>
+<h2 id="nacos初体验">Nacos初体验</h2>
+<h3 id="使用nacos作为注册中心">使用Nacos作为注册中心</h3>
+<p><strong>1.首先引入SpringCloud Alibaba依赖</strong></p>
+<blockquote>
+<p>注意：选择合适的版本</p>
+<ul>
+<li>1.5.x 版本适用于 Spring Boot 1.5.x</li>
+<li>2.0.x 版本适用于 Spring Boot 2.0.x</li>
+<li>2.1.x 版本适用于 Spring Boot 2.1.x</li>
+<li>2.2.x 版本适用于 Spring Boot 2.2.x</li>
+</ul>
+</blockquote>
+<p>pom文件配置：</p>
+<pre><code class="language-xml">&lt;dependencyManagement&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-alibaba-dependencies&lt;/artifactId&gt;
+            &lt;version&gt;2.2.0.RELEASE&lt;/version&gt;
+            &lt;type&gt;pom&lt;/type&gt;
+            &lt;scope&gt;import&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+&lt;/dependencyManagement&gt;
+</code></pre>
+<p><strong>2.引入Nacos注册中心依赖</strong></p>
+<p>pom文件配置：</p>
+<pre><code class="language-xml"> &lt;dependency&gt;
+     &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
+     &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;/artifactId&gt;
+ &lt;/dependency&gt;
+</code></pre>
+<p>配置文件的配置</p>
+<pre><code class="language-yaml">server:
+  port: 8080
+spring:
+  application:
+    name: Hello-Nacos
+  cloud:	
+    nacos:	//这里配置nacos注册中心的地址
+      discovery:
+        server-addr: 127.0.0.1:8848
+</code></pre>
+<p>启动类</p>
+<pre><code class="language-java">@EnableDiscoveryClient
+@SpringBootApplication
+public class WebApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(WebApplication.class, args);
+    }
+}
+</code></pre>
+<p><strong>3.获取Nacos的服务端</strong> : <a href="https://github.com/alibaba/nacos/releases">https://github.com/alibaba/nacos/releases</a></p>
+<p>下载后启动服务端，打开浏览器访问http://127.0.0.1:8848/nacos</p>
+<blockquote>
+<p>默认账号密码均为 :  nacos</p>
+</blockquote>
+<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDG7zdu5bYPEFPr12D8OkMEYu1DJG*5eK3lVVBNlEJkx0ySzhh6XBrLqI3aub0c9N9WHz6F0GNPY3QjyzlM5Sn3I!/r" alt="img"></p>
+<p><strong>4.启动服务</strong></p>
+<p>启动测试服务后，查看nacos服务管理中心，可以看到该服务已经成功注册</p>
+<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDANHDRYdnw1M1WmgVH0crmHOjLlQVsFpiO5oBTA8FsQH0Nm*ahJ59W5ZvjY5CUzs8EiB.VS0XghAZj7w6MYxiwE!/r" alt="img"></p>
+<p>之后就可以结合<strong>spring cloud open-feign</strong>进行远程服务调用啦，这里不再演示</p>
+<h3 id="使用nacos作为配置中心">使用Nacos作为配置中心</h3>
+<p><strong>1.首先导入nacos配置中心的依赖</strong></p>
+<pre><code class="language-xml">&lt;dependency&gt;
+     &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
+     &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-config&lt;/artifactId&gt;
+ &lt;/dependency&gt;
+</code></pre>
+<p><strong>2.新增bootstrap.properties配置文件,添加已下配置信息</strong></p>
+<pre><code class="language-properties">spring.application.name=hello-nacos		#项目名
+spring.cloud.nacos.config.server-addr=127.0.0.1:8848	#nacos配置中心地址
+</code></pre>
+<p><strong>3.在配置中心中新建配置文件,nacos配置中心默认会加载项目名.properties文件</strong></p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDOH1ooBuaFstN*d29tU4caTOpUnPT4PIuoR.o1iLb22quCKYwmo91Lyg.zlldyfk0RNYvgum.Sbg3vFBpGzXh*k!/r" alt="img"></p>
+<p>Controller相关代码</p>
+<pre><code class="language-java">@RestController
+public class WebController {
+
+    @Value(&quot;${mycustomer.name}&quot;)
+    public String name;
+    @Value(&quot;${mycustomer.age}&quot;)
+    public int age;
+
+    @GetMapping
+    private Map test() {
+        HashMap hashMap = new HashMap();
+        hashMap.put(&quot;name&quot;, name);
+        hashMap.put(&quot;age&quot;, age);
+        return hashMap;
+    }
+}
+</code></pre>
+<p><strong>测试结果</strong></p>
+<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDKE1c2saFUWwEizwFiv13aR68uNuSy7ORqB3YJHPsr2N6DUPi6Cx7vxti4f.g0BWBpLmiZT.8KBVXK1Ch4fSrIQ!/r" alt="img"></p>
+<p>成功读取配置中心里配置信息</p>
+<p>这里还可以配合使用 <strong>@RefreshScope</strong> 注解实现动态配置刷新</p>
+<blockquote>
+<p>注意：如果配置中心和当前应用的配置文件中都配置了相同的项，会优先使用配置中心里的配置</p>
+</blockquote>
+<h5 id="heading"></h5>
+<h4 id="实现多配置文件加载如开发生产测试等环境"><strong>实现多配置文件加载</strong>(如开发，生产，测试等环境&hellip;)</h4>
+<p><strong>nacos配置中心的一些概念</strong></p>
+<ol>
+<li>
+<p><strong>命名空间</strong> ,默认：public(保留空间)，默认新增的所有配置都存在public空间,</p>
+<p>要使用特定的命名空间，需要在bootstrap.properties配置文件中指定命名空间ID</p>
+<pre><code>spring.cloud.nacos.config.namespace=23902197-c354-4216-94cf-8e5cb8537e26
+</code></pre>
+<p>通过这一点，我们可以为每一个微服务创建一个命名空间，形成基于微服务间的隔离</p>
+</li>
+<li>
+<p><strong>配置集</strong> ：所有配置文件的集合</p>
+</li>
+<li>
+<p><strong>配置集ID</strong> ：相当于文件名</p>
+</li>
+<li>
+<p><strong>配置分组</strong> ：默认所有配置集都属于<strong>DEFAULT_GROUP</strong>，我们可以在创建配置文件时，使用配置分组来区分不同的环境</p>
+<p>在bootstrap.properties配置文件 中指定分组</p>
+<pre><code class="language-properties">spring.cloud.nacos.config.group=dev	#指定配置分组
+</code></pre>
+</li>
+</ol>
+<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDAvBPPqhjzeag96M*l8i68yLacgNAbVYfmgzbcc2k4*YdY*tZTeRZ1jSu5.dWmTlWGBB9d.IWfKApuUATfEwkTI!/r" alt="img"></p>
+<p>bootstrap.properties配置文件中指定多配置文件加载</p>
+<pre><code class="language-properties">#多配置文件加载
+
+spring.cloud.nacos.config.ext-config[0].data-id=datasource.yml	#配置ID
+
+spring.cloud.nacos.config.ext-config[0].group=dev	#配置分组
+
+spring.cloud.nacos.config.ext-config[0].refresh=true	#自动刷新
+
+spring.cloud.nacos.config.ext-config[1].data-id=hello-nacos.properties
+
+spring.cloud.nacos.config.ext-config[1].group=dev
+
+spring.cloud.nacos.config.ext-config[1].refresh=true
+</code></pre>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2020/06/tcp%E7%B2%98%E5%8C%85%E5%92%8C%E6%8B%86%E5%8C%85%E9%97%AE%E9%A2%98/" title="TCP粘包和拆包问题"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2020/07/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E7%9A%84%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88%E9%97%AE%E9%A2%98/"
+                    title="高并发下的缓存失效问题及解决方案"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2020
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

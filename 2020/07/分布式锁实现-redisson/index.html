@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        分布式锁实现-Redisson - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="概述：Redisson是架设在Redis基础上的一个Java驻内存数据网格。简单来说就是Redis分布式锁对于Java语言的实现，其提供的许" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>分布式锁实现-Redisson - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="分布式锁实现-Redisson" />
+<meta property="og:description" content="概述：Redisson是架设在Redis基础上的一个Java驻内存数据网格。简单来说就是Redis分布式锁对于Java语言的实现，其提供的许" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2020/07/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%AE%9E%E7%8E%B0-redisson/" />
+<meta property="article:published_time" content="2020-07-08T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-07-08T00:00:00+00:00" />
+<meta itemprop="name" content="分布式锁实现-Redisson">
+<meta itemprop="description" content="概述：Redisson是架设在Redis基础上的一个Java驻内存数据网格。简单来说就是Redis分布式锁对于Java语言的实现，其提供的许">
+<meta itemprop="datePublished" content="2020-07-08T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-07-08T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2286">
+
+
+
+<meta itemprop="keywords" content="缓存,redisson," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="分布式锁实现-Redisson"/>
+<meta name="twitter:description" content="概述：Redisson是架设在Redis基础上的一个Java驻内存数据网格。简单来说就是Redis分布式锁对于Java语言的实现，其提供的许"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">25</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8Bvolatile%E5%85%B3%E9%94%AE%E5%AD%97%E8%A7%A3%E6%9E%90/" class="title">Java中Volatile关键字</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-28</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/springcloud-alibaba-sentinel/" class="title">高并发下保证服务稳定性-Sentinel</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-22 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-22</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/" class="title">接口幂等性问题与解决方案</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-10 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-10</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/springcloud-alibaba-seata/" class="title">分布式解决方案-Seata</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-04</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" class="title">本地事务与分布式事务</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-03 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-03</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2020/07/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%AE%9E%E7%8E%B0-redisson/"
+    >分布式锁实现-Redisson</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2020/07/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%AE%9E%E7%8E%B0-redisson/" class="article-date">
+  <time datetime="2020-07-08 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-07-08</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/"> 笔记 </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/%E7%BC%93%E5%AD%98/"> 缓存 </a>
+    <a class="article-tag-link" href="/tags/redisson/"> redisson </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2020/07/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%AE%9E%E7%8E%B0-redisson/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2286字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<blockquote>
+<p>概述：Redisson是架设在Redis基础上的一个Java驻内存数据网格。简单来说就是Redis分布式锁对于Java语言的实现，其提供的许多分布式服务，本文介绍了如何使用Redisson来实现分布式锁，以及其他几种常用的分布式锁</p>
+</blockquote>
+<h2 id="简单实现">简单实现</h2>
+<p><strong>1.引入依赖</strong></p>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.redisson&lt;/groupId&gt;
+    &lt;artifactId&gt;redisson&lt;/artifactId&gt;
+    &lt;version&gt;3.12.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p><strong>2.配置Redisson客户端</strong></p>
+<pre><code class="language-java">@Configuration
+public class MyRedissonConfig {
+    @Bean(destroyMethod = &quot;shutdown&quot;)
+    public RedissonClient redisson() throws IOException {
+        Config config = new Config();
+        //config.useClusterServers( )	//集群配置
+        //.addNodeAddress(&quot;127.0.8.1:7004&quot;，&quot;127.0.0.1:6379&quot;);
+        //单节点配置     可以用&quot;rediss://&quot;来启用SSL连接
+        config.useSingleServer().setAddress(&quot;redis://127.0.0.1:6379&quot;);
+        return Redisson.create(config);
+    }
+}
+</code></pre>
+<p><strong>3.测试Controller</strong></p>
+<pre><code class="language-java"> @GetMapping(&quot;/hello&quot;)
+  public String hello(){
+      //1、获取一把锁，只要锁的名字一样，就是同一把锁
+      RLock lock = redisson.getLock(&quot;my-lock&quot;);
+      //2.加锁
+      lock.lock(); //阻塞式等待。默认加的锁存活时间为30s。
+      //看门狗机制：
+      //1)、锁的自动续期，如果业务超长，运行期间会自动给锁续上新的30s。不用担心业务时间长，锁自动过期被删掉
+      //2)、加锁的业务只要运行完成，就不会给当前锁续期，即使不手动解锁，锁默认在30s以后自动删除。
+      try {
+          System.out.println(&quot;加锁成功... &quot; + Thread.currentThread().getId());
+          Thread.sleep(30000);  //模拟执行耗时业务
+          return &quot;hello&quot;;
+      } catch (Exception e) {
+      } finally {
+          //3、解锁
+          System.out.println(&quot;释放锁...&quot; + Thread.currentThread().getId());
+          lock.unlock();
+      }
+      return &quot;Throw Exception！&quot;;
+    }
+</code></pre>
+<p><strong>可通过设置虚拟机参数启动多个服务，模拟集群环境下进行测试</strong></p>
+<p>初次访问时，加锁成功，控制台输出内容：</p>
+<p><code>加锁成功... 60</code></p>
+<p>等待30s后业务逻辑执行完成，释放锁，控制台输出内容：</p>
+<p><code>释放锁...60</code></p>
+<p>Redis中存储的分布式锁信息如下图：</p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDEz10sPlrPmN1WLWWllRv8rlRw8iGaUtNnHzwpNqOaWeP2iM7mFc9Yl8kMj7Icg1GibB2aMQJyQPNTMdXvtyREY!/r" alt=""></p>
+<p>在浏览器中同时访问多个服务，</p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDIbWwrYHpSM6SAaCgDmPgw6926ab1rm*Mer1U0u6eowhDq9ZxCEehPx1VFfiUClQ84yXzlsse4Fj.7*zhn5ZTTY!/r" alt=""></p>
+<p>此时控制台输出内容</p>
+<p><code>加锁成功... 60</code></p>
+<p><code>释放锁...60</code></p>
+<p><code>加锁成功... 67</code></p>
+<p><code>释放锁...67</code></p>
+<p>这样一个简单的分布式锁就添加成功了，现在每一个进程都需要获取在获取锁后才能进行进一步的业务处理。我们</p>
+<p>就可以根据这一点=有效的预防<strong>缓存击穿、接口幂等性</strong>等问题。</p>
+<h2 id="redisson-看门狗机制"><strong>Redisson 看门狗机制</strong></h2>
+<p>在我们进行测试的时候有一个问题，可以明显的发现，在Redis上存储的分布式锁的有效时间为30s，而且当这个</p>
+<p>值减少到19s时，存活时间又重新刷新为30s。</p>
+<p>这就redisson的看门狗机制。</p>
+<p>让我们先来看看redisson里的 <strong>Lock</strong> 方法源码</p>
+<pre><code class="language-java">public void lock() {
+    try {
+        this.lock(-1L, (TimeUnit)null, false);
+    } catch (InterruptedException var2) {
+        throw new IllegalStateException();
+    }
+}
+</code></pre>
+<p>接下来会调用另一个带参数的重载方法，我们可以进去直接看其中尝试获取锁的那段源码</p>
+<pre><code class="language-java">private &lt;T&gt; RFuture&lt;Long&gt; tryAcquireAsync(long leaseTime, TimeUnit unit, long threadId) {
+    if (leaseTime != -1L) {
+        return this.tryLockInnerAsync(leaseTime, unit, threadId, RedisCommands.EVAL_LONG);
+    } else {
+        RFuture&lt;Long&gt; ttlRemainingFuture = this.tryLockInnerAsync(this.commandExecutor.getConnectionManager().getCfg().getLockWatchdogTimeout(), TimeUnit.MILLISECONDS, threadId, RedisCommands.EVAL_LONG);
+        ttlRemainingFuture.onComplete((ttlRemaining, e) -&gt; {
+            if (e == null) {
+                if (ttlRemaining == null) {
+                    this.scheduleExpirationRenewal(threadId);
+                }
+
+            }
+        });
+        return ttlRemainingFuture;
+    }
+}
+</code></pre>
+<p>可以看到，如果我们没有传入指定锁的存活时间，也就是上面的 <strong>leaseTim</strong> 变量的值，默认是-1,</p>
+<p>此时走else路线，其中redisson默认将锁的存活时间设置为30s</p>
+<pre><code>this.lockWatchdogTimeout = 30000L;
+</code></pre>
+<p>接下来 ，可以看到一个重要的方法 <strong>scheduleExpirationRenewal()</strong> ,根据名称有一个大概的理解，就是一个到期续</p>
+<p>订的定时任务。</p>
+<p>继续跟踪源码，可以看到最主要的方法 <strong>renewExpiration()</strong>，在这里面就创建了一个<strong>定时任务task</strong>，</p>
+<p>并且延迟10s执行一次，其中又进行递归调用，相当于每隔10s执行一次，直到我们的业务逻辑执行完毕</p>
+<pre><code class="language-java">private void renewExpiration() {
+    RedissonLock.ExpirationEntry ee = (RedissonLock.ExpirationEntry)EXPIRATION_RENEWAL_MAP.get(this.getEntryName());
+    if (ee != null) {
+        Timeout task = this.commandExecutor.getConnectionManager().newTimeout(new TimerTask() {
+            public void run(Timeout timeout) throws Exception {
+                RedissonLock.ExpirationEntry ent = (RedissonLock.ExpirationEntry)RedissonLock.EXPIRATION_RENEWAL_MAP.get(RedissonLock.this.getEntryName());
+                if (ent != null) {
+                    Long threadId = ent.getFirstThreadId();
+                    if (threadId != null) {
+                        RFuture&lt;Boolean&gt; future = RedissonLock.this.renewExpirationAsync(threadId);
+                        future.onComplete((res, e) -&gt; {
+                            if (e != null) {
+                                RedissonLock.log.error(&quot;Can't update lock &quot; + RedissonLock.this.getName() + &quot; expiration&quot;, e);
+                            } else {
+                                if (res) {
+                                    RedissonLock.this.renewExpiration();
+                                }
+
+                            }
+                        });
+                    }
+                }
+            }
+        }, this.internalLockLeaseTime / 3L, TimeUnit.MILLISECONDS);
+        ee.setTimeout(task);
+    }
+}
+</code></pre>
+<p>当然我们也可以进入renewExpirationAsync()方法中查看刷新锁存活时间所执行的<strong>Lua脚本</strong></p>
+<pre><code class="language-lua">if (redis.call('hexists', KEYS[1], ARGV[2]) == 1) then redis.call('pexpire', KEYS[1], ARGV[1]); return 1; end; return 0;
+</code></pre>
+<p><strong>最佳实践，使用时，手动指定过期时间，可以省去整个续期操作</strong></p>
+<h2 id="常见的分布式锁"><strong>常见的分布式锁</strong></h2>
+<h3 id="可重入锁">可重入锁</h3>
+<p>先看看已下伪代码</p>
+<pre><code class="language-java">a() {
+	b();
+}
+</code></pre>
+<p>在A方法中调用了B方法，此时A方法需要获取C锁，往下执行，B方法也需要获取C锁，如果C锁为不可重入锁，那</p>
+<p>就需要首先等待A方法释放C锁，而A方法又需要等待B方法执行完成才能释放C锁，这就产生了死锁的问题。如果C</p>
+<p>锁为可重入锁，那么A方法与B方法都同时持有C锁，</p>
+<p><strong>常用的方法</strong></p>
+<pre><code class="language-java">Rlock lock = redisson.getLock(&quot;lock&quot;)
+//加锁
+lock.lock();
+//尝试加锁
+lock.tryLock();
+//释放锁
+lock.unlock();
+</code></pre>
+<h3 id="公平锁">公平锁</h3>
+<p>顾名思义，所有线程在获取锁时需要顺序的获取，就像日常排队一样。Redisisson默认为非公平锁</p>
+<p><strong>常用的方法</strong></p>
+<pre><code class="language-java">Rlock fireLock = redisson.getFairLock(&quot;fireLock&quot;)
+fireLock.lock();
+fireLock.unlock();
+</code></pre>
+<h3 id="读写锁"><strong>读写锁</strong></h3>
+<p>保证一定能读到最新状态，读锁可以在没有写锁的时候被多个线程同时持有（共享锁），写锁是独占的(排他锁/独</p>
+<p>享锁)。 每次只能有一个写线程，但是可以有多个线程并发地读数据。</p>
+<p>分布式可重入读写锁允许同时有多个读锁和一个写锁处于加锁状态。</p>
+<p><strong>常用的方法</strong></p>
+<pre><code class="language-java">RReadWriteLock rwlock = redisson.getReadWriteLock(&quot;anyRWLock&quot;);
+//加读锁
+rwlock.readLock().lock();
+//加写锁
+rwlock.writeLock().lock();
+</code></pre>
+<p><strong>常见情况分析</strong></p>
+<ul>
+<li><strong>读+读</strong> ：相当于无锁，并发读，只会在redis中记录好，所有当前的读锁。会同时加锁成功</li>
+<li><strong>写+读</strong> ：等待写锁释放</li>
+<li><strong>写+写</strong> ：阻塞方式，需等待上一个写锁释放</li>
+<li><strong>读+写</strong> ：有读锁，写也需要等待。</li>
+</ul>
+<p><strong>总结：只要有写的存在，都必须等待</strong></p>
+<h3 id="信号量">信号量</h3>
+<p>可以限制同时访问共享区域的线程数量，即限流。</p>
+<p>信号量总数存储于Redis的一个key(可自定义)中，每次申请都会将该key对应的value值减去1，直到数量为0，不能</p>
+<p>再次申请。反之，当释放许可时，每次操作都会将其值加上1。</p>
+<p>比喻：相当于一个停车场，来一辆车，可用的车库数就减少一，走一辆，可用的车库数就增加一。</p>
+<p><strong>常用的方法</strong></p>
+<pre><code>RSemaphore semaphore = redisson.getSemaphore(&quot;semaphore&quot;);
+//获取23个信号量，如果无法获取，会一直等待，阻塞方法
+semaphore.acquire(23);
+//尝试获取1个信号量，无法获取时，返回false
+semaphore.tryAcquire(); 
+//释放信号量
+semaphore.release(); 
+</code></pre>
+<h3 id="闭锁">闭锁</h3>
+<p>需要等待其他线程闭锁都执行完成后，才可以开始执行闭锁中的逻辑</p>
+<p><strong>常用的方法</strong></p>
+<pre><code>RCountDownLatch latch = redisson.getCountDownLatch(&quot;anyCountDownLatch&quot;);
+//设置闭锁数量
+latch.trySetCount(1);
+//等待其他闭锁都执行完成
+latch.await();
+
+//在其他线程或其他JVM里
+RCountDownLatch latch = redisson.getCountDownLatch(&quot;anyCountDownLatch&quot;);
+//完成，闭锁数减一
+latch.countDown();
+</code></pre>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2020/07/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E7%9A%84%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88%E9%97%AE%E9%A2%98/" title="高并发下的缓存失效问题及解决方案"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2020/07/%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98%E5%8F%8A%E6%9C%80%E4%BD%B3%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"
+                    title="缓存与数据库一致性问题及最佳解决方案"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2020
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

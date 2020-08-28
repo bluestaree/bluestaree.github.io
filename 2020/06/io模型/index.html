@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        Netty的IO模型 - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="前言 IO模型：就是用什么样的通道进行数据的发送和接收,很大程度上决定了程序通信的性能 而netty是一款基于NIO(Nonblocking I/" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>Netty的IO模型 - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="Netty的IO模型" />
+<meta property="og:description" content="前言 IO模型：就是用什么样的通道进行数据的发送和接收,很大程度上决定了程序通信的性能 而netty是一款基于NIO(Nonblocking I/" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2020/06/io%E6%A8%A1%E5%9E%8B/" />
+<meta property="article:published_time" content="2020-06-09T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-06-09T00:00:00+00:00" />
+<meta itemprop="name" content="Netty的IO模型">
+<meta itemprop="description" content="前言 IO模型：就是用什么样的通道进行数据的发送和接收,很大程度上决定了程序通信的性能 而netty是一款基于NIO(Nonblocking I/">
+<meta itemprop="datePublished" content="2020-06-09T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-06-09T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2501">
+
+
+
+<meta itemprop="keywords" content="Netty," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Netty的IO模型"/>
+<meta name="twitter:description" content="前言 IO模型：就是用什么样的通道进行数据的发送和接收,很大程度上决定了程序通信的性能 而netty是一款基于NIO(Nonblocking I/"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">25</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8Bvolatile%E5%85%B3%E9%94%AE%E5%AD%97%E8%A7%A3%E6%9E%90/" class="title">Java中Volatile关键字</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-28</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/springcloud-alibaba-sentinel/" class="title">高并发下保证服务稳定性-Sentinel</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-22 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-22</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/" class="title">接口幂等性问题与解决方案</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-10 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-10</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/springcloud-alibaba-seata/" class="title">分布式解决方案-Seata</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-04</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" class="title">本地事务与分布式事务</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-03 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-03</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2020/06/io%E6%A8%A1%E5%9E%8B/"
+    >Netty的IO模型</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2020/06/io%E6%A8%A1%E5%9E%8B/" class="article-date">
+  <time datetime="2020-06-09 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-06-09</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/netty/"> Netty </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/netty/"> Netty </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2020/06/io%E6%A8%A1%E5%9E%8B/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2501字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<h2 id="前言">前言</h2>
+<blockquote>
+<p>IO模型：就是用什么样的通道进行数据的发送和接收,很大程度上决定了程序通信的性能</p>
+<p>而<strong>netty</strong>是一款基于NIO(Nonblocking I/O,非阻塞IO)所开发的网络通信框架。</p>
+</blockquote>
+<p>下面介绍三种I/O模型。</p>
+<p><strong>BIO，传统同步阻塞</strong> ： 服务器实现模式为一个连接一个线程,即客户端有连接请求时服务器端就需要启动一个线程</p>
+<p>进行处理,如果这个连接不做任何事情会造成不必要的线程开销</p>
+<p><strong>NIO，同步非阻塞</strong>：服务器实现模式为一个线程处理多个请求(连接),即客户端发送的连接请求都会注册到多路复用</p>
+<p>器上,多路复用器轮询到连接有IO请求就进行处理</p>
+<p><strong>AIO，异步非阻塞</strong>：AIO引入异步通道的概念,采用了 Proactor模式,简化了程序编写,有效的请求才启动线程,它的特</p>
+<p>点是先由操作系统完成后才通知服务端程序启动线程去处理,一般适用于连接数较多且连接时间较长的应用</p>
+<h2 id="bionioaio适用场景分析">BIO、NIO、AIO适用场景分析</h2>
+<ol>
+<li>BIO方式适用于连接数目比较小且固定的架构,这种方式对服务器资源要求比较高并发局限于应用中,JDK1.4以前</li>
+</ol>
+<p>的唯一选择,但程序简单易理解。</p>
+<ol start="2">
+<li>
+<p>NIO方式适用于连接数目多且连接比较短(轻操作)的架构,比如聊天服务器,弹幕系统,服务器间通讯等。编程比较复杂,JDK1.4开始支持</p>
+</li>
+<li>
+<p>AIO方式使用于连接数目多且连接比较长(重操作)的架构,比如相册服务器,充分调用OS参与并发操作,编程比较复</p>
+</li>
+</ol>
+<p>杂,JDK7开始支持</p>
+<h2 id="nio的三大核心组件----channel--selector--buffer">NIO的三大核心组件 &ndash; Channel , Selector , Buffer</h2>
+<h3 id="缓冲区-buffer-"><strong>缓冲区( Buffer )</strong></h3>
+<p>缓冲区本质上是一个可以读写数据的内存块,可以理解成是一个容器对象(含数组),该对象提供了一组方法,可以更轻</p>
+<p>松地使用内存块，缓冲区对象内置了一些机制,，能够跟踪和记录缓冲区的状态变化情况。 Channel提供从文件、</p>
+<p>网络读取数据的渠道，但是读取或写入的数据都必须经由 Buffer，常用的Buffer缓冲区：<strong>ByteBuffer</strong></p>
+<p><strong>除了Boolean，java中的其他原生数据类型都有与之对应的Buffer</strong></p>
+<h4 id="buffer的分散和聚集">Buffer的分散和聚集</h4>
+<p>NIO还支持通过多个Buffer(即Buffer数组)完成读写操作，即Scattering和Gathering</p>
+<ul>
+<li>Scattering：将数据写入到buffer时，可以采用buffer数组的形式，依次写入【分散】</li>
+<li>Gathering：从buffer读取数据时，可以采用buffer数组，依次读</li>
+</ul>
+<h3 id="通道-channel-"><strong>通道( Channel )</strong></h3>
+<p>NIO的通道类似于流,但有些区别如下</p>
+<ul>
+<li>通道可以同时进行读写,而流只能读或者只能写</li>
+<li>通道可以实现异步读写数据</li>
+<li>通道可以从缓冲读数据,也可以写数据到缓冲:</li>
+</ul>
+<p>常用的通道：<strong>FileChannel(文件读写)</strong>、<strong>DatagramChannel(对UDP数据读写)</strong>、<strong>ServerSocketChannel(TCP数据读写)</strong>、<strong>SocketChannel(TCP数据读写)</strong></p>
+<p>Channel 可从原生IO中获取</p>
+<pre><code class="language-java">// 创建一个输出流- &gt;channel
+FileOutputStream fileOutputStream = new FileOutputStream(&quot;d:\\file01.txt&quot;);
+//通过fileOutputStream获取对应的FileChannel
+//这个fileChannel真实类型是FileChannelImpl
+FileChannel fileChannel = fileOutputStream.getChannel();
+</code></pre>
+<p>NIO还提供了 <strong>MappedByteBuffer</strong>，可以让文件直接在内存(堆外的内存)中进行修改，而如何同步到文件由NIO来完成.</p>
+<pre><code class="language-java">RandomAccessFile randomAccessFile = new RandomAccessFile(&quot;1.txt&quot;,&quot;rw&quot;);
+//获取对应的通道
+FileChannel channel = randomAccessFile.getChannel();
+/**
+*参数1: FileChannel.MapMode.READ_WRITE使用的读写模式
+*参数2: 0:可以直接修改的起始位置
+*参数3: 5:是映射到内存的大小, 即将1.txt的多少个字节映射到内存
+*可以直接修改的范围就是 0-5
+*/
+MappedByteBuffer mappedByteBuffer = channel.map(FileChannel.MapMode.READ_WRITE, 0, 5);
+mappedByteBuffer.put(0,(byte)'H');
+mappedByteBuffer.put(3,(byte)'9');
+
+</code></pre>
+<h3 id="选择器-selector-">选择器( Selector )</h3>
+<ol>
+<li>
+<p>Java的NIO，用非阻塞的IO方式。可以用一个线程，处理多个的客户端连接，就会使用到 Selector(选择器)</p>
+</li>
+<li>
+<p>Selector能够检测多个注册的通道上是否有事件发生(注意:多个 Channel以事件的方式可以注册到同一个</p>
+</li>
+</ol>
+<p>Selector)，如果有事件发生，便获取事件然后针对每个事件进行相应的处理。这样就可以只用一个单线程去管理</p>
+<p>多个通道，也就是管理多个连接和请求。</p>
+<ol start="3">
+<li>
+<p>只有在连接真正有读写事件发生时，才会进行读写，就大大地减少了系统开销，并且不必为每个连接都创建一个线程，不用去维护多个线程</p>
+</li>
+<li>
+<p>避免了多线程之间的上下文切换导致的开销</p>
+</li>
+</ol>
+<h2 id="nio初体验">NIO初体验</h2>
+<p>使用NIO实现简单多人聊天功能</p>
+<p>服务端</p>
+<pre><code class="language-java">import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.*;
+import java.util.Iterator;
+import java.util.Set;
+
+//实现简单多人聊天功能
+//服务端
+public class NioService {
+
+    public ServerSocketChannel serverSocketChannel;
+    public Selector selector;
+    public static final int PORT = 8888;
+
+    //初始化参数
+    public NioService() throws IOException {
+        //初始化serverSocketChannel
+        serverSocketChannel = ServerSocketChannel.open();
+        //初始化selector
+        selector = Selector.open();
+        //绑定监听端口
+        serverSocketChannel.socket().bind(new InetSocketAddress(PORT));
+        //设置非阻塞
+        serverSocketChannel.configureBlocking(false);
+        //注册至selector
+        serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+
+        System.out.println(&quot;服务器初始化完成  = &quot;);
+    }
+
+    //监听
+    public void listen() {
+        try {
+            while (true) {
+                int i = selector.select();
+                if (i &gt; 0) { // 有事件发生
+                    //获取触发事件的所有SelectionKey
+                    Iterator&lt;SelectionKey&gt; iterator = selector.selectedKeys().iterator();
+                    //遍历,
+                    while (iterator.hasNext()) {
+                        SelectionKey key = iterator.next();
+                        //连接事件
+                        if (key.isAcceptable()) {
+                            //获取客户端链接通道
+                            SocketChannel socketChannel = serverSocketChannel.accept();
+                            //设置非阻塞
+                            socketChannel.configureBlocking(false);
+                            //注册至selector
+                            socketChannel.register(selector, SelectionKey.OP_READ);
+                            //提示
+                            System.out.println(socketChannel.getRemoteAddress() + &quot; 上线&quot; );
+                        }
+                        if (key.isReadable()) {
+                            //读数据
+                            receiverMessage(key);
+                        }
+                        iterator.remove();
+                    }
+
+                }
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //接收数据
+    public void receiverMessage(SelectionKey key) {
+        if (key == null) {
+            return;
+        }
+        SocketChannel socketChannel = (SocketChannel) key.channel();
+
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        try {
+            socketChannel.read(byteBuffer);
+            //
+            String msg = new String(byteBuffer.array());
+            System.out.println(&quot;转发 &quot; + socketChannel.getRemoteAddress() + &quot; :的信息&quot; + msg);
+            //转发信息
+            sendMessage(msg,socketChannel);
+        } catch (IOException e) {
+            e.printStackTrace();
+            try {
+                System.out.println(socketChannel.getRemoteAddress() + &quot; 离线了&quot;);
+                key.channel();
+                socketChannel.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    //转发信息
+    public void sendMessage(String msg, SocketChannel self) throws IOException {
+        System.out.println(&quot;服务器转发消息中&quot;);
+        //获取所有已注册的通道(除去自己)
+        Set&lt;SelectionKey&gt; keys = selector.keys();
+        for (SelectionKey key : keys) {
+            Channel channel = key.channel();
+            if (channel instanceof SocketChannel &amp;&amp; channel != self) {
+                ByteBuffer byteBuffer = ByteBuffer.wrap(msg.getBytes());
+                ((SocketChannel) channel).write(byteBuffer);
+            }
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        NioService nioService = new NioService();
+        nioService.listen();
+    }
+}
+</code></pre>
+<p>客户端</p>
+<pre><code class="language-java">import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.SocketChannel;
+import java.util.Iterator;
+import java.util.Scanner;
+
+//客户端
+public class NioClient {
+
+    private SocketChannel socketChannel;
+    private Selector selector;
+    private static final String ADDRESS = &quot;127.0.0.1&quot;;
+    private static final int PORT = 8888;
+    private String username;
+
+    public NioClient() throws IOException {
+        socketChannel = SocketChannel.open(new InetSocketAddress(ADDRESS, PORT));
+        selector = Selector.open();
+        socketChannel.configureBlocking(false);
+        socketChannel.register(selector, SelectionKey.OP_READ);
+
+        username =  socketChannel.getLocalAddress().toString().substring(1);
+        System.out.println(username + &quot;is ok...&quot; );
+    }
+
+    public void sendMessage(String msg) throws IOException {
+        msg = username + &quot; 说:&quot; + msg;
+        ByteBuffer byteBuffer = ByteBuffer.wrap(msg.getBytes());
+        socketChannel.write(byteBuffer);
+    }
+
+    public void listen() throws IOException {
+        int select = selector.select();
+        if (select &gt; 0) {
+            Iterator&lt;SelectionKey&gt; iterator = selector.selectedKeys().iterator();
+            while (iterator.hasNext()) {
+                SelectionKey key = iterator.next();
+                if (key.isReadable()) {
+                    ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+                    socketChannel.read(byteBuffer);
+                    System.out.println(new String(byteBuffer.array()));
+                }
+            }
+            iterator.remove();
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        NioClient nioClient = new NioClient();
+
+        //开启一条线程监听消息
+        new Thread(){
+            @Override
+            public void run() {
+                while(true) {
+                    try {
+                        nioClient.listen();
+                        Thread.currentThread().sleep(3000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
+
+        //主线程发送消息
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNextLine()) {
+            nioClient.sendMessage(scanner.next());
+        }
+    }
+}
+</code></pre>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2020/06/netty%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/" title="Netty线程模型"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2020/06/%E9%9B%B6%E6%8B%B7%E8%B4%9D/"
+                    title="零拷贝"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2020
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

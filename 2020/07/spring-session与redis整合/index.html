@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        Spring Session与Redis整合 - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="概述：在一些应用场景下，服务端也需要返回完整的页面信息给客户端，比如有利于SEO的主页，搜索页面等，都需要服务端渲染。当然使用Nuxt或Ne" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>Spring Session与Redis整合 - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="Spring Session与Redis整合" />
+<meta property="og:description" content="概述：在一些应用场景下，服务端也需要返回完整的页面信息给客户端，比如有利于SEO的主页，搜索页面等，都需要服务端渲染。当然使用Nuxt或Ne" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2020/07/spring-session%E4%B8%8Eredis%E6%95%B4%E5%90%88/" />
+<meta property="article:published_time" content="2020-07-28T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-07-28T00:00:00+00:00" />
+<meta itemprop="name" content="Spring Session与Redis整合">
+<meta itemprop="description" content="概述：在一些应用场景下，服务端也需要返回完整的页面信息给客户端，比如有利于SEO的主页，搜索页面等，都需要服务端渲染。当然使用Nuxt或Ne">
+<meta itemprop="datePublished" content="2020-07-28T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-07-28T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1908">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Spring Session与Redis整合"/>
+<meta name="twitter:description" content="概述：在一些应用场景下，服务端也需要返回完整的页面信息给客户端，比如有利于SEO的主页，搜索页面等，都需要服务端渲染。当然使用Nuxt或Ne"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">25</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8Bvolatile%E5%85%B3%E9%94%AE%E5%AD%97%E8%A7%A3%E6%9E%90/" class="title">Java中Volatile关键字</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-28</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/springcloud-alibaba-sentinel/" class="title">高并发下保证服务稳定性-Sentinel</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-22 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-22</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/" class="title">接口幂等性问题与解决方案</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-10 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-10</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/springcloud-alibaba-seata/" class="title">分布式解决方案-Seata</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-04</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" class="title">本地事务与分布式事务</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-03 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-03</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2020/07/spring-session%E4%B8%8Eredis%E6%95%B4%E5%90%88/"
+    >Spring Session与Redis整合</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2020/07/spring-session%E4%B8%8Eredis%E6%95%B4%E5%90%88/" class="article-date">
+  <time datetime="2020-07-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-07-28</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/"> 笔记 </a>
+</span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2020/07/spring-session%E4%B8%8Eredis%E6%95%B4%E5%90%88/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1908字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 4分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<blockquote>
+<p>概述：在一些应用场景下，服务端也需要返回完整的页面信息给客户端，比如有利于SEO的主页，搜索页面等，都需要服务端渲染。当然使用<strong>Nuxt</strong>或<strong>Next</strong>也可以完美解决此问题，本文使用了<strong>Spring Session</strong>技术，结合<strong>Redis</strong>来解决原生Session使用中的一些问题。</p>
+</blockquote>
+<h2 id="heepsession">HeepSession</h2>
+<p>原生HeepSession，是在服务器内存中开辟了一个存储空间，底层使用的是Map结构，用于存储此次会话数据，由SessionManager进行统一管理.</p>
+<p><strong>工作原理：</strong> 在第一次使用session时，服务器会创建一个带 <strong>JSESSIONID</strong> 的cookie，默认以当前服务器域名为该cookie的作用域，以后浏览器只要在对应的作用域下进行请求，服务器就能获取cookie中的<strong>JSESSIONID</strong>对应的Session数据.</p>
+<p><strong>问题：</strong></p>
+<ul>
+<li>不能跨域名共享，可以看到该cookie中指定了可生效的域名</li>
+<li>分布式情况下，多个服务器下，一个用户的session无法共享</li>
+</ul>
+<h2 id="解决方法"><strong>解决方法</strong></h2>
+<h4 id="session共享问题解决-session复制"><strong>Session共享问题解决-session复制</strong></h4>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDD3tyPSSZBs11Fa.1clu*x7sX1G53O0oW00lnSyPbqvUs3qLQsJ80o9roeSrSEK.jEnQCAyYNk0u1KhOBD.tol0!/r" alt="img"></p>
+<p><strong>多服务器集群之间进行session的复制，无论负载均衡到哪一个服务器都能找到数据</strong></p>
+<p><strong>优点</strong></p>
+<ul>
+<li>web-server (Tomcat) 原生支持，只需要修改配置文件</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>session同步需要数据传输， 占用大量网络带宽，降低了服务器群的业务处理能力</li>
+<li>任意一台web-server保存的数据都是所有web-server的session总和，受到内存限制无法水平扩展更多的web-server</li>
+<li>大型分布式集群情况下，由于所有web-server都全量保存数据，所以此方案不可取。</li>
+</ul>
+<h4 id="session共享问题解决-客户端存储"><strong>Session共享问题解决-客户端存储</strong></h4>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDGsq44eCHHZ.F7ikY.EJdvp9NzefYdNVFhNsHdYQDDoNhHqPqKCIWIzFwrSwoP*nT4mcf01ZHmyJYvAQxoEynDo!/r" alt="img"></p>
+<p><strong>将所有信息都通过cookie存储到客户端中</strong></p>
+<p><strong>优点</strong></p>
+<ul>
+<li>服务器不需存储session, 用户保存自己的session信息到cookie中。节省服务端资源</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>每次http请求， 携带用户在cookie中的完整信息，浪费网络带宽</li>
+<li>session数据放在cookie中，cookie有长度限制4K,不能保存大量信息</li>
+<li>session数据放在cookie中，存在泄漏、篡改、窃取等安全隐患</li>
+</ul>
+<h4 id="session共享问题解决-hash一致性"><strong>Session共享问题解决-hash一致性</strong></h4>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDClorVyKdMOqX7pwF9mrd3HRKf2N*ZxMKzGrVoWT1yN.0SQH1rGPiFZsF24G0AeJ2ufxNRv*n0dvSAqF5AfdN7M!/r" alt="img"></p>
+<p><strong>通过负载均衡，保证同一个IP的多次请求，都落在一个服务器上</strong></p>
+<p><strong>优点:</strong></p>
+<ul>
+<li>只需要改nginx配置，不需要修改应用代码</li>
+<li>负载均衡，只要hash属性的值分布是均匀的，多台web-server的负载是均衡的</li>
+<li>可以支持web-server水平扩 展(session同步法是不行的，受内存限制)</li>
+</ul>
+<p><strong>缺点:</strong></p>
+<ul>
+<li>session还是存在web server中的， 所以web-server重启可能导致部分session丢失，影响业务，如部分用户需要重新登录</li>
+<li>如果web-serven水平扩 展，rehash后session重新分布，也会有一部分用户路由不到正确的session</li>
+<li>但是以上缺点问题也不是很大，因为session本来都是有有效期的。所以这两种反向代理的方式可以使用</li>
+</ul>
+<h4 id="session共享问题解决-统一存储"><strong>Session共享问题解决-统一存储</strong></h4>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDNoCHyWuEDUYOmL*tQGYObtH8UUSW*32F.*IMt6Az90yEUZ0y6iqnL7fY0UI2XJ4IRXW8qUgHVtWT5QtSo10Rsk!/r" alt="img"></p>
+<p><strong>不存在服务器内存中，转为由数据库，或Redis等其他中间件进行存储</strong></p>
+<p><strong>优点:</strong></p>
+<ul>
+<li>没有安全隐患</li>
+<li>可以水平扩展， 数据库/缓存水平切分即可</li>
+<li>web-server重启或者扩 容都不会有session丢失</li>
+</ul>
+<p><strong>缺点:</strong></p>
+<ul>
+<li>增加了一次网络调用，并且需要修改应用代码;如将所有的getSession方法替换为从Redis查数据的方式。redis获取数据比内存慢很多</li>
+</ul>
+<h4 id="session共享问题解决-不同服务子域session共享"><strong>Session共享问题解决-不同服务，子域session共享</strong></h4>
+<p>子域session无法共享问题主要原因是：默认的cookie有效域仅为当前域名。</p>
+<p>我们可以整合<strong>Spring Session</strong>修改这个作用域，扩大它的作用范围，如jd.com，这样在其他子域名(pro.jd.com)就</p>
+<p>可以携带此cookie ,实现跨域<strong>session共享</strong>。</p>
+<h2 id="简单接入spring-session"><strong>简单接入Spring Session</strong></h2>
+<p><strong>Spring Session提供了一套API，用于完成管理用户Session的功能</strong></p>
+<h3 id="spring-session与redis整合">Spring Session与Redis整合</h3>
+<p><strong>1. pom文件配置</strong></p>
+<pre><code class="language-xml">	&lt;dependency&gt;
+		&lt;groupId&gt;org.springframework.session&lt;/groupId&gt;
+		&lt;artifactId&gt;spring-session-data-redis&lt;/artifactId&gt;
+	&lt;/dependency&gt;
+</code></pre>
+<p><strong>配置文件</strong></p>
+<pre><code class="language-properties">#Redis连接信息
+spring.redis.host=127.0.0.1
+spring.redis.port=6379
+spring.session.store-type=redis  #指定session存储类型
+server.servlet.session.timeout=30m #session超时时间
+</code></pre>
+<p><strong>2. Config配置类</strong></p>
+<pre><code class="language-java">//配置JSON序列化，默认为JDK序列化方式
+    @Bean
+    public RedisSerializer&lt;Object&gt; springSessionDefaultRedisSerializer() {
+        return new GenericJackson2JsonRedisSerializer();
+    }
+
+//配置自定义cookie信息
+	@Bean
+	public CookieSerializer cookieSerializer() {
+		DefaultCookieSerializer serializer = new DefaultCookieSerializer();
+		serializer.setCookieName(&quot;JSESSIONID&quot;); 
+		serializer.setCookiePath(&quot;/&quot;); 
+		serializer.setDomainName(&quot;bookstore.com&quot;); 
+		return serializer;
+	}
+</code></pre>
+<p><strong>3. Controller</strong></p>
+<p>在Session中添加数据</p>
+<pre><code class="language-JAVA">@GetMapping(&quot;/session&quot;)
+private String session(HttpSession session) {
+    UserInfo userInfo = new UserInfo();
+    userInfo.setName(&quot;Jack&quot;);
+    userInfo.setAge(25);
+    session.setAttribute(&quot;userInfo&quot;, userInfo);
+    return &quot;redirect:http://www.bookstore.com&quot;;
+}
+</code></pre>
+<p><strong>4. 启动类</strong></p>
+<p>启动类中添加如下注解</p>
+<pre><code class="language-java">//整合redis作为session存储
+@EnableRedisHttpSession
+@SpringBootApplication
+public class WebApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(WebApplication.class, args);
+    }
+} 
+</code></pre>
+<h4 id="redis存储结构"><strong>Redis存储结构</strong></h4>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDChzE.HUVNaIGwsN.2D5HeLimJmOLvZziooAQUeg4gOlU.XiKGSEyCzRr7YjJNBLW4Fm9ifwfapSpV7bcFFEPYY!/r" alt="img"></p>
+<h4 id="页面cookie信息"><strong>页面cookie信息</strong></h4>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDEgAzmp8q3vhJfOQFXU6fwGjQfOAD4rjsKBmRMj9jyI2zK8DWvOdItKQaTCRImNYGwtCC2RvXyiL77E1nkXvFlo!/r" alt="img"></p>
+<p>这样一来，我们就将Session存储的位置转移到了Redis，并且修改了Cookie默认信息，只要携带有效的Cookie访问服务器，Spring Session就能从Redis中获取到对应的Session数据，在页面中进行渲染。</p>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2020/07/completablefuture-%E5%BC%82%E6%AD%A5%E7%BC%96%E6%8E%92/" title="CompletableFuture-异步编排"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2020/08/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/"
+                    title="本地事务与分布式事务"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2020
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>
