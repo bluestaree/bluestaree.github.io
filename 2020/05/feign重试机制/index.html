@@ -2,7 +2,7 @@
 <html lang="zh">
   <head>
     <title>
-        Feign重试机制 - AzkeepToo个人博客
+        Feign的一些使用问题 - AzkeepToo个人博客
       </title>
         <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -22,29 +22,29 @@
     
     <meta name="description" content="Feign调用流程 构造请求对象，将对象转为json 发送执行请求(执行成功会解码响应得数据) 获取结果 从代码中可以看出，如何请求出现异常，就会执" />
     <meta name="generator" content="Hugo 0.69.2 with theme pure" />
-    <title>Feign重试机制 - AzkeepToo个人博客</title>
+    <title>Feign的一些使用问题 - AzkeepToo个人博客</title>
     
     
     <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
     
     <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
-    <meta property="og:title" content="Feign重试机制" />
+    <meta property="og:title" content="Feign的一些使用问题" />
 <meta property="og:description" content="Feign调用流程 构造请求对象，将对象转为json 发送执行请求(执行成功会解码响应得数据) 获取结果 从代码中可以看出，如何请求出现异常，就会执" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://bluestaree.github.io/2020/05/feign%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6/" />
 <meta property="article:published_time" content="2020-05-08T00:00:00+00:00" />
 <meta property="article:modified_time" content="2020-05-08T00:00:00+00:00" />
-<meta itemprop="name" content="Feign重试机制">
+<meta itemprop="name" content="Feign的一些使用问题">
 <meta itemprop="description" content="Feign调用流程 构造请求对象，将对象转为json 发送执行请求(执行成功会解码响应得数据) 获取结果 从代码中可以看出，如何请求出现异常，就会执">
 <meta itemprop="datePublished" content="2020-05-08T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-05-08T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="99">
+<meta itemprop="wordCount" content="108">
 
 
 
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Feign重试机制"/>
+<meta name="twitter:title" content="Feign的一些使用问题"/>
 <meta name="twitter:description" content="Feign调用流程 构造请求对象，将对象转为json 发送执行请求(执行成功会解码响应得数据) 获取结果 从代码中可以看出，如何请求出现异常，就会执"/>
 
     <!--[if lte IE 9]>
@@ -314,7 +314,7 @@
   <a
     class="article-title"
     href="/2020/05/feign%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6/"
-    >Feign重试机制</a
+    >Feign的一些使用问题</a
   >
 </h1>
 
@@ -333,7 +333,7 @@
 
         <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2020/05/feign%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6/#comments"
             class="article-comment-link">评论</a></span>
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 99字</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 108字</span>
 		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 1分 </span>
       </div>
     </div>
@@ -347,6 +347,7 @@
 </ol>
 <p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDIhxFYfm8B6GABRBAfKBADR5iZzoFgmgH09PiMJ4LRr5Nge.GzvJREGeZoA9bmkbazB7mBEZ8SAhmO9U6LosVHU!/r" alt="img"></p>
 <p>从代码中可以看出，如何请求出现异常，就会执行 <strong>retryer.continueOrPropagate(e)</strong> 方法进行重试，直到重试次数到指定的值，或者重试成功为止</p>
+<h3 id="feign-get请求传对象httpswwwcnblogscomqq503665965p9865881html"><a href="https://www.cnblogs.com/qq503665965/p/9865881.html">feign get请求传对象</a></h3>
 
     </div>
     <div class="article-footer">
