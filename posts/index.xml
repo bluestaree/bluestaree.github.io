@@ -5,10 +5,19 @@
     <link>https://bluestaree.github.io/posts/</link>
     <description>Recent content in Posts on AzkeepToo个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 28 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 17 Sep 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://bluestaree.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>后端Long类型传到前端精度丢失的正确解决方式</title>
+      <link>https://bluestaree.github.io/2020/09/long%E7%B1%BB%E5%9E%8B%E7%B2%BE%E5%BA%A6%E4%B8%A2%E5%A4%B1/</link>
+      <pubDate>Thu, 17 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/09/long%E7%B1%BB%E5%9E%8B%E7%B2%BE%E5%BA%A6%E4%B8%A2%E5%A4%B1/</guid>
+      <description>最近项目开发中遇到的bug，排查后发现Long主键返回给前端时出现精度丢失问题 原因：前端js对Long类型支持的精度不够，导致后端使用的Lo</description>
+    </item>
     
     <item>
       <title>Java中Volatile关键字</title>
@@ -179,15 +188,6 @@
       
       <guid>https://bluestaree.github.io/2020/06/%E9%9B%B6%E6%8B%B7%E8%B4%9D/</guid>
       <description>转载 · 原文链接：https://www.jianshu.com/p/275602182f39 前言 零拷贝这三个字，一直是服务器网络编程的关键字</description>
-    </item>
-    
-    <item>
-      <title>Netty的IO模型</title>
-      <link>https://bluestaree.github.io/2020/06/io%E6%A8%A1%E5%9E%8B/</link>
-      <pubDate>Tue, 09 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/06/io%E6%A8%A1%E5%9E%8B/</guid>
-      <description>前言 IO模型：就是用什么样的通道进行数据的发送和接收,很大程度上决定了程序通信的性能 而netty是一款基于NIO(Nonblocking I/</description>
     </item>
     
   </channel>

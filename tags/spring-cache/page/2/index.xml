@@ -11,6 +11,15 @@
     
     
     <item>
+      <title>Netty的IO模型</title>
+      <link>https://bluestaree.github.io/2020/06/io%E6%A8%A1%E5%9E%8B/</link>
+      <pubDate>Tue, 09 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/06/io%E6%A8%A1%E5%9E%8B/</guid>
+      <description>前言 IO模型：就是用什么样的通道进行数据的发送和接收,很大程度上决定了程序通信的性能 而netty是一款基于NIO(Nonblocking I/</description>
+    </item>
+    
+    <item>
       <title>Netty线程模型</title>
       <link>https://bluestaree.github.io/2020/06/netty%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/</link>
       <pubDate>Mon, 08 Jun 2020 00:00:00 +0000</pubDate>
