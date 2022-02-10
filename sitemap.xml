@@ -4,27 +4,34 @@
   
   <url>
     <loc>https://bluestaree.github.io/categories/</loc>
-    <lastmod>2020-09-17T00:00:00+00:00</lastmod>
+    <lastmod>2020-09-23T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://bluestaree.github.io/posts/</loc>
-    <lastmod>2020-09-17T00:00:00+00:00</lastmod>
+    <lastmod>2020-09-23T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://bluestaree.github.io/2020/09/long%E7%B1%BB%E5%9E%8B%E7%B2%BE%E5%BA%A6%E4%B8%A2%E5%A4%B1/</loc>
-    <lastmod>2020-09-17T00:00:00+00:00</lastmod>
+    <loc>https://bluestaree.github.io/2020/09/%E6%9E%9A%E4%B8%BE%E7%B1%BB%E8%BD%AC%E4%B8%BA%E9%9B%86%E5%90%88%E6%95%B0%E6%8D%AE/</loc>
+    <lastmod>2020-09-23T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2020-09-23T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://bluestaree.github.io/2020/09/long%E7%B1%BB%E5%9E%8B%E7%B2%BE%E5%BA%A6%E4%B8%A2%E5%A4%B1/</loc>
     <lastmod>2020-09-17T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
