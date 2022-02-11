@@ -5,10 +5,19 @@
     <link>https://bluestaree.github.io/categories/</link>
     <description>Recent content in Categories on AzkeepToo个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 23 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 28 Sep 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://bluestaree.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>正则表达式实现字符串模板替换</title>
+      <link>https://bluestaree.github.io/2020/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%9D%BF%E6%9B%BF%E6%8D%A2/</link>
+      <pubDate>Mon, 28 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%9D%BF%E6%9B%BF%E6%8D%A2/</guid>
+      <description>场景： 最近开发项目中，有这样一个功能:管理人可自定义消息模板， 可在模板中插入动态参数，由后台进行替换，考虑了下，可以采用正则实现，参考文章 ：</description>
+    </item>
     
     <item>
       <title>枚举类转为集合数据</title>
@@ -179,15 +188,6 @@
       
       <guid>https://bluestaree.github.io/2020/06/netty%E7%BB%84%E4%BB%B6%E4%BB%8B%E7%BB%8D/</guid>
       <description>总览 Bootstrap or ServerBootstrap EventLoop or EventLoopGroup ChannelInitializer ChannelHandler ChannelPipeline ChannelHandlerContext Future or ChannelFuture Bootstrap or ServerBootstrap 都是用来启动一个Netty应用的配置类，它主要作用是配置整个Netty程序，串联起各个组件。 EventLoop or EventLoopGroup EventLoopGroup 是一</description>
-    </item>
-    
-    <item>
-      <title>Netty初体验</title>
-      <link>https://bluestaree.github.io/2020/06/netty%E5%88%9D%E4%BD%93%E9%AA%8C/</link>
-      <pubDate>Sun, 14 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/06/netty%E5%88%9D%E4%BD%93%E9%AA%8C/</guid>
-      <description>前言：通过Netty完成一个简单的多客户端与单服务端交互的demo Netty初体验 服务端 public class NettyServer { public static void main(String[] args) throws Exception { //1. 创建两个线程组 bossGroup 和 workerGroup //2. bossGroup 只</description>
     </item>
     
   </channel>
