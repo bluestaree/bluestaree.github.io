@@ -5,10 +5,19 @@
     <link>https://bluestaree.github.io/tags/</link>
     <description>Recent content in Tags on AzkeepToo个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 28 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 05 Oct 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://bluestaree.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>SpringBoot应用部署于外置Tomcat容器</title>
+      <link>https://bluestaree.github.io/2020/04/springboot%E5%BA%94%E7%94%A8%E9%83%A8%E7%BD%B2%E4%BA%8E%E5%A4%96%E7%BD%AEtomcat%E5%AE%B9%E5%99%A8/</link>
+      <pubDate>Fri, 17 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/springboot%E5%BA%94%E7%94%A8%E9%83%A8%E7%BD%B2%E4%BA%8E%E5%A4%96%E7%BD%AEtomcat%E5%AE%B9%E5%99%A8/</guid>
+      <description>转载 · 原文链接：SpringBoot应用部署于外置Tomcat容器 0x01. 概述 SpringBoot平时我们用的爽歪歪，爽到它自己连Tomcat都自</description>
+    </item>
     
     <item>
       <title>关于我</title>

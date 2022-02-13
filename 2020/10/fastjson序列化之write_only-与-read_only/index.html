@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        fastjson序列化之WRITE_ONLY 与 READ_ONLY - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="前言 在项目开发中，经常会遇到这样的场景：对于参数较多的接口，一般是定义参数VO类的方式进行接收，同时根据需要定义返回的VO类。这样做项目结构" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>fastjson序列化之WRITE_ONLY 与 READ_ONLY - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="fastjson序列化之WRITE_ONLY 与 READ_ONLY" />
+<meta property="og:description" content="前言 在项目开发中，经常会遇到这样的场景：对于参数较多的接口，一般是定义参数VO类的方式进行接收，同时根据需要定义返回的VO类。这样做项目结构" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2020/10/fastjson%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bwrite_only-%E4%B8%8E-read_only/" />
+<meta property="article:published_time" content="2020-10-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-10-05T00:00:00+00:00" />
+<meta itemprop="name" content="fastjson序列化之WRITE_ONLY 与 READ_ONLY">
+<meta itemprop="description" content="前言 在项目开发中，经常会遇到这样的场景：对于参数较多的接口，一般是定义参数VO类的方式进行接收，同时根据需要定义返回的VO类。这样做项目结构">
+<meta itemprop="datePublished" content="2020-10-05T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-10-05T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="446">
+
+
+
+<meta itemprop="keywords" content="json," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="fastjson序列化之WRITE_ONLY 与 READ_ONLY"/>
+<meta name="twitter:description" content="前言 在项目开发中，经常会遇到这样的场景：对于参数较多的接口，一般是定义参数VO类的方式进行接收，同时根据需要定义返回的VO类。这样做项目结构"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">29</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/json/" class="tag-list-link">json</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="tag-list-link">正则表达式</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/10/fastjson%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bwrite_only-%E4%B8%8E-read_only/" class="title">fastjson序列化之WRITE_ONLY 与 READ_ONLY</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-10-05 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-10-05</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%9D%BF%E6%9B%BF%E6%8D%A2/" class="title">正则表达式实现字符串模板替换</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-09-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-09-28</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/09/%E6%9E%9A%E4%B8%BE%E7%B1%BB%E8%BD%AC%E4%B8%BA%E9%9B%86%E5%90%88%E6%95%B0%E6%8D%AE/" class="title">枚举类转为集合数据</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-09-23 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-09-23</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/09/long%E7%B1%BB%E5%9E%8B%E7%B2%BE%E5%BA%A6%E4%B8%A2%E5%A4%B1/" class="title">后端Long类型传到前端精度丢失的正确解决方式</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-09-17 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-09-17</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/08/java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8Bvolatile%E5%85%B3%E9%94%AE%E5%AD%97%E8%A7%A3%E6%9E%90/" class="title">Java中Volatile关键字</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-28</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2020/10/fastjson%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bwrite_only-%E4%B8%8E-read_only/"
+    >fastjson序列化之WRITE_ONLY 与 READ_ONLY</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2020/10/fastjson%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bwrite_only-%E4%B8%8E-read_only/" class="article-date">
+  <time datetime="2020-10-05 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-10-05</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/"> 笔记 </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/json/"> json </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2020/10/fastjson%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bwrite_only-%E4%B8%8E-read_only/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 446字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 1分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<h3 id="前言">前言</h3>
+<blockquote>
+<p>在项目开发中，经常会遇到这样的场景：对于参数较多的接口，一般是定义参数VO类的方式进行接收，同时根据需要定义返回的VO类。这样做项目结构清晰，不存在多余属性值，缺点是：VO类定义多。另外的做法是，尽量将入参和返回信息都定义在都一个VO类中。缺点是前端会接收到无关的属性信息，影响前端开发。</p>
+<p>本文主要接收fastjson序列化参数之 WRITE_ONLY 与 READ_ONLY 的配置</p>
+</blockquote>
+<p><strong>当接口中请求参数Bean</strong>的字段被 <strong>@JsonProperty(access = Access.WRITE_ONLY)</strong> 约束时，能够正常接收参数（反序列化），但不参与序列化</p>
+<p>反之，被 <strong>@JsonProperty(access = Access.READ_ONLY)</strong> 约束时的属性，不能接收到前端传递的参数，能正常进行序列化，但不参与反序列化</p>
+<hr>
+<h3 id="测试准备"><strong>测试准备</strong></h3>
+<p><strong>实体类</strong></p>
+<pre><code class="language-java">@Data
+@ToString
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @TableId(value = &quot;id&quot;, type = IdType.AUTO)
+    private Long id;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String username;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String avatar;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String email;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
+
+}
+</code></pre>
+<p><strong>控制层</strong></p>
+<pre><code class="language-java">@Slf4j
+@RestController
+@RequestMapping(&quot;/test&quot;)
+public class JsonController {
+
+    @PostMapping(&quot;/json&quot;)
+    public User getUser(@RequestBody User user) {
+        log.info(&quot;接收到的参数：{}&quot; ,user);
+        user.setId(1L);
+        user.setUsername(&quot;username1&quot;);
+        user.setAvatar(&quot;avatar1&quot;);
+        user.setEmail(&quot;email1&quot;);
+        return user;
+    }
+
+}
+</code></pre>
+<p><strong>postman</strong> 发起测试请求，body参数如下</p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/TmEUgtj9EK6.7V8ajmQrEKboplrD4XIdQhOxgIqhFPOJi6yETbgqb*jHXNJGg6LwFfNC90DZys4bb.BHRANvleGnkYW0OcWkQdN8Udtk3X8!/r" alt=""></p>
+<p><strong>请求结果</strong></p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/TmEUgtj9EK6.7V8ajmQrEJM9PNCieKEQLbfxBf933mJjijPG5cQv4kCaZCkHvBoxdddWni54VMY7RTPKX6vcA1E3Up0m8EZKCiHReP.HQI4!/r" alt=""></p>
+<p><strong>后台接收参数:</strong></p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/TmEUgtj9EK6.7V8ajmQrEN0UELyWQjy9XqfEyyn.DCzBH43O16T8AiI6*9mSdXrwxojfdgIJH0GaepmRRr*A8gemy.R9gGunFLyZWhkEkn0!/r" alt=""></p>
+<p><strong>因此，总结如下：</strong></p>
+<p><strong>WRITE_ONLY:仅做反序列化操作。</strong></p>
+<p><strong>READ_ONLY：仅做序列化操作。</strong></p>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2020/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%9D%BF%E6%9B%BF%E6%8D%A2/" title="正则表达式实现字符串模板替换"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2022
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

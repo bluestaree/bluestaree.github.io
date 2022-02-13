@@ -4,21 +4,42 @@
   
   <url>
     <loc>https://bluestaree.github.io/categories/</loc>
-    <lastmod>2020-09-28T00:00:00+00:00</lastmod>
+    <lastmod>2020-10-05T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://bluestaree.github.io/2020/10/fastjson%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bwrite_only-%E4%B8%8E-read_only/</loc>
+    <lastmod>2020-10-05T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://bluestaree.github.io/tags/json/</loc>
+    <lastmod>2020-10-05T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://bluestaree.github.io/posts/</loc>
-    <lastmod>2020-09-28T00:00:00+00:00</lastmod>
+    <lastmod>2020-10-05T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://bluestaree.github.io/tags/</loc>
-    <lastmod>2020-09-28T00:00:00+00:00</lastmod>
+    <lastmod>2020-10-05T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2020-10-05T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -32,13 +53,6 @@
   
   <url>
     <loc>https://bluestaree.github.io/2020/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%9D%BF%E6%9B%BF%E6%8D%A2/</loc>
-    <lastmod>2020-09-28T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2020-09-28T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>json on AzkeepToo个人博客</title>
+    <link>https://bluestaree.github.io/tags/json/</link>
+    <description>Recent content in json on AzkeepToo个人博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 05 Oct 2020 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://bluestaree.github.io/tags/json/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>SpringBoot应用部署于外置Tomcat容器</title>
+      <link>https://bluestaree.github.io/2020/04/springboot%E5%BA%94%E7%94%A8%E9%83%A8%E7%BD%B2%E4%BA%8E%E5%A4%96%E7%BD%AEtomcat%E5%AE%B9%E5%99%A8/</link>
+      <pubDate>Fri, 17 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/springboot%E5%BA%94%E7%94%A8%E9%83%A8%E7%BD%B2%E4%BA%8E%E5%A4%96%E7%BD%AEtomcat%E5%AE%B9%E5%99%A8/</guid>
+      <description>转载 · 原文链接：SpringBoot应用部署于外置Tomcat容器 0x01. 概述 SpringBoot平时我们用的爽歪歪，爽到它自己连Tomcat都自</description>
+    </item>
+    
+    <item>
+      <title>关于我</title>
+      <link>https://bluestaree.github.io/about/</link>
+      <pubDate>Sun, 05 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/about/</guid>
+      <description>本人90后小白一枚，code，从hello开始。慢慢的，谈不上热爱，但也能渐渐体会到其中的乐趣 目前的主要学习方向：java后端开发 博客内容以</description>
+    </item>
+    
+  </channel>
+</rss>
