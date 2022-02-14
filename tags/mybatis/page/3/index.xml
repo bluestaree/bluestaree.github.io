@@ -5,10 +5,28 @@
     <link>https://bluestaree.github.io/tags/mybatis/</link>
     <description>Recent content in Mybatis on AzkeepToo个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 30 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Nov 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://bluestaree.github.io/tags/mybatis/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>@SpringBootApplication注解</title>
+      <link>https://bluestaree.github.io/2020/04/springbootapplication%E6%B3%A8%E8%A7%A3/</link>
+      <pubDate>Sat, 18 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/springbootapplication%E6%B3%A8%E8%A7%A3/</guid>
+      <description>转载 · 原文链接：https://www.codesheep.cn/2018/07/30/at-SpringBootApplication-z</description>
+    </item>
+    
+    <item>
+      <title>Docker常用命令</title>
+      <link>https://bluestaree.github.io/2020/04/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Sat, 18 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+      <description>查看当前所有镜像 docker images 查看所有容器 docker ps -a 根据一个镜像创建一个容器并运行 (windows环境) docker run -d &amp;ndash;name mysql_3308 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=tdt123 -p 3307:3306 -v //f/docker/mysql_3308:/var/lib/mysql mysql:5.5 &amp;ndash;name mysql_3308 &amp;hellip; mysql:5.5 设置容器名，及</description>
+    </item>
     
     <item>
       <title>SpringBoot应用部署于外置Tomcat容器</title>

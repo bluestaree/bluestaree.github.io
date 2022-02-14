@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        springboot&#43;druid&#43;mybatis plus的多数据源配置 - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="转载 · 原文链接：https://www.codesheep.cn/2018/07/30/at-SpringBootApplication-z" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>springboot&#43;druid&#43;mybatis plus的多数据源配置 - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="springboot&#43;druid&#43;mybatis plus的多数据源配置" />
+<meta property="og:description" content="转载 · 原文链接：https://www.codesheep.cn/2018/07/30/at-SpringBootApplication-z" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2020/11/springboot-druid-mybatis-plus%E7%9A%84%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E9%85%8D%E7%BD%AE/" />
+<meta property="article:published_time" content="2020-11-30T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-11-30T00:00:00+00:00" />
+<meta itemprop="name" content="springboot&#43;druid&#43;mybatis plus的多数据源配置">
+<meta itemprop="description" content="转载 · 原文链接：https://www.codesheep.cn/2018/07/30/at-SpringBootApplication-z">
+<meta itemprop="datePublished" content="2020-11-30T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-11-30T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="880">
+
+
+
+<meta itemprop="keywords" content="spring-boot,druid,mybatis," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="springboot&#43;druid&#43;mybatis plus的多数据源配置"/>
+<meta name="twitter:description" content="转载 · 原文链接：https://www.codesheep.cn/2018/07/30/at-SpringBootApplication-z"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">31</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/captcha/" class="tag-list-link">captcha</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/druid/" class="tag-list-link">druid</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/json/" class="tag-list-link">json</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="tag-list-link">正则表达式</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/12/anji-plus-captcha%E8%A1%8C%E4%B8%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E9%9B%86%E6%88%90/" class="title">anji-plus-captcha行为验证码集成</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-12-18 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-12-18</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/11/springboot-druid-mybatis-plus%E7%9A%84%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E9%85%8D%E7%BD%AE/" class="title">springboot&#43;druid&#43;mybatis plus的多数据源配置</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-11-30 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-11-30</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/10/fastjson%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bwrite_only-%E4%B8%8E-read_only/" class="title">fastjson序列化之WRITE_ONLY 与 READ_ONLY</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-10-05 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-10-05</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%9D%BF%E6%9B%BF%E6%8D%A2/" class="title">正则表达式实现字符串模板替换</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-09-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-09-28</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/09/%E6%9E%9A%E4%B8%BE%E7%B1%BB%E8%BD%AC%E4%B8%BA%E9%9B%86%E5%90%88%E6%95%B0%E6%8D%AE/" class="title">枚举类转为集合数据</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-09-23 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-09-23</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2020/11/springboot-druid-mybatis-plus%E7%9A%84%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E9%85%8D%E7%BD%AE/"
+    >springboot&#43;druid&#43;mybatis plus的多数据源配置</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2020/11/springboot-druid-mybatis-plus%E7%9A%84%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2020-11-30 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-11-30</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/"> 笔记 </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/spring-boot/"> spring-boot </a>
+    <a class="article-tag-link" href="/tags/druid/"> druid </a>
+    <a class="article-tag-link" href="/tags/mybatis/"> mybatis </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2020/11/springboot-druid-mybatis-plus%E7%9A%84%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E9%85%8D%E7%BD%AE/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 880字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 2分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<blockquote>
+<p>转载 · 原文链接：https://www.codesheep.cn/2018/07/30/at-SpringBootApplication-zhujie/</p>
+</blockquote>
+<p>多数据源配置，在我们集成多个系统或者对接的时候经常会用到，结合springboot、druid提供了比较方便的集成方案。</p>
+<p>思路：</p>
+<p>1、yml中配置多个数据源信息</p>
+<p>2、通过AOP切换不同数据源</p>
+<p>3、配合mybatis plus使用</p>
+<hr>
+<h3 id="1yml配置">1、yml配置</h3>
+<pre><code class="language-yaml">spring:
+  aop:
+      proxy-target-class: true
+      auto: true
+  datasource:
+    druid:
+      db1:
+        url: jdbc:mysql://localhost:3306/eboot
+        username: root
+        password: root
+        driver-class-name: com.mysql.jdbc.Driver
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+      db2:
+        url: jdbc:oracle:thin:@192.168.136.222:ORCL
+        username: sa
+        password: sa123456
+        driver-class-name: oracle.jdbc.OracleDriver
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+      db3:
+        url: jdbc:oracle:thin:@192.168.136.223:ORCL
+        username: sb
+        password: sb123456
+        driver-class-name: oracle.jdbc.OracleDriver
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+</code></pre>
+<h3 id="2启动加载多个数据源">2、启动加载多个数据源</h3>
+<p>下面mybatis plus的全局配置被注掉了，因为同样可以在yml中配置也可以</p>
+<pre><code class="language-java">package com.df.openapi.config;
+
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
+import com.baomidou.mybatisplus.MybatisConfiguration;
+import com.baomidou.mybatisplus.entity.GlobalConfiguration;
+import com.baomidou.mybatisplus.mapper.LogicSqlInjector;
+import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
+import com.df.openapi.config.db.DBTypeEnum;
+import com.df.openapi.config.db.DynamicDataSource;
+import com.df.openapi.config.db.MyMetaObjectHandler;
+import org.apache.ibatis.plugin.Interceptor;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.type.JdbcType;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author 小尘哥
+ */
+@EnableTransactionManagement
+@Configuration
+@MapperScan(&quot;com.df.openapi.**.mapper.db*&quot;)
+public class MybatisPlusConfig {
+
+    @Bean
+    public PaginationInterceptor paginationInterceptor() {
+        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+        paginationInterceptor.setLocalPage(true);
+        return paginationInterceptor;
+    }
+
+    @Bean(name = &quot;db1&quot;)
+    @ConfigurationProperties(prefix = &quot;spring.datasource.druid.db1&quot;)
+    public DataSource db1() {
+        return DruidDataSourceBuilder.create().build();
+    }
+
+    @Bean(name = &quot;db2&quot;)
+    @ConfigurationProperties(prefix = &quot;spring.datasource.druid.db2&quot;)
+    public DataSource db2() {
+        return DruidDataSourceBuilder.create().build();
+    }
+
+    @Bean(name = &quot;db3&quot;)
+    @ConfigurationProperties(prefix = &quot;spring.datasource.druid.db3&quot;)
+    public DataSource db3() {
+        return DruidDataSourceBuilder.create().build();
+    }
+
+    /**
+     * 动态数据源配置
+     *
+     * @return
+     */
+    @Bean
+    @Primary
+    public DataSource multipleDataSource(@Qualifier(&quot;db1&quot;) DataSource db1,
+                                         @Qualifier(&quot;db2&quot;) DataSource db2,
+                                         @Qualifier(&quot;db3&quot;) DataSource db3) {
+        DynamicDataSource dynamicDataSource = new DynamicDataSource();
+        Map&lt;Object, Object&gt; targetDataSources = new HashMap&lt;&gt;();
+        targetDataSources.put(DBTypeEnum.db1.getValue(), db1);
+        targetDataSources.put(DBTypeEnum.db2.getValue(), db2);
+        targetDataSources.put(DBTypeEnum.db3.getValue(), db3);
+        dynamicDataSource.setTargetDataSources(targetDataSources);
+        dynamicDataSource.setDefaultTargetDataSource(db2);
+        return dynamicDataSource;
+    }
+
+    @Bean(&quot;sqlSessionFactory&quot;)
+    public SqlSessionFactory sqlSessionFactory() throws Exception {
+        MybatisSqlSessionFactoryBean sqlSessionFactory = new MybatisSqlSessionFactoryBean();
+        sqlSessionFactory.setDataSource(multipleDataSource(db1(), db2(),db3()));
+
+        MybatisConfiguration configuration = new MybatisConfiguration();
+        configuration.setJdbcTypeForNull(JdbcType.NULL);
+        configuration.setMapUnderscoreToCamelCase(true);
+        configuration.setCacheEnabled(false);
+        sqlSessionFactory.setConfiguration(configuration);
+        //PerformanceInterceptor(),OptimisticLockerInterceptor()
+        //添加分页功能
+        sqlSessionFactory.setPlugins(new Interceptor[]{
+                paginationInterceptor()
+        });
+//        sqlSessionFactory.setGlobalConfig(globalConfiguration());
+        return sqlSessionFactory.getObject();
+    }
+
+ /*   @Bean
+    public GlobalConfiguration globalConfiguration() {
+        GlobalConfiguration conf = new GlobalConfiguration(new LogicSqlInjector());
+        conf.setLogicDeleteValue(&quot;-1&quot;);
+        conf.setLogicNotDeleteValue(&quot;1&quot;);
+        conf.setIdType(0);
+        conf.setMetaObjectHandler(new MyMetaObjectHandler());
+        conf.setDbColumnUnderline(true);
+        conf.setRefresh(true);
+        return conf;
+    }*/
+}
+</code></pre>
+<h3 id="3dbtype枚举类">3、DBType枚举类</h3>
+<pre><code class="language-java">package com.df.openapi.config.db;
+
+public enum DBTypeEnum {
+
+    db1(&quot;db1&quot;), db2(&quot;db2&quot;), db3(&quot;db3&quot;);
+    private String value;
+
+    DBTypeEnum(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+}
+</code></pre>
+<h3 id="4动态数据源决策">4、动态数据源决策</h3>
+<pre><code class="language-java">package com.df.openapi.config.db;
+
+import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
+
+public class DynamicDataSource extends AbstractRoutingDataSource {
+
+    @Override
+    protected Object determineCurrentLookupKey() {
+        return  DbContextHolder.getDbType();
+    }
+}
+</code></pre>
+<h3 id="5设置获取数据源">5、设置、获取数据源</h3>
+<pre><code class="language-java">package com.df.openapi.config.db;
+
+public class DbContextHolder {
+
+    private static final ThreadLocal contextHolder = new ThreadLocal&lt;&gt;();
+    /**
+     * 设置数据源
+     * @param dbTypeEnum
+     */
+    public static void setDbType(DBTypeEnum dbTypeEnum) {
+        contextHolder.set(dbTypeEnum.getValue());
+    }
+
+    /**
+     * 取得当前数据源
+     * @return
+     */
+    public static String getDbType() {
+        return (String) contextHolder.get();
+    }
+
+    /**
+     * 清除上下文数据
+     */
+    public static void clearDbType() {
+        contextHolder.remove();
+    }
+}
+
+</code></pre>
+<h3 id="6aop实现的数据源切换">6、AOP实现的数据源切换</h3>
+<p>@Order设置的足够小是为了让他先执行</p>
+<pre><code class="language-java">package com.df.openapi.config.db;
+
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
+/**
+ * @author 迪富
+ */
+@Component
+@Order(value = -100)
+@Slf4j
+@Aspect
+public class DataSourceSwitchAspect {
+
+    @Pointcut(&quot;execution(* com.df.openapi.*.mapper.db1..*.*(..))&quot;)
+    private void db1Aspect() {
+    }
+
+    @Pointcut(&quot;execution(* com.df.openapi.*.mapper.db2..*.*(..))&quot;)
+    private void db2Aspect() {
+    }
+
+    @Pointcut(&quot;execution(* com.df.openapi.*.mapper.db3..*.*(..))&quot;)
+    private void db3Aspect() {
+    }
+
+    @Before(&quot;db1Aspect()&quot;)
+    public void db1() {
+        log.info(&quot;切换到db1 数据源...&quot;);
+        DbContextHolder.setDbType(DBTypeEnum.db1);
+    }
+
+    @Before(&quot;db2Aspect()&quot;)
+    public void db2() {
+        log.info(&quot;切换到db2 数据源...&quot;);
+        DbContextHolder.setDbType(DBTypeEnum.db2);
+    }
+
+    @Before(&quot;db3Aspect()&quot;)
+    public void db3() {
+        log.info(&quot;切换到db3 数据源...&quot;);
+        DbContextHolder.setDbType(DBTypeEnum.db3);
+    }
+}
+
+</code></pre>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2020/10/fastjson%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bwrite_only-%E4%B8%8E-read_only/" title="fastjson序列化之WRITE_ONLY 与 READ_ONLY"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2020/12/anji-plus-captcha%E8%A1%8C%E4%B8%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E9%9B%86%E6%88%90/"
+                    title="anji-plus-captcha行为验证码集成"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2022
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

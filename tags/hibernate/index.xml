@@ -11,6 +11,24 @@
     
     
     <item>
+      <title>anji-plus-captcha行为验证码集成</title>
+      <link>https://bluestaree.github.io/2020/12/anji-plus-captcha%E8%A1%8C%E4%B8%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E9%9B%86%E6%88%90/</link>
+      <pubDate>Fri, 18 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/12/anji-plus-captcha%E8%A1%8C%E4%B8%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E9%9B%86%E6%88%90/</guid>
+      <description>本文介绍开源项目：anji-plus-captcha开源项目集成流程 github地址: https://github.com/anji-plus/captcha/ 码云地址: https://gitee.com/xiweicheng/captcha 第一步： 加入pom文件依赖 &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.anji-plus&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;captcha&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; 第二步</description>
+    </item>
+    
+    <item>
+      <title>springboot&#43;druid&#43;mybatis plus的多数据源配置</title>
+      <link>https://bluestaree.github.io/2020/11/springboot-druid-mybatis-plus%E7%9A%84%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/11/springboot-druid-mybatis-plus%E7%9A%84%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E9%85%8D%E7%BD%AE/</guid>
+      <description>转载 · 原文链接：https://www.codesheep.cn/2018/07/30/at-SpringBootApplication-z</description>
+    </item>
+    
+    <item>
       <title>fastjson序列化之WRITE_ONLY 与 READ_ONLY</title>
       <link>https://bluestaree.github.io/2020/10/fastjson%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bwrite_only-%E4%B8%8E-read_only/</link>
       <pubDate>Mon, 05 Oct 2020 00:00:00 +0000</pubDate>
@@ -170,24 +188,6 @@
       
       <guid>https://bluestaree.github.io/2020/06/%E5%AE%9A%E6%97%B6%E5%99%A8-cron%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
       <description>参考：Quartz文档 cron表达式基本语法：秒 分 时 日 月 周 年 (共7位，其中第7位 年 在Spring中不支持) 特殊字符: ,：枚举; (cron=&amp;quot;7,9,23 * * * * ?&amp;</description>
-    </item>
-    
-    <item>
-      <title>Netty编解码器</title>
-      <link>https://bluestaree.github.io/2020/06/netty%E7%9A%84%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8/</link>
-      <pubDate>Sat, 20 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/06/netty%E7%9A%84%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8/</guid>
-      <description>Netty的编解码器 当Netty发送或者接受一个消息的时候，就将会发生一次数据转换。入站消息会被解码：从字节转换为另一种格式(比如java对</description>
-    </item>
-    
-    <item>
-      <title>Netty-Handler链的调用机制</title>
-      <link>https://bluestaree.github.io/2020/06/handler%E9%93%BE%E7%9A%84%E8%B0%83%E7%94%A8%E6%9C%BA%E5%88%B6/</link>
-      <pubDate>Thu, 18 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/06/handler%E9%93%BE%E7%9A%84%E8%B0%83%E7%94%A8%E6%9C%BA%E5%88%B6/</guid>
-      <description>前言：Netty中ChannelHandler 的作用就是处理IO事件或拦截IO事件，并将其处理结果转发给下一个Handler，那么Handl</description>
     </item>
     
   </channel>

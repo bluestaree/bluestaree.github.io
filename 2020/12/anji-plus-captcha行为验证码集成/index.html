@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        anji-plus-captcha行为验证码集成 - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="本文介绍开源项目：anji-plus-captcha开源项目集成流程 github地址: https://github.com/anji-plus/captcha/ 码云地址: https://gitee.com/xiweicheng/captcha 第一步： 加入pom文件依赖 &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.anji-plus&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;captcha&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; 第二步" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>anji-plus-captcha行为验证码集成 - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="anji-plus-captcha行为验证码集成" />
+<meta property="og:description" content="本文介绍开源项目：anji-plus-captcha开源项目集成流程 github地址: https://github.com/anji-plus/captcha/ 码云地址: https://gitee.com/xiweicheng/captcha 第一步： 加入pom文件依赖 &lt;dependency&gt; &lt;groupId&gt;com.anji-plus&lt;/groupId&gt; &lt;artifactId&gt;captcha&lt;/artifactId&gt; &lt;/dependency&gt; 第二步" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2020/12/anji-plus-captcha%E8%A1%8C%E4%B8%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E9%9B%86%E6%88%90/" />
+<meta property="article:published_time" content="2020-12-18T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-12-18T00:00:00+00:00" />
+<meta itemprop="name" content="anji-plus-captcha行为验证码集成">
+<meta itemprop="description" content="本文介绍开源项目：anji-plus-captcha开源项目集成流程 github地址: https://github.com/anji-plus/captcha/ 码云地址: https://gitee.com/xiweicheng/captcha 第一步： 加入pom文件依赖 &lt;dependency&gt; &lt;groupId&gt;com.anji-plus&lt;/groupId&gt; &lt;artifactId&gt;captcha&lt;/artifactId&gt; &lt;/dependency&gt; 第二步">
+<meta itemprop="datePublished" content="2020-12-18T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-12-18T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1024">
+
+
+
+<meta itemprop="keywords" content="captcha," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="anji-plus-captcha行为验证码集成"/>
+<meta name="twitter:description" content="本文介绍开源项目：anji-plus-captcha开源项目集成流程 github地址: https://github.com/anji-plus/captcha/ 码云地址: https://gitee.com/xiweicheng/captcha 第一步： 加入pom文件依赖 &lt;dependency&gt; &lt;groupId&gt;com.anji-plus&lt;/groupId&gt; &lt;artifactId&gt;captcha&lt;/artifactId&gt; &lt;/dependency&gt; 第二步"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">31</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/captcha/" class="tag-list-link">captcha</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/druid/" class="tag-list-link">druid</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/json/" class="tag-list-link">json</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="tag-list-link">正则表达式</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/12/anji-plus-captcha%E8%A1%8C%E4%B8%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E9%9B%86%E6%88%90/" class="title">anji-plus-captcha行为验证码集成</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-12-18 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-12-18</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/11/springboot-druid-mybatis-plus%E7%9A%84%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E9%85%8D%E7%BD%AE/" class="title">springboot&#43;druid&#43;mybatis plus的多数据源配置</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-11-30 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-11-30</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/10/fastjson%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bwrite_only-%E4%B8%8E-read_only/" class="title">fastjson序列化之WRITE_ONLY 与 READ_ONLY</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-10-05 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-10-05</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%9D%BF%E6%9B%BF%E6%8D%A2/" class="title">正则表达式实现字符串模板替换</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-09-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-09-28</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/09/%E6%9E%9A%E4%B8%BE%E7%B1%BB%E8%BD%AC%E4%B8%BA%E9%9B%86%E5%90%88%E6%95%B0%E6%8D%AE/" class="title">枚举类转为集合数据</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-09-23 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-09-23</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2020/12/anji-plus-captcha%E8%A1%8C%E4%B8%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E9%9B%86%E6%88%90/"
+    >anji-plus-captcha行为验证码集成</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2020/12/anji-plus-captcha%E8%A1%8C%E4%B8%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E9%9B%86%E6%88%90/" class="article-date">
+  <time datetime="2020-12-18 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-12-18</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/"> 笔记 </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/captcha/"> captcha </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2020/12/anji-plus-captcha%E8%A1%8C%E4%B8%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E9%9B%86%E6%88%90/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1024字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 3分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<blockquote>
+<p>本文介绍开源项目：anji-plus-captcha开源项目集成流程</p>
+<p>github地址:	<code>https://github.com/anji-plus/captcha/</code></p>
+<p>码云地址:	<code>https://gitee.com/xiweicheng/captcha</code></p>
+</blockquote>
+<h3 id="第一步">第一步：</h3>
+<p>加入pom文件依赖</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;com.anji-plus&lt;/groupId&gt;
+    &lt;artifactId&gt;captcha&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h3 id="第二步">第二步：</h3>
+<p>重写redis服务实现</p>
+<pre><code class="language-java">import com.anji.captcha.service.CaptchaCacheService;
+
+public class CaptchaCacheServiceRedisImpl implements CaptchaCacheService {
+
+    @Override
+    public String type() {
+        return &quot;redis&quot;;
+    }
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    @Override
+    public void set(String key, String value, long expiresInSeconds) {
+        stringRedisTemplate.opsForValue().set(key, value, expiresInSeconds, TimeUnit.SECONDS);
+    }
+
+    @Override
+    public boolean exists(String key) {
+        return stringRedisTemplate.hasKey(key);
+    }
+
+    @Override
+    public void delete(String key) {
+        stringRedisTemplate.delete(key);
+    }
+
+    @Override
+    public String get(String key) {
+        return stringRedisTemplate.opsForValue().get(key);
+    }
+
+    @Override
+    public Long increment(String key, long val) {
+        return stringRedisTemplate.opsForValue().increment(key,val);
+    }
+}
+</code></pre>
+<h3 id="第三步">第三步：</h3>
+<p>自定义验证码背景图片，这里我的资源文件路径配置如下：</p>
+<p>目录结构</p>
+<ul>
+<li>resources
+<ul>
+<li>images</li>
+<li>captcha
+<ul>
+<li>pic-click</li>
+<li>slide
+<ul>
+<li>original</li>
+<li>slidingBlock</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/TmEUgtj9EK6.7V8ajmQrEHItJ9riW*er1P10S80ljguOE*ji7SguqlxBjBP*KGrwOQNjftPdZfn.1XqFXPrypCRfQJJPUitMwQSN8VXAotI!/r" alt=""></p>
+<h3 id="第四步">第四步：</h3>
+<p>添加配置类</p>
+<pre><code class="language-java">@Configuration
+public class CaptchaConfig {
+
+    @Bean(name = &quot;captchaCacheService&quot;)
+    public CaptchaCacheService captchaCacheService() {
+        CaptchaCacheServiceRedisImpl captchaCacheServiceRedis = new CaptchaCacheServiceRedisImpl();
+        CaptchaServiceFactory.cacheService.put(&quot;redis&quot;, captchaCacheServiceRedis);
+        return captchaCacheServiceRedis;
+    }
+    
+    @Bean
+    @DependsOn(&quot;captchaCacheService&quot;)
+    public CaptchaService captchaService() {
+        Properties config = new Properties();
+        config.put(Const.CAPTCHA_CACHETYPE, &quot;redis&quot;);
+        config.put(Const.CAPTCHA_WATER_MARK, &quot;&quot;);
+        config.put(Const.CAPTCHA_FONT_TYPE, &quot;宋体&quot;);
+        config.put(Const.CAPTCHA_TYPE, &quot;default&quot;);
+        config.put(Const.CAPTCHA_INTERFERENCE_OPTIONS, &quot;0&quot;);
+        config.put(Const.ORIGINAL_PATH_JIGSAW, &quot;classpath:images/captcha/slide&quot;);
+        config.put(Const.ORIGINAL_PATH_PIC_CLICK, &quot;classpath:images/captcha/pic-click&quot;);
+        config.put(Const.CAPTCHA_SLIP_OFFSET, &quot;5&quot;);
+        config.put(Const.CAPTCHA_AES_STATUS, &quot;true&quot;);
+        config.put(Const.CAPTCHA_WATER_FONT, &quot;宋体&quot;);
+        config.put(Const.CAPTCHA_CACAHE_MAX_NUMBER, &quot;1000&quot;);
+        config.put(Const.CAPTCHA_TIMING_CLEAR_SECOND, &quot;180&quot;);
+        config.put(Const.HISTORY_DATA_CLEAR_ENABLE, &quot;1&quot;);
+        config.put(Const.REQ_FREQUENCY_LIMIT_ENABLE, &quot;0&quot;);
+        config.put(Const.REQ_GET_LOCK_LIMIT, &quot;10&quot;);
+        config.put(Const.REQ_GET_LOCK_SECONDS, &quot;30&quot;);
+        config.put(Const.REQ_GET_MINUTE_LIMIT, &quot;240&quot;);
+        config.put(Const.REQ_CHECK_MINUTE_LIMIT, &quot;600&quot;);
+        config.put(Const.REQ_VALIDATE_MINUTE_LIMIT, &quot;600&quot;);
+
+        config.put(Const.CAPTCHA_FONT_SIZE, &quot;25&quot;);
+        config.put(Const.CAPTCHA_FONT_STYLE, Font.BOLD);
+        //更多自定义参数，请参考service/springboot/../resources/application.properties
+        if ((StrUtil.isNotBlank(config.getProperty(Const.ORIGINAL_PATH_JIGSAW))
+                &amp;&amp; config.getProperty(Const.ORIGINAL_PATH_JIGSAW).startsWith(&quot;classpath:&quot;))
+                || (StrUtil.isNotBlank(config.getProperty(Const.ORIGINAL_PATH_PIC_CLICK))
+                &amp;&amp; config.getProperty(Const.ORIGINAL_PATH_PIC_CLICK).startsWith(&quot;classpath:&quot;))) {
+            //自定义resources目录下初始化底图
+            config.put(Const.CAPTCHA_INIT_ORIGINAL, &quot;true&quot;);
+            initializeBaseMap(config.getProperty(Const.ORIGINAL_PATH_JIGSAW),
+                    config.getProperty(Const.ORIGINAL_PATH_PIC_CLICK));
+        }
+        CaptchaService s = CaptchaServiceFactory.getInstance(config);
+        return s;
+    }
+    
+
+    private static void initializeBaseMap(String jigsaw, String picClick) {
+        ImageUtils.cacheBootImage(getResourcesImagesFile(jigsaw + &quot;/original/*.png&quot;), getResourcesImagesFile(jigsaw + &quot;/slidingBlock/*.png&quot;), getResourcesImagesFile(picClick + &quot;/*.png&quot;));
+    }
+
+    public static Map&lt;String, String&gt; getResourcesImagesFile(String path) {
+        Map&lt;String, String&gt; imgMap = new HashMap();
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+
+        try {
+            Resource[] resources = resolver.getResources(path);
+            Resource[] var4 = resources;
+            int var5 = resources.length;
+
+            for(int var6 = 0; var6 &lt; var5; ++var6) {
+                Resource resource = var4[var6];
+                byte[] bytes = FileCopyUtils.copyToByteArray(resource.getInputStream());
+                String string = Base64Utils.encodeToString(bytes);
+                String filename = resource.getFilename();
+                imgMap.put(filename, string);
+            }
+        } catch (Exception var11) {
+            var11.printStackTrace();
+        }
+
+        return imgMap;
+    }
+}
+</code></pre>
+<h3 id="第五步">第五步：</h3>
+<p>控制层接口</p>
+<pre><code class="language-java">@RestController
+@RequestMapping(&quot;/captcha&quot;)
+public class CaptchaController {
+
+    @Autowired
+    private CaptchaService captchaService;
+
+    @PostMapping(&quot;/get&quot;)
+    public ResponseModel get(@RequestBody CaptchaVO captchaVO) {
+        return captchaService.get(captchaVO);
+    }
+
+    @PostMapping(&quot;/check&quot;)
+    public ResponseModel check(@RequestBody CaptchaVO captchaVO) {
+        return captchaService.check(captchaVO);
+    }
+
+    @PostMapping(&quot;/verify&quot;)
+    public ResponseModel verify(@RequestBody CaptchaVO captchaVO) {
+        return captchaService.verification(captchaVO);
+    }
+
+}
+</code></pre>
+<h3 id="第六步">第六步：</h3>
+<p>定义二次校验过滤器</p>
+<pre><code class="language-java">@Component
+public class ValidateCodeFilter extends OncePerRequestFilter {
+
+    @Autowired
+    private CaptchaService captchaService;
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+                                    FilterChain filterChain) throws ServletException, IOException {
+        RequestMatcher matcher = new AntPathRequestMatcher(&quot;/**/userLogin/login&quot;, HttpMethod.POST.toString());
+        boolean matches = matcher.matches(httpServletRequest);
+        String grantType = httpServletRequest.getParameter(&quot;grantType&quot;);
+        if (matches
+                &amp;&amp; StringUtils.equalsIgnoreCase(grantType, &quot;password&quot;)) {
+            try {
+                validateCode(httpServletRequest);
+                filterChain.doFilter(httpServletRequest, httpServletResponse);
+            } catch (Exception e) {
+                int code = HttpStatus.ERROR;
+                String msg = e.getMessage();
+                ServletUtils.renderString(httpServletResponse, JSON.toJSONString(Result.error(code, msg)));
+            }
+        } else {
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+        }
+    }
+
+    private void validateCode(HttpServletRequest httpServletRequest) {
+        String captchaVerification = httpServletRequest.getParameter(&quot;captchaVerification&quot;);
+        CaptchaVO captchaVO = new CaptchaVO();
+        captchaVO.setCaptchaVerification(captchaVerification);
+        ResponseModel response = captchaService.verification(captchaVO);
+        // 验证码校验失败，返回信息告诉前端
+        if(response.isSuccess() == false){
+            String repCode = response.getRepCode();
+            String repMsg = response.getRepMsg();
+            // repCode  0000  无异常，代表成功
+            if(RepCodeEnum.EXCEPTION.getCode().equals(repCode)) {
+                // repCode  9999  服务器内部异常
+            } else if(RepCodeEnum.BLANK_ERROR.getCode().equals(repCode)) {
+                // repCode  0011  参数不能为空
+            } else if(RepCodeEnum.API_CAPTCHA_INVALID.getCode().equals(repCode)) {
+                // repCode  6110  验证码已失效，请重新获取
+            } else if(RepCodeEnum.API_CAPTCHA_COORDINATE_ERROR.getCode().equals(repCode)) {
+                // repCode  6111  验证失败
+            } else if(RepCodeEnum.API_CAPTCHA_ERROR.getCode().equals(repCode)) {
+                // repCode  6112  获取验证码失败,请联系管理员
+            } else {
+                // 其他异常
+            }
+        }
+    }
+}
+</code></pre>
+<h3 id="第七步">第七步：</h3>
+<p>前端代码, 参考官方文档，提供多种项目示例，这里不再扩展</p>
+<p><a href="https://captcha.anji-plus.com/#/doc">https://captcha.anji-plus.com/#/doc</a></p>
+<h3 id="第八步">第八步：</h3>
+<p>启动后台服务 、前端页面服务</p>
+<p>接口联调测试:</p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/TmEUgtj9EK6.7V8ajmQrEBloQnXIRZZbPWK1ULBsBpZsrpjG9KI89hhR2umy25Tq5T4Vzk8Un0v5s2cE8DbblyLO4uTS8Xzr0XwyRdFMXrQ!/r" alt=""></p>
+<h3 id="注意">注意：</h3>
+<p><strong>点选验证码乱码问题</strong></p>
+<ul>
+<li>
+<p>如果将项目部署到linux服务器中 ，需保证字体库存在，否则将出现乱码问题,</p>
+<p>具体操作流程可参考官方文档</p>
+<p><a href="https://captcha.anji-plus.com/#/doc">https://captcha.anji-plus.com/#/doc</a></p>
+<p>及博客</p>
+<p><a href="https://blog.csdn.net/weixin_44850882/article/details/121103708">https://blog.csdn.net/weixin_44850882/article/details/121103708</a></p>
+</li>
+</ul>
+<p><strong>限流功能BUG</strong></p>
+<ul>
+<li>慎用限流功能，存在永久key BUG，问题代码位置 <strong>FrequencyLimitHandler</strong> 如图位置：</li>
+</ul>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/TmEUgtj9EK6.7V8ajmQrEEgnLOJPs4wQOCmlkUWtgE31WMvd8oem0zcFHPJR08Dg8P4PBL*kww4Nk3rJ6HIaH2Sr097shZzjKmq8dQevEHE!/r" alt=""></p>
+<p>问题出现场景：</p>
+<ol>
+<li>正常获取 key （①操作）</li>
+<li>key刚好过期</li>
+<li>此时不会执行if中的 set 方法（②操作）</li>
+<li>执行 increment 方法就会在redis中插入一条永久key(③操作)</li>
+</ol>
+<p>参考</p>
+<p><a href="https://github.com/anji-plus/captcha/issues/66">https://github.com/anji-plus/captcha/issues/66</a></p>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2020/11/springboot-druid-mybatis-plus%E7%9A%84%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E9%85%8D%E7%BD%AE/" title="springboot&#43;druid&#43;mybatis plus的多数据源配置"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2022
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>
