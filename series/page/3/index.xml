@@ -10,6 +10,15 @@
     
     
     <item>
+      <title>SpringBoot应用程序启动过程</title>
+      <link>https://bluestaree.github.io/2020/04/springboot%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/</link>
+      <pubDate>Sun, 19 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/springboot%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/</guid>
+      <description>转载 · 原文链接：https://www.codesheep.cn/2018/09/04/springboot-startup-process</description>
+    </item>
+    
+    <item>
       <title>@SpringBootApplication注解</title>
       <link>https://bluestaree.github.io/2020/04/springbootapplication%E6%B3%A8%E8%A7%A3/</link>
       <pubDate>Sat, 18 Apr 2020 00:00:00 +0000</pubDate>
