@@ -5,10 +5,19 @@
     <link>https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/</link>
     <description>Recent content in 笔记 on AzkeepToo个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 05 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 08 Jan 2021 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>TCP粘包和拆包问题</title>
+      <link>https://bluestaree.github.io/2020/06/tcp%E7%B2%98%E5%8C%85%E5%92%8C%E6%8B%86%E5%8C%85%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Thu, 25 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/06/tcp%E7%B2%98%E5%8C%85%E5%92%8C%E6%8B%86%E5%8C%85%E9%97%AE%E9%A2%98/</guid>
+      <description>前言：TCP是面向连接的，面向流的，提供高可靠性服务。收发两端(客户端和服务器端)都要有一一成对的socket，因此发送端为了将多个发给接收</description>
+    </item>
     
     <item>
       <title>定时器-cron表达式</title>
@@ -179,15 +188,6 @@
       
       <guid>https://bluestaree.github.io/2020/04/jdk-8%E7%9A%84%E9%82%A3%E4%BA%9B%E6%96%B0%E7%89%B9%E6%80%A7/</guid>
       <description>转载 · 原文链接：https://www.runoob.com/java/java8-new-features.html java 8 新特性 Java8 新增了非常</description>
-    </item>
-    
-    <item>
-      <title>原码、反码和补码</title>
-      <link>https://bluestaree.github.io/2020/04/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/</link>
-      <pubDate>Tue, 28 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/04/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/</guid>
-      <description>原反补的相互转换 今天在学习算法时遇到了这个问题，然后大脑就突然宕机。什么情况w(ﾟДﾟ)w！ 在此上网查询资料后记录下， 转载 · 原文链接：htt</description>
     </item>
     
   </channel>

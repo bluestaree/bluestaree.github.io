@@ -5,10 +5,19 @@
     <link>https://bluestaree.github.io/posts/</link>
     <description>Recent content in Posts on AzkeepToo个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 05 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 08 Jan 2021 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://bluestaree.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>原码、反码和补码</title>
+      <link>https://bluestaree.github.io/2020/04/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/</link>
+      <pubDate>Tue, 28 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/</guid>
+      <description>原反补的相互转换 今天在学习算法时遇到了这个问题，然后大脑就突然宕机。什么情况w(ﾟДﾟ)w！ 在此上网查询资料后记录下， 转载 · 原文链接：htt</description>
+    </item>
     
     <item>
       <title>SpringBoot应用程序启动过程</title>

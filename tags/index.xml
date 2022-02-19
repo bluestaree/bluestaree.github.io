@@ -5,10 +5,19 @@
     <link>https://bluestaree.github.io/tags/</link>
     <description>Recent content in Tags on AzkeepToo个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 25 Dec 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 08 Jan 2021 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://bluestaree.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Mybatis-Plus租户解析的应用</title>
+      <link>https://bluestaree.github.io/2021/01/mybatis-plus%E7%A7%9F%E6%88%B7%E8%A7%A3%E6%9E%90%E7%9A%84%E5%BA%94%E7%94%A8/</link>
+      <pubDate>Fri, 08 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2021/01/mybatis-plus%E7%A7%9F%E6%88%B7%E8%A7%A3%E6%9E%90%E7%9A%84%E5%BA%94%E7%94%A8/</guid>
+      <description>转载 · 原文链接：https://www.jianshu.com/p/a80b88b7076b 当前不少同学都在做SAAS平台，SAAS平台中各</description>
+    </item>
     
     <item>
       <title>保留首尾字符，中间全部变为星号</title>
@@ -179,15 +188,6 @@
       
       <guid>https://bluestaree.github.io/2020/07/springcloud-alibaba-nacos-%E6%B3%A8%E5%86%8C%E4%B8%8E%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/</guid>
       <description>由于Spring Cloud Eureka已经宣布停止开源计划，不再继续维护，这怎么行，还能愉快的使用吗。 今天在空闲之余了解了下另外一个功能更加强大的注</description>
-    </item>
-    
-    <item>
-      <title>TCP粘包和拆包问题</title>
-      <link>https://bluestaree.github.io/2020/06/tcp%E7%B2%98%E5%8C%85%E5%92%8C%E6%8B%86%E5%8C%85%E9%97%AE%E9%A2%98/</link>
-      <pubDate>Thu, 25 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/06/tcp%E7%B2%98%E5%8C%85%E5%92%8C%E6%8B%86%E5%8C%85%E9%97%AE%E9%A2%98/</guid>
-      <description>前言：TCP是面向连接的，面向流的，提供高可靠性服务。收发两端(客户端和服务器端)都要有一一成对的socket，因此发送端为了将多个发给接收</description>
     </item>
     
   </channel>

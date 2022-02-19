@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        Mybatis-Plus租户解析的应用 - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="转载 · 原文链接：https://www.jianshu.com/p/a80b88b7076b 当前不少同学都在做SAAS平台，SAAS平台中各" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>Mybatis-Plus租户解析的应用 - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="Mybatis-Plus租户解析的应用" />
+<meta property="og:description" content="转载 · 原文链接：https://www.jianshu.com/p/a80b88b7076b 当前不少同学都在做SAAS平台，SAAS平台中各" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2021/01/mybatis-plus%E7%A7%9F%E6%88%B7%E8%A7%A3%E6%9E%90%E7%9A%84%E5%BA%94%E7%94%A8/" />
+<meta property="article:published_time" content="2021-01-08T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-01-08T00:00:00+00:00" />
+<meta itemprop="name" content="Mybatis-Plus租户解析的应用">
+<meta itemprop="description" content="转载 · 原文链接：https://www.jianshu.com/p/a80b88b7076b 当前不少同学都在做SAAS平台，SAAS平台中各">
+<meta itemprop="datePublished" content="2021-01-08T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-01-08T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2878">
+
+
+
+<meta itemprop="keywords" content="mybatis," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Mybatis-Plus租户解析的应用"/>
+<meta name="twitter:description" content="转载 · 原文链接：https://www.jianshu.com/p/a80b88b7076b 当前不少同学都在做SAAS平台，SAAS平台中各"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">33</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/captcha/" class="tag-list-link">captcha</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/json/" class="tag-list-link">json</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="tag-list-link">正则表达式</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2021/01/mybatis-plus%E7%A7%9F%E6%88%B7%E8%A7%A3%E6%9E%90%E7%9A%84%E5%BA%94%E7%94%A8/" class="title">Mybatis-Plus租户解析的应用</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2021-01-08 00:00:00 &#43;0000 UTC" itemprop="datePublished">2021-01-08</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2021/01/%E4%BF%9D%E7%95%99%E9%A6%96%E5%B0%BE%E5%AD%97%E7%AC%A6%E5%85%B6%E4%BD%99%E5%85%A8%E9%83%A8%E5%8F%98%E4%B8%BA%E6%98%9F%E5%8F%B7/" class="title">保留首尾字符，中间全部变为星号</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2021-01-05 00:00:00 &#43;0000 UTC" itemprop="datePublished">2021-01-05</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/12/mybatis-plus%E7%9A%84%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90ds%E4%BA%8B%E5%8A%A1%E9%97%AE%E9%A2%98/" class="title">Mybatis plus的多数据源@DS事务问题</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-12-25 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-12-25</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/12/anji-plus-captcha%E8%A1%8C%E4%B8%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E9%9B%86%E6%88%90/" class="title">anji-plus-captcha行为验证码集成</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-12-18 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-12-18</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/10/fastjson%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bwrite_only-%E4%B8%8E-read_only/" class="title">fastjson序列化之WRITE_ONLY 与 READ_ONLY</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-10-05 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-10-05</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2021/01/mybatis-plus%E7%A7%9F%E6%88%B7%E8%A7%A3%E6%9E%90%E7%9A%84%E5%BA%94%E7%94%A8/"
+    >Mybatis-Plus租户解析的应用</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2021/01/mybatis-plus%E7%A7%9F%E6%88%B7%E8%A7%A3%E6%9E%90%E7%9A%84%E5%BA%94%E7%94%A8/" class="article-date">
+  <time datetime="2021-01-08 00:00:00 &#43;0000 UTC" itemprop="datePublished">2021-01-08</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/"> 笔记 </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/mybatis/"> mybatis </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2021/01/mybatis-plus%E7%A7%9F%E6%88%B7%E8%A7%A3%E6%9E%90%E7%9A%84%E5%BA%94%E7%94%A8/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2878字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 6分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<blockquote>
+<p>转载 · 原文链接：https://www.jianshu.com/p/a80b88b7076b</p>
+</blockquote>
+<p>当前不少同学都在做SAAS平台，SAAS平台中各租户的数据一般在同一张表中。
+如何优美的处理各租户数据的数据权限是一个很大的问题。比如，A租户在平台只能增删改查id为A的数据，而不能处理租户B的数据，否则就乱套了。
+而在平台中，带有租户ID字段的表可谓很多，我上一个项目中几百张表八成冗余了租户ID字段</p>
+<p>个人在原先的公司都是以手动设置租户ID的形式对后台数据进行租户的限定，一般为前端传入ID参数，或者从当前会话中取出租户ID，再手动设置到sql 的where 条件中。
+在使用Mybatis-Plus插件中，发现了其一个租户解析器的功能，研究一波拿来使用一下</p>
+<h3 id="官方配置示例">官方配置示例</h3>
+<p>下面为其官方使用例子，该示例展示如何配置租户sql解析</p>
+<pre><code class="language-java">package com.baomidou.mybatisplus.samples.tenant.config;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.baomidou.mybatisplus.core.parser.ISqlParser;
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
+import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
+
+import net.sf.jsqlparser.expression.Expression;
+import net.sf.jsqlparser.expression.LongValue;
+
+/**
+ * @author miemie
+ * @since 2018-08-10
+ */
+@Configuration
+@MapperScan(&quot;com.baomidou.mybatisplus.samples.tenant.mapper&quot;)
+public class MybatisPlusConfig {
+
+    /**
+     * 多租户属于 SQL 解析部分，依赖 MP 分页插件
+     */
+    @Bean
+    public PaginationInterceptor paginationInterceptor() {
+        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+        /*
+         * 【测试多租户】 SQL 解析处理拦截器&lt;br&gt;
+         * 这里固定写成住户 1 实际情况你可以从cookie读取，因此数据看不到 【 麻花藤 】 这条记录（ 注意观察 SQL ）&lt;br&gt;
+         */
+        List&lt;ISqlParser&gt; sqlParserList = new ArrayList&lt;&gt;();
+        TenantSqlParser tenantSqlParser = new TenantSqlParser();
+        tenantSqlParser.setTenantHandler(new TenantHandler() {
+
+            @Override
+            public Expression getTenantId() {
+                return new LongValue(1L);
+            }
+
+            @Override
+            public String getTenantIdColumn() {
+                return &quot;tenant_id&quot;;
+            }
+
+            @Override
+            public boolean doTableFilter(String tableName) {
+                // 这里可以判断是否过滤表
+                /*if (&quot;user&quot;.equals(tableName)) {
+                    return true;
+                }*/
+                return false;
+            }
+        });
+
+        sqlParserList.add(tenantSqlParser);
+        paginationInterceptor.setSqlParserList(sqlParserList);
+//        paginationInterceptor.setSqlParserFilter(new ISqlParserFilter() {
+//            @Override
+//            public boolean doFilter(MetaObject metaObject) {
+//                MappedStatement ms = PluginUtils.getMappedStatement(metaObject);
+//                // 过滤自定义查询此时无租户信息约束【 麻花藤 】出现
+//                if (&quot;com.baomidou.springboot.mapper.UserMapper.selectListBySQL&quot;.equals(ms.getId())) {
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+        return paginationInterceptor;
+    }
+
+
+    /**
+     * 性能分析拦截器，不建议生产使用
+     * 用来观察 SQL 执行情况及执行时长
+     */
+    @Bean
+    public PerformanceInterceptor performanceInterceptor(){
+        return new PerformanceInterceptor();
+    }
+}
+</code></pre>
+<p>注意其中关键的两个类，建议去看一下源码
+<code>TenantSqlParser</code> <code>TenantHandler</code>
+其中<code>TenantSqlParser</code> 需要一个 <code>TenantHandler</code> 接口成员，
+根据<code>TenantHandler</code> 接口的 <code>getTenantId()</code> <code>getTenantIdColumn()</code>   <code>doTableFilter(String tableName)</code> 三个方法分别配置租户ID的获取，租户ID的字段名，以及是否过滤该表</p>
+<hr>
+<hr>
+<h3 id="问题">问题</h3>
+<p>看起来近乎完美，配置好上面三项配置，我们CRUD完全不需要手动传租户ID参数，省了一大堆事情。然鹅，问题来了：
+配置：我的租户ID从当前登录会话中取，根据租户用户不同，获取不同的租户ID实现了数据权限的控制，
+栗子：我是系统管理员，我不仅需要查看租户A的数据，也需要查看租户B的数据，而且我不是租户没有租户ID。
+继续引用以上配置，sql将解析成类似于<code>where tenant_id = null</code>的语句，无法查询到租户AB的数据</p>
+<h3 id="处理思路">处理思路</h3>
+<ul>
+<li>我需要在某个地方做判断，如果是系统管理员时，我不希望做这个租户sql解析，不需要限定 tenant_id 的条件；当我是租户用户是，我需要做这个限定</li>
+<li>如果自己实现一个拦截去做上面的判断，颇为啰嗦，我注意到了<code>TenantHandler</code> 接口的  <code>doTableFilter(String tableName)</code> 方法。这个方法可以根据表名判断是否做租户sql解析，我们参照此实现做拓展即可</li>
+</ul>
+<h3 id="实现根据用户判断是否进行租户sql解析">实现根据用户判断是否进行租户sql解析</h3>
+<ul>
+<li>自定义接口<code>MyTenantHandler</code> 继承 <code>TenantHandler</code> 新增  <code>doUserFilter(ContextInfo userInfo)</code> 方法，注意ContextInfo 当前用户会话信息，具体实现请查阅<a href="https://links.jianshu.com/go?to=%5Bhttps%3A%2F%2Fwww.jianshu.com%2Fp%2Fde80b7986e95%5D(https%3A%2F%2Fwww.jianshu.com%2Fp%2Fde80b7986e95)">此博客</a>中对ContextInfo及拦截使用的方式</li>
+</ul>
+<pre><code class="language-java">import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
+import com.zh.backend.common.dto.ContextInfo;
+
+/**
+ * @author wangqichang
+ * @since 2019/6/6
+ */
+public interface MyTenantHandler extends TenantHandler {
+        boolean doUserFilter(ContextInfo userInfo);
+}
+</code></pre>
+<ul>
+<li>自定义<code>MyTenantSqlParser</code> 继承 <code>AbstractJsqlParser</code> 参考 原来的实现类<code>TenantSqlParser</code>，加入对当前用户的判断</li>
+</ul>
+<pre><code class="language-java">import cn.hutool.core.util.ObjectUtil;
+import com.baomidou.mybatisplus.core.parser.AbstractJsqlParser;
+import com.baomidou.mybatisplus.core.toolkit.Assert;
+import com.baomidou.mybatisplus.core.toolkit.ExceptionUtils;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
+import com.zh.backend.common.context.CustomContext;
+import com.zh.backend.common.dto.ContextInfo;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import net.sf.jsqlparser.expression.BinaryExpression;
+import net.sf.jsqlparser.expression.Expression;
+import net.sf.jsqlparser.expression.Parenthesis;
+import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
+import net.sf.jsqlparser.expression.operators.conditional.OrExpression;
+import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
+import net.sf.jsqlparser.expression.operators.relational.ExpressionList;
+import net.sf.jsqlparser.expression.operators.relational.ItemsList;
+import net.sf.jsqlparser.expression.operators.relational.MultiExpressionList;
+import net.sf.jsqlparser.schema.Column;
+import net.sf.jsqlparser.schema.Table;
+import net.sf.jsqlparser.statement.delete.Delete;
+import net.sf.jsqlparser.statement.insert.Insert;
+import net.sf.jsqlparser.statement.select.*;
+import net.sf.jsqlparser.statement.update.Update;
+
+import java.util.List;
+
+/**
+ * @author wangqichang
+ * @since 2019/6/6
+ */
+@Data
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
+public class MyTenantSqlParser extends AbstractJsqlParser {
+
+
+    private MyTenantHandler tenantHandler;
+
+    /**
+     * select 语句处理
+     */
+    @Override
+    public void processSelectBody(SelectBody selectBody) {
+        if (tenantHandler.doUserFilter(CustomContext.current())){
+            //对系统用户不过滤
+            return;
+        }
+        if (selectBody instanceof PlainSelect) {
+            processPlainSelect((PlainSelect) selectBody);
+        } else if (selectBody instanceof WithItem) {
+            WithItem withItem = (WithItem) selectBody;
+            if (withItem.getSelectBody() != null) {
+                processSelectBody(withItem.getSelectBody());
+            }
+        } else {
+            SetOperationList operationList = (SetOperationList) selectBody;
+            if (operationList.getSelects() != null &amp;&amp; operationList.getSelects().size() &gt; 0) {
+                operationList.getSelects().forEach(this::processSelectBody);
+            }
+        }
+    }
+
+    /**
+     * &lt;p&gt;
+     * insert 语句处理
+     * &lt;/p&gt;
+     */
+    @Override
+    public void processInsert(Insert insert) {
+        if (tenantHandler.doTableFilter(insert.getTable().getName())) {
+            // 过滤退出执行
+            return;
+        }
+        if (tenantHandler.doUserFilter(CustomContext.current())){
+            //对系统用户不过滤
+            return;
+        }
+        if (tenantHandler.doUserFilter(CustomContext.current())) {
+            ContextInfo userInfo = CustomContext.current();
+            // 过滤退出执行
+            if (ObjectUtil.isNotNull(userInfo)&amp;&amp;ObjectUtil.isNotNull(userInfo.getTentId())){
+                return;
+            }
+            return;
+        }
+        insert.getColumns().add(new Column(tenantHandler.getTenantIdColumn()));
+        if (insert.getSelect() != null) {
+            processPlainSelect((PlainSelect) insert.getSelect().getSelectBody(), true);
+        } else if (insert.getItemsList() != null) {
+            // fixed github pull/295
+            ItemsList itemsList = insert.getItemsList();
+            if (itemsList instanceof MultiExpressionList) {
+                ((MultiExpressionList) itemsList).getExprList().forEach(el -&gt; el.getExpressions().add(tenantHandler.getTenantId()));
+            } else {
+                ((ExpressionList) insert.getItemsList()).getExpressions().add(tenantHandler.getTenantId());
+            }
+        } else {
+            throw ExceptionUtils.mpe(&quot;Failed to process multiple-table update, please exclude the tableName or statementId&quot;);
+        }
+    }
+
+    /**
+     * &lt;p&gt;
+     * update 语句处理
+     * &lt;/p&gt;
+     */
+    @Override
+    public void processUpdate(Update update) {
+        if (tenantHandler.doUserFilter(CustomContext.current())){
+            //对系统用户不过滤
+            return;
+        }
+        List&lt;Table&gt; tableList = update.getTables();
+        Assert.isTrue(null != tableList &amp;&amp; tableList.size() &lt; 2,
+                &quot;Failed to process multiple-table update, please exclude the statementId&quot;);
+        Table table = tableList.get(0);
+        if (tenantHandler.doTableFilter(table.getName())) {
+            // 过滤退出执行
+            return;
+        }
+        update.setWhere(this.andExpression(table, update.getWhere()));
+    }
+
+    /**
+     * &lt;p&gt;
+     * delete 语句处理
+     * &lt;/p&gt;
+     */
+    @Override
+    public void processDelete(Delete delete) {
+        if (tenantHandler.doUserFilter(CustomContext.current())){
+            //对系统用户不过滤
+            return;
+        }
+        if (tenantHandler.doTableFilter(delete.getTable().getName())) {
+            // 过滤退出执行
+            return;
+        }
+        delete.setWhere(this.andExpression(delete.getTable(), delete.getWhere()));
+    }
+
+    /**
+     * &lt;p&gt;
+     * delete update 语句 where 处理
+     * &lt;/p&gt;
+     */
+    protected BinaryExpression andExpression(Table table, Expression where) {
+        //获得where条件表达式
+        EqualsTo equalsTo = new EqualsTo();
+        equalsTo.setLeftExpression(this.getAliasColumn(table));
+        equalsTo.setRightExpression(tenantHandler.getTenantId());
+        if (null != where) {
+            if (where instanceof OrExpression) {
+                return new AndExpression(equalsTo, new Parenthesis(where));
+            } else {
+                return new AndExpression(equalsTo, where);
+            }
+        }
+        return equalsTo;
+    }
+
+    /**
+     * &lt;p&gt;
+     * 处理 PlainSelect
+     * &lt;/p&gt;
+     */
+    protected void processPlainSelect(PlainSelect plainSelect) {
+        processPlainSelect(plainSelect, false);
+    }
+
+    /**
+     * &lt;p&gt;
+     * 处理 PlainSelect
+     * &lt;/p&gt;
+     *
+     * @param plainSelect
+     * @param addColumn   是否添加租户列,insert into select语句中需要
+     */
+    protected void processPlainSelect(PlainSelect plainSelect, boolean addColumn) {
+        FromItem fromItem = plainSelect.getFromItem();
+        if (fromItem instanceof Table) {
+            Table fromTable = (Table) fromItem;
+            if (tenantHandler.doTableFilter(fromTable.getName())) {
+                // 过滤退出执行
+                return;
+            }
+            plainSelect.setWhere(builderExpression(plainSelect.getWhere(), fromTable));
+            if (addColumn) {
+                plainSelect.getSelectItems().add(new SelectExpressionItem(new Column(tenantHandler.getTenantIdColumn())));
+            }
+        } else {
+            processFromItem(fromItem);
+        }
+        List&lt;Join&gt; joins = plainSelect.getJoins();
+        if (joins != null &amp;&amp; joins.size() &gt; 0) {
+            joins.forEach(j -&gt; {
+                processJoin(j);
+                processFromItem(j.getRightItem());
+            });
+        }
+    }
+
+    /**
+     * 处理子查询等
+     */
+    protected void processFromItem(FromItem fromItem) {
+        if (fromItem instanceof SubJoin) {
+            SubJoin subJoin = (SubJoin) fromItem;
+            if (subJoin.getJoinList() != null) {
+                subJoin.getJoinList().forEach(this::processJoin);
+            }
+            if (subJoin.getLeft() != null) {
+                processFromItem(subJoin.getLeft());
+            }
+        } else if (fromItem instanceof SubSelect) {
+            SubSelect subSelect = (SubSelect) fromItem;
+            if (subSelect.getSelectBody() != null) {
+                processSelectBody(subSelect.getSelectBody());
+            }
+        } else if (fromItem instanceof ValuesList) {
+            logger.debug(&quot;Perform a subquery, if you do not give us feedback&quot;);
+        } else if (fromItem instanceof LateralSubSelect) {
+            LateralSubSelect lateralSubSelect = (LateralSubSelect) fromItem;
+            if (lateralSubSelect.getSubSelect() != null) {
+                SubSelect subSelect = lateralSubSelect.getSubSelect();
+                if (subSelect.getSelectBody() != null) {
+                    processSelectBody(subSelect.getSelectBody());
+                }
+            }
+        }
+    }
+
+    /**
+     * 处理联接语句
+     */
+    protected void processJoin(Join join) {
+        if (join.getRightItem() instanceof Table) {
+            Table fromTable = (Table) join.getRightItem();
+            if (this.tenantHandler.doTableFilter(fromTable.getName())) {
+                // 过滤退出执行
+                return;
+            }
+            join.setOnExpression(builderExpression(join.getOnExpression(), fromTable));
+        }
+    }
+
+    /**
+     * 处理条件
+     */
+    protected Expression builderExpression(Expression expression, Table table) {
+        //生成字段名
+        EqualsTo equalsTo = new EqualsTo();
+        equalsTo.setLeftExpression(this.getAliasColumn(table));
+        equalsTo.setRightExpression(tenantHandler.getTenantId());
+        //加入判断防止条件为空时生成 &quot;and null&quot; 导致查询结果为空
+        if (expression == null) {
+            return equalsTo;
+        } else {
+            if (expression instanceof BinaryExpression) {
+                BinaryExpression binaryExpression = (BinaryExpression) expression;
+                if (binaryExpression.getLeftExpression() instanceof FromItem) {
+                    processFromItem((FromItem) binaryExpression.getLeftExpression());
+                }
+                if (binaryExpression.getRightExpression() instanceof FromItem) {
+                    processFromItem((FromItem) binaryExpression.getRightExpression());
+                }
+            }
+            if (expression instanceof OrExpression) {
+                return new AndExpression(equalsTo, new Parenthesis(expression));
+            } else {
+                return new AndExpression(equalsTo, expression);
+            }
+        }
+    }
+
+    /**
+     * &lt;p&gt;
+     * 租户字段别名设置&lt;br&gt;
+     * tableName.tenantId 或 tableAlias.tenantId
+     * &lt;/p&gt;
+     *
+     * @param table 表对象
+     * @return 字段
+     */
+    protected Column getAliasColumn(Table table) {
+        StringBuilder column = new StringBuilder();
+        if (null == table.getAlias()) {
+            column.append(table.getName());
+        } else {
+            column.append(table.getAlias().getName());
+        }
+        column.append(StringPool.DOT);
+        column.append(tenantHandler.getTenantIdColumn());
+        return new Column(column.toString());
+    }
+}
+</code></pre>
+<ul>
+<li>修改Mybatis-Plus的配置，替换原先实现</li>
+</ul>
+<pre><code class="language-dart">import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
+import com.baomidou.mybatisplus.core.parser.ISqlParser;
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.zh.backend.common.context.CustomContext;
+import com.zh.backend.common.dto.ContextInfo;
+import net.sf.jsqlparser.expression.Expression;
+import net.sf.jsqlparser.expression.LongValue;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+
+/**
+ * 向MP注入多租户解析器，其中自定义MyTenantSqlParser和MyTenantHandler对MP的租户处理逻辑进行继承拓展
+ * 处理器将会判断当前用户是否为租户用户再决定是否过滤不做租户解析
+ * 过滤处理的表格将通过配置注入进来
+ *
+ * @author wangqichang
+ * @since 2019/6/10
+ */
+@Configuration
+public class BaseTenantSqlParserConfig {
+
+    @Value(&quot;${tenant.tentTables}&quot;)
+    private String tentTables;
+
+    /**
+     * 多租户属于 SQL 解析部分，依赖 MP 分页插件
+     */
+    @Bean
+    public PaginationInterceptor paginationInterceptor() {
+        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+        /*
+         * 【测试多租户】 SQL 解析处理拦截器&lt;br&gt;
+         * 这里固定写成住户 1 实际情况你可以从cookie读取，因此数据看不到 【 麻花藤 】 这条记录（ 注意观察 SQL ）&lt;br&gt;
+         */
+        List&lt;ISqlParser&gt; sqlParserList = new ArrayList&lt;&gt;();
+        MyTenantSqlParser tenantSqlParser = new MyTenantSqlParser();
+
+        tenantSqlParser.setTenantHandler(new MyTenantHandler() {
+            @Override
+            public boolean doUserFilter(ContextInfo userInfo) {
+                /**
+                 * 这个参数是当前线程变量中的用户信息
+                 * 当用户信息没有租户ID（超管或者未登录），即不过滤该sql
+                 */
+
+                if (ObjectUtil.isNotNull(userInfo) &amp;&amp; ObjectUtil.isNotNull(userInfo.getTentId())) {
+                    return false;
+                }
+                return true;
+            }
+
+            @Override
+            public Expression getTenantId() {
+                /**
+                 * sql解析时，租户ID参数从会话线程中取出
+                 */
+                if (ObjectUtil.isNotNull(CustomContext.current()) &amp;&amp; ObjectUtil.isNotNull(CustomContext.current().getTentId())) {
+                    return new LongValue(CustomContext.current().getTentId());
+                }
+                return null;
+            }
+
+            /**
+             * 数据库各表中，租户ID字段名
+             * @return
+             */
+            @Override
+            public String getTenantIdColumn() {
+                return &quot;tent_id&quot;;
+            }
+
+            @Override
+            public boolean doTableFilter(String tableName) {
+                /**
+                 * 这里可以判断是否过滤表
+                 * 表名根据实际去配置，凡是不带tent_id的表均应该配置，否则sql会报找不到tent_id这个字段
+                 */
+                if (ObjectUtil.isNotNull(tentTables)) {
+                    List&lt;String&gt; tables = Arrays.asList(tentTables.split(&quot;,&quot;));
+                    if (CollUtil.isNotEmpty(tables) &amp;&amp; tables.contains(tableName)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        });
+        sqlParserList.add(tenantSqlParser);
+        paginationInterceptor.setSqlParserList(sqlParserList);
+        return paginationInterceptor;
+    }
+}
+</code></pre>
+<h3 id="效果展示">效果展示</h3>
+<ul>
+<li>当登录超管用户进行查询，sql中没有限定租户ID</li>
+</ul>
+<pre><code class="language-css">[2019-06-14 09:25:08,963] [INFO ] [http-nio-8906-exec-7] jdbc.sqltiming 370 SELECT id, name, full_name, create_time, create_id, dept_id, password, tent_id, type, lock, 
+work_id FROM sys_user 
+</code></pre>
+<ul>
+<li>当使用租户用户进行查询，sql中限定了租户ID</li>
+</ul>
+<pre><code class="language-csharp">[2019-06-14 09:26:35,446] [INFO ] [http-nio-8906-exec-10] jdbc.sqltiming 370 SELECT id, name, full_name, create_time, create_id, dept_id, password, tent_id, type, lock, 
+work_id FROM sys_user WHERE sys_user.tent_id = 8 
+</code></pre>
+<p>大功告成！</p>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2021/01/%E4%BF%9D%E7%95%99%E9%A6%96%E5%B0%BE%E5%AD%97%E7%AC%A6%E5%85%B6%E4%BD%99%E5%85%A8%E9%83%A8%E5%8F%98%E4%B8%BA%E6%98%9F%E5%8F%B7/" title="保留首尾字符，中间全部变为星号"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2022
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>
