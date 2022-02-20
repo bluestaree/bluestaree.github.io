@@ -2,7 +2,7 @@
 <html lang="zh">
   <head>
     <title>
-        Mybatis-Plus租户解析的应用 - AzkeepToo个人博客
+        Mybatis Plus实现多租户解析的应用 - AzkeepToo个人博客
       </title>
         <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -20,32 +20,32 @@
     <meta http-equiv="window-target" content="_top" />
     
     
-    <meta name="description" content="转载 · 原文链接：https://www.jianshu.com/p/a80b88b7076b 当前不少同学都在做SAAS平台，SAAS平台中各" />
+    <meta name="description" content="转载 · 原文链接：https://www.jianshu.com/p/a80b88b7076b， https://blog.csdn.net/weixin_42284052/article/details/114543215 前提介绍 一般的程序应用当使用者访问不同，并且" />
     <meta name="generator" content="Hugo 0.69.2 with theme pure" />
-    <title>Mybatis-Plus租户解析的应用 - AzkeepToo个人博客</title>
+    <title>Mybatis Plus实现多租户解析的应用 - AzkeepToo个人博客</title>
     
     
     <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
     
     <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
-    <meta property="og:title" content="Mybatis-Plus租户解析的应用" />
-<meta property="og:description" content="转载 · 原文链接：https://www.jianshu.com/p/a80b88b7076b 当前不少同学都在做SAAS平台，SAAS平台中各" />
+    <meta property="og:title" content="Mybatis Plus实现多租户解析的应用" />
+<meta property="og:description" content="转载 · 原文链接：https://www.jianshu.com/p/a80b88b7076b， https://blog.csdn.net/weixin_42284052/article/details/114543215 前提介绍 一般的程序应用当使用者访问不同，并且" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://bluestaree.github.io/2021/01/mybatis-plus%E7%A7%9F%E6%88%B7%E8%A7%A3%E6%9E%90%E7%9A%84%E5%BA%94%E7%94%A8/" />
 <meta property="article:published_time" content="2021-01-08T00:00:00+00:00" />
 <meta property="article:modified_time" content="2021-01-08T00:00:00+00:00" />
-<meta itemprop="name" content="Mybatis-Plus租户解析的应用">
-<meta itemprop="description" content="转载 · 原文链接：https://www.jianshu.com/p/a80b88b7076b 当前不少同学都在做SAAS平台，SAAS平台中各">
+<meta itemprop="name" content="Mybatis Plus实现多租户解析的应用">
+<meta itemprop="description" content="转载 · 原文链接：https://www.jianshu.com/p/a80b88b7076b， https://blog.csdn.net/weixin_42284052/article/details/114543215 前提介绍 一般的程序应用当使用者访问不同，并且">
 <meta itemprop="datePublished" content="2021-01-08T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-01-08T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2878">
+<meta itemprop="wordCount" content="2471">
 
 
 
-<meta itemprop="keywords" content="mybatis," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Mybatis-Plus租户解析的应用"/>
-<meta name="twitter:description" content="转载 · 原文链接：https://www.jianshu.com/p/a80b88b7076b 当前不少同学都在做SAAS平台，SAAS平台中各"/>
+<meta itemprop="keywords" content="mybatis,SaaS," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Mybatis Plus实现多租户解析的应用"/>
+<meta name="twitter:description" content="转载 · 原文链接：https://www.jianshu.com/p/a80b88b7076b， https://blog.csdn.net/weixin_42284052/article/details/114543215 前提介绍 一般的程序应用当使用者访问不同，并且"/>
 
     <!--[if lte IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -153,7 +153,7 @@
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
-            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">33</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">35</span></li>
         </ul>
     </div>
 </div>
@@ -168,7 +168,7 @@
             
             
             <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
-                    class="tag-list-count">1</span></li>
+                    class="tag-list-count">2</span></li>
             
             
             <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
@@ -215,6 +215,10 @@
                     class="tag-list-count">1</span></li>
             
             
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/saas/" class="tag-list-link">saas</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
             <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
                     class="tag-list-count">1</span></li>
             
@@ -254,7 +258,27 @@
             <li>
                 <div class="item-inner">
                     <p class="item-title">
-                        <a href="https://bluestaree.github.io/2021/01/mybatis-plus%E7%A7%9F%E6%88%B7%E8%A7%A3%E6%9E%90%E7%9A%84%E5%BA%94%E7%94%A8/" class="title">Mybatis-Plus租户解析的应用</a>
+                        <a href="https://bluestaree.github.io/2021/03/docker%E5%AE%B9%E5%99%A8%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/" class="title">Docker容器安装及使用</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2021-03-15 00:00:00 &#43;0000 UTC" itemprop="datePublished">2021-03-15</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2021/01/virtualbox%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F/" class="title">VirtualBox虚拟机网络模式</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2021-01-25 00:00:00 &#43;0000 UTC" itemprop="datePublished">2021-01-25</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2021/01/mybatis-plus%E7%A7%9F%E6%88%B7%E8%A7%A3%E6%9E%90%E7%9A%84%E5%BA%94%E7%94%A8/" class="title">Mybatis Plus实现多租户解析的应用</a>
                     </p>
                     <p class="item-date">
                         <time datetime="2021-01-08 00:00:00 &#43;0000 UTC" itemprop="datePublished">2021-01-08</time>
@@ -278,26 +302,6 @@
                     </p>
                     <p class="item-date">
                         <time datetime="2020-12-25 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-12-25</time>
-                    </p>
-                </div>
-            </li>
-            <li>
-                <div class="item-inner">
-                    <p class="item-title">
-                        <a href="https://bluestaree.github.io/2020/12/anji-plus-captcha%E8%A1%8C%E4%B8%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E9%9B%86%E6%88%90/" class="title">anji-plus-captcha行为验证码集成</a>
-                    </p>
-                    <p class="item-date">
-                        <time datetime="2020-12-18 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-12-18</time>
-                    </p>
-                </div>
-            </li>
-            <li>
-                <div class="item-inner">
-                    <p class="item-title">
-                        <a href="https://bluestaree.github.io/2020/10/fastjson%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bwrite_only-%E4%B8%8E-read_only/" class="title">fastjson序列化之WRITE_ONLY 与 READ_ONLY</a>
-                    </p>
-                    <p class="item-date">
-                        <time datetime="2020-10-05 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-10-05</time>
                     </p>
                 </div>
             </li>
@@ -326,7 +330,7 @@
   <a
     class="article-title"
     href="/2021/01/mybatis-plus%E7%A7%9F%E6%88%B7%E8%A7%A3%E6%9E%90%E7%9A%84%E5%BA%94%E7%94%A8/"
-    >Mybatis-Plus租户解析的应用</a
+    >Mybatis Plus实现多租户解析的应用</a
   >
 </h1>
 
@@ -345,563 +349,260 @@
   <span class="article-tag">
     <i class="icon icon-tags"></i>&nbsp;
     <a class="article-tag-link" href="/tags/mybatis/"> mybatis </a>
+    <a class="article-tag-link" href="/tags/saas/"> SaaS </a>
   </span>
 
         <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2021/01/mybatis-plus%E7%A7%9F%E6%88%B7%E8%A7%A3%E6%9E%90%E7%9A%84%E5%BA%94%E7%94%A8/#comments"
             class="article-comment-link">评论</a></span>
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2878字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 6分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2471字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
       <hr>
 <blockquote>
-<p>转载 · 原文链接：https://www.jianshu.com/p/a80b88b7076b</p>
+<p>转载 · 原文链接：<a href="https://www.jianshu.com/p/a80b88b7076b">https://www.jianshu.com/p/a80b88b7076b</a>，</p>
+<p><a href="https://blog.csdn.net/weixin_42284052/article/details/114543215">https://blog.csdn.net/weixin_42284052/article/details/114543215</a></p>
 </blockquote>
-<p>当前不少同学都在做SAAS平台，SAAS平台中各租户的数据一般在同一张表中。
-如何优美的处理各租户数据的数据权限是一个很大的问题。比如，A租户在平台只能增删改查id为A的数据，而不能处理租户B的数据，否则就乱套了。
-而在平台中，带有租户ID字段的表可谓很多，我上一个项目中几百张表八成冗余了租户ID字段</p>
-<p>个人在原先的公司都是以手动设置租户ID的形式对后台数据进行租户的限定，一般为前端传入ID参数，或者从当前会话中取出租户ID，再手动设置到sql 的where 条件中。
-在使用Mybatis-Plus插件中，发现了其一个租户解析器的功能，研究一波拿来使用一下</p>
-<h3 id="官方配置示例">官方配置示例</h3>
-<p>下面为其官方使用例子，该示例展示如何配置租户sql解析</p>
-<pre><code class="language-java">package com.baomidou.mybatisplus.samples.tenant.config;
+<h3 id="前提介绍">前提介绍</h3>
+<p><strong>一般的程序应用当使用者访问不同，并且进入相对应的程序页面，则会把用户相关数据传输到后台这里。在传输的时候需要带上标识（租户ID），以便程序将数据进行隔离。当不同的租户使用同一个程序服务，这里就需要考虑一个数据隔离的情况。</strong></p>
+<h3 id="什么是多租户技术">什么是多租户技术</h3>
+<ul>
+<li>多租户技术或称多重租赁技术，是一种软件架构技术，是实现如何在多用户环境下（此处的多用户一般是面向企业）共用相同的系统或程序组件，并且确保各用户间数据隔离性。</li>
+<li>在一台服务器上运行单个应用实例，它为多个租户（客户）提供服务。从定义中我们可以理解：多租户是一种架构，目的是为了让多用户环境下使用同一套程序，且保证用户间数据隔离。多租户的重点就是同程序下实现多用户数据的隔离。</li>
+</ul>
+<h3 id="数据隔离有三种方案">数据隔离有三种方案：</h3>
+<ol>
+<li>独立数据库：简单来说就是一个租户使用一个数据库，这种数据隔离级别最高，安全性最好，但是提高成本。</li>
+<li>共享数据库、隔离数据架构：多租户使用同一个数据裤，但是每个租户对应一个Schema(数据库user)。</li>
+<li>共享数据库、共享数据架构：使用同一个数据库，同一个Schema，但是在表中增加了租户ID的字段，这种共享数据程度最高，隔离级别最低。</li>
+</ol>
+<ul>
+<li>优点：三种方案比较，第三种方案的维护和购置成本最低，允许每个数据库支持的租户数量最多。</li>
+<li>缺点：隔离级别最低，安全性最低，需要在设计开发时加大对安全的开发量； 数据备份和恢复最困难，需要逐表逐条备份和还原。</li>
+</ul>
+<h4 id="多租户具体实现">多租户具体实现</h4>
+<p><strong>利用MybatisPlus实现</strong>
+这里我们选用了第三种方案（共享数据库，共享 Schema，共享数据表）来实现，也就意味着，每个数据表都需要有一个租户标识(provider_id)</p>
+<p>现在有数据库表(user)如下：</p>
+<table>
+<thead>
+<tr>
+<th align="left">字段名</th>
+<th align="left">字段类型</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">BIGINT(20)</td>
+<td align="left">主键</td>
+</tr>
+<tr>
+<td align="left">provider_id</td>
+<td align="left">BIGINT(20)</td>
+<td align="left">服务商ID</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">VARCHAR(30)</td>
+<td align="left">姓名</td>
+</tr>
+</tbody>
+</table>
+<p>将provider_id视为租户ID，用来隔离租户与租户之间的数据，如果要查询当前服务商的用户，SQL大致如下：</p>
+<pre><code class="language-sql">SELECT * FROM user t WHERE t.name LIKE '%Tom%' AND t.provider_id = 1;
+</code></pre>
+<p>试想一下，除了一些系统共用的表以外，其他租户相关的表，我们都需要不厌其烦的加上AND t.provider_id = ?查询条件，稍不注意就会导致数据越界，数据安全问题让人担忧。</p>
+<p>好在有了MybatisPlus这个神器，可以极为方便的实现多租户SQL解析器，官方文档如下：
+<a href="https://gitee.com/link?target=http%3A%2F%2Fmp.baomidou.com%2Fguide%2F">http://mp.baomidou.com/guide/</a>&hellip;</p>
+<p>这里终于进入了正题，开始搭建一个极为简单的开发环境吧!</p>
+<pre><code class="language-sql">#schema.sql
+DROP TABLE IF EXISTS user;
+CREATE TABLE user
+(
+id BIGINT(20) NOT NULL COMMENT '主键',
+provider_id BIGINT(20) NOT NULL COMMENT '服务商ID',
+name VARCHAR(30) NULL DEFAULT NULL COMMENT '姓名',
+PRIMARY KEY (id)
+);
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import com.baomidou.mybatisplus.core.parser.ISqlParser;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
-import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
-
-import net.sf.jsqlparser.expression.Expression;
-import net.sf.jsqlparser.expression.LongValue;
-
-/**
- * @author miemie
- * @since 2018-08-10
- */
-@Configuration
-@MapperScan(&quot;com.baomidou.mybatisplus.samples.tenant.mapper&quot;)
+#data.sql
+INSERT INTO user (id, provider_id, name) VALUES (1, 1, 'Tony老师');
+INSERT INTO user (id, provider_id, name) VALUES (2, 1, 'William老师');
+INSERT INTO user (id, provider_id, name) VALUES (3, 2, '路人甲');
+INSERT INTO user (id, provider_id, name) VALUES (4, 2, '路人乙');
+INSERT INTO user (id, provider_id, name) VALUES (5, 2, '路人丙');
+INSERT INTO user (id, provider_id, name) VALUES (6, 2, '路人丁');
+</code></pre>
+<p>MybatisPlus Config</p>
+<p>基础环境搭建完成，现在开始配置MybatisPlus多租户相关的实现。</p>
+<p><strong>1) 核心配置：TenantSqlParser</strong></p>
+<pre><code class="language-java">@Configuration
+@MapperScan(&quot;com.wuwenze.mybatisplusmultitenancy.mapper&quot;)
 public class MybatisPlusConfig {
 
-    /**
-     * 多租户属于 SQL 解析部分，依赖 MP 分页插件
-     */
+    private static final String SYSTEM_TENANT_ID = &quot;provider_id&quot;;
+
+    private static final List IGNORE_TENANT_TABLES = Lists.newArrayList(&quot;provider&quot;);
+
+    @Autowired
+    private ApiContext apiContext;
+
     @Bean
     public PaginationInterceptor paginationInterceptor() {
+
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-        /*
-         * 【测试多租户】 SQL 解析处理拦截器&lt;br&gt;
-         * 这里固定写成住户 1 实际情况你可以从cookie读取，因此数据看不到 【 麻花藤 】 这条记录（ 注意观察 SQL ）&lt;br&gt;
-         */
-        List&lt;ISqlParser&gt; sqlParserList = new ArrayList&lt;&gt;();
-        TenantSqlParser tenantSqlParser = new TenantSqlParser();
-        tenantSqlParser.setTenantHandler(new TenantHandler() {
+        // SQL解析处理拦截：增加租户处理回调。
+        TenantSqlParser tenantSqlParser = new TenantSqlParser()
+                .setTenantHandler(new TenantHandler() {
+                    
+                    @Override
+                    public Expression getTenantId() {
+                        // 从当前系统上下文中取出当前请求的服务商ID，通过解析器注入到SQL中。
+                        Long currentProviderId = apiContext.getCurrentProviderId();
+                        if (null == currentProviderId) {
+                            throw new RuntimeException(&quot;#1129 getCurrentProviderId error.&quot;);
+                        }
+                        return new LongValue(currentProviderId);
+                    }
 
-            @Override
-            public Expression getTenantId() {
-                return new LongValue(1L);
-            }
+                    @Override
+                    public String getTenantIdColumn() {
+                        return SYSTEM_TENANT_ID;
+                    }
 
-            @Override
-            public String getTenantIdColumn() {
-                return &quot;tenant_id&quot;;
-            }
-
-            @Override
-            public boolean doTableFilter(String tableName) {
-                // 这里可以判断是否过滤表
-                /*if (&quot;user&quot;.equals(tableName)) {
-                    return true;
-                }*/
-                return false;
-            }
-        });
-
-        sqlParserList.add(tenantSqlParser);
-        paginationInterceptor.setSqlParserList(sqlParserList);
-//        paginationInterceptor.setSqlParserFilter(new ISqlParserFilter() {
-//            @Override
-//            public boolean doFilter(MetaObject metaObject) {
-//                MappedStatement ms = PluginUtils.getMappedStatement(metaObject);
-//                // 过滤自定义查询此时无租户信息约束【 麻花藤 】出现
-//                if (&quot;com.baomidou.springboot.mapper.UserMapper.selectListBySQL&quot;.equals(ms.getId())) {
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
+                    @Override
+                    public boolean doTableFilter(String tableName) {
+                        // 忽略掉一些表：如租户表(provider)本身不需要执行这样的处理。
+                        return IGNORE_TENANT_TABLES.stream().anyMatch((e) -&gt; e.equalsIgnoreCase(tableName));
+                    }
+                });
+        paginationInterceptor.setSqlParserList(Lists.newArrayList(tenantSqlParser));
         return paginationInterceptor;
     }
 
-
-    /**
-     * 性能分析拦截器，不建议生产使用
-     * 用来观察 SQL 执行情况及执行时长
-     */
-    @Bean
-    public PerformanceInterceptor performanceInterceptor(){
+    @Bean(name = &quot;performanceInterceptor&quot;)
+    public PerformanceInterceptor performanceInterceptor() {
         return new PerformanceInterceptor();
     }
+
 }
 </code></pre>
-<p>注意其中关键的两个类，建议去看一下源码
-<code>TenantSqlParser</code> <code>TenantHandler</code>
-其中<code>TenantSqlParser</code> 需要一个 <code>TenantHandler</code> 接口成员，
-根据<code>TenantHandler</code> 接口的 <code>getTenantId()</code> <code>getTenantIdColumn()</code>   <code>doTableFilter(String tableName)</code> 三个方法分别配置租户ID的获取，租户ID的字段名，以及是否过滤该表</p>
-<hr>
-<hr>
-<h3 id="问题">问题</h3>
-<p>看起来近乎完美，配置好上面三项配置，我们CRUD完全不需要手动传租户ID参数，省了一大堆事情。然鹅，问题来了：
-配置：我的租户ID从当前登录会话中取，根据租户用户不同，获取不同的租户ID实现了数据权限的控制，
-栗子：我是系统管理员，我不仅需要查看租户A的数据，也需要查看租户B的数据，而且我不是租户没有租户ID。
-继续引用以上配置，sql将解析成类似于<code>where tenant_id = null</code>的语句，无法查询到租户AB的数据</p>
-<h3 id="处理思路">处理思路</h3>
-<ul>
-<li>我需要在某个地方做判断，如果是系统管理员时，我不希望做这个租户sql解析，不需要限定 tenant_id 的条件；当我是租户用户是，我需要做这个限定</li>
-<li>如果自己实现一个拦截去做上面的判断，颇为啰嗦，我注意到了<code>TenantHandler</code> 接口的  <code>doTableFilter(String tableName)</code> 方法。这个方法可以根据表名判断是否做租户sql解析，我们参照此实现做拓展即可</li>
-</ul>
-<h3 id="实现根据用户判断是否进行租户sql解析">实现根据用户判断是否进行租户sql解析</h3>
-<ul>
-<li>自定义接口<code>MyTenantHandler</code> 继承 <code>TenantHandler</code> 新增  <code>doUserFilter(ContextInfo userInfo)</code> 方法，注意ContextInfo 当前用户会话信息，具体实现请查阅<a href="https://links.jianshu.com/go?to=%5Bhttps%3A%2F%2Fwww.jianshu.com%2Fp%2Fde80b7986e95%5D(https%3A%2F%2Fwww.jianshu.com%2Fp%2Fde80b7986e95)">此博客</a>中对ContextInfo及拦截使用的方式</li>
-</ul>
-<pre><code class="language-java">import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
-import com.zh.backend.common.dto.ContextInfo;
+<p><strong>2) 核心配置：ApiContext</strong></p>
+<pre><code class="language-java">@Component
+public class ApiContext {
+    private static final String KEY_CURRENT_PROVIDER_ID = &quot;KEY_CURRENT_PROVIDER_ID&quot;;
+    private static final Map&lt;String, Object&gt; mContext = Maps.newConcurrentMap();
 
-/**
- * @author wangqichang
- * @since 2019/6/6
- */
-public interface MyTenantHandler extends TenantHandler {
-        boolean doUserFilter(ContextInfo userInfo);
-}
-</code></pre>
-<ul>
-<li>自定义<code>MyTenantSqlParser</code> 继承 <code>AbstractJsqlParser</code> 参考 原来的实现类<code>TenantSqlParser</code>，加入对当前用户的判断</li>
-</ul>
-<pre><code class="language-java">import cn.hutool.core.util.ObjectUtil;
-import com.baomidou.mybatisplus.core.parser.AbstractJsqlParser;
-import com.baomidou.mybatisplus.core.toolkit.Assert;
-import com.baomidou.mybatisplus.core.toolkit.ExceptionUtils;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
-import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
-import com.zh.backend.common.context.CustomContext;
-import com.zh.backend.common.dto.ContextInfo;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
-import net.sf.jsqlparser.expression.BinaryExpression;
-import net.sf.jsqlparser.expression.Expression;
-import net.sf.jsqlparser.expression.Parenthesis;
-import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
-import net.sf.jsqlparser.expression.operators.conditional.OrExpression;
-import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
-import net.sf.jsqlparser.expression.operators.relational.ExpressionList;
-import net.sf.jsqlparser.expression.operators.relational.ItemsList;
-import net.sf.jsqlparser.expression.operators.relational.MultiExpressionList;
-import net.sf.jsqlparser.schema.Column;
-import net.sf.jsqlparser.schema.Table;
-import net.sf.jsqlparser.statement.delete.Delete;
-import net.sf.jsqlparser.statement.insert.Insert;
-import net.sf.jsqlparser.statement.select.*;
-import net.sf.jsqlparser.statement.update.Update;
-
-import java.util.List;
-
-/**
- * @author wangqichang
- * @since 2019/6/6
- */
-@Data
-@Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
-public class MyTenantSqlParser extends AbstractJsqlParser {
-
-
-    private MyTenantHandler tenantHandler;
-
-    /**
-     * select 语句处理
-     */
-    @Override
-    public void processSelectBody(SelectBody selectBody) {
-        if (tenantHandler.doUserFilter(CustomContext.current())){
-            //对系统用户不过滤
-            return;
-        }
-        if (selectBody instanceof PlainSelect) {
-            processPlainSelect((PlainSelect) selectBody);
-        } else if (selectBody instanceof WithItem) {
-            WithItem withItem = (WithItem) selectBody;
-            if (withItem.getSelectBody() != null) {
-                processSelectBody(withItem.getSelectBody());
-            }
-        } else {
-            SetOperationList operationList = (SetOperationList) selectBody;
-            if (operationList.getSelects() != null &amp;&amp; operationList.getSelects().size() &gt; 0) {
-                operationList.getSelects().forEach(this::processSelectBody);
-            }
-        }
+    public void setCurrentProviderId(Long providerId) {
+        mContext.put(KEY_CURRENT_PROVIDER_ID, providerId);
     }
 
-    /**
-     * &lt;p&gt;
-     * insert 语句处理
-     * &lt;/p&gt;
-     */
-    @Override
-    public void processInsert(Insert insert) {
-        if (tenantHandler.doTableFilter(insert.getTable().getName())) {
-            // 过滤退出执行
-            return;
-        }
-        if (tenantHandler.doUserFilter(CustomContext.current())){
-            //对系统用户不过滤
-            return;
-        }
-        if (tenantHandler.doUserFilter(CustomContext.current())) {
-            ContextInfo userInfo = CustomContext.current();
-            // 过滤退出执行
-            if (ObjectUtil.isNotNull(userInfo)&amp;&amp;ObjectUtil.isNotNull(userInfo.getTentId())){
-                return;
-            }
-            return;
-        }
-        insert.getColumns().add(new Column(tenantHandler.getTenantIdColumn()));
-        if (insert.getSelect() != null) {
-            processPlainSelect((PlainSelect) insert.getSelect().getSelectBody(), true);
-        } else if (insert.getItemsList() != null) {
-            // fixed github pull/295
-            ItemsList itemsList = insert.getItemsList();
-            if (itemsList instanceof MultiExpressionList) {
-                ((MultiExpressionList) itemsList).getExprList().forEach(el -&gt; el.getExpressions().add(tenantHandler.getTenantId()));
-            } else {
-                ((ExpressionList) insert.getItemsList()).getExpressions().add(tenantHandler.getTenantId());
-            }
-        } else {
-            throw ExceptionUtils.mpe(&quot;Failed to process multiple-table update, please exclude the tableName or statementId&quot;);
-        }
-    }
-
-    /**
-     * &lt;p&gt;
-     * update 语句处理
-     * &lt;/p&gt;
-     */
-    @Override
-    public void processUpdate(Update update) {
-        if (tenantHandler.doUserFilter(CustomContext.current())){
-            //对系统用户不过滤
-            return;
-        }
-        List&lt;Table&gt; tableList = update.getTables();
-        Assert.isTrue(null != tableList &amp;&amp; tableList.size() &lt; 2,
-                &quot;Failed to process multiple-table update, please exclude the statementId&quot;);
-        Table table = tableList.get(0);
-        if (tenantHandler.doTableFilter(table.getName())) {
-            // 过滤退出执行
-            return;
-        }
-        update.setWhere(this.andExpression(table, update.getWhere()));
-    }
-
-    /**
-     * &lt;p&gt;
-     * delete 语句处理
-     * &lt;/p&gt;
-     */
-    @Override
-    public void processDelete(Delete delete) {
-        if (tenantHandler.doUserFilter(CustomContext.current())){
-            //对系统用户不过滤
-            return;
-        }
-        if (tenantHandler.doTableFilter(delete.getTable().getName())) {
-            // 过滤退出执行
-            return;
-        }
-        delete.setWhere(this.andExpression(delete.getTable(), delete.getWhere()));
-    }
-
-    /**
-     * &lt;p&gt;
-     * delete update 语句 where 处理
-     * &lt;/p&gt;
-     */
-    protected BinaryExpression andExpression(Table table, Expression where) {
-        //获得where条件表达式
-        EqualsTo equalsTo = new EqualsTo();
-        equalsTo.setLeftExpression(this.getAliasColumn(table));
-        equalsTo.setRightExpression(tenantHandler.getTenantId());
-        if (null != where) {
-            if (where instanceof OrExpression) {
-                return new AndExpression(equalsTo, new Parenthesis(where));
-            } else {
-                return new AndExpression(equalsTo, where);
-            }
-        }
-        return equalsTo;
-    }
-
-    /**
-     * &lt;p&gt;
-     * 处理 PlainSelect
-     * &lt;/p&gt;
-     */
-    protected void processPlainSelect(PlainSelect plainSelect) {
-        processPlainSelect(plainSelect, false);
-    }
-
-    /**
-     * &lt;p&gt;
-     * 处理 PlainSelect
-     * &lt;/p&gt;
-     *
-     * @param plainSelect
-     * @param addColumn   是否添加租户列,insert into select语句中需要
-     */
-    protected void processPlainSelect(PlainSelect plainSelect, boolean addColumn) {
-        FromItem fromItem = plainSelect.getFromItem();
-        if (fromItem instanceof Table) {
-            Table fromTable = (Table) fromItem;
-            if (tenantHandler.doTableFilter(fromTable.getName())) {
-                // 过滤退出执行
-                return;
-            }
-            plainSelect.setWhere(builderExpression(plainSelect.getWhere(), fromTable));
-            if (addColumn) {
-                plainSelect.getSelectItems().add(new SelectExpressionItem(new Column(tenantHandler.getTenantIdColumn())));
-            }
-        } else {
-            processFromItem(fromItem);
-        }
-        List&lt;Join&gt; joins = plainSelect.getJoins();
-        if (joins != null &amp;&amp; joins.size() &gt; 0) {
-            joins.forEach(j -&gt; {
-                processJoin(j);
-                processFromItem(j.getRightItem());
-            });
-        }
-    }
-
-    /**
-     * 处理子查询等
-     */
-    protected void processFromItem(FromItem fromItem) {
-        if (fromItem instanceof SubJoin) {
-            SubJoin subJoin = (SubJoin) fromItem;
-            if (subJoin.getJoinList() != null) {
-                subJoin.getJoinList().forEach(this::processJoin);
-            }
-            if (subJoin.getLeft() != null) {
-                processFromItem(subJoin.getLeft());
-            }
-        } else if (fromItem instanceof SubSelect) {
-            SubSelect subSelect = (SubSelect) fromItem;
-            if (subSelect.getSelectBody() != null) {
-                processSelectBody(subSelect.getSelectBody());
-            }
-        } else if (fromItem instanceof ValuesList) {
-            logger.debug(&quot;Perform a subquery, if you do not give us feedback&quot;);
-        } else if (fromItem instanceof LateralSubSelect) {
-            LateralSubSelect lateralSubSelect = (LateralSubSelect) fromItem;
-            if (lateralSubSelect.getSubSelect() != null) {
-                SubSelect subSelect = lateralSubSelect.getSubSelect();
-                if (subSelect.getSelectBody() != null) {
-                    processSelectBody(subSelect.getSelectBody());
-                }
-            }
-        }
-    }
-
-    /**
-     * 处理联接语句
-     */
-    protected void processJoin(Join join) {
-        if (join.getRightItem() instanceof Table) {
-            Table fromTable = (Table) join.getRightItem();
-            if (this.tenantHandler.doTableFilter(fromTable.getName())) {
-                // 过滤退出执行
-                return;
-            }
-            join.setOnExpression(builderExpression(join.getOnExpression(), fromTable));
-        }
-    }
-
-    /**
-     * 处理条件
-     */
-    protected Expression builderExpression(Expression expression, Table table) {
-        //生成字段名
-        EqualsTo equalsTo = new EqualsTo();
-        equalsTo.setLeftExpression(this.getAliasColumn(table));
-        equalsTo.setRightExpression(tenantHandler.getTenantId());
-        //加入判断防止条件为空时生成 &quot;and null&quot; 导致查询结果为空
-        if (expression == null) {
-            return equalsTo;
-        } else {
-            if (expression instanceof BinaryExpression) {
-                BinaryExpression binaryExpression = (BinaryExpression) expression;
-                if (binaryExpression.getLeftExpression() instanceof FromItem) {
-                    processFromItem((FromItem) binaryExpression.getLeftExpression());
-                }
-                if (binaryExpression.getRightExpression() instanceof FromItem) {
-                    processFromItem((FromItem) binaryExpression.getRightExpression());
-                }
-            }
-            if (expression instanceof OrExpression) {
-                return new AndExpression(equalsTo, new Parenthesis(expression));
-            } else {
-                return new AndExpression(equalsTo, expression);
-            }
-        }
-    }
-
-    /**
-     * &lt;p&gt;
-     * 租户字段别名设置&lt;br&gt;
-     * tableName.tenantId 或 tableAlias.tenantId
-     * &lt;/p&gt;
-     *
-     * @param table 表对象
-     * @return 字段
-     */
-    protected Column getAliasColumn(Table table) {
-        StringBuilder column = new StringBuilder();
-        if (null == table.getAlias()) {
-            column.append(table.getName());
-        } else {
-            column.append(table.getAlias().getName());
-        }
-        column.append(StringPool.DOT);
-        column.append(tenantHandler.getTenantIdColumn());
-        return new Column(column.toString());
+    public Long getCurrentProviderId() {
+        return (Long) mContext.get(KEY_CURRENT_PROVIDER_ID);
     }
 }
 </code></pre>
-<ul>
-<li>修改Mybatis-Plus的配置，替换原先实现</li>
-</ul>
-<pre><code class="language-dart">import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.ObjectUtil;
-import com.baomidou.mybatisplus.core.parser.ISqlParser;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.zh.backend.common.context.CustomContext;
-import com.zh.backend.common.dto.ContextInfo;
-import net.sf.jsqlparser.expression.Expression;
-import net.sf.jsqlparser.expression.LongValue;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+<p><strong>单元测试</strong></p>
+<pre><code class="language-java">@Slf4j
+@RunWith(SpringRunner.class)
+@FixMethodOrder(MethodSorters.JVM)
+@SpringBootTest(classes = MybatisPlusMultiTenancyApplication.class)
+public class MybatisPlusMultiTenancyApplicationTests {
 
 
-/**
- * 向MP注入多租户解析器，其中自定义MyTenantSqlParser和MyTenantHandler对MP的租户处理逻辑进行继承拓展
- * 处理器将会判断当前用户是否为租户用户再决定是否过滤不做租户解析
- * 过滤处理的表格将通过配置注入进来
- *
- * @author wangqichang
- * @since 2019/6/10
- */
-@Configuration
-public class BaseTenantSqlParserConfig {
+    @Autowired
+    private ApiContext apiContext;
 
-    @Value(&quot;${tenant.tentTables}&quot;)
-    private String tentTables;
+    @Autowired
+    private UserMapper userMapper;
 
-    /**
-     * 多租户属于 SQL 解析部分，依赖 MP 分页插件
-     */
-    @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-        /*
-         * 【测试多租户】 SQL 解析处理拦截器&lt;br&gt;
-         * 这里固定写成住户 1 实际情况你可以从cookie读取，因此数据看不到 【 麻花藤 】 这条记录（ 注意观察 SQL ）&lt;br&gt;
-         */
-        List&lt;ISqlParser&gt; sqlParserList = new ArrayList&lt;&gt;();
-        MyTenantSqlParser tenantSqlParser = new MyTenantSqlParser();
+    @Before
+    public void before() {
+        // 在上下文中设置当前服务商的ID
+        apiContext.setCurrentProviderId(1L);
+    }
 
-        tenantSqlParser.setTenantHandler(new MyTenantHandler() {
-            @Override
-            public boolean doUserFilter(ContextInfo userInfo) {
-                /**
-                 * 这个参数是当前线程变量中的用户信息
-                 * 当用户信息没有租户ID（超管或者未登录），即不过滤该sql
-                 */
+    @Test
+    public void insert() {
+        User user = new User().setName(&quot;新来的Tom老师&quot;);
+        Assert.assertTrue(userMapper.insert(user) &gt; 0);
 
-                if (ObjectUtil.isNotNull(userInfo) &amp;&amp; ObjectUtil.isNotNull(userInfo.getTentId())) {
-                    return false;
-                }
-                return true;
-            }
+        user = userMapper.selectById(user.getId());
+        log.info(&quot;#insert user={}&quot;, user);
 
-            @Override
-            public Expression getTenantId() {
-                /**
-                 * sql解析时，租户ID参数从会话线程中取出
-                 */
-                if (ObjectUtil.isNotNull(CustomContext.current()) &amp;&amp; ObjectUtil.isNotNull(CustomContext.current().getTentId())) {
-                    return new LongValue(CustomContext.current().getTentId());
-                }
-                return null;
-            }
+        // 检查插入的数据是否自动填充了租户ID
+        Assert.assertEquals(apiContext.getCurrentProviderId(), user.getProviderId());
+    }
 
-            /**
-             * 数据库各表中，租户ID字段名
-             * @return
-             */
-            @Override
-            public String getTenantIdColumn() {
-                return &quot;tent_id&quot;;
-            }
-
-            @Override
-            public boolean doTableFilter(String tableName) {
-                /**
-                 * 这里可以判断是否过滤表
-                 * 表名根据实际去配置，凡是不带tent_id的表均应该配置，否则sql会报找不到tent_id这个字段
-                 */
-                if (ObjectUtil.isNotNull(tentTables)) {
-                    List&lt;String&gt; tables = Arrays.asList(tentTables.split(&quot;,&quot;));
-                    if (CollUtil.isNotEmpty(tables) &amp;&amp; tables.contains(tableName)) {
-                        return false;
-                    }
-                }
-                return true;
-            }
+    @Test
+    public void selectList() {
+        userMapper.selectList(null).forEach((e) -&gt; {
+            log.info(&quot;#selectList, e={}&quot;, e);
+            // 验证查询的数据是否超出范围
+            Assert.assertEquals(apiContext.getCurrentProviderId(), e.getProviderId());
         });
-        sqlParserList.add(tenantSqlParser);
-        paginationInterceptor.setSqlParserList(sqlParserList);
-        return paginationInterceptor;
     }
 }
 </code></pre>
-<h3 id="效果展示">效果展示</h3>
-<ul>
-<li>当登录超管用户进行查询，sql中没有限定租户ID</li>
-</ul>
-<pre><code class="language-css">[2019-06-14 09:25:08,963] [INFO ] [http-nio-8906-exec-7] jdbc.sqltiming 370 SELECT id, name, full_name, create_time, create_id, dept_id, password, tent_id, type, lock, 
-work_id FROM sys_user 
+<p><strong>运行结果：</strong></p>
+<pre><code class="language-java">2018-11-29 21:07:14.262  INFO 18688 --- [           main] .MybatisPlusMultiTenancyApplicationTests : Started MybatisPlusMultiTenancyApplicationTests in 2.629 seconds (JVM running for 3.904)
+2018-11-29 21:07:14.554 DEBUG 18688 --- [           main] c.w.m.mapper.UserMapper.insert           : ==&gt;  Preparing: INSERT INTO user (id, name, provider_id) VALUES (?, ?, 1)
+2018-11-29 21:07:14.577 DEBUG 18688 --- [           main] c.w.m.mapper.UserMapper.insert           : ==&gt; Parameters: 1068129257418178562(Long), 新来的Tom老师(String)
+2018-11-29 21:07:14.577 DEBUG 18688 --- [           main] c.w.m.mapper.UserMapper.insert           : &lt;==    Updates: 1
+ Time：0 ms - ID：com.wuwenze.mybatisplusmultitenancy.mapper.UserMapper.insert
+Execute SQL：INSERT INTO user (id, name, provider_id) VALUES (?, ?, 1) {1: 1068129257418178562, 2: STRINGDECODE('\u65b0\u6765\u7684Tom\u8001\u5e08')}
+
+2018-11-29 21:07:14.585 DEBUG 18688 --- [           main] c.w.m.mapper.UserMapper.selectById       : ==&gt;  Preparing: SELECT id, provider_id, name FROM user WHERE user.provider_id = 1 AND id = ?
+2018-11-29 21:07:14.595 DEBUG 18688 --- [           main] c.w.m.mapper.UserMapper.selectById       : ==&gt; Parameters: 1068129257418178562(Long)
+2018-11-29 21:07:14.614 DEBUG 18688 --- [           main] c.w.m.mapper.UserMapper.selectById       : &lt;==      Total: 1
+2018-11-29 21:07:14.615  INFO 18688 --- [           main] .MybatisPlusMultiTenancyApplicationTests : #insert user=User(id=1068129257418178562, providerId=1, name=新来的Tom老师)
+ Time：19 ms - ID：com.wuwenze.mybatisplusmultitenancy.mapper.UserMapper.selectById
+Execute SQL：SELECT id, provider_id, name FROM user WHERE user.provider_id = 1 AND id = ? {1: 1068129257418178562}
+
+2018-11-29 21:07:14.626 DEBUG 18688 --- [           main] c.w.m.mapper.UserMapper.selectList       : ==&gt;  Preparing: SELECT id, provider_id, name FROM user WHERE user.provider_id = 1
+ Time：0 ms - ID：com.wuwenze.mybatisplusmultitenancy.mapper.UserMapper.selectList
+Execute SQL：SELECT id, provider_id, name FROM user WHERE user.provider_id = 1
+
+2018-11-29 21:07:14.629 DEBUG 18688 --- [           main] c.w.m.mapper.UserMapper.selectList       : ==&gt; Parameters:
+2018-11-29 21:07:14.630 DEBUG 18688 --- [           main] c.w.m.mapper.UserMapper.selectList       : &lt;==      Total: 3
+2018-11-29 21:07:14.632  INFO 18688 --- [           main] .MybatisPlusMultiTenancyApplicationTests : #selectList, e=User(id=1, providerId=1, name=Tony老师)
+2018-11-29 21:07:14.632  INFO 18688 --- [           main] .MybatisPlusMultiTenancyApplicationTests : #selectList, e=User(id=2, providerId=1, name=William老师)
+2018-11-29 21:07:14.632  INFO 18688 --- [           main] .MybatisPlusMultiTenancyApplicationTests : #selectList, e=User(id=1068129257418178562, providerId=1, name=新来的Tom老师)
 </code></pre>
-<ul>
-<li>当使用租户用户进行查询，sql中限定了租户ID</li>
-</ul>
-<pre><code class="language-csharp">[2019-06-14 09:26:35,446] [INFO ] [http-nio-8906-exec-10] jdbc.sqltiming 370 SELECT id, name, full_name, create_time, create_id, dept_id, password, tent_id, type, lock, 
-work_id FROM sys_user WHERE sys_user.tent_id = 8 
+<p>从打印的日志不难看出，这个方案相当完美，仅需简单的配置，让开发者完全忽略了(provider_id)字段的存在，同时又最大程度的保证了数据的安全性，可谓是一举两得！</p>
+<blockquote>
+<p>注：特定SQL过滤，如果在程序中，有部分SQL不需要加上租户ID的表示，需要过滤特定的sql，可以通过如下两种方式：</p>
+</blockquote>
+<p>在配置分页插件中加上配置ISqlParserFilter解析器，配置SQL很多，比较麻烦，不建议；</p>
+<pre><code class="language-java">paginationInterceptor.setSqlParserFilter(new ISqlParserFilter() {
+      @Override
+      public boolean doFilter(MetaObject metaObject) {
+        MappedStatement ms = SqlParserHelper.getMappedStatement(metaObject);
+        // 对应Mapper、dao中的方法
+        if(&quot;com.example.demo.mapper.UserMapper.selectList&quot;.equals(ms.getId())){
+          return true;
+        }
+        return false;
+      }
+});
 </code></pre>
-<p>大功告成！</p>
+<p>通过租户注解 @SqlParser(filter = true) 的形式，目前只能作用于Mapper的方法上：</p>
+<pre><code class="language-java">public interface UserMapper extends BaseMapper&lt;User&gt; {
+  
+  /**
+   * 自定Wrapper修改
+   *
+   * @param userWrapper 条件构造器
+   * @param user    修改的对象参数
+   * @return
+   */
+  @SqlParser(filter = true)
+  int updateByMyWrapper(@Param(Constants.WRAPPER) Wrapper&lt;User&gt; userWrapper, @Param(&quot;user&quot;) User user);
+}
+</code></pre>
 
     </div>
     <div class="article-footer">
@@ -917,6 +618,11 @@ work_id FROM sys_user WHERE sys_user.tent_id = 8
                 <a href="https://bluestaree.github.io/2021/01/%E4%BF%9D%E7%95%99%E9%A6%96%E5%B0%BE%E5%AD%97%E7%AC%A6%E5%85%B6%E4%BD%99%E5%85%A8%E9%83%A8%E5%8F%98%E4%B8%BA%E6%98%9F%E5%8F%B7/" title="保留首尾字符，中间全部变为星号"><i
                         class="icon icon-angle-left"
                         aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2021/01/virtualbox%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F/"
+                    title="VirtualBox虚拟机网络模式"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
             </li>
             
             <li class="toggle-toc">

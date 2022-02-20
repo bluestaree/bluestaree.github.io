@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        Docker容器安装及使用 - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="Docker容器安装及使用 一、非docker-ce版本卸载 yum remove docker \ docker-client \ docker-client-latest \ docker-common \ docker-latest \ docker-latest-logrotate \ docker-logrotate \ docker-engine rm -rf /etc/systemd/system/docker.service.d rm -rf /var/lib/docker rm -rf /var/run/docker 二、docker-ce版本卸载" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>Docker容器安装及使用 - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="Docker容器安装及使用" />
+<meta property="og:description" content="Docker容器安装及使用 一、非docker-ce版本卸载 yum remove docker \ docker-client \ docker-client-latest \ docker-common \ docker-latest \ docker-latest-logrotate \ docker-logrotate \ docker-engine rm -rf /etc/systemd/system/docker.service.d rm -rf /var/lib/docker rm -rf /var/run/docker 二、docker-ce版本卸载" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2021/03/docker%E5%AE%B9%E5%99%A8%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/" />
+<meta property="article:published_time" content="2021-03-15T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-03-15T00:00:00+00:00" />
+<meta itemprop="name" content="Docker容器安装及使用">
+<meta itemprop="description" content="Docker容器安装及使用 一、非docker-ce版本卸载 yum remove docker \ docker-client \ docker-client-latest \ docker-common \ docker-latest \ docker-latest-logrotate \ docker-logrotate \ docker-engine rm -rf /etc/systemd/system/docker.service.d rm -rf /var/lib/docker rm -rf /var/run/docker 二、docker-ce版本卸载">
+<meta itemprop="datePublished" content="2021-03-15T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-03-15T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1369">
+
+
+
+<meta itemprop="keywords" content="docker," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Docker容器安装及使用"/>
+<meta name="twitter:description" content="Docker容器安装及使用 一、非docker-ce版本卸载 yum remove docker \ docker-client \ docker-client-latest \ docker-common \ docker-latest \ docker-latest-logrotate \ docker-logrotate \ docker-engine rm -rf /etc/systemd/system/docker.service.d rm -rf /var/lib/docker rm -rf /var/run/docker 二、docker-ce版本卸载"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">35</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/captcha/" class="tag-list-link">captcha</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/json/" class="tag-list-link">json</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/saas/" class="tag-list-link">saas</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="tag-list-link">正则表达式</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2021/03/docker%E5%AE%B9%E5%99%A8%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/" class="title">Docker容器安装及使用</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2021-03-15 00:00:00 &#43;0000 UTC" itemprop="datePublished">2021-03-15</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2021/01/virtualbox%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F/" class="title">VirtualBox虚拟机网络模式</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2021-01-25 00:00:00 &#43;0000 UTC" itemprop="datePublished">2021-01-25</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2021/01/mybatis-plus%E7%A7%9F%E6%88%B7%E8%A7%A3%E6%9E%90%E7%9A%84%E5%BA%94%E7%94%A8/" class="title">Mybatis Plus实现多租户解析的应用</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2021-01-08 00:00:00 &#43;0000 UTC" itemprop="datePublished">2021-01-08</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2021/01/%E4%BF%9D%E7%95%99%E9%A6%96%E5%B0%BE%E5%AD%97%E7%AC%A6%E5%85%B6%E4%BD%99%E5%85%A8%E9%83%A8%E5%8F%98%E4%B8%BA%E6%98%9F%E5%8F%B7/" class="title">保留首尾字符，中间全部变为星号</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2021-01-05 00:00:00 &#43;0000 UTC" itemprop="datePublished">2021-01-05</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2020/12/mybatis-plus%E7%9A%84%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90ds%E4%BA%8B%E5%8A%A1%E9%97%AE%E9%A2%98/" class="title">Mybatis plus的多数据源@DS事务问题</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-12-25 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-12-25</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2021/03/docker%E5%AE%B9%E5%99%A8%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/"
+    >Docker容器安装及使用</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2021/03/docker%E5%AE%B9%E5%99%A8%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time datetime="2021-03-15 00:00:00 &#43;0000 UTC" itemprop="datePublished">2021-03-15</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/"> 笔记 </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/docker/"> docker </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2021/03/docker%E5%AE%B9%E5%99%A8%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1369字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 3分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<h1 id="docker容器安装及使用">Docker容器安装及使用</h1>
+<h2 id="一非docker-ce版本卸载">一、非docker-ce版本卸载</h2>
+<pre><code class="language-linux">yum remove docker \ 
+				  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-engine
+                  
+rm -rf /etc/systemd/system/docker.service.d
+
+rm -rf /var/lib/docker
+
+rm -rf /var/run/docker
+</code></pre>
+<h2 id="二docker-ce版本卸载">二、docker-ce版本卸载</h2>
+<pre><code>列出docker安装过的相关包
+
+yum list installed | grep docker
+
+删除相关安装包 
+yum -y remove containerd.io.x86_64
+
+yum -y remove docker-ce-cli.x86_64
+
+yum -y remove docker-ce.x86_64
+</code></pre>
+<h2 id="三安装指定版本docker">三、安装指定版本docker</h2>
+<pre><code>安装所需工具和配置 
+yum install -y yum-utils
+
+yum-config-manager --add-repo https://mirrors.aliyun.com/dockerce/linux/centos/docker-ce.repo
+
+查看版本
+yum list docker-ce --showduplicates|sort -r
+
+列出版本信息如下：
+
+ * updates: mirrors.ustc.edu.cn 
+Loading mirror speeds from cached hostfile 
+Loaded plugins: fastestmirror 
+Installed Packages 
+ * extras: mirrors.163.com 
+docker-ce.x86_64            3:20.10.5-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:20.10.4-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:20.10.3-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:20.10.2-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:20.10.1-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:20.10.0-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:19.03.9-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:19.03.8-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:19.03.7-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:19.03.6-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:19.03.5-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:19.03.4-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:19.03.3-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:19.03.2-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:19.03.15-3.el7                   docker-ce-stable 
+docker-ce.x86_64            3:19.03.14-3.el7                   docker-ce-stable 
+docker-ce.x86_64            3:19.03.1-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:19.03.13-3.el7                   docker-ce-stable 
+docker-ce.x86_64            3:19.03.13-3.el7                   @docker-ce-stable 
+docker-ce.x86_64            3:19.03.12-3.el7                   docker-ce-stable 
+docker-ce.x86_64            3:19.03.11-3.el7                   docker-ce-stable 
+docker-ce.x86_64            3:19.03.10-3.el7                   docker-ce-stable 
+docker-ce.x86_64            3:19.03.0-3.el7                    docker-ce-stable 
+</code></pre>
+<pre><code>选择指定版本安装，注意去掉字符串&quot;3:&quot;
+
+yum install -y docker-ce-19.03.13-3.el7 docker-ce-cli-19.03.13-3.el7 containerd.io
+</code></pre>
+<pre><code>同时启动并设置开机自启 
+systemctl enable docker &amp;&amp; systemctl start docker 
+查看版本号 
+docker --version 或者 docker -v 
+查看信息 
+docker info
+</code></pre>
+<h2 id="四自定义配置">四、自定义配置</h2>
+<h3 id="1配置文件路径">1、配置文件路径</h3>
+<p>​	vi  /etc/docker/daemon.json</p>
+<h3 id="2增加如下配置">2、增加如下配置</h3>
+<pre><code>{   
+	#修改镜像源   
+	&quot;registry-mirrors&quot;: [&quot;https://registry.docker-cn.com&quot;,&quot;http://hubmirror.c.163.com&quot;,&quot;https://docker.mirrors.ustc.edu.cn&quot;],   
+	#修改docker存储位置   
+	&quot;graph&quot;:&quot;/data/docker&quot;,   
+	#修改日志存储大小和数量   
+	&quot;log-opts&quot;: {&quot;max-size&quot;:&quot;500m&quot;, &quot;max-file&quot;:&quot;3&quot;} 
+}
+</code></pre>
+<pre><code>删除docker旧存储路径（确保新路径能正常使用在删除） 
+rm -rf /var/lib/docker
+
+重启docker 
+systemctl restart docker
+</code></pre>
+<h2 id="五非root账户安装运行">五、非root账户安装运行</h2>
+<pre><code>查看用户组及成员 
+sudo cat /etc/group | grep docker
+
+可以添加docker组 
+sudo groupadd docker 
+
+添加linux用户到docker组  
+sudo gpasswd -a ${USER} docker 
+
+增加读写权限 
+sudo chmod a+rw /var/run/docker.sock
+
+重启docker 
+sudo systemctl restart docker
+</code></pre>
+<h2 id="六docker命令">六、docker命令</h2>
+<h3 id="1网络操作命名">1、网络操作命名</h3>
+<pre><code>创建网络 
+docker  network  create  --subnet=172.30.0.0/16 my-network
+
+查看网络内部信息 
+docker network inspect my-network
+
+列所有列表的网络 
+docker network  ls
+
+移除指定的网络 
+docker network rm my-network
+</code></pre>
+<h3 id="2容器操作命令">2、容器操作命令</h3>
+<pre><code>启动docker 
+systemctl start docker
+
+停止docker 
+systemctl stop docker
+
+重启docker 
+systemctl restart docker
+
+开机启动docker 
+systemctl enable docker
+
+查看当前运行的容器 
+docker ps
+
+查看所有容器 
+docker ps -a
+
+查看镜像 
+docker images
+
+进入容器 
+docker exec -it 容器ID /bin/bash
+
+停止容器 
+docker stop 容器ID/容器名称
+
+删除容器 
+docker rm 容器ID/容器名称
+
+删除镜像 
+docker rmi 镜像ID
+</code></pre>
+<h3 id="3日志操作命令">3、日志操作命令</h3>
+<pre><code>语法：docker logs [OPTIONS] CONTAINER
+
+OPTIONS说明：
+-f : 跟踪日志输出
+--since :显示某个开始时间的所有日志
+-t : 显示时间戳
+--tail :仅列出最新N条容器日志
+
+获取容器日志 
+docker logs -f 容器ID
+
+查看容器从2016年7月1日后的最新10条日志 
+docker logs --since=&quot;2016-07-01&quot; --tail=10 容器ID
+</code></pre>
+<h3 id="4更多操作命令">4、更多操作命令</h3>
+<p><a href="https://www.runoob.com/docker/docker-command-manual.html">https://www.runoob.com/docker/docker-command-manual.html</a></p>
+<h2 id="七docker-compose使用">七、docker-compose使用</h2>
+<h3 id="1安装运行">1、安装运行</h3>
+<pre><code>安装命令 
+curl -L https://github.com/docker/compose/releases/download/1.25.5/dockercompose-`uname -s`-`uname -m` &gt; /usr/local/bin/docker-compose 
+
+设置权限 
+chmod +x /usr/local/bin/docker-compose
+
+运行命令 
+docker-compose -f docker-compose.yml up -d
+
+# 脚本中使用内存和cpu限制的情况下启动脚本要加--compatibility 
+docker-compose -f docker-compose.yml --compatibility up -d
+
+ps:在版本2中，可以通过services下的“ mem_limit”和“ cpu_shares”参数正常工作。 但是在使用版 本3时失败，除非我使用群模式，否则将它们置于部署部分似乎不值得。
+
+# 构建镜像并运行启动 
+docker-compose up -d --build
+
+</code></pre>
+<h3 id="2服务器部署示例">2、服务器部署示例</h3>
+<p>该脚本用于安装redis、mysql、rabbitmq应用服务，并使用创建的指定网络my-network。同时通 过cpus和memory限制机器资源。注意容器和宿主机时间同步的两种方式。</p>
+<pre><code>version: &quot;3&quot;
+
+networks:  
+	default:    
+		external:      
+			name: my-network
+			
+services:  
+	redis:    
+		image: redis    
+		container_name: my-redis-165-1    
+		restart: always    
+		ports:     
+        	- 6379:6379    
+        environment:      
+        	TZ: Asia/Shanghai    
+        volumes:       
+        	- &quot;./redis/redis.conf:/etc/redis/redis.conf&quot;        
+        	- &quot;./redis/data/:/data&quot;     
+        command:     
+        	redis-server /etc/redis/redis.conf --appendonly yes --bind 0.0.0.0    
+        deploy:      
+        	resources:        
+        	limits:          
+        		cpus: '0.5'          
+        		memory: 500M  
+	mysql5.7.31:    
+		image: mysql:5.7.31    
+		container_name: my-mysql5.7.31-165-1    
+		restart: always    
+		ports:      
+			- 3306:3306    
+		volumes:        
+			- &quot;./mysql5.7.31/data:/var/lib/mysql&quot;        
+			- &quot;./mysql5.7.31/conf/my.cnf:/etc/mysql/my.cnf&quot;        
+			- &quot;./mysql5.7.31/log:/var/log/mysql&quot;        
+			- &quot;./mysql5.7.31/init:/docker-entrypoint-initdb.d/&quot;    
+		environment:      
+			TZ: Asia/Shanghai      
+			MYSQL_ROOT_PASSWORD: root      
+			MYSQL_ROOT_HOST: &quot;%&quot;    
+		deploy:      
+			resources:        
+				limits:          
+					cpus: '1'          
+					memory: 1G  
+	rabbitmq:    
+		image: rabbitmq:3.8.14-management    
+		container_name: my-rabbitmq-165-1    
+		hostname: rabbitmq    
+		restart: always    
+		ports:
+      		- &quot;15672:15672&quot; #web管理口15672      
+      		- &quot;4369:4369&quot; #erlang发现口      
+      		- &quot;5672:5672&quot;  #client端通信口      
+      		- &quot;25672:25672&quot; #server间内部通信口    
+      	environment:      
+      		# TZ: Asia/Shanghai # 第一种时间调整无效      
+      		RABBITMQ_DEFAULT_USER: root      
+      		RABBITMQ_DEFAULT_PASS: root    
+      	volumes:      
+      		- &quot;./rabbitmq/data:/var/lib/rabbitmq&quot;      
+      		- &quot;./rabbitmq/logs:/var/log/rabbitmq&quot;      
+      		- &quot;./rabbitmq/conf:/etc/rabbitmq&quot;      
+      		- /etc/localtime:/etc/localtime:ro # 第二种时间调整有效    
+      	deploy:      
+      		resources:        
+      			limits:          
+      				cpus: '0.5'          
+      				memory: 500M					
+</code></pre>
+<pre><code>安装rabbitmq后如果要开启web管理的话，需要进入容器执行如下命令： 
+rabbitmq-plugins enable rabbitmq_management
+
+rabbitmq 
+生产环境配置 https://www.cnblogs.com/operationhome/p/10483840.html
+
+rabbitmq 
+配置文件属性参考 https://www.rabbitmq.com/configure.html
+</code></pre>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2021/01/virtualbox%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F/" title="VirtualBox虚拟机网络模式"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2022
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>
