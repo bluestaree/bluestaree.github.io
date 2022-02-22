@@ -10,6 +10,15 @@
     
     
     <item>
+      <title>Maven,Gradle依赖</title>
+      <link>https://bluestaree.github.io/2020/05/mavengradle%E4%BE%9D%E8%B5%96/</link>
+      <pubDate>Sat, 02 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/mavengradle%E4%BE%9D%E8%B5%96/</guid>
+      <description>最近在学习中遇到了新的包管理工具 - Gradle 。 上网查询了下Gradle 的依赖方式，方便与Maven区分对比 。 转载 · 原文链接：https://blog</description>
+    </item>
+    
+    <item>
       <title>Mybatis中Mapper标签总结大全</title>
       <link>https://bluestaree.github.io/2020/04/mybatis%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E6%B1%87%E6%80%BB/</link>
       <pubDate>Thu, 30 Apr 2020 00:00:00 +0000</pubDate>

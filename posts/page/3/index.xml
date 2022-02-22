@@ -5,10 +5,19 @@
     <link>https://bluestaree.github.io/posts/</link>
     <description>Recent content in Posts on AzkeepToo个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 15 Mar 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Mar 2021 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://bluestaree.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Maven,Gradle依赖</title>
+      <link>https://bluestaree.github.io/2020/05/mavengradle%E4%BE%9D%E8%B5%96/</link>
+      <pubDate>Sat, 02 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/mavengradle%E4%BE%9D%E8%B5%96/</guid>
+      <description>最近在学习中遇到了新的包管理工具 - Gradle 。 上网查询了下Gradle 的依赖方式，方便与Maven区分对比 。 转载 · 原文链接：https://blog</description>
+    </item>
     
     <item>
       <title>Mybatis中Mapper标签总结大全</title>
