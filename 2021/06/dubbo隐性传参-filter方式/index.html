@@ -2,7 +2,7 @@
 <html lang="zh">
   <head>
     <title>
-        Maven,Gradle依赖 - AzkeepToo个人博客
+        Dubbo隐性传参-filter方式 - AzkeepToo个人博客
       </title>
         <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -20,32 +20,32 @@
     <meta http-equiv="window-target" content="_top" />
     
     
-    <meta name="description" content="最近在学习中遇到了新的包管理工具 - Gradle 。 上网查询了下Gradle 的依赖方式，方便与Maven区分对比 。 转载 · 原文链接：https://blog" />
+    <meta name="description" content="Dubbo隐性传参-filter方式 使用场景： 服务提供方 需要校验 消费端是否具有权限调用接口，因此消费端在每次请求前都需要带上认证信息 原理: R" />
     <meta name="generator" content="Hugo 0.69.2 with theme pure" />
-    <title>Maven,Gradle依赖 - AzkeepToo个人博客</title>
+    <title>Dubbo隐性传参-filter方式 - AzkeepToo个人博客</title>
     
     
     <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
     
     <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
-    <meta property="og:title" content="Maven,Gradle依赖" />
-<meta property="og:description" content="最近在学习中遇到了新的包管理工具 - Gradle 。 上网查询了下Gradle 的依赖方式，方便与Maven区分对比 。 转载 · 原文链接：https://blog" />
+    <meta property="og:title" content="Dubbo隐性传参-filter方式" />
+<meta property="og:description" content="Dubbo隐性传参-filter方式 使用场景： 服务提供方 需要校验 消费端是否具有权限调用接口，因此消费端在每次请求前都需要带上认证信息 原理: R" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://bluestaree.github.io/2020/05/mavengradle%E4%BE%9D%E8%B5%96/" />
-<meta property="article:published_time" content="2020-05-02T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-05-02T00:00:00+00:00" />
-<meta itemprop="name" content="Maven,Gradle依赖">
-<meta itemprop="description" content="最近在学习中遇到了新的包管理工具 - Gradle 。 上网查询了下Gradle 的依赖方式，方便与Maven区分对比 。 转载 · 原文链接：https://blog">
-<meta itemprop="datePublished" content="2020-05-02T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-05-02T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1350">
+<meta property="og:url" content="https://bluestaree.github.io/2021/06/dubbo%E9%9A%90%E6%80%A7%E4%BC%A0%E5%8F%82-filter%E6%96%B9%E5%BC%8F/" />
+<meta property="article:published_time" content="2021-06-15T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-06-15T00:00:00+00:00" />
+<meta itemprop="name" content="Dubbo隐性传参-filter方式">
+<meta itemprop="description" content="Dubbo隐性传参-filter方式 使用场景： 服务提供方 需要校验 消费端是否具有权限调用接口，因此消费端在每次请求前都需要带上认证信息 原理: R">
+<meta itemprop="datePublished" content="2021-06-15T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-06-15T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1032">
 
 
 
-<meta itemprop="keywords" content="Maven,Gradle," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Maven,Gradle依赖"/>
-<meta name="twitter:description" content="最近在学习中遇到了新的包管理工具 - Gradle 。 上网查询了下Gradle 的依赖方式，方便与Maven区分对比 。 转载 · 原文链接：https://blog"/>
+<meta itemprop="keywords" content="dubbo," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Dubbo隐性传参-filter方式"/>
+<meta name="twitter:description" content="Dubbo隐性传参-filter方式 使用场景： 服务提供方 需要校验 消费端是否具有权限调用接口，因此消费端在每次请求前都需要带上认证信息 原理: R"/>
 
     <!--[if lte IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -333,8 +333,8 @@
       <h1 itemprop="name">
   <a
     class="article-title"
-    href="/2020/05/mavengradle%E4%BE%9D%E8%B5%96/"
-    >Maven,Gradle依赖</a
+    href="/2021/06/dubbo%E9%9A%90%E6%80%A7%E4%BC%A0%E5%8F%82-filter%E6%96%B9%E5%BC%8F/"
+    >Dubbo隐性传参-filter方式</a
   >
 </h1>
 
@@ -342,8 +342,8 @@
         
 <span class="article-date">
   <i class="icon icon-calendar-check"></i>&nbsp;
-<a href="https://bluestaree.github.io/2020/05/mavengradle%E4%BE%9D%E8%B5%96/" class="article-date">
-  <time datetime="2020-05-02 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-05-02</time>
+<a href="https://bluestaree.github.io/2021/06/dubbo%E9%9A%90%E6%80%A7%E4%BC%A0%E5%8F%82-filter%E6%96%B9%E5%BC%8F/" class="article-date">
+  <time datetime="2021-06-15 00:00:00 &#43;0000 UTC" itemprop="datePublished">2021-06-15</time>
 </a>
 </span>
 <span class="article-category">
@@ -352,72 +352,257 @@
 </span>  
   <span class="article-tag">
     <i class="icon icon-tags"></i>&nbsp;
-    <a class="article-tag-link" href="/tags/maven/"> Maven </a>
-    <a class="article-tag-link" href="/tags/gradle/"> Gradle </a>
+    <a class="article-tag-link" href="/tags/dubbo/"> dubbo </a>
   </span>
 
-        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2020/05/mavengradle%E4%BE%9D%E8%B5%96/#comments"
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2021/06/dubbo%E9%9A%90%E6%80%A7%E4%BC%A0%E5%8F%82-filter%E6%96%B9%E5%BC%8F/#comments"
             class="article-comment-link">评论</a></span>
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1350字</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1032字</span>
 		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 3分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
       <hr>
-<p>最近在学习中遇到了新的包管理工具 - Gradle 。</p>
-<p>上网查询了下Gradle 的依赖方式，方便与Maven区分对比 。</p>
+<h2 id="dubbo隐性传参-filter方式">Dubbo隐性传参-filter方式</h2>
 <blockquote>
-<p>转载 · 原文链接：https://blog.csdn.net/zyt_524744325/article/details/86535463</p>
+<p>使用场景： 服务提供方 需要校验 消费端是否具有权限调用接口，因此消费端在每次请求前都需要带上认证信息</p>
 </blockquote>
-<h3 id="依赖配置-gradle">依赖配置-Gradle</h3>
-<p>目前Gradle版本支持的依赖配置有：implementation、api、compileOnly、runtimeOnly和annotationProcessor，已经废弃的配置有：compile、provided、apk、providedCompile。此外依赖配置还可以加一些配置项，例如AndroidTestImplementation、debugApi等等。</p>
-<ul>
-<li>implementation</li>
-</ul>
-<p>与compile对应，会添加依赖到编译路径，并且会将依赖打包到输出（aar或apk），但是在编译时不会将依赖的实现暴露给其他module，也就是只有在运行时其他module才能访问这个依赖中的实现。使用这个配置，可以显著提升构建时间，因为它可以减少重新编译的module的数量。建议，尽量使用这个依赖配置。</p>
-<ul>
-<li>api</li>
-</ul>
-<p>与compile对应，功能完全一样，会添加依赖到编译路径，并且会将依赖打包到输出（aar或apk），与implementation不同，这个依赖可以传递，其他module无论在编译时和运行时都可以访问这个依赖的实现，也就是会泄漏一些不应该不使用的实现。举个例子，A依赖B，B依赖C，如果都是使用api配置的话，A可以直接使用C中的类（编译时和运行时），而如果是使用implementation配置的话，在编译时，A是无法访问C中的类的。</p>
-<ul>
-<li>compileOnly</li>
-</ul>
-<p>与provided对应，Gradle把依赖加到编译路径，编译时使用，不会打包到输出（aar或apk）。这可以减少输出的体积，在只在编译时需要，在运行时可选的情况，很有用。</p>
-<ul>
-<li>runtimeOnly</li>
-</ul>
-<p>与apk对应，gradle添加依赖只打包到APK，运行时使用，但不会添加到编译路径。这个没有使用过。</p>
-<ul>
-<li>annotationProcessor</li>
-</ul>
-<p>与compile对应，用于注解处理器的依赖配置，这个没用过。</p>
-<hr>
-<h3 id="依赖配置-maven"><strong>依赖配置-Maven</strong></h3>
-<ul>
-<li>compile</li>
-</ul>
-<p>默认scope为compile，表示为当前依赖参与项目的编译、测试和运行阶段，属于强依赖。打包之时，会达到包里去。</p>
-<ul>
-<li>test</li>
-</ul>
-<p>该依赖仅仅参与测试相关的内容，包括测试用例的编译和执行，比如定性的Junit。</p>
-<ul>
-<li>runtime</li>
-</ul>
-<p>依赖仅参与运行周期中的使用。一般这种类库都是接口与实现相分离的类库，比如JDBC类库，在编译之时仅依赖相关的接口，在具体的运行之时，才需要具体的mysql、oracle等等数据的驱动程序。</p>
-<p>此类的驱动都是为runtime的类库。</p>
-<ul>
-<li>provided</li>
-</ul>
-<p>该依赖在打包过程中，不需要打进去，这个由运行的环境来提供，比如tomcat或者基础类库等等，事实上，该依赖可以参与编译、测试和运行等周期，与compile等同。区别在于打包阶段进行了exclude操作。</p>
-<ul>
-<li>system</li>
-</ul>
-<p>使用上与provided相同，不同之处在于该依赖不从maven仓库中提取，而是从本地文件系统中提取，其会参照systemPath的属性进行提取依赖。</p>
-<ul>
-<li>import</li>
-</ul>
-<p>这个是maven2.0.9版本后出的属性，import只能在dependencyManagement的中使用，能解决maven单继承问题，import依赖关系实际上并不参与限制依赖关系的传递性。</p>
+<h3 id="原理-rpccontext内部有一个threadlocal变量它是作为threadlocalmap的key表明每个线程有一个rpccontext">原理: RpcContext内部有一个ThreadLocal变量，它是作为ThreadLocalMap的key，表明每个线程有一个RpcContext</h3>
+<pre><code class="language-java">public class RpcContext {
+    private static final ThreadLocal&lt;RpcContext&gt; LOCAL = new ThreadLocal&lt;RpcContext&gt;() {
+        @Override
+        protected RpcContext initialValue() {
+            return new RpcContext();
+        }
+    };
+
+    // 获取initialValue 中的对象 
+    public static RpcContext getContext() {
+        return LOCAL.get();
+    }
+}
+</code></pre>
+<h4 id="配置文件">配置文件</h4>
+<pre><code class="language-yaml">##################
+### dubbo 服务端配置
+##################
+dubbo:
+  application:
+    name: ${spring.application.name}
+  scan:
+    base-packages: com.dubbotest.**.facade
+  protocols:
+    dubbo:
+      name: dubbo
+      port: 22181
+  registries:
+    address: spring-cloud://localhost
+  cloud:
+    subscribed-services: iot-server-smart,iot-server-admin,iot-netty-route
+  consumer:
+    check: false
+    filter: params
+  provider:
+    filter: ehmException,-exception,params
+</code></pre>
+<p>注意其中的consumer与provider 中 filter 配置  ： params</p>
+<h4 id="过滤器">过滤器</h4>
+<pre><code class="language-java">public class ParamsFilter implements Filter {
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public ParamsFilter() {
+    }
+
+    public Result invoke(Invoker&lt;?&gt; invoker, Invocation invocation) throws RpcException {
+        RpcContext rpcContext = RpcContext.getContext();
+		// 是否服务提供方
+        boolean isServer = rpcContext.isProviderSide();
+        Map rpcMap;
+        if (isServer) {
+   			// 获取参数
+            rpcMap = RpcContext.getContext().getAttachments();
+            if (rpcMap != null) {
+				// 将参数封装到自定义上下文中 方便取值
+                DubboContextThreadLocal.set(Maps.newHashMap(rpcMap));
+            }
+
+            this.logger.info(&quot;PROVIDER####params{}&quot;, rpcMap);
+            // 执行请求
+            Result result = invoker.invoke(invocation);
+            // 清空自定义上下文
+            DubboContextThreadLocal.remove();
+            return result;
+        } else {
+            // 将以后的参数先拿出来，在汇总到一起避免trace的跟踪参数被覆盖丢失
+            rpcMap = RpcContext.getContext().getAttachments();
+            // 自定义上下文内容
+            Map&lt;String, String&gt; webMap = WebContextThreadLocal.get();
+            if (webMap != null &amp;&amp; rpcMap != null) {
+                webMap.putAll(rpcMap);
+            }
+     
+    	 	// 重新设置上下文内容
+            RpcContext.getContext().setAttachments(webMap);
+            // RpcContext.getContext().set(&quot;ip&quot;, &quot;192.168.1.235&quot;);
+            this.logger.info(&quot;CONSUMER###params{}&quot;, webMap);
+            // 执行请求
+            Result result = invoker.invoke(invocation);
+            return result;
+        }
+    }
+}
+</code></pre>
+<h4 id="自定义dubbo上下文-">自定义dubbo上下文 ,</h4>
+<pre><code class="language-java">public class DubboContextThreadLocal {
+    private static ThreadLocal&lt;Map&lt;String, String&gt;&gt; dubboContextThreadLocal = new ThreadLocal&lt;Map&lt;String, String&gt;&gt;();
+
+    public static void set(Map&lt;String, String&gt; infoMap) {
+        dubboContextThreadLocal.set(infoMap);
+    }
+
+    public static Map&lt;String, String&gt; get() {
+        return dubboContextThreadLocal.get();
+    }
+
+    public static void remove() {
+        dubboContextThreadLocal.remove();
+    }
+
+    public static String getUserId() {
+        Map&lt;String, String&gt; operatorMap = get();
+        if (operatorMap == null) {
+            return null;
+        } else {
+            return operatorMap.get(&quot;userId&quot;);
+        }
+    }
+
+    public static String getUserName() {
+        Map&lt;String, String&gt; operatorMap = get();
+        if (operatorMap == null) {
+            return null;
+        } else {
+            return operatorMap.get(&quot;userName&quot;);
+        }
+    }
+
+    public static String getApplicationName() {
+        Map&lt;String, String&gt; operatorMap = get();
+        if (operatorMap == null) {
+            return null;
+        } else {
+            return operatorMap.get(&quot;applicationName&quot;);
+        }
+    }
+
+    public static String getAccessKeyId() {
+        Map&lt;String, String&gt; operatorMap = get();
+        if (operatorMap == null) {
+            return null;
+        } else {
+            return operatorMap.get(&quot;accessKeyId&quot;);
+        }
+    }
+}
+</code></pre>
+<h4 id="自定义web参数上下文">自定义web参数上下文</h4>
+<pre><code class="language-java">public class WebContextThreadLocal {
+   private static ThreadLocal&lt;Map&lt;String, String&gt;&gt; webContextThreadLocal = new ThreadLocal&lt;Map&lt;String, String&gt;&gt;();
+
+   public static void set(Map&lt;String, String&gt; infoMap) {
+      webContextThreadLocal.set(infoMap);
+   }
+
+   public static Map&lt;String, String&gt; get() {
+      return webContextThreadLocal.get();
+   }
+
+   public static void remove() {
+      webContextThreadLocal.remove();
+   }
+
+}
+</code></pre>
+<p>比如一些公用的分页参数 pageNum , pageSize等 都可以 通过过滤器 / 拦截器 ，获取请求参数，存到web参数上下文中</p>
+<h4 id="相关拦截器">相关拦截器</h4>
+<pre><code class="language-java">@Component
+public class TraceInterceptor extends HandlerInterceptorAdapter {
+
+    private Logger logger = LoggerFactory.getLogger(TraceInterceptor.class);
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
+        // 设置传递参数
+        Map&lt;String, String&gt; context = Maps.newHashMap();
+        try {
+            // 获取当前的用户
+            LoginUser loginUser = SecurityUtils.getLoginUser();
+
+            if (loginUser != null) {
+                context.put(&quot;userId&quot;, String.valueOf(loginUser.getUserId()));
+                context.put(&quot;userName&quot;, loginUser.getUsername());
+            }
+
+        } catch (Exception e) {
+            logger.debug(&quot;无用户信息 &quot;);
+        }
+        try {
+            PageDomain pageDomain = TableSupport.buildPageRequest();
+            if (pageDomain.getPageNum() != null &amp;&amp; pageDomain.getPageSize() != null) {
+                context.put(&quot;pageDomain&quot;, JSON.toJSONString(pageDomain));
+            }
+        } catch (Exception e) {
+            logger.debug(&quot;无分页信息 &quot;);
+        }
+        WebContextThreadLocal.set(context);
+        return true;
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+                           ModelAndView modelAndView) throws Exception {
+        super.postHandle(request, response, handler, modelAndView);
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+            throws Exception {
+        WebContextThreadLocal.remove();
+    }
+}
+</code></pre>
+<h4 id="拦截器注册">拦截器注册</h4>
+<pre><code class="language-java">@Configuration
+public class ResourcesConfig implements WebMvcConfigurer {
+
+    /**
+     * 自定义拦截规则
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new TraceInterceptor()).addPathPatterns(&quot;/**&quot;);
+    }
+}
+</code></pre>
+<h4 id="自定义dubbo-过滤器注册">自定义Dubbo 过滤器注册</h4>
+<p>META-INF 文件目录下 新增文件 org.apache.dubbo.rpc.Filter，并添加以下内容</p>
+<pre><code>params=com.ehaomiao.common.dubbo.filter.ParamsFilter
+ehmException=com.ehaomiao.common.dubbo.filter.EhmExceptionFilter
+</code></pre>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/TmEUgtj9EK6.7V8ajmQrEFsRN8D1fxnj0j*Zx0XiBoNO13y2Nuh62IjKvUf5OTz9Iei9NcpqRrgGN3HtreSvkhms*Xfqnh2mPbBfW14oLqo!/r" alt=""></p>
+<p>结合yaml中的配置即可生效</p>
+<h4 id="使用">使用</h4>
+<pre><code class="language-java">...
+Map&lt;String, String&gt; context = new HashMap&lt;&gt;();
+context.put(&quot;accessKeyId&quot;, accessKeyId);
+// 设置隐式传递参数
+RpcContext.getContext().setAttachments(context);
+
+// 调用接口
+IotDevice iotDevice = accessFacade.getDeviceByDeviceCode(deviceSncode);
+....
+</code></pre>
 
     </div>
     <div class="article-footer">
@@ -430,14 +615,9 @@
     <div class="bar-inner">
         <ul class="pager pull-left">
             <li class="prev">
-                <a href="https://bluestaree.github.io/2020/04/mybatis%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E6%B1%87%E6%80%BB/" title="Mybatis中Mapper标签总结大全"><i
+                <a href="https://bluestaree.github.io/2021/06/%E4%BD%BF%E7%94%A8new%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E4%B8%8E-spring-autowire/" title="使用New创建对象与 spring @Autowire"><i
                         class="icon icon-angle-left"
                         aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
-            </li>
-            <li class="next">
-                <a href="https://bluestaree.github.io/2020/05/spring-security%E6%B5%81%E7%A8%8B%E4%B8%8E%E9%85%8D%E7%BD%AE/"
-                    title="SpringSecurity流程与配置"><span>上一篇&nbsp;&nbsp;</span><i
-                        class="icon icon-angle-right" aria-hidden="true"></i></a>
             </li>
             
             <li class="toggle-toc">
