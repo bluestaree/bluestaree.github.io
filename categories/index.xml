@@ -5,10 +5,28 @@
     <link>https://bluestaree.github.io/categories/</link>
     <description>Recent content in Categories on AzkeepToo个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 15 Jun 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Sep 2021 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://bluestaree.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>java服务部署跳过编译文件 并转移到指定文件夹下</title>
+      <link>https://bluestaree.github.io/2021/09/%E4%BA%8B%E5%8A%A1%E4%BC%98%E5%8C%96%E4%B9%8Btransactionsynchronizationmanager/</link>
+      <pubDate>Sun, 26 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2021/09/%E4%BA%8B%E5%8A%A1%E4%BC%98%E5%8C%96%E4%B9%8Btransactionsynchronizationmanager/</guid>
+      <description>废话不多说，直接上图 *1、排除编译过滤项 包括 .TTC 文件 并将最终文件 放置/target下</description>
+    </item>
+    
+    <item>
+      <title>验证码登录简单实现</title>
+      <link>https://bluestaree.github.io/2021/07/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%99%BB%E5%BD%95%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Tue, 13 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2021/07/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%99%BB%E5%BD%95%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</guid>
+      <description>验证码登录简单实现 思路：基于过滤器实现，拦截登录请求，获取前端传递的验证码code进行校验 废话不多说直接上代码 ValidateCodeFilter @Component public class ValidateCodeFilter extends OncePerRequestFilter { @Autowired private ValidateCodeService validateCodeService; @Override protected void</description>
+    </item>
     
     <item>
       <title>Dubbo隐性传参-filter方式</title>
@@ -170,24 +188,6 @@
       
       <guid>https://bluestaree.github.io/2020/08/springcloud-alibaba-sentinel/</guid>
       <description>简介：Sentinel-哨兵，是Spring Cloud Alibaba 的开源项目，是面向微服务的轻量级流量控制框架，从流量控制、熔断降级、系统负载保护等多个维度保</description>
-    </item>
-    
-    <item>
-      <title>接口幂等性问题与解决方案</title>
-      <link>https://bluestaree.github.io/2020/08/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/</link>
-      <pubDate>Mon, 10 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/08/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/</guid>
-      <description>概述 接口幂等性 接口幂等性就是用户对于同一操作发起的一次请求或者多次请求的结果是一致的， 不会因为多次点击而产生了副作用;比如说支付场景，用户购</description>
-    </item>
-    
-    <item>
-      <title>分布式解决方案-Seata</title>
-      <link>https://bluestaree.github.io/2020/08/springcloud-alibaba-seata/</link>
-      <pubDate>Tue, 04 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/08/springcloud-alibaba-seata/</guid>
-      <description>简介：Seata是一款阿里巴巴开源的分布式事务解决方案，致力于提供高性能和简单易用的分布式事务服务。Seata 将为用户提供了AT、TCC、S</description>
     </item>
     
   </channel>

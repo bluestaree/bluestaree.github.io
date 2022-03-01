@@ -4,7 +4,35 @@
   
   <url>
     <loc>https://bluestaree.github.io/categories/</loc>
-    <lastmod>2021-06-15T00:00:00+00:00</lastmod>
+    <lastmod>2021-09-26T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://bluestaree.github.io/2021/09/%E4%BA%8B%E5%8A%A1%E4%BC%98%E5%8C%96%E4%B9%8Btransactionsynchronizationmanager/</loc>
+    <lastmod>2021-09-26T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://bluestaree.github.io/posts/</loc>
+    <lastmod>2021-09-26T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2021-09-26T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://bluestaree.github.io/2021/07/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%99%BB%E5%BD%95%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</loc>
+    <lastmod>2021-07-13T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -24,21 +52,7 @@
   </url>
   
   <url>
-    <loc>https://bluestaree.github.io/posts/</loc>
-    <lastmod>2021-06-15T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://bluestaree.github.io/tags/</loc>
-    <lastmod>2021-06-15T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2021-06-15T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
