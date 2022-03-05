@@ -2,7 +2,7 @@
 <html lang="zh">
   <head>
     <title>
-        Docker常用命令 - AzkeepToo个人博客
+        内部引用导致AOP注解不生效 - AzkeepToo个人博客
       </title>
         <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -20,32 +20,32 @@
     <meta http-equiv="window-target" content="_top" />
     
     
-    <meta name="description" content="查看当前所有镜像 docker images 查看所有容器 docker ps -a 根据一个镜像创建一个容器并运行 (windows环境) docker run -d &amp;ndash;name mysql_3308 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=tdt123 -p 3307:3306 -v //f/docker/mysql_3308:/var/lib/mysql mysql:5.5 &amp;ndash;name mysql_3308 &amp;hellip; mysql:5.5 设置容器名，及" />
+    <meta name="description" content="内部引用导致AOP注解不生效 今天同事遇到了一个bug， 场景是这样的：在一个复杂业务逻辑，查询结果却与数据库不一致，并且其中部分字段为未更新前" />
     <meta name="generator" content="Hugo 0.69.2 with theme pure" />
-    <title>Docker常用命令 - AzkeepToo个人博客</title>
+    <title>内部引用导致AOP注解不生效 - AzkeepToo个人博客</title>
     
     
     <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
     
     <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
-    <meta property="og:title" content="Docker常用命令" />
-<meta property="og:description" content="查看当前所有镜像 docker images 查看所有容器 docker ps -a 根据一个镜像创建一个容器并运行 (windows环境) docker run -d &ndash;name mysql_3308 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=tdt123 -p 3307:3306 -v //f/docker/mysql_3308:/var/lib/mysql mysql:5.5 &ndash;name mysql_3308 &hellip; mysql:5.5 设置容器名，及" />
+    <meta property="og:title" content="内部引用导致AOP注解不生效" />
+<meta property="og:description" content="内部引用导致AOP注解不生效 今天同事遇到了一个bug， 场景是这样的：在一个复杂业务逻辑，查询结果却与数据库不一致，并且其中部分字段为未更新前" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://bluestaree.github.io/2020/04/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" />
-<meta property="article:published_time" content="2020-04-18T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-04-18T00:00:00+00:00" />
-<meta itemprop="name" content="Docker常用命令">
-<meta itemprop="description" content="查看当前所有镜像 docker images 查看所有容器 docker ps -a 根据一个镜像创建一个容器并运行 (windows环境) docker run -d &ndash;name mysql_3308 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=tdt123 -p 3307:3306 -v //f/docker/mysql_3308:/var/lib/mysql mysql:5.5 &ndash;name mysql_3308 &hellip; mysql:5.5 设置容器名，及">
-<meta itemprop="datePublished" content="2020-04-18T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-04-18T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="334">
+<meta property="og:url" content="https://bluestaree.github.io/2021/08/%E5%86%85%E9%83%A8%E5%BC%95%E7%94%A8%E5%AF%BC%E8%87%B4aop%E6%B3%A8%E8%A7%A3%E4%B8%8D%E7%94%9F%E6%95%88/" />
+<meta property="article:published_time" content="2021-08-18T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-08-18T00:00:00+00:00" />
+<meta itemprop="name" content="内部引用导致AOP注解不生效">
+<meta itemprop="description" content="内部引用导致AOP注解不生效 今天同事遇到了一个bug， 场景是这样的：在一个复杂业务逻辑，查询结果却与数据库不一致，并且其中部分字段为未更新前">
+<meta itemprop="datePublished" content="2021-08-18T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-08-18T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="529">
 
 
 
-<meta itemprop="keywords" content="docker," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Docker常用命令"/>
-<meta name="twitter:description" content="查看当前所有镜像 docker images 查看所有容器 docker ps -a 根据一个镜像创建一个容器并运行 (windows环境) docker run -d &ndash;name mysql_3308 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=tdt123 -p 3307:3306 -v //f/docker/mysql_3308:/var/lib/mysql mysql:5.5 &ndash;name mysql_3308 &hellip; mysql:5.5 设置容器名，及"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="内部引用导致AOP注解不生效"/>
+<meta name="twitter:description" content="内部引用导致AOP注解不生效 今天同事遇到了一个bug， 场景是这样的：在一个复杂业务逻辑，查询结果却与数据库不一致，并且其中部分字段为未更新前"/>
 
     <!--[if lte IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -333,8 +333,8 @@
       <h1 itemprop="name">
   <a
     class="article-title"
-    href="/2020/04/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"
-    >Docker常用命令</a
+    href="/2021/08/%E5%86%85%E9%83%A8%E5%BC%95%E7%94%A8%E5%AF%BC%E8%87%B4aop%E6%B3%A8%E8%A7%A3%E4%B8%8D%E7%94%9F%E6%95%88/"
+    >内部引用导致AOP注解不生效</a
   >
 </h1>
 
@@ -342,69 +342,104 @@
         
 <span class="article-date">
   <i class="icon icon-calendar-check"></i>&nbsp;
-<a href="https://bluestaree.github.io/2020/04/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="article-date">
-  <time datetime="2020-04-18 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-04-18</time>
+<a href="https://bluestaree.github.io/2021/08/%E5%86%85%E9%83%A8%E5%BC%95%E7%94%A8%E5%AF%BC%E8%87%B4aop%E6%B3%A8%E8%A7%A3%E4%B8%8D%E7%94%9F%E6%95%88/" class="article-date">
+  <time datetime="2021-08-18 00:00:00 &#43;0000 UTC" itemprop="datePublished">2021-08-18</time>
 </a>
 </span>
 <span class="article-category">
   <i class="icon icon-folder"></i>&nbsp;
   <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/"> 笔记 </a>
-</span>  
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>&nbsp;
-    <a class="article-tag-link" href="/tags/docker/"> docker </a>
-  </span>
+</span>
 
-        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2020/04/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/#comments"
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2021/08/%E5%86%85%E9%83%A8%E5%BC%95%E7%94%A8%E5%AF%BC%E8%87%B4aop%E6%B3%A8%E8%A7%A3%E4%B8%8D%E7%94%9F%E6%95%88/#comments"
             class="article-comment-link">评论</a></span>
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 334字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 1分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 529字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 2分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
       <hr>
-<p><strong>查看当前所有镜像</strong></p>
-<p>docker images</p>
-<p><strong>查看所有容器</strong></p>
-<p>docker ps -a</p>
-<p><strong>根据一个镜像创建一个容器并运行</strong> (windows环境)</p>
-<p>docker run -d &ndash;name mysql_3308 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=tdt123 -p 3307:3306 -v //f/docker/mysql_3308:/var/lib/mysql mysql:5.5</p>
-<ul>
-<li>&ndash;name mysql_3308 &hellip; mysql:5.5 设置容器名，及选用镜像（如果没有tag即5.5，则会自动下载最新版的mysql）</li>
-<li>-e MYSQL_ROOT_HOST=% 允许远程登录</li>
-<li>-e MYSQL_ROOT_PASSWORD=123456 root登录密码</li>
-<li>-p 3308:3306  端口映射至宿主机3308</li>
-<li>-d 后台运行容器，并返回容器ID；</li>
-<li>-v //f/docker/mysql_3308:/var/lib/mysql  绑定镜像位置到宿主机上</li>
-<li>&ndash;lower_case_table_names=1  不区分大小写</li>
-</ul>
-<hr>
-<p><strong>其他栗子</strong></p>
-<p>docker run &ndash;name mysql -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 -v //e/docker/share/mysql_3306:/var/lib/mysql mysql</p>
-<p>docker create &ndash;name tracker &ndash;net host -v //e/docker/data/tracker:/var/fdfs delron/fastdfs tracker</p>
-<p>docker create &ndash;name es -p 9200:9200 -p 9300:9300 -e &ldquo;discovery.type=single-node&rdquo; -v  //e/docker/es/data/:/usr/share/elasticsearch/data elasticsearch:6.5.4</p>
-<p>docker create &ndash;name kibana -p 5601:5601 -v  //e/docker/es/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml kibana:6.5.4</p>
-<p>docker create &ndash;name redis -p 6379:6379 -v //e/docker/redis/data:/data redis:5.0.2</p>
-<p><strong>复制当前目录文件至指定容器位置</strong></p>
-<p>docker cp elasticsearch-analysis-ik-6.5.4.zip es:/usr/share/elasticsearch/plugins/</p>
-<p><strong>启动容器并显示启动日志</strong></p>
-<p>docker start rabbitmq &amp;&amp; docker logs -f rabbitmq</p>
-<p><strong>进入容器</strong></p>
-<p>docker exec -it 775c7c9ee1e1 /bin/bash (进入容器控制台)</p>
-<ul>
-<li>775c7c9ee1e1 为容器ID</li>
-</ul>
-<p><strong>查看容器信息</strong></p>
-<p>dokcer inspect 容器名</p>
-<p><strong>查找文件</strong></p>
-<p>find / -name tracker.conf</p>
-<p><strong>保存镜像文件</strong></p>
-<p>docker save</p>
-<p>docker save -o python_3.tar python:3</p>
-<p><strong>加载镜像文件</strong></p>
-<p>docker load</p>
-<p>docker load -i python_3.tar</p>
-<p>-&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;</p>
+<h3 id="内部引用导致aop注解不生效">内部引用导致AOP注解不生效</h3>
+<p>今天同事遇到了一个bug，</p>
+<p>场景是这样的：在一个复杂业务逻辑，查询结果却与数据库不一致，并且其中部分字段为未更新前数据，如下图情况</p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/TmEUgtj9EK6.7V8ajmQrENe1d9uot69C4Fqapjjg1b7TWkyyejoTqXlkCDCaZDnyJIERQdVFjpcfKt6s7hwZhhzKENb1lPCrAozJs*RDZYY!/r" alt=""></p>
+<p><strong>业务伪代码：</strong></p>
+<pre><code class="language-java">@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+public void dealWithPoint(Point point) { 
+    // .....
+    // 减积分操作 
+    updatePoints();       
+	// ....
+	// 加积分 ，  第二次执行时出现问题，查看日志并没有select语句，确定mybatis进行了缓存
+ 	updatePoints();      
+} 
+
+
+public void updatePoints() {
+	// 获取数据库信息  , 注意这里，属于内部引用 导致AOP注解失效
+    Point inDb = queryData1();     
+	//校验数据安全
+	check(inDb);
+	//更新字段内容
+	inDb.setPoints = 1;
+	inDb.setUserPoints = 1;
+	// ......
+}
+
+@Transactional(rollbackFor = Exception.class, propagation = Propagation.NOT_SUPPORTED)
+public Point queryData1() { 
+    getById();
+} 
+</code></pre>
+<p><strong>而出现数据不一致的原因 也是因为在第一步操作中，我们更新了 inDb  实体类信息。</strong></p>
+<blockquote>
+<p>刚看到这个问题，首先觉得 是不是 mybatis 将查询数据缓存了</p>
+<p>于是尝试使用注解</p>
+<p>@Options(flushCache=Options.FlushCachePolicy.TRUE)</p>
+</blockquote>
+<p>但还是一样的结果，然道注解没生效？？？？</p>
+<p><strong>然后继续排查，发现其中一段逻辑是引用了内部方法，导致注解不生效，</strong></p>
+<p><strong>伪代码</strong></p>
+<pre><code class="language-java">public void updatePoints() {
+	// 获取数据库信息  , 注意这里，属于内部引用 导致AOP注解失效
+    Point inDb = queryData1();     
+	//校验数据安全
+	check(inDb );
+	//更新字段内容
+	inDb.setPoints = 1;
+	inDb.setUserPoints = 1;
+	//...
+}
+
+@Transactional(rollbackFor = Exception.class, propagation = Propagation.NOT_SUPPORTED)
+public Point queryData1() { 
+   getById();
+} 
+</code></pre>
+<p><strong>解决方式</strong></p>
+<p>在该Service类中注入自己</p>
+<p>如果不想再新加一个Service类，在该Service类中注入自己也是一种选择。具体代码如下：\</p>
+<pre><code class="language-java">  @Servcie 
+  public class ServiceA { 
+     @Autowired 
+     prvate ServiceA serviceA; 
+   
+     public void save(User user) { 
+           queryData1(); 
+           queryData2(); 
+           serviceA.doSave(user); 
+     } 
+      
+     @Transactional(rollbackFor=Exception.class) 
+     public void doSave(User user) { 
+         addData1(); 
+         updateData2(); 
+      } 
+  } 
+</code></pre>
+<p>参考文章:</p>
+<p><a href="https://developer.51cto.com/art/202011/633243.htm">https://developer.51cto.com/art/202011/633243.htm</a></p>
+<p><a href="https://blog.csdn.net/qq_35853455/article/details/106614093">https://blog.csdn.net/qq_35853455/article/details/106614093</a></p>
 
     </div>
     <div class="article-footer">
@@ -417,13 +452,13 @@
     <div class="bar-inner">
         <ul class="pager pull-left">
             <li class="prev">
-                <a href="https://bluestaree.github.io/2020/04/springboot%E5%BA%94%E7%94%A8%E9%83%A8%E7%BD%B2%E4%BA%8E%E5%A4%96%E7%BD%AEtomcat%E5%AE%B9%E5%99%A8/" title="SpringBoot应用部署于外置Tomcat容器"><i
+                <a href="https://bluestaree.github.io/2021/07/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%99%BB%E5%BD%95%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/" title="验证码登录简单实现"><i
                         class="icon icon-angle-left"
                         aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
             </li>
             <li class="next">
-                <a href="https://bluestaree.github.io/2020/04/springbootapplication%E6%B3%A8%E8%A7%A3/"
-                    title="@SpringBootApplication注解"><span>上一篇&nbsp;&nbsp;</span><i
+                <a href="https://bluestaree.github.io/2021/09/%E4%BA%8B%E5%8A%A1%E4%BC%98%E5%8C%96%E4%B9%8Btransactionsynchronizationmanager/"
+                    title="java服务部署跳过编译文件 并转移到指定文件夹下"><span>上一篇&nbsp;&nbsp;</span><i
                         class="icon icon-angle-right" aria-hidden="true"></i></a>
             </li>
             

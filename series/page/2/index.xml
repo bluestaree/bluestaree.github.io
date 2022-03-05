@@ -10,6 +10,15 @@
     
     
     <item>
+      <title>高并发下保证服务稳定性-Sentinel</title>
+      <link>https://bluestaree.github.io/2020/08/springcloud-alibaba-sentinel/</link>
+      <pubDate>Sat, 22 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/08/springcloud-alibaba-sentinel/</guid>
+      <description>简介：Sentinel-哨兵，是Spring Cloud Alibaba 的开源项目，是面向微服务的轻量级流量控制框架，从流量控制、熔断降级、系统负载保护等多个维度保</description>
+    </item>
+    
+    <item>
       <title>接口幂等性问题与解决方案</title>
       <link>https://bluestaree.github.io/2020/08/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/</link>
       <pubDate>Mon, 10 Aug 2020 00:00:00 +0000</pubDate>
@@ -178,15 +187,6 @@
       
       <guid>https://bluestaree.github.io/2020/06/netty%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/</guid>
       <description>前言 不同的线程模型，对程序的性能有很大的影响，Netty线程模型主要基于主从Reactor多线程模型做了一定的改进 目前存在的线程模型有： 传统</description>
-    </item>
-    
-    <item>
-      <title>正向代理与方向代理</title>
-      <link>https://bluestaree.github.io/2020/06/%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%8E%E6%96%B9%E5%90%91%E4%BB%A3%E7%90%86/</link>
-      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/06/%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%8E%E6%96%B9%E5%90%91%E4%BB%A3%E7%90%86/</guid>
-      <description>所谓的正向与反向，都是对于我们自己的电脑来说 正向代理：帮助客户端访问外部资源的， 举个例子：如科学上网。如果我们需要访问谷歌，就需要代理服务器</description>
     </item>
     
   </channel>

@@ -20,6 +20,15 @@
     </item>
     
     <item>
+      <title>内部引用导致AOP注解不生效</title>
+      <link>https://bluestaree.github.io/2021/08/%E5%86%85%E9%83%A8%E5%BC%95%E7%94%A8%E5%AF%BC%E8%87%B4aop%E6%B3%A8%E8%A7%A3%E4%B8%8D%E7%94%9F%E6%95%88/</link>
+      <pubDate>Wed, 18 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2021/08/%E5%86%85%E9%83%A8%E5%BC%95%E7%94%A8%E5%AF%BC%E8%87%B4aop%E6%B3%A8%E8%A7%A3%E4%B8%8D%E7%94%9F%E6%95%88/</guid>
+      <description>内部引用导致AOP注解不生效 今天同事遇到了一个bug， 场景是这样的：在一个复杂业务逻辑，查询结果却与数据库不一致，并且其中部分字段为未更新前</description>
+    </item>
+    
+    <item>
       <title>验证码登录简单实现</title>
       <link>https://bluestaree.github.io/2021/07/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%99%BB%E5%BD%95%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</link>
       <pubDate>Tue, 13 Jul 2021 00:00:00 +0000</pubDate>
@@ -179,15 +188,6 @@
       
       <guid>https://bluestaree.github.io/2020/08/java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8Bvolatile%E5%85%B3%E9%94%AE%E5%AD%97%E8%A7%A3%E6%9E%90/</guid>
       <description>转载:https://www.jianshu.com/p/157279e6efdb 1. volatile简介 在上一篇文章中我们深入理解了java</description>
-    </item>
-    
-    <item>
-      <title>高并发下保证服务稳定性-Sentinel</title>
-      <link>https://bluestaree.github.io/2020/08/springcloud-alibaba-sentinel/</link>
-      <pubDate>Sat, 22 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/08/springcloud-alibaba-sentinel/</guid>
-      <description>简介：Sentinel-哨兵，是Spring Cloud Alibaba 的开源项目，是面向微服务的轻量级流量控制框架，从流量控制、熔断降级、系统负载保护等多个维度保</description>
     </item>
     
   </channel>
