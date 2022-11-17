@@ -2,7 +2,7 @@
 <html lang="zh">
   <head>
     <title>
-        缓存与数据库一致性问题及最佳解决方案 - AzkeepToo个人博客
+        java服务部署跳过编译文件 并转移到指定文件夹下 - AzkeepToo个人博客
       </title>
         <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -20,32 +20,32 @@
     <meta http-equiv="window-target" content="_top" />
     
     
-    <meta name="description" content="前言：现在互联网高并发的背景下，为了有效的提高服务应用的响应速度，相信大家都会想到采用缓存技术。然而如果你的应用引入了缓存机制，那么有一个问" />
+    <meta name="description" content="废话不多说，直接上图 1、排除编译过滤项 包括 *.TTC 文件 并将最终文件 放置/target下 2、包括编译过滤项， 排除 *.yml , *.TTC 文件 效果： 编译前文件位置： 编译" />
     <meta name="generator" content="Hugo 0.69.2 with theme pure" />
-    <title>缓存与数据库一致性问题及最佳解决方案 - AzkeepToo个人博客</title>
+    <title>java服务部署跳过编译文件 并转移到指定文件夹下 - AzkeepToo个人博客</title>
     
     
     <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
     
     <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
-    <meta property="og:title" content="缓存与数据库一致性问题及最佳解决方案" />
-<meta property="og:description" content="前言：现在互联网高并发的背景下，为了有效的提高服务应用的响应速度，相信大家都会想到采用缓存技术。然而如果你的应用引入了缓存机制，那么有一个问" />
+    <meta property="og:title" content="java服务部署跳过编译文件 并转移到指定文件夹下" />
+<meta property="og:description" content="废话不多说，直接上图 1、排除编译过滤项 包括 *.TTC 文件 并将最终文件 放置/target下 2、包括编译过滤项， 排除 *.yml , *.TTC 文件 效果： 编译前文件位置： 编译" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://bluestaree.github.io/2020/07/%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98%E5%8F%8A%E6%9C%80%E4%BD%B3%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" />
-<meta property="article:published_time" content="2020-07-09T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-07-09T00:00:00+00:00" />
-<meta itemprop="name" content="缓存与数据库一致性问题及最佳解决方案">
-<meta itemprop="description" content="前言：现在互联网高并发的背景下，为了有效的提高服务应用的响应速度，相信大家都会想到采用缓存技术。然而如果你的应用引入了缓存机制，那么有一个问">
-<meta itemprop="datePublished" content="2020-07-09T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-07-09T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1615">
+<meta property="og:url" content="https://bluestaree.github.io/2021/09/java%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E8%B7%B3%E8%BF%87%E7%BC%96%E8%AF%91%E6%96%87%E4%BB%B6-%E5%B9%B6%E8%BD%AC%E7%A7%BB%E5%88%B0%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B/" />
+<meta property="article:published_time" content="2021-09-26T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-09-26T00:00:00+00:00" />
+<meta itemprop="name" content="java服务部署跳过编译文件 并转移到指定文件夹下">
+<meta itemprop="description" content="废话不多说，直接上图 1、排除编译过滤项 包括 *.TTC 文件 并将最终文件 放置/target下 2、包括编译过滤项， 排除 *.yml , *.TTC 文件 效果： 编译前文件位置： 编译">
+<meta itemprop="datePublished" content="2021-09-26T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-09-26T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="170">
 
 
 
-<meta itemprop="keywords" content="缓存," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="缓存与数据库一致性问题及最佳解决方案"/>
-<meta name="twitter:description" content="前言：现在互联网高并发的背景下，为了有效的提高服务应用的响应速度，相信大家都会想到采用缓存技术。然而如果你的应用引入了缓存机制，那么有一个问"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="java服务部署跳过编译文件 并转移到指定文件夹下"/>
+<meta name="twitter:description" content="废话不多说，直接上图 1、排除编译过滤项 包括 *.TTC 文件 并将最终文件 放置/target下 2、包括编译过滤项， 排除 *.yml , *.TTC 文件 效果： 编译前文件位置： 编译"/>
 
     <!--[if lte IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -333,8 +333,8 @@
       <h1 itemprop="name">
   <a
     class="article-title"
-    href="/2020/07/%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98%E5%8F%8A%E6%9C%80%E4%BD%B3%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"
-    >缓存与数据库一致性问题及最佳解决方案</a
+    href="/2021/09/java%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E8%B7%B3%E8%BF%87%E7%BC%96%E8%AF%91%E6%96%87%E4%BB%B6-%E5%B9%B6%E8%BD%AC%E7%A7%BB%E5%88%B0%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B/"
+    >java服务部署跳过编译文件 并转移到指定文件夹下</a
   >
 </h1>
 
@@ -342,101 +342,43 @@
         
 <span class="article-date">
   <i class="icon icon-calendar-check"></i>&nbsp;
-<a href="https://bluestaree.github.io/2020/07/%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98%E5%8F%8A%E6%9C%80%E4%BD%B3%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="article-date">
-  <time datetime="2020-07-09 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-07-09</time>
+<a href="https://bluestaree.github.io/2021/09/java%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E8%B7%B3%E8%BF%87%E7%BC%96%E8%AF%91%E6%96%87%E4%BB%B6-%E5%B9%B6%E8%BD%AC%E7%A7%BB%E5%88%B0%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B/" class="article-date">
+  <time datetime="2021-09-26 00:00:00 &#43;0000 UTC" itemprop="datePublished">2021-09-26</time>
 </a>
 </span>
 <span class="article-category">
   <i class="icon icon-folder"></i>&nbsp;
   <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/"> 笔记 </a>
-</span>  
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>&nbsp;
-    <a class="article-tag-link" href="/tags/%E7%BC%93%E5%AD%98/"> 缓存 </a>
-  </span>
+</span>
 
-        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2020/07/%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98%E5%8F%8A%E6%9C%80%E4%BD%B3%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/#comments"
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2021/09/java%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E8%B7%B3%E8%BF%87%E7%BC%96%E8%AF%91%E6%96%87%E4%BB%B6-%E5%B9%B6%E8%BD%AC%E7%A7%BB%E5%88%B0%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B/#comments"
             class="article-comment-link">评论</a></span>
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1615字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 4分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 170字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 1分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
       <hr>
+<p><strong>废话不多说，直接上图</strong></p>
+<p><img src="https://github.com/bluestaree/bluestaree.github.io/blob/master/image/Idea%E6%B3%A8%E9%87%8A%E6%A8%A1%E6%9D%BF%E9%85%8D%E7%BD%AE-6.png?raw=true" alt=""></p>
+<p>1、排除编译过滤项 包括 *.TTC 文件 并将最终文件 放置/target下</p>
+<p><img src="https://note.youdao.com/yws/public/resource/b4bdf377a27b7d9c349e8bc7883d66a2/xmlnote/5DEB115B91804540915DF9A268A3F687/9522" alt=""></p>
+<p>2、包括编译过滤项， 排除 *.yml , *.TTC 文件</p>
+<p><img src="http://m.qpic.cn/psc?/V106pUqs1JqYPf/bqQfVz5yrrGYSXMvKr.cqUDHf0bo2kv7bw0n8EvBTVaVClM*dcqvL.FG49V355qm5krAw6V2xLP9RR.P79Uk8gs*CXRr81bl1vHN6*tvy9o!/r" alt=""></p>
+<h4 id="效果">效果：</h4>
+<p>编译前文件位置：</p>
+<p><img src="http://m.qpic.cn/psc?/V106pUqs1JqYPf/bqQfVz5yrrGYSXMvKr.cqTTEdUM*R8TjiD2G5A2K5eGxXsog55CJ343oygZNYIKS*9lXqI0teSuB0RftEAmP2LXdSdVoKOrV4u6U2C*jtvg!/b&amp;bo=MgKsAQAAAAADF68!&amp;rf=viewer_4" alt=""></p>
+<p>编译后文件位置：</p>
+<p><img src="http://m.qpic.cn/psc?/V106pUqs1JqYPf/bqQfVz5yrrGYSXMvKr.cqUJ.dSwrNNOPQCbA9FYhGm0MA4TQUIO4*FdYmcuKDatFS841pCZwcNumeyFxIAQO7K46t8wyC7XvGKQ5yrcmKYo!/b&amp;bo=ywM*AQAAAAADF8Q!&amp;rf=viewer_4" alt=""></p>
+<p>大功告成。</p>
+<p>后续只需要将文件部署到 linux 服务器即可</p>
+<p>这里以jekins 部署为例子</p>
 <blockquote>
-<p>前言：现在互联网高并发的背景下，为了有效的提高服务应用的响应速度，相信大家都会想到采用缓存技术。然而如果你的应用引入了缓存机制，那么有一个问题是必须要考虑的：如何在数据库更新数据时，保证缓存是最新的数据？这也是缓存在写模式下所存在的问题</p>
+<p>jekins 部署时需注意，在脚本中 需要将对应文件 拷贝到指定服务器中*，否则 jekins 之后 执行docker脚本 将报找不到指定文件错误</p>
 </blockquote>
-<h3 id="缓存机制介绍">缓存机制介绍</h3>
-<blockquote>
-<p>参考文章：https://www.jianshu.com/p/dc1e5091a0d8</p>
-</blockquote>
-<p>如今利用缓存机制来提高查询效率已被广泛用在各大生产环境，查询数据的一般流程如下所示</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDLg.w3*.hY7H7S7zqkt73wm4Qh69d3AR9N.kS4t8acten0GEouvKgOTqrq0J.ienUeK1VDDdOGeHS2z3mRuRZl8!/r" alt="img"></p>
-<p>在没有更新数据的情况下，数据库和缓存的数据是保持一致的，当时当要执行数据库的更新操作时，数据库和缓存就会出现不一致的情况。</p>
-<p>首先需要明确的是，既然系统引入缓存机制，就必须接受系统会出现数据不一致的情况发生，我们不可能完全避免，只能尽量减少不一致的时间，达到最终一致性。</p>
-<p>那么如何将缓存中的数据与数据库保持一致呢，比较常见的两个模式是：</p>
-<ul>
-<li><strong>双写模式</strong></li>
-<li><strong>失效模式</strong></li>
-</ul>
-<h3 id="缓存数据一致性-双写模式">缓存数据一致性-双写模式</h3>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDBI3Iv7chLETQDbAwq89e8..mL6Ag0PbPAATM0g71t0NCMY87PBBc15*ogLgf3BmekFnj3hOystTH2YGxLvXwoM!/r" alt=""></p>
-<p><strong>思路：首先更改数据库，然后再更新缓存</strong></p>
-<p>可能存在的问题，如图所示，假设存在两个请求，且其执行顺序如下：</p>
-<ol>
-<li>请求A更新数据-1</li>
-<li>请求B更新数据-2</li>
-<li>请求B更新缓存-2</li>
-<li>请求A更新缓存-1</li>
-</ol>
-<p>出现了缓存与数据不一致的情况。</p>
-<p>这是暂时性的脏数据问题，因为在数据稳定，缓存过期以后，又能得到最新的正确数据。</p>
-<p><strong>解决：</strong> 添加读写锁，如果有线程需要更新数据，其他线程必须等待其执行完成。</p>
-<p>注：如果业务允许暂时性的数据不一致问题，可以忽略此问题，但要注意设置<strong>合适的缓存过期时间</strong>。保证最终数据的一致性。</p>
-<h3 id="缓存数据一致性-失效模式">缓存数据一致性-失效模式</h3>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDI1N*0P6g67N5BtbiBZ1cUDyBRfHpudI1R8wXu4wti7xCbhL6y1AnZYliKH1lv7SNFtjcxq8zyOd0O.0h9OF*OM!/r" alt=""></p>
-<p><strong>思路：首先更改数据库，然后删除缓存，等待下次一主动查询进行更新</strong></p>
-<p>可能存在的问题，如图所示，假设存在三个请求，且其执行顺序如下:</p>
-<ol>
-<li>请求A更新数据-1</li>
-<li>请求A删除缓存</li>
-<li>请求B更新数据-2</li>
-<li>请求C获取数据，此时缓存已经被删除</li>
-<li>请求C读取数据-1</li>
-<li>请求B删除缓存</li>
-<li>请求C更新缓存</li>
-</ol>
-<p>此问题依旧导致的是脏数据问题，主要在于线程之间写和读的问题，也可以通过加锁的方式进行解决，不过会增加系统负重性，降低效率。</p>
-<h3 id="缓存数据一致性-解决方案">缓存数据一致性-解决方案</h3>
-<p>无论是双写模式还是失效模式，都会导致缓存的不一致问题。即多个实例同时更新会出事。怎么办?</p>
-<ul>
-<li>对于一些实时性要求靠的数据，如：用户数据，订单数据等，缓存数据加上过期时间，每隔一段时间触发读的主动更新即可</li>
-<li>如果是菜单，商品介绍等基础数据，也可以去使用canal订阅binlog的方式。</li>
-<li>缓存数据+过期时间也足够解决大部分业务对于缓存的要求。</li>
-<li>通过加锁保证并发读写，写写的时候按顺序排好队。读读无所谓。所以适合使用读写锁。 (业务不关心脏数据，允许临时脏数据可忽略) ;</li>
-</ul>
-<h3 id="总结"><strong>总结:</strong></h3>
-<ul>
-<li>放入缓存的数据本就不应该是实时性、一致性要求超高的。所以缓存数据的时候加上过期时间，保证每天拿到当前最新数据即可。</li>
-<li>不应该过度设计，增加系统的复杂性</li>
-<li>遇到实时性、一致性要求高的数据，就应该查数据库，即使慢点。</li>
-</ul>
-<h3 id="解决方案之canal简单介绍">解决方案之Canal简单介绍</h3>
-<p>Canal是阿里巴巴旗下的一款开源项目。其定位是基于数据库增量日志解析，提供增量数据订阅&amp;消费。</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDLNRaW3HHu8oSISHyiw3ht0NYpgVWj7bkLXXkhW*1YDMPucGM8bCnK08njZNXVRBx9YHKh8GbsXsuhWXY8tcrxk!/r" alt=""></p>
-<p><strong>使用Canal更新缓存</strong></p>
-<p>Canal可以模拟为Mysql的一个从服务器，只要Mysql数据发生更改，Canal就能够同步到变化的内容（binlog）。</p>
-<p>利用这个特性，我们就可以编写逻辑一些业务，在数据库更改的同时修改redis缓存信息。这样一来，在编码期</p>
-<p>间，我们只需要关注修改数据库的逻辑即可</p>
-<p>优点：屏蔽了对缓存的操作，简化代码</p>
-<p>缺点：添加新的中间件，需要额外开发自定义功能</p>
-<h3 id="heading"></h3>
-<p><strong>使用Canal解决数据异构</strong></p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDLA7HR27msxh6wVxKra4dBt5YmZHlr9U2byp0M.C*9*trvgudBH1hUVnHQTURnEGj2Or3hlLKxys6Pom*X*Ux8Q!/r" alt=""></p>
-<p>Canal也可以在大数据情况下解决数据异构问题，举个栗子：</p>
-<p>一些电商网站都会根据用户浏览喜好，显示相关的推荐商品，引导客户点击购买。Canal就可以高效的完成并计算</p>
-<p>分析出用户可能感兴趣的商品。</p>
-<p>Canal通过订阅用户浏览记录表，商品信息表，购物车表等数据的更新。结合这些数据，Canal可以智能的分析计算出用户的喜好商品，并生成一张新的表： 用户推荐表，这样我们就无需自己进行大量计算。</p>
+<p><img src="http://m.qpic.cn/psc?/V106pUqs1JqYPf/bqQfVz5yrrGYSXMvKr.cqXyEizCT4PKy9JMo9h4ymnlcSQ2zbGRN*yhA56QkNbXlYwLPFQ.aBBxUTuxKG0gGMrz1CKJdL3nWN4UStdQtzuQ!/b&amp;bo=AwdhAwAAAAADB0Q!&amp;rf=viewer_4" alt=""></p>
+<pre><code>usercenter-server-auth/target/DockerFile, usercenter-server-auth/target/usercenter-server-auth-1.0.0.jar,usercenter-server-auth/target/docker-compose.yml,usercenter-server-auth/target/deploy.sh,usercenter-server-auth/target/SIMSUN.TTC
+</code></pre>
 
     </div>
     <div class="article-footer">
@@ -449,14 +391,9 @@
     <div class="bar-inner">
         <ul class="pager pull-left">
             <li class="prev">
-                <a href="https://bluestaree.github.io/2020/07/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%AE%9E%E7%8E%B0-redisson/" title="分布式锁实现-Redisson"><i
+                <a href="https://bluestaree.github.io/2021/08/%E5%86%85%E9%83%A8%E5%BC%95%E7%94%A8%E5%AF%BC%E8%87%B4aop%E6%B3%A8%E8%A7%A3%E4%B8%8D%E7%94%9F%E6%95%88/" title="内部引用导致AOP注解不生效"><i
                         class="icon icon-angle-left"
                         aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
-            </li>
-            <li class="next">
-                <a href="https://bluestaree.github.io/2020/07/springcache%E4%BD%BF%E7%94%A8/"
-                    title="Spring Cache使用"><span>上一篇&nbsp;&nbsp;</span><i
-                        class="icon icon-angle-right" aria-hidden="true"></i></a>
             </li>
             
             <li class="toggle-toc">

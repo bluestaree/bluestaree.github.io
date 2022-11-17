@@ -262,7 +262,7 @@
             <li>
                 <div class="item-inner">
                     <p class="item-title">
-                        <a href="https://bluestaree.github.io/2021/09/%E4%BA%8B%E5%8A%A1%E4%BC%98%E5%8C%96%E4%B9%8Btransactionsynchronizationmanager/" class="title">java服务部署跳过编译文件 并转移到指定文件夹下</a>
+                        <a href="https://bluestaree.github.io/2021/09/java%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E8%B7%B3%E8%BF%87%E7%BC%96%E8%AF%91%E6%96%87%E4%BB%B6-%E5%B9%B6%E8%BD%AC%E7%A7%BB%E5%88%B0%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B/" class="title">java服务部署跳过编译文件 并转移到指定文件夹下</a>
                     </p>
                     <p class="item-date">
                         <time datetime="2021-09-26 00:00:00 &#43;0000 UTC" itemprop="datePublished">2021-09-26</time>
@@ -362,28 +362,28 @@
 <h3 id="内部引用导致aop注解不生效">内部引用导致AOP注解不生效</h3>
 <p>今天同事遇到了一个bug，</p>
 <p>场景是这样的：在一个复杂业务逻辑，查询结果却与数据库不一致，并且其中部分字段为未更新前数据，如下图情况</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/TmEUgtj9EK6.7V8ajmQrENe1d9uot69C4Fqapjjg1b7TWkyyejoTqXlkCDCaZDnyJIERQdVFjpcfKt6s7hwZhhzKENb1lPCrAozJs*RDZYY!/r" alt=""></p>
+<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/TmEUgtj9EK6.7V8ajmQrENe1d9uot69C4Fqapjjg1b7TWkyyejoTqXlkCDCaZDnyJIERQdVFjpcfKt6s7hwZhhzKENb1lPCrAozJs*RDZYY!/r" alt="img"></p>
 <p><strong>业务伪代码：</strong></p>
 <pre><code class="language-java">@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
 public void dealWithPoint(Point point) { 
     // .....
     // 减积分操作 
     updatePoints();       
-	// ....
-	// 加积分 ，  第二次执行时出现问题，查看日志并没有select语句，确定mybatis进行了缓存
+    // ....
+    // 加积分 ，  第二次执行时出现问题，查看日志并没有select语句，确定mybatis进行了缓存
  	updatePoints();      
 } 
 
 
 public void updatePoints() {
-	// 获取数据库信息  , 注意这里，属于内部引用 导致AOP注解失效
+    // 获取数据库信息  , 注意这里，属于内部引用 导致AOP注解失效
     Point inDb = queryData1();     
-	//校验数据安全
-	check(inDb);
-	//更新字段内容
-	inDb.setPoints = 1;
-	inDb.setUserPoints = 1;
-	// ......
+    //校验数据安全
+    check(inDb);
+    //更新字段内容
+    inDb.setPoints = 1;
+    inDb.setUserPoints = 1;
+    // ......
 }
 
 @Transactional(rollbackFor = Exception.class, propagation = Propagation.NOT_SUPPORTED)
@@ -391,7 +391,7 @@ public Point queryData1() {
     getById();
 } 
 </code></pre>
-<p><strong>而出现数据不一致的原因 也是因为在第一步操作中，我们更新了 inDb  实体类信息。</strong></p>
+<p><strong>而出现数据不一致的原因 也是因为在第一步操作中，我们更新了 inDb 实体类信息。</strong></p>
 <blockquote>
 <p>刚看到这个问题，首先觉得 是不是 mybatis 将查询数据缓存了</p>
 <p>于是尝试使用注解</p>
@@ -401,14 +401,14 @@ public Point queryData1() {
 <p><strong>然后继续排查，发现其中一段逻辑是引用了内部方法，导致注解不生效，</strong></p>
 <p><strong>伪代码</strong></p>
 <pre><code class="language-java">public void updatePoints() {
-	// 获取数据库信息  , 注意这里，属于内部引用 导致AOP注解失效
+    // 获取数据库信息  , 注意这里，属于内部引用 导致AOP注解失效
     Point inDb = queryData1();     
-	//校验数据安全
-	check(inDb );
-	//更新字段内容
-	inDb.setPoints = 1;
-	inDb.setUserPoints = 1;
-	//...
+    //校验数据安全
+    check(inDb );
+    //更新字段内容
+    inDb.setPoints = 1;
+    inDb.setUserPoints = 1;
+    //...
 }
 
 @Transactional(rollbackFor = Exception.class, propagation = Propagation.NOT_SUPPORTED)
@@ -457,7 +457,7 @@ public Point queryData1() {
                         aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
             </li>
             <li class="next">
-                <a href="https://bluestaree.github.io/2021/09/%E4%BA%8B%E5%8A%A1%E4%BC%98%E5%8C%96%E4%B9%8Btransactionsynchronizationmanager/"
+                <a href="https://bluestaree.github.io/2021/09/java%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E8%B7%B3%E8%BF%87%E7%BC%96%E8%AF%91%E6%96%87%E4%BB%B6-%E5%B9%B6%E8%BD%AC%E7%A7%BB%E5%88%B0%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B/"
                     title="java服务部署跳过编译文件 并转移到指定文件夹下"><span>上一篇&nbsp;&nbsp;</span><i
                         class="icon icon-angle-right" aria-hidden="true"></i></a>
             </li>
