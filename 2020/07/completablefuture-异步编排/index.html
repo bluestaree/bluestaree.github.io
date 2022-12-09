@@ -153,7 +153,7 @@
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
-            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">44</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">43</span></li>
         </ul>
     </div>
 </div>
@@ -236,10 +236,6 @@
             
             
             <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
-                    class="tag-list-count">1</span></li>
-            
-            
-            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
                     class="tag-list-count">1</span></li>
             
             
@@ -484,7 +480,7 @@ new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAlieTime, TimeUnit uni
 <p>但是，可以看到上述1，2，3步骤可以异步进行，互不影响，但是4，5，6则需要1的结果才能进行查询，关系还是比较复杂的</p>
 <p>在这种场景下，我们就可以使用CompletableFuture来处理</p>
 <p>CompletableFuture实现了Future接口，Future可以获取到异步结果，可以理解为vue中的promise，</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDBNtYI65dISYLUS*9KFiH*.XVuggDu23jxYO7wgVOHXRFKiwh9N.vqYSd9JwwWIPjARg..owy1RiCVP9OzalFBw!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/jdk/completableFuture.png" alt="img"></p>
 <h3 id="1-创建一个异步对象"><strong>1. 创建一个异步对象</strong></h3>
 <p>CompletableFuture提供了四个静态方法来创建一一个异步操作。</p>
 <pre><code class="language-java">public static CompletableFuture&lt;Void&gt; runAsync(Runnable runnable)

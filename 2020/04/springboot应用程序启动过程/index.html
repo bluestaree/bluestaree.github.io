@@ -153,7 +153,7 @@
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
-            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">44</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">43</span></li>
         </ul>
     </div>
 </div>
@@ -236,10 +236,6 @@
             
             
             <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
-                    class="tag-list-count">1</span></li>
-            
-            
-            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
                     class="tag-list-count">1</span></li>
             
             
@@ -369,7 +365,7 @@
 <p>结合 SpringBoot 2.0的源码，来看看SpringBoot应用程序的启动流程！</p>
 <h3 id="概述">概述</h3>
 <p>说到接触 SpringBoot 伊始，给我第一映像最深的是有两个关键元素：</p>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDMbjmlvVRq7BgDh3zb*GQ.V7SURIwR1HiFawRdcMk7h1UNoHuO9AFR6WWYLv5TuwwN739HjCe0hpxDvGQbN7rOQ!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/springboot/springboot-start-1.png" alt="img"></p>
 <p>对照上面的典型代码，这个两个元素分别是：</p>
 <ul>
 <li><strong>@SpringBootApplication</strong></li>
@@ -395,31 +391,31 @@ public class CodeSheepApplication {
 <hr>
 <h3 id="springapplication-实例的初始化">SpringApplication 实例的初始化</h3>
 <p>我们对照代码来看：</p>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDAwHBceOGkYoDlyt1N3pxLm9BIhXDcofPO17UtvqQvk.CxunzHDI4*OQiAJbYT.QPkRX93m3tgBq8Y917DYNv.g!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/springboot/springboot-start-2.png" alt="img"></p>
 <p>四个关键的步骤已标注在图中，分别解释如下：</p>
 <ul>
 <li><strong>①</strong> 推断应用的类型：创建的是 REACTIVE应用、SERVLET应用、NONE 三种中的某一种</li>
 </ul>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDKZ7VusfI1DgTg44AlXPLH7K7rC7pUAtiZuU.V0bOkjJyacLz5ppZ28WUyWCrPHPXNlEcFT3jhEU0VydSMLuWZ8!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/springboot/springboot-start-3.png" alt="img"></p>
 <ul>
 <li><strong>②</strong> 使用 <code>SpringFactoriesLoader</code>查找并加载 classpath下 <code>META-INF/spring.factories</code>文件中所有可用的 <code>ApplicationContextInitializer</code></li>
 </ul>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDF*fFJeV14At3oEHCuHuh1jtWxaxMjGAi1Hv01JGc3X6L4*2Pm6jnH4*.6Zvb6zhAGq2mf4EsodIKr5GwZaoFH0!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/springboot/springboot-start-4.png" alt="img"></p>
 <ul>
 <li><strong>③</strong> 使用 <code>SpringFactoriesLoader</code>查找并加载 classpath下 <code>META-INF/spring.factories</code>文件中的所有可用的 <code>ApplicationListener</code></li>
 </ul>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDGHstE6GkL46OTpTNPIMGwkXuNc3.zBHg1wXIQKonpA04LY.0uAJ4eRr3asjdBnAZnoZz6BiiakqkJXZjkGfTcs!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/springboot/springboot-start-5.png" alt="img"></p>
 <ul>
 <li><strong>④</strong> 推断并设置 main方法的定义类</li>
 </ul>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDA417Z0kxzBcXqFuxPl0TgOAjzfAWEsYXCe7qYnHgKhXGKozC*R.kcO2aSwGPuCtLHv9OSPNE9cgBNPiR9c0jKI!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/springboot/springboot-start-6.png" alt="img"></p>
 <hr>
 <hr>
 <h3 id="springapplication-的run方法探秘">SpringApplication 的run()方法探秘</h3>
 <p>先看看代码长啥样子：</p>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDBEUpvNQZyM6p4FrjIoKZH7cGliRjoALj*vgUfGe2ii.V.B6g8ah.i96HZslOS9YHpL2hp4oNDdgRRA.pZgg.bI!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/springboot/springboot-start-7.png" alt="img"></p>
 <p>各个主要步骤我已经标注在上图之中了，除此之外，我也按照自己的理解画了一个流程图如下所示，可以对照数字标示看一下：</p>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDIqbqaoLLZe51Q2a5OK02G*Z*KkOuqONpgL5i2V39P2ZUz8MkuFjnWWz0yfnvDjRRwZcUQeIADNhKr14wy8bOVM!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/springboot/springboot-start-8.png" alt="img"></p>
 <p>我们将各步骤总结精炼如下：</p>
 <ol>
 <li>通过 <code>SpringFactoriesLoader</code> 加载 <code>META-INF/spring.factories</code> 文件，获取并创建 <code>SpringApplicationRunListener</code> 对象</li>

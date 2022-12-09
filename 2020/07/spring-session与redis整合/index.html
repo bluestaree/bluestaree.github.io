@@ -153,7 +153,7 @@
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
-            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">44</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">43</span></li>
         </ul>
     </div>
 </div>
@@ -236,10 +236,6 @@
             
             
             <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
-                    class="tag-list-count">1</span></li>
-            
-            
-            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
                     class="tag-list-count">1</span></li>
             
             
@@ -372,7 +368,7 @@
 </ul>
 <h2 id="解决方法"><strong>解决方法</strong></h2>
 <h4 id="session共享问题解决-session复制"><strong>Session共享问题解决-session复制</strong></h4>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDD3tyPSSZBs11Fa.1clu*x7sX1G53O0oW00lnSyPbqvUs3qLQsJ80o9roeSrSEK.jEnQCAyYNk0u1KhOBD.tol0!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/springsession/SpringSession%E4%B8%8ERedis%E6%95%B4%E5%90%88-1.png" alt="img"></p>
 <p><strong>多服务器集群之间进行session的复制，无论负载均衡到哪一个服务器都能找到数据</strong></p>
 <p><strong>优点</strong></p>
 <ul>
@@ -385,7 +381,7 @@
 <li>大型分布式集群情况下，由于所有web-server都全量保存数据，所以此方案不可取。</li>
 </ul>
 <h4 id="session共享问题解决-客户端存储"><strong>Session共享问题解决-客户端存储</strong></h4>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDGsq44eCHHZ.F7ikY.EJdvp9NzefYdNVFhNsHdYQDDoNhHqPqKCIWIzFwrSwoP*nT4mcf01ZHmyJYvAQxoEynDo!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/springsession/SpringSession%E4%B8%8ERedis%E6%95%B4%E5%90%88-5.png" alt="img"></p>
 <p><strong>将所有信息都通过cookie存储到客户端中</strong></p>
 <p><strong>优点</strong></p>
 <ul>
@@ -398,7 +394,7 @@
 <li>session数据放在cookie中，存在泄漏、篡改、窃取等安全隐患</li>
 </ul>
 <h4 id="session共享问题解决-hash一致性"><strong>Session共享问题解决-hash一致性</strong></h4>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDClorVyKdMOqX7pwF9mrd3HRKf2N*ZxMKzGrVoWT1yN.0SQH1rGPiFZsF24G0AeJ2ufxNRv*n0dvSAqF5AfdN7M!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/springsession/SpringSession%E4%B8%8ERedis%E6%95%B4%E5%90%88-3.png" alt="img"></p>
 <p><strong>通过负载均衡，保证同一个IP的多次请求，都落在一个服务器上</strong></p>
 <p><strong>优点:</strong></p>
 <ul>
@@ -413,7 +409,7 @@
 <li>但是以上缺点问题也不是很大，因为session本来都是有有效期的。所以这两种反向代理的方式可以使用</li>
 </ul>
 <h4 id="session共享问题解决-统一存储"><strong>Session共享问题解决-统一存储</strong></h4>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDNoCHyWuEDUYOmL*tQGYObtH8UUSW*32F.*IMt6Az90yEUZ0y6iqnL7fY0UI2XJ4IRXW8qUgHVtWT5QtSo10Rsk!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/springsession/SpringSession%E4%B8%8ERedis%E6%95%B4%E5%90%88-6.png" alt="img"></p>
 <p><strong>不存在服务器内存中，转为由数据库，或Redis等其他中间件进行存储</strong></p>
 <p><strong>优点:</strong></p>
 <ul>
@@ -485,9 +481,9 @@ public class WebApplication {
 } 
 </code></pre>
 <h4 id="redis存储结构"><strong>Redis存储结构</strong></h4>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDChzE.HUVNaIGwsN.2D5HeLimJmOLvZziooAQUeg4gOlU.XiKGSEyCzRr7YjJNBLW4Fm9ifwfapSpV7bcFFEPYY!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/springsession/SpringSession%E4%B8%8ERedis%E6%95%B4%E5%90%88-4.png" alt="img"></p>
 <h4 id="页面cookie信息"><strong>页面cookie信息</strong></h4>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDEgAzmp8q3vhJfOQFXU6fwGjQfOAD4rjsKBmRMj9jyI2zK8DWvOdItKQaTCRImNYGwtCC2RvXyiL77E1nkXvFlo!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/springsession/SpringSession%E4%B8%8ERedis%E6%95%B4%E5%90%88-7.png" alt="img"></p>
 <p>这样一来，我们就将Session存储的位置转移到了Redis，并且修改了Cookie默认信息，只要携带有效的Cookie访问服务器，Spring Session就能从Redis中获取到对应的Session数据，在页面中进行渲染。</p>
 
     </div>

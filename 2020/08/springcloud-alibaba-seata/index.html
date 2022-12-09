@@ -39,7 +39,7 @@
 <meta itemprop="description" content="简介：Seata是一款阿里巴巴开源的分布式事务解决方案，致力于提供高性能和简单易用的分布式事务服务。Seata 将为用户提供了AT、TCC、S">
 <meta itemprop="datePublished" content="2020-08-04T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-08-04T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1847">
+<meta itemprop="wordCount" content="1877">
 
 
 
@@ -153,7 +153,7 @@
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
-            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">44</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">43</span></li>
         </ul>
     </div>
 </div>
@@ -236,10 +236,6 @@
             
             
             <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
-                    class="tag-list-count">1</span></li>
-            
-            
-            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
                     class="tag-list-count">1</span></li>
             
             
@@ -357,7 +353,7 @@
 
         <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2020/08/springcloud-alibaba-seata/#comments"
             class="article-comment-link">评论</a></span>
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1847字</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1877字</span>
 		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 4分 </span>
       </div>
     </div>
@@ -429,15 +425,15 @@
 <h3 id="测试"><strong>测试</strong></h3>
 <p><strong>无异常情况</strong></p>
 <p>订单表</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDGEbSwWM8X7i6mT.FhwNSXuSmd3orBV2cbh0CAbNG.wY5ggTR7IM5Yabw9uzFmWrJnNSHpJxBrDAXWWLfDRuYqk!/r" alt="测试-1"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/seata/Seata%E6%B5%8B%E8%AF%95-1.png" alt="测试-1"></p>
 <p>库存表</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDOJ6gMwKapzMPY8JwHsqG2U1yPnHnxvr.3O6LXCOfdvLLWC36B8MAQWwldymPUjqjFcbBwfwyzBm2OYOoexawWo!/r" alt="测试-2"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/seata/Seata%E6%B5%8B%E8%AF%95-2.png" alt="测试-2"></p>
 <p>两个事务动能正常提交，没有问题。</p>
 <p>接下来演示失败情况，手动操作数据库，将订单表的记录和锁定的库存数量重置</p>
 <p><strong>异常情况</strong></p>
 <p>打开异常代码注释</p>
 <p>可以看到，订单表事务正常回滚，而库存表事务却未回滚，因为spring 控制的是本地事务，无法对远程事务进行控制，造成了数据不一致的情况</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDMOTVLpw*XFbxxBZdUR*gTaNLbf.dFi3zXIcvkVYdM9JIpFtP4k9d9bX0xuZyqF962Y6x1yXnVX2EsMOJ8BbLUE!/r" alt="测试-3"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/seata/Seata%E6%B5%8B%E8%AF%95-3.png" alt="测试-3"></p>
 <h3 id="引入seata进行分布式事务控制">引入Seata进行分布式事务控制</h3>
 <h4 id="1-为每一个需要控制事务的数据库都创捷一个-undo_log-表"><strong>1. 为每一个需要控制事务的数据库都创捷一个 UNDO_LOG 表</strong></h4>
 <pre><code class="language-scheme">-- 注意此处0.3.0+ 增加唯一索引 ux_undo_log
@@ -539,7 +535,6 @@ config {
 </code></pre>
 <p>在bin目录下，根据操作系统<strong>启动Seata-Service</strong></p>
 <p>可以看到在eurek中Seata-Service已经注册成功</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDHo4SlLZJmytqj31sjvb1yz0oyJjVeJqo80pc2etWAxYE*WJa68za5HsO7MZpbFRtJpMHcp5GiVvrSmf921DIyk!/r" alt="eureka"></p>
 <h4 id="3导入seata依赖"><strong>3.导入Seata依赖</strong></h4>
 <pre><code class="language-xml">&lt;dependency&gt;
 	&lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
@@ -549,7 +544,7 @@ config {
 </code></pre>
 <h4 id="4添加globaltransactional-注解"><strong>4.添加@GlobalTransactional 注解</strong></h4>
 <p>在分布式大事务方法上添加<code>@GlobalTransactional</code> 注解 ，其他远程分支事务保持<code>@Transactional</code>注解即可</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDG0ffk2iSLl2BIbbbVFeKg5xrdhmG.77mn96rSTfP*SzdHN2lBkjVxJn8e8sQDsE1rHN0rXy.L2RGlKLXe1vgak!/r" alt="测试-6"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/seata/Seata%E6%B5%8B%E8%AF%95-6.png" alt="测试-6"></p>
 <h4 id="5使用seata-datasourceproxy代理自己的数据源"><strong>5.使用seata DataSourceProxy代理自己的数据源</strong></h4>
 <p>所有需要使用seata控制事务的微服务都需要进行配置</p>
 <pre><code class="language-java">@Configuration
@@ -569,19 +564,20 @@ public class MySeataConfig {
 }
 </code></pre>
 <h4 id="6导入registryconf和fileconf文件"><strong>6.导入registry.conf和file.conf文件</strong></h4>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDIDYixSU57yAcH*TUM2bfhj7X7IZEveyxf7tmXCrGtZl4*YvV0rdzgouHdl8QWfarY9xwXg9ZeNr*rZ23htp3ms!/r" alt="测试-4"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/seata/Seata%E6%B5%8B%E8%AF%95-4.png" alt="测试-4"></p>
 <p>每一个服务，都必须导入Seata-Service的conf目录下的registry.conf和file.conf</p>
 <p>其中<code>file.conf</code>的<code>service.vgroup_ mapping</code>配置必须和<code>spring. application.name</code>一致。否则会提示<strong>no available server to connect</strong>错误</p>
 <p>格式</p>
 <p><code>vgroup_mapping.{application.name}-fescar-service-group = &quot;default&quot;</code></p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDADNdHD.nz7z5X*QW841Ed4KyrTRSHN9PKLBKAUi2oxK7EZWiSLILYb64CFMbMLXYfhxHXVtrhXTmWWRQ1flIUY!/r" alt="测试-5"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/seata/Seata%E6%B5%8B%E8%AF%95-5.png" alt="测试-5"></p>
 <h4 id="7启动测试"><strong>7.启动测试</strong></h4>
 <p>测试之前，为了方便查看结果，记得把数据库中的数据手动重置下</p>
 <p><strong>先看正常情况</strong></p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDMNOJ0U9siII709TNhaCzTvmlKcJzYmwvaR0YwpTwm6DDZLBnHcBdt*JDBny.r9hCI6xAtLUNq*PpJqighPOIug!/r" alt="测试-8"></p>
+<p>没啥好说得</p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/seata/Seata%E6%B5%8B%E8%AF%95-8.png" alt="测试-8"></p>
 <p><strong>异常情况</strong></p>
-<p>在加入Seata控制事务后</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDLy4OjbAEvKbLp3O6bB3OHQP24OpSaXBQNW5HbK.6gCGcfMul92THCytTkdhZTMu2INeTd9*eWPSy7k19*FIIds!/r" alt="测试-7"></p>
+<p>按上述步骤， 同样打开异常代码。 在加入Seata控制事务后， 两张表数据 都更新了</p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/seata/Seata%E6%B5%8B%E8%AF%95-7.png" alt="测试-7"></p>
 <p>两个事务都能够进行回滚。成功解决了分布式事务控制问题</p>
 <blockquote>
 <p>注意：AT模式并不适合超高并发的情况。在控制事务的过程中，会使用各种锁机制来进行事务控制，在高并发情况下，就会变成串行化。</p>

@@ -153,7 +153,7 @@
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
-            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">44</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">43</span></li>
         </ul>
     </div>
 </div>
@@ -236,10 +236,6 @@
             
             
             <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
-                    class="tag-list-count">1</span></li>
-            
-            
-            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
                     class="tag-list-count">1</span></li>
             
             
@@ -374,7 +370,7 @@
 <li>1)采用阻塞I0模式获取输入的数据</li>
 <li>2)每个连接都需要独立的线程完成数据的输入，业务处理，数据返回等操作</li>
 </ul>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDOETHk9F36ax96gGTRLMjrFByJ2rtXDOXptoxbSA3mA1gM9AY.4gaFWSXbSOXLbONVgNHFpR6c0oaCYgHPCYwog!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/netty/netty%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B-1.png" alt="img"></p>
 <h3 id="reactor模式"><strong>Reactor模式</strong></h3>
 <p>针对传统阻塞I/0服务模型的2个缺点，解决方案:</p>
 <ul>
@@ -386,7 +382,7 @@
 <ol>
 <li>
 <h4 id="单reactor单线程"><strong>单Reactor单线程</strong></h4>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDKoPnAcCnhT9Q0jHAG6ScE9NPkZ5hSGkxJlHd4VnrJxNRFzA3KoC3DKlVpec95IOp4NVt51reGIKmfTFZhXjkrQ!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/netty/netty%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B-2.png" alt="img"></p>
 <p><strong>流程说明</strong></p>
 <ol>
 <li>
@@ -420,7 +416,7 @@
 </li>
 <li>
 <h4 id="单reactor多线程"><strong>单Reactor多线程</strong></h4>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDGA.IuTIC.j81ktay0LdiPV7ge1F7jKKguGjt1L5hzi6GYMB4OxOmDUP33LhA45PuSJWmqkFC2GGYFw.tAp1hH0!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/netty/netty%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B-3.png" alt="img"></p>
 <p><strong>流程说明</strong></p>
 <ol>
 <li>
@@ -454,7 +450,7 @@
 </li>
 <li>
 <h4 id="主从reactor多线程"><strong>主从Reactor多线程</strong></h4>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDMQ5T2CH5FPTXQeRofi3NOs*UA.HcsYiYER8cIE1G5OpPUP839k4yUDeSjO1MHmtgBfAeWQbC9RPlhUCIklELqM!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/netty/netty%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B-4.png" alt="img"></p>
 <p><strong>流程说明</strong></p>
 <ol>
 <li>
@@ -496,7 +492,7 @@
 </ol>
 <h3 id="netty线程模式"><strong>Netty线程模式</strong></h3>
 <p>主要基于主从Reactor多线程模型做了一定的改进，其中主从Reactor多线程模型中有多个Reactor</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDGkYjxbNpLuAQe5cNFIbkECMPvB4fX9FC6F9GsW5OnK.QGU8dcmwJ32cY6*l39QZHOsjoBymi4MVumbFxemWNnk!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/netty/netty%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B-5.png" alt="img"></p>
 <p><strong>流程说明</strong></p>
 <ol>
 <li>
@@ -541,7 +537,7 @@
 <li>每个 Niochannel只会绑定在唯一的 NioEventLoop上</li>
 <li>每个 NioChannel都绑定有一个自己的 ChannelPipeline</li>
 </ol>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDDbaLzMBhRsNytJKzI9xwFvkXAT9xDDjGyaSsWIm6ezPLnq1xeXRhOxNVnwoq.YZ7PEwgpjMdGcl4rs.s6rVCB4!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/netty/netty%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B-6.png" alt="img"></p>
 
     </div>
     <div class="article-footer">

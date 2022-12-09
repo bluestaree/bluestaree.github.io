@@ -153,7 +153,7 @@
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
-            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">44</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">43</span></li>
         </ul>
     </div>
 </div>
@@ -236,10 +236,6 @@
             
             
             <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
-                    class="tag-list-count">1</span></li>
-            
-            
-            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
                     class="tag-list-count">1</span></li>
             
             
@@ -403,7 +399,7 @@
 <blockquote>
 <p>注：优先选择对应版本的控制台，版本的不同可能会出现数据无法传输等问题</p>
 </blockquote>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDBYseNXcf6McMMuQYiT7MLNcXOfzxODYFJ8XileBGsIzxhKkeFKgIyJS88ukAEY48M7n.oHg*71aWOgzwOdDoBw!/r" alt="sentinel版本"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/sentinel/sentinel%E7%89%88%E6%9C%AC.png" alt="sentinel版本"></p>
 <p><strong>启动控制台</strong></p>
 <p>sentinel 控制台是一个Spring boot 项目打成的jar包 ，我们可以直接在使用命令行启动这个jar包</p>
 <p><code>java -jar .\sentinel-dashboard-1.7.1.jar</code></p>
@@ -412,7 +408,7 @@
 <p>默认用户密码：sentinel</p>
 </blockquote>
 <p>初始化界面</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDJ778WdS.mADaFWO16TVHdYhWpq14bG44WTIIjOQy037cLDEeU8BfwRHRdofzveMa.OWDcArk40eHUyfX5q6PSs!/r" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/sentinel/sentinel%E7%95%8C%E9%9D%A2-1.png" alt=""></p>
 <h4 id="3启动服务"><strong>3.启动服务</strong></h4>
 <p><strong>配置文件</strong></p>
 <p>application.yml</p>
@@ -425,17 +421,17 @@
 </code></pre>
 <p>默认 sentinel 与spring cloud整合，会将所有请求都标识为受保护的资源</p>
 <p>在服务启动后，我们先访问一个测试请求，之后就可以在sentinel的控制台中查看到本次请求情况</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDAg.BSHa5PwrdLHy.9L*ACVWY2IuGtce9B29wbOMNVhUPVJQ5gUuRatiCccwIbzfv6kZGYhQckZPo8SWzOtlLY4!/r" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/sentinel/sentinel%E7%95%8C%E9%9D%A2-2.png" alt=""></p>
 <p>可以看到，在控制台中，我们能很方便的给指定请求设置一些规则</p>
 <p>这里我们尝试先添加一个流量控制规则 ， <a href="https://github.com/alibaba/Sentinel/wiki/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8#%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6%E8%A7%84%E5%88%99-flowrule">sentinel 流量规则定义</a></p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDHSpHVDgB0KXHyOmlQjHpivx7vszDiS65f6By*6Lw54C3AOIMfEGYhFtF7JkNnkwGda4y0HWpAz.pDeKWBkcQsk!/r" alt="流控设置"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/sentinel/%E6%B5%81%E6%8E%A7%E8%AE%BE%E7%BD%AE-1.png" alt="流控设置"></p>
 <p>这里设置 QPS = 1 (每秒只允许一个请求进行访问)，其他请求会被限制</p>
 <blockquote>
 <p>注意：默认所有的规则设置保存在服务内存中，这些配置会在服务重启后失效</p>
 </blockquote>
 <p><strong>效果测试</strong></p>
 <p>超过规则限制，sentinel 默认的返回数据</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDPn8FL89HFc9CX4ftWOGlXK.fPrCVZACOR7rYhwLltCcO4xvLK.I5m6EX7Y81abxwbh6i1hHQ6dNKPboTRHm4Zc!/r" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/sentinel/sentinel%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C-1.png" alt=""></p>
 <h3 id="sentinel-实时监控">sentinel 实时监控</h3>
 <p><strong>Spring Boot Actuator</strong> 可以帮助你监控和管理Spring Boot应用，比如健康检查、审计、统计和HTTP追踪等。所有的这些特性可以通过JMX或者HTTP endpoints来获得。</p>
 <p>Sentinel 可以通过获取 Actuator 的信息来达到对服务各项数据的实时监控</p>
@@ -453,7 +449,7 @@
 <p>重新启动服务后，</p>
 <p>结合上面 QPS = 1 的流控设置测试，可以直观的看到 Sentinel 控制台中显示的实时监控数据：</p>
 <p>每秒只允许1个请求访问，其它多余请求都被限制了</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDKAvwh.G4QrbJv5Wmrv4zNRTVMAzujQzyIZXGPo3ITO8BiDb0VF9YRS7SrDqDk6VW7LHy9f6LzQIjqw*2lh7*Tg!/r" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/sentinel/sentinel%E5%AE%9E%E6%97%B6%E7%9B%91%E6%8E%A7.png" alt=""></p>
 <h3 id="自定义统一处理">自定义统一处理</h3>
 <p><strong>设置url请求统一处理:WebCallbackManager</strong></p>
 <p><strong>导入依赖</strong></p>
@@ -501,7 +497,7 @@ public class MySentinelConfig {
 </code></pre>
 <p>对自定义受保护资源添加流控规则，同上设置QPS=1，方便测试</p>
 <p>多次访问该请求，控制台输出内容</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDD.ZjNzAyzK0dn7tB02Segso7qjw39RVsZ9qUmYpppghatBdh2pY7alEn40V7*jhXCTrxo6Ma9HBzg3zeu2Y65Y!/r" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/sentinel/sentinel%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C-2.png" alt=""></p>
 <h4 id="2基于注解"><strong>2.基于注解</strong></h4>
 <pre><code class="language-java">//定义资源，以及访问受限时调用的方法
 @SentinelResource(value = &quot;getProductById&quot;,blockHandler = &quot;blockHandlerForGetProduct&quot;)
@@ -550,13 +546,13 @@ public class ProductFeignClientFallback implements ProductFeignClient {
     }
 </code></pre>
 <p><strong>响应结果</strong></p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDKsfSkz1UlnqHgXa8ye2y3ZcbiEp*gsWkquAdQAbgNLSCMC9dco9BC.olEBi17yvUWft1lq31swcbzga3Fsvq9E!/r" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/sentinel/sentinel%2Bfeign.png" alt=""></p>
 <p>虽然我们没有启动远程服务，但是由于我们配置了 sentinel 熔断处理，没有出现服务异常，返回了默认数据。</p>
 <p>对feign添加熔断保护，就相当于加了一个保险。如果远程服务宕机，我们还能够响应默认数据给客户端，而不会因为feign远程调用失败，而导致服务不可用。</p>
 <hr>
 <p>当然，我们也可以对远程服务添加<strong>降级规则</strong>，当feign请求超过规则限制，同样会触发我们刚刚设置的熔断回调方法</p>
 <p><strong>对远程服务设置降级规则</strong></p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDHQCPaJQVP6.hScZxJafvtRlDC3BhmMa.GeKN9p8VROUjX5Qc091xF.3ASkuwPrVDcJOUrK0FTx5s1j.TTBSxfY!/r" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/sentinel/sentinel%E9%99%8D%E7%BA%A7.png" alt=""></p>
 <p><strong>远程服务</strong></p>
 <p>这里为了测试效果，我们可以让线程小睡一会</p>
 <pre><code class="language-java">public String getProductById(Integer id) {

@@ -153,7 +153,7 @@
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
-            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">44</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">43</span></li>
         </ul>
     </div>
 </div>
@@ -236,10 +236,6 @@
             
             
             <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
-                    class="tag-list-count">1</span></li>
-            
-            
-            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
                     class="tag-list-count">1</span></li>
             
             
@@ -370,24 +366,24 @@
 <hr>
 <p>由于使用了微服务，会有多个数据库的情况，有时业务需要，需要切换数据源，所以使用了Mybatis plus的@DS来切换多数据源</p>
 <p>yml数据库配置如下：</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/TmEUgtj9EK6.7V8ajmQrEFj8.o6TYqr3jhb2cfPIuri7kkzEwu9S5sWo.h9l011QVkT00VgEsMbsrg02OlW6dMrmK6ej7eAhT6i5H33j8YI!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/mysql/%40DS%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BA%8B%E5%8A%A1%E9%97%AE%E9%A2%98-1.png" alt="img"></p>
 <p>service如下，默认是master数据源</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/TmEUgtj9EK6.7V8ajmQrEEqXGJylv1oq.yc*FOeHo04n10g8d7tpIpLY0ycpIriKAo3.6nep3RDE*i1bO5laDIcRs0TGNk2Gskz3Iv.JL6g!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/mysql/%40DS%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BA%8B%E5%8A%A1%E9%97%AE%E9%A2%98-2.png" alt="img"></p>
 <p>userService</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/TmEUgtj9EK6.7V8ajmQrEIk1EoOl3Q9wdoltAp.pPC*uRaRy9nZzQMD0iwZoBJ4Dy4nRhu9h686J5WoXyD6Bp4wwLzHC9txI0Tk*De392lE!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/mysql/%40DS%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BA%8B%E5%8A%A1%E9%97%AE%E9%A2%98-3.png" alt="img"></p>
 <p>bookService</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/TmEUgtj9EK6.7V8ajmQrEAMKdU26v9NcEyMSUnYmUSL*36es0Q*BUVB0n.OREVzKDGvts2e1.UyqsF3xLAtF4.xQ7fCpnX1uU*ICJj2dc6o!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/mysql/%40DS%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BA%8B%E5%8A%A1%E9%97%AE%E9%A2%98-4.png" alt="img"></p>
 <p>但是神奇的事发生的，bookService的数据库应该是common，但是却是master的，也就是说@DS切换数据源没有起作用</p>
 <p>于是开始排查</p>
 <p>去除MasterService.upload上面的@Transactional，数据源切换正常，但是事务无效BookService的save上面加@Transactional，数据源没有切换BookService的save上面加@Transactional(propagation = Propagation.REQUIRES_NEW)，数据源切换，且事务有效原因：</p>
 <p>开启事务的同时，会从数据库连接池获取数据库连接；如果内层的service使用@DS切换数据源，只是又做了一层拦截，但是并没有改变整个事务的连接在这个事务内的所有数据库操作，都是在事务连接建立之后，所以会产生数据源没有切换的问题为了使@DS起作用，必须替换数据库连接，也就是改变事务的传播机智，产生新的事务，获取新的数据库连接所以bookService的save方法上除了加@Transactional外，还需要设置propagation = Propagation.REQUIRES_NEW使得代码走以下逻辑：</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/TmEUgtj9EK6.7V8ajmQrEC8xKEwodKRarjjshCxEUDS6ftXUu.c2H1T.NmKQQ.876.wAEQyB6WVHlSvojKYJ77NgecTnzvZ8xULHg*oLTrc!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/mysql/%40DS%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BA%8B%E5%8A%A1%E9%97%AE%E9%A2%98-5.png" alt="img"></p>
 <p>在走startTransaction，再走doBegin，重新创建新事务，获取新的数据库连接，从而得到@DS的数据源</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/TmEUgtj9EK6.7V8ajmQrEMjsvI3sV.FyorWS5hhQUHNcH70dvJMPhxkkqgjN6CbbR0WVMzyrohwRBpNcGHAAhZlnbNOuooPJhlV5ST2qd58!/r" alt="img"></p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/TmEUgtj9EK6.7V8ajmQrEG*vnIRHpfGEBqHmXuAP2RI*EtHYl.o2ad7kvjRob600tddsKrMMvyo74NtJtK2WSzxBcfa76voQ3g6MmXa8f5w!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/mysql/%40DS%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BA%8B%E5%8A%A1%E9%97%AE%E9%A2%98-6.png" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/mysql/%40DS%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BA%8B%E5%8A%A1%E9%97%AE%E9%A2%98-7.png" alt="img"></p>
 <p>最终代码如下，只需要修改的是bookService</p>
 <p>在方法上增加：@Transactional(propagation = Propagation.REQUIRES_NEW)</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/TmEUgtj9EK6.7V8ajmQrEBTVksfdd82gyyVQ8MCi5xgIf3m6Ggw2LAuQJmQUUQk961aneVT3*meotipRqanzCAX57XST8f8JJDMwl*JxT1w!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/mysql/%40DS%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BA%8B%E5%8A%A1%E9%97%AE%E9%A2%98-8.png" alt="img"></p>
 <p>@DS数据源切换生效@Transaction事务生效需要注意：</p>
 <p>master：userService</p>
 <p>common：bookService</p>

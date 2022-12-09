@@ -153,7 +153,7 @@
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
-            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">44</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">43</span></li>
         </ul>
     </div>
 </div>
@@ -236,10 +236,6 @@
             
             
             <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
-                    class="tag-list-count">1</span></li>
-            
-            
-            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
                     class="tag-list-count">1</span></li>
             
             
@@ -429,10 +425,10 @@ public class WebApplication {
 <blockquote>
 <p>默认账号密码均为 :  nacos</p>
 </blockquote>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDG7zdu5bYPEFPr12D8OkMEYu1DJG*5eK3lVVBNlEJkx0ySzhh6XBrLqI3aub0c9N9WHz6F0GNPY3QjyzlM5Sn3I!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/nacos/nacos-1.png" alt="img"></p>
 <p><strong>4.启动服务</strong></p>
 <p>启动测试服务后，查看nacos服务管理中心，可以看到该服务已经成功注册</p>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDANHDRYdnw1M1WmgVH0crmHOjLlQVsFpiO5oBTA8FsQH0Nm*ahJ59W5ZvjY5CUzs8EiB.VS0XghAZj7w6MYxiwE!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/nacos/nacos-2.png" alt="img"></p>
 <p>之后就可以结合<strong>spring cloud open-feign</strong>进行远程服务调用啦，这里不再演示</p>
 <h3 id="使用nacos作为配置中心">使用Nacos作为配置中心</h3>
 <p><strong>1.首先导入nacos配置中心的依赖</strong></p>
@@ -446,7 +442,7 @@ public class WebApplication {
 spring.cloud.nacos.config.server-addr=127.0.0.1:8848	#nacos配置中心地址
 </code></pre>
 <p><strong>3.在配置中心中新建配置文件,nacos配置中心默认会加载项目名.properties文件</strong></p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDOH1ooBuaFstN*d29tU4caTOpUnPT4PIuoR.o1iLb22quCKYwmo91Lyg.zlldyfk0RNYvgum.Sbg3vFBpGzXh*k!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/nacos/nacos-3.png" alt="img"></p>
 <p>Controller相关代码</p>
 <pre><code class="language-java">@RestController
 public class WebController {
@@ -466,7 +462,7 @@ public class WebController {
 }
 </code></pre>
 <p><strong>测试结果</strong></p>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDKE1c2saFUWwEizwFiv13aR68uNuSy7ORqB3YJHPsr2N6DUPi6Cx7vxti4f.g0BWBpLmiZT.8KBVXK1Ch4fSrIQ!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/nacos/nacos-4.png" alt="img"></p>
 <p>成功读取配置中心里配置信息</p>
 <p>这里还可以配合使用 <strong>@RefreshScope</strong> 注解实现动态配置刷新</p>
 <blockquote>
@@ -496,7 +492,7 @@ public class WebController {
 </code></pre>
 </li>
 </ol>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDAvBPPqhjzeag96M*l8i68yLacgNAbVYfmgzbcc2k4*YdY*tZTeRZ1jSu5.dWmTlWGBB9d.IWfKApuUATfEwkTI!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/nacos/nacos-6.png" alt="img"></p>
 <p>bootstrap.properties配置文件中指定多配置文件加载</p>
 <pre><code class="language-properties">#多配置文件加载
 

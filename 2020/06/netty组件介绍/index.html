@@ -153,7 +153,7 @@
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
-            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">44</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">43</span></li>
         </ul>
     </div>
 </div>
@@ -236,10 +236,6 @@
             
             
             <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
-                    class="tag-list-count">1</span></li>
-            
-            
-            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
                     class="tag-list-count">1</span></li>
             
             
@@ -387,7 +383,7 @@
 </li>
 </ol>
 <p>客户端连接处理流程如下图</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDCAVqymmihr3MxAO85tb49tFEXrL7t9P6Y6LfDKgImMad0dklfkgeQZV0L1HVeMpjApGIAlzgBcKhEnAgwS4wJI!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/netty/netty%E7%BB%84%E4%BB%B6-1.png" alt="img"></p>
 <h3 id="channelinitializer">ChannelInitializer</h3>
 <p>channel的初始化容器，我们就是在这里面设置自定义的处理器</p>
 <p>相关API</p>
@@ -407,19 +403,19 @@
 <ul>
 <li><strong>ChannelInboundHandler</strong> 处理入站事件接口</li>
 </ul>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDDASdkwnHK.pJ9wEVjySFeF9tYVrH*KClVs.IYDbz5GFjrIsm6rdTTltATHJuFuuFiKeN8royqDNE0F02rJjZi4!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/netty/netty%E7%BB%84%E4%BB%B6-5.png" alt="img"></p>
 <ul>
 <li><strong>ChannelOutboundHandler</strong> 处理出站事件接口</li>
 </ul>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDHnn.jR7FzP7CF3Sqw9SOtr9V5F5MXH50C1eiHJjBGtcVqURDox7HKcZkW6wYPd9Ih2XDdEFR*qG9B7keTdjJBw!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/netty/netty%E7%BB%84%E4%BB%B6-6.png" alt="img"></p>
 <p>此外，<strong>ChannelDuplexHandler</strong> 类能够同时处理出站和入站事件</p>
 <p>每个客户端Channel 都独享自己的 Handle</p>
 <h3 id="channelpipeline"><strong>ChannelPipeline</strong></h3>
 <p>在Netty中每个Channel都有且仅有一个ChannelPipeline与之对应，<strong>pipeline和channel是相互包含关系</strong> 即双方都可以获取对方的实例。它们的组成关系如下图所示</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDAfKZn8htc9cL.qRA3oh42Q*YedtTu*5kqmhof7mGta9tK3I8qwInPI2xUTNPP7hskZp91CNNO0s9lynsFPdKTI!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/netty/netty%E7%BB%84%E4%BB%B6-2.png" alt="img"></p>
 <p><strong>一个Channel包含了一个ChannelPipeline，而ChannelPipeline 中又维护了一个由ChannelHandlerContext组成的双向链表，并且每个ChannelHandlerContext中又关联着一个ChannelHandler</strong></p>
 <p>入站事件和出站事件在一个双向链表中，入站事件会从链表head往后传递到最后一个入站的handler,出站事件会从链表tail往前传递到最前一个出站的handler,两种类型的handler互不干扰</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDG3jcWvwG5Y9.ULqM4bq9pDjo2*Y5*uRqbBva5w*3wQy*GOBfyXUm9zaM8yKqKDayXsCAy6dxHKjoGTxuvi5qjw!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/netty/netty%E7%BB%84%E4%BB%B6-3.png" alt="img"></p>
 <h3 id="channelhandlercontext"><strong>ChannelHandlerContext</strong></h3>
 <p>多个ChannelHandlerContext组成了一个双向链表，Context是对Handler的封装。</p>
 <ol>
@@ -438,7 +434,7 @@
 <li><strong>ChannelOutboundInvoker flush()</strong>，刷新</li>
 <li><strong>ChannelFuture writeAndFlush(Object msg)</strong>， 将数据写到ChannelPipeline中当前ChannelHandler 的下一个ChannelHandler开始处理(出站)</li>
 </ul>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDBoM456f9c3UnSgYJbh5Cx53IaOpJaY3Nv.VBELb0U8QQwxtSmOYxeKfu8fy2fidmVgch2eY3Fd9nHrkwXDWu.w!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/netty/netty%E7%BB%84%E4%BB%B6-4.png" alt="img"></p>
 <h3 id="future-or-channelfuture">Future or ChannelFuture</h3>
 <p><strong>Netty的异步模型</strong></p>
 <p>基本介绍</p>

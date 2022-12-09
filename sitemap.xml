@@ -493,20 +493,6 @@
   </url>
   
   <url>
-    <loc>https://bluestaree.github.io/tags/springsecurity/</loc>
-    <lastmod>2020-05-06T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bluestaree.github.io/2020/05/spring-security%E6%B5%81%E7%A8%8B%E4%B8%8E%E9%85%8D%E7%BD%AE/</loc>
-    <lastmod>2020-05-06T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://bluestaree.github.io/tags/gradle/</loc>
     <lastmod>2020-05-02T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>

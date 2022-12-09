@@ -153,7 +153,7 @@
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
-            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">44</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">43</span></li>
         </ul>
     </div>
 </div>
@@ -236,10 +236,6 @@
             
             
             <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
-                    class="tag-list-count">1</span></li>
-            
-            
-            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
                     class="tag-list-count">1</span></li>
             
             
@@ -381,7 +377,7 @@
 <li>对于查询不到的结果，可以存为null，并加入短暂过期时间 (可能会导致大量无效key)</li>
 <li>使用布隆过滤器，过滤无效请求，拒绝访问（存在误判情况）</li>
 </ul>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDFpaiItXvFSRjfZFYPSo.dXtC1Jx6hiHY*DeJKgEiTkcQsYmVw.6GaqBXOvhI4Hkdi8QuUmlRUKkzFHFS4qXc8c!/r" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/cache/%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88-1.png" alt=""></p>
 <hr>
 <h3 id="缓存雪崩">缓存雪崩</h3>
 <p>缓存雪崩是指在我们设置缓存时key采用了相同的过期时间，导致缓存在某一时刻同时失效，请求全部转发到DB，</p>
@@ -389,7 +385,7 @@
 <p><strong>解决:</strong></p>
 <p>原有的失效时间基础上增加一个随机值，不同的key，设置不同的过期时间，让缓存失效的时间点尽量均匀，这样</p>
 <p>每一个缓存的过期时间的重复率就会降低，很难引发集体失效的事件。</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDCeqV2dMadgM8ILE0OIs5y8zHYl8RMVJbBcWAQUUQFEMSwedenB61SSrPvoAukjRg3dcRJMYhkDhdg7lp.CH0F8!/r" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/cache/%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88-3.png" alt=""></p>
 <hr>
 <h3 id="缓存击穿">缓存击穿</h3>
 <p>对于一些设置了过期时间的 key，如果这些 key 可能会在某些时间点被超高并发地访问，是一种非常“热点”的数</p>
@@ -427,7 +423,7 @@
 <p>在 redis、db 中间做一个二级缓存</p>
 </li>
 </ul>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDJtVWrj49kMduxyRET*oxMW6ZXHlh9Bykl4VZwykSwwyxnrRwUGJn9pLloD2k6tiOZ4X2OfS1kVo9qi2nIYmOMw!/r" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/cache/%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88-2.png" alt=""></p>
 
     </div>
     <div class="article-footer">

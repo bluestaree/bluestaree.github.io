@@ -153,7 +153,7 @@
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
-            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">44</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">43</span></li>
         </ul>
     </div>
 </div>
@@ -236,10 +236,6 @@
             
             
             <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
-                    class="tag-list-count">1</span></li>
-            
-            
-            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
                     class="tag-list-count">1</span></li>
             
             
@@ -365,33 +361,33 @@
 </blockquote>
 <h3 id="使用步骤"><strong>使用步骤</strong></h3>
 <p>1.对需要校验的Bean对应字段加上校验注解，并定义错误消息提示</p>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDHY.6f*Xjxu1URh1Ftz4IW6lD0.hh9xy5PC7j8ykAELBS0gFoSZ4M7ZY.6CFLvnSmHpkD280eL4b*2uJT19qwig!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/valid/jsr303.png" alt="img"></p>
 <p>所支持的校验注解类型可以在  <strong>javax.validation.constraints</strong> 包下查看</p>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDJUn2gN69sEgGBv6p6kt5gJ2a1KJJoP.3qjWIvzmTMZx95i68SqS6dPBwkRzwdIoE1AwyIgLGKMUxIKISCaUjuE!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/valid/jsr303-1.png" alt="img"></p>
 <p>2.开启校验</p>
 <p>使用 <strong>@Valid</strong> 开启校验</p>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDNWD*0kkYEdOyzrY9*rjAwCHhQCxoMWHW2ThT8QX23C*aHzyFpe2OZzp3wllpeLmi12Gfn5uMuHA7nwtQVYV.0k!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/valid/jsr303-2.png" alt="img"></p>
 <p>这样就能够完成校验功能了，是不是很简单，当然也允许使用自定义规则的校验注解，这里不再进行演示。</p>
 <h3 id="异常信息处理">异常信息处理</h3>
 <p>对于校验不通过的异常数据，通常需要我们自己来处理，如果我们没有进行异常处理，默认返回的结果就像这样一</p>
 <p>长串的错误信息，用户体验就不是很好了</p>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDCPAzjrHK1wlzwBxks6QaUU5d21ZykJ1CO83FUK5hLEwgGQjrocD8VanU80j3ryipGVnyambTuRI7QBpxvl6Qn0!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/valid/jsr303-3.png" alt="img"></p>
 <p>这样的数据肯定不是我们所希望的，</p>
 <h5 id="处理方法"><strong>处理方法</strong></h5>
 <p>我们可以在校验方法上，添加 <strong>BindingResult</strong> 方法参数，就可以接收到异常信息，获取到校验的结果，并进行相应的逻辑处理</p>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDAN9GcV5609rfGZqph7uonKxMFvSki6qOh8EzOzRTCt33*eSTcbum1kY3paX485Pum2lQBOl*GLGNf00bi3Iq1s!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/valid/jsr303-4.png" alt="img"></p>
 <p>当然这样也不是最好的解决方案，如果有很多服务都需要校验异常，那就太麻烦了，我们可以使用SprngMVC所提</p>
 <p>供控制器增强功能，进行全局异常捕获处理，针对<strong>MethodArgumentNotValidException</strong>异常进行捕获，并统</p>
 <p>一返回自定义的结果</p>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDFxbQya5x04w89Wnr3XQB0OsCilXXv1vihiShvwLncqH8nj1TiZFGtPGiydaNKIXCbdvov6jin1COrP4LcKtc8Y!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/valid/jsr303-5.png" alt="img"></p>
 <h3 id="分组校验"><strong>分组校验</strong></h3>
 <p>分组校验适合多场景校验的情况，举个栗子，比如对于商品评论ID，规定在新增时不需要携带ID信息，使用自增</p>
 <p>长主键，而在修改时必须要携带ID信息。</p>
 <p>这样一来就需要在Bean中的ID字段添加多个校验注解,这时就需要用到分组校验</p>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDGGmfQM.Y7KW7xDrV5Tv*chGofPTwZIM.po7guNZT1tX88jONQ1xfiOqVa5EmLCxQRXXyyJP4mMrSwCI8dyGQfA!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/valid/jsr303-6.png" alt="img"></p>
 <p>注意，分组的标识必须为接口类型 ，可以自定义一个标记接口</p>
 <p>在校验的时候使用 <strong>@Validated</strong> 指定校验组即可</p>
-<p><img src="https://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDJWCdOoivvWQs5*r*Z04ladZQigWzr8IXB9BCAdJqX3ep20Of90CiyzQdw9xnoreL3FUXi3I0tiRRIQ4MFqsQqY!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/valid/jsr303-7.png" alt="img"></p>
 <blockquote>
 <p>注意：如果存在没有指定分组的校验注解，在指定分组校验的情况下不会生效</p>
 </blockquote>

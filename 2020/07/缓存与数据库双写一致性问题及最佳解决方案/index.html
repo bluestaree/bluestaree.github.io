@@ -153,7 +153,7 @@
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">3</span></li>
-            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">44</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">43</span></li>
         </ul>
     </div>
 </div>
@@ -236,10 +236,6 @@
             
             
             <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
-                    class="tag-list-count">1</span></li>
-            
-            
-            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/springsecurity/" class="tag-list-link">springsecurity</a><span
                     class="tag-list-count">1</span></li>
             
             
@@ -371,7 +367,7 @@
 <p>参考文章：https://www.jianshu.com/p/dc1e5091a0d8</p>
 </blockquote>
 <p>如今利用缓存机制来提高查询效率已被广泛用在各大生产环境，查询数据的一般流程如下所示</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDLg.w3*.hY7H7S7zqkt73wm4Qh69d3AR9N.kS4t8acten0GEouvKgOTqrq0J.ienUeK1VDDdOGeHS2z3mRuRZl8!/r" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/cache/%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99-5.png" alt="img"></p>
 <p>在没有更新数据的情况下，数据库和缓存的数据是保持一致的，当时当要执行数据库的更新操作时，数据库和缓存就会出现不一致的情况。</p>
 <p>首先需要明确的是，既然系统引入缓存机制，就必须接受系统会出现数据不一致的情况发生，我们不可能完全避免，只能尽量减少不一致的时间，达到最终一致性。</p>
 <p>那么如何将缓存中的数据与数据库保持一致呢，比较常见的两个模式是：</p>
@@ -380,7 +376,7 @@
 <li><strong>失效模式</strong></li>
 </ul>
 <h3 id="缓存数据一致性-双写模式">缓存数据一致性-双写模式</h3>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDBI3Iv7chLETQDbAwq89e8..mL6Ag0PbPAATM0g71t0NCMY87PBBc15*ogLgf3BmekFnj3hOystTH2YGxLvXwoM!/r" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/cache/%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99-3.png" alt=""></p>
 <p><strong>思路：首先更改数据库，然后再更新缓存</strong></p>
 <p>可能存在的问题，如图所示，假设存在两个请求，且其执行顺序如下：</p>
 <ol>
@@ -394,7 +390,7 @@
 <p><strong>解决：</strong> 添加读写锁，如果有线程需要更新数据，其他线程必须等待其执行完成。</p>
 <p>注：如果业务允许暂时性的数据不一致问题，可以忽略此问题，但要注意设置<strong>合适的缓存过期时间</strong>。保证最终数据的一致性。</p>
 <h3 id="缓存数据一致性-失效模式">缓存数据一致性-失效模式</h3>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDI1N*0P6g67N5BtbiBZ1cUDyBRfHpudI1R8wXu4wti7xCbhL6y1AnZYliKH1lv7SNFtjcxq8zyOd0O.0h9OF*OM!/r" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/cache/%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99-2.png" alt=""></p>
 <p><strong>思路：首先更改数据库，然后删除缓存，等待下次一主动查询进行更新</strong></p>
 <p>可能存在的问题，如图所示，假设存在三个请求，且其执行顺序如下:</p>
 <ol>
@@ -423,7 +419,7 @@
 </ul>
 <h3 id="解决方案之canal简单介绍">解决方案之Canal简单介绍</h3>
 <p>Canal是阿里巴巴旗下的一款开源项目。其定位是基于数据库增量日志解析，提供增量数据订阅&amp;消费。</p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDLNRaW3HHu8oSISHyiw3ht0NYpgVWj7bkLXXkhW*1YDMPucGM8bCnK08njZNXVRBx9YHKh8GbsXsuhWXY8tcrxk!/r" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/cache/%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99-1.png" alt=""></p>
 <p><strong>使用Canal更新缓存</strong></p>
 <p>Canal可以模拟为Mysql的一个从服务器，只要Mysql数据发生更改，Canal就能够同步到变化的内容（binlog）。</p>
 <p>利用这个特性，我们就可以编写逻辑一些业务，在数据库更改的同时修改redis缓存信息。这样一来，在编码期</p>
@@ -432,7 +428,7 @@
 <p>缺点：添加新的中间件，需要额外开发自定义功能</p>
 <h3 id="heading"></h3>
 <p><strong>使用Canal解决数据异构</strong></p>
-<p><img src="http://r.photo.store.qq.com/psc?/V106pUqs1JqYPf/Af1yGqSdppVqA7I0*cpgDLA7HR27msxh6wVxKra4dBt5YmZHlr9U2byp0M.C*9*trvgudBH1hUVnHQTURnEGj2Or3hlLKxys6Pom*X*Ux8Q!/r" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/cache/%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99-4.png" alt=""></p>
 <p>Canal也可以在大数据情况下解决数据异构问题，举个栗子：</p>
 <p>一些电商网站都会根据用户浏览喜好，显示相关的推荐商品，引导客户点击购买。Canal就可以高效的完成并计算</p>
 <p>分析出用户可能感兴趣的商品。</p>
