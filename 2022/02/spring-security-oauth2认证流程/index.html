@@ -466,33 +466,33 @@
 <h3 id="3获取token的详细流程代码截图">3.获取token的详细流程（代码截图）</h3>
 <h4 id="31代码截图梳理流程">3.1.代码截图梳理流程</h4>
 <p><strong>1.一个比较重要的过滤器</strong></p>
-<p><img src="https://img-blog.csdn.net/2018051122213623" alt="这里写图片描述"></p>
+<p><img src="https://github.com/bluestaree/bluestaree.github.io/blob/master/image/security/SecurityOauth2-1.png?raw=true" alt="这里写图片描述"></p>
 <p><strong>2.此处是①中的attemptAuthentication方法</strong></p>
-<p><img src="https://img-blog.csdn.net/20180511222224707" alt="这里写图片描述"></p>
+<p><img src="https://github.com/bluestaree/bluestaree.github.io/blob/master/image/security/SecurityOauth2-2.png?raw=true" alt="这里写图片描述"></p>
 <p><strong>3.此处是②中调用的authenticate方法</strong></p>
-<p><img src="https://img-blog.csdn.net/20180511222330493" alt="这里写图片描述"></p>
+<p><img src="https://github.com/bluestaree/bluestaree.github.io/blob/master/image/security/SecurityOauth2-3.png?raw=true" alt="这里写图片描述"></p>
 <p><strong>4.此处是③中调用的AbstractUserDetailsAuthenticationProvider类的authenticate方法</strong></p>
-<p><img src="https://img-blog.csdn.net/20180511222451388" alt="这里写图片描述"></p>
+<p><img src="https://github.com/bluestaree/bluestaree.github.io/blob/master/image/security/SecurityOauth2-4.png?raw=true" alt="这里写图片描述"></p>
 <p><strong>5.此处是④中调用的DaoAuthenticationProvider类的retrieveUser方法</strong></p>
-<p><img src="https://img-blog.csdn.net/20180511222706410" alt="这里写图片描述"></p>
+<p><img src="https://github.com/bluestaree/bluestaree.github.io/blob/master/image/security/SecurityOauth2-5.png?raw=true" alt="这里写图片描述"></p>
 <p><strong>6.此处为⑤中调用的ClientDetailsUserDetailsService类的loadUserByUsername方法，执行完后接着返回执行④之后的方法</strong></p>
-<p><img src="https://img-blog.csdn.net/20180511222844956" alt="这里写图片描述"></p>
+<p><img src="https://github.com/bluestaree/bluestaree.github.io/blob/master/image/security/SecurityOauth2-6.png?raw=true" alt="这里写图片描述"></p>
 <p><strong>7.此处为④中调用的DaoAuthenticationProvider类的additionalAuthenticationChecks方法，此处执行完则主要过滤器执行完毕，后续会进入/oauth/token映射的方法。</strong></p>
-<p><img src="https://img-blog.csdn.net/20180511222944638" alt="这里写图片描述"></p>
+<p><img src="https://github.com/bluestaree/bluestaree.github.io/blob/master/image/security/SecurityOauth2-7.png?raw=true" alt="这里写图片描述"></p>
 <p><strong>8.此处进入/oauth/token映射的TokenEndpoint类的postAccessToken方法</strong></p>
-<p><img src="https://img-blog.csdn.net/20180511223311632" alt="这里写图片描述"></p>
+<p><img src="https://github.com/bluestaree/bluestaree.github.io/blob/master/image/security/SecurityOauth2-8.png?raw=true" alt="这里写图片描述"></p>
 <p><strong>9.此处为⑧中调用的AbstractTokenGranter类的grant方法</strong></p>
-<p><img src="https://img-blog.csdn.net/20180511223622691" alt="这里写图片描述"></p>
+<p><img src="https://github.com/bluestaree/bluestaree.github.io/blob/master/image/security/SecurityOauth2-9.png?raw=true" alt="这里写图片描述"></p>
 <p><strong>10.此处为⑨中调用的ResourceOwnerPasswordTokenGranter类中的getOAuth2Authentication方法</strong></p>
-<p><img src="https://img-blog.csdn.net/20180511223727144" alt="这里写图片描述"></p>
+<p><img src="https://github.com/bluestaree/bluestaree.github.io/blob/master/image/security/SecurityOauth2-10.png?raw=true" alt="这里写图片描述"></p>
 <p><strong>11.此处为⑩中调用的自定义的CustomUserAuthenticationProvider类中的authenticate方法，此处校验用户密码是否正确，此处执行完则返回⑨执行后续方法。</strong></p>
-<p><img src="https://img-blog.csdn.net/20180511223854515" alt="这里写图片描述"></p>
+<p><img src="https://github.com/bluestaree/bluestaree.github.io/blob/master/image/security/SecurityOauth2-11.png?raw=true" alt="这里写图片描述"></p>
 <p><strong>12.此处为⑨中调用的DefaultTokenServices中的createAccessToken方法</strong></p>
-<p><img src="https://img-blog.csdn.net/20180511224049265" alt="这里写图片描述"></p>
+<p><img src="https://github.com/bluestaree/bluestaree.github.io/blob/master/image/security/SecurityOauth2-12.png?raw=true" alt="这里写图片描述"></p>
 <p><strong>13.此处为12中调用的RedisTokenStore中的getAccessToken方法等，此处执行完，则一直向上返回到⑧中执行后续方法。</strong></p>
-<p><img src="https://img-blog.csdn.net/20180511224258633" alt="这里写图片描述"></p>
+<p><img src="https://github.com/bluestaree/bluestaree.github.io/blob/master/image/security/SecurityOauth2-13.png?raw=true" alt="这里写图片描述"></p>
 <p><strong>14.此处为⑧中获取到token后需要包装返回流操作</strong></p>
-<p><img src="https://img-blog.csdn.net/20180511224758841" alt="这里写图片描述"></p>
+<p><img src="https://github.com/bluestaree/bluestaree.github.io/blob/master/image/security/SecurityOauth2-14.png?raw=true" alt="这里写图片描述"></p>
 <h3 id="4oauth2authenticationprocessingfilter-资源服务器认证解析">4.OAuth2AuthenticationProcessingFilter （资源服务器认证）解析</h3>
 <p>​	通过前面的解析我们最终获取到了token，但获取token 不是我们最终目的，我们最终的目的时拿到资源信息，所以我们还得通过获取到的token去调用资源服务器接口获取资源数据。那么接下来我们就来解析资源服务器是如何通过传入token去辨别用户并允许返回资源信息的。我们知道资源服务器在过滤器链新增了 OAuth2AuthenticationProcessingFilter 来拦截请求并认证，那就这个过滤器的实现</p>
 <pre><code class="language-java"> public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,

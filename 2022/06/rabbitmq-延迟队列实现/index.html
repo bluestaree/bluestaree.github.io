@@ -429,7 +429,7 @@
 <p>官方插件地址：https://www.rabbitmq.com/community-plugins.html</p>
 <p>找到插件<code>rabbitmq_delayed_message_exchange</code>，进入GitHub下载本地RabbitMQ对应的插件版本（下载<code>.ez</code>文件）。</p>
 <p>我这里下载的是3.8.9版本，如图：
-<a href="https://img2020.cnblogs.com/blog/1759273/202109/1759273-20210916233158726-53857033.png"><img src="https://img2020.cnblogs.com/blog/1759273/202109/1759273-20210916233158726-53857033.png" alt="img"></a></p>
+<a href="https://img2020.cnblogs.com/blog/1759273/202109/1759273-20210916233158726-53857033.png"><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/mq/rabbitmqdelayqueue-1.png" alt="img"></a></p>
 <p>下载到本地后将文件放置RabbitMQ的plugins目录。</p>
 <p>我这里本地是使用docker-compose安装的服务，<code>image</code>为<code>rabbitmq:3.8.3-management</code>（虽然版本没对起来，但是测试能用，但是使用3.9的版本会报错，插件安装失败）安装的服务，操作步骤如下：</p>
 <ol>
@@ -474,7 +474,7 @@
 </li>
 </ol>
 <p>安装完毕后登陆RabbitMQ控制台查看，会发现多了个<code>x-delayed-message</code>类型的Exchange。</p>
-<p><a href="https://img2020.cnblogs.com/blog/1759273/202109/1759273-20210916233228723-1504151607.png"><img src="https://img2020.cnblogs.com/blog/1759273/202109/1759273-20210916233228723-1504151607.png" alt="img"></a></p>
+<p><a href="https://img2020.cnblogs.com/blog/1759273/202109/1759273-20210916233228723-1504151607.png"><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/mq/rabbitmqdelayqueue-2.png" alt="img"></a></p>
 <h4 id="3-实现延迟队列">3. 实现延迟队列</h4>
 <h5 id="31-引入所需依赖">3.1 引入所需依赖</h5>
 <pre><code class="language-xml">&lt;dependency&gt;
