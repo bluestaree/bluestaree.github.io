@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        ik分词器踩坑记录 - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="问题 一、热词配置过多后失效 我使用的es版本7.6.2，对应ik分词器版本7.6.2，经过反复测试，发现当词库数量超过一定数目时，ik分词器无" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>ik分词器踩坑记录 - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="ik分词器踩坑记录" />
+<meta property="og:description" content="问题 一、热词配置过多后失效 我使用的es版本7.6.2，对应ik分词器版本7.6.2，经过反复测试，发现当词库数量超过一定数目时，ik分词器无" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2023/04/ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/" />
+<meta property="article:published_time" content="2023-04-12T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-04-12T00:00:00+00:00" />
+<meta itemprop="name" content="ik分词器踩坑记录">
+<meta itemprop="description" content="问题 一、热词配置过多后失效 我使用的es版本7.6.2，对应ik分词器版本7.6.2，经过反复测试，发现当词库数量超过一定数目时，ik分词器无">
+<meta itemprop="datePublished" content="2023-04-12T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2023-04-12T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1217">
+
+
+
+<meta itemprop="keywords" content="Elasticsearch," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ik分词器踩坑记录"/>
+<meta name="twitter:description" content="问题 一、热词配置过多后失效 我使用的es版本7.6.2，对应ik分词器版本7.6.2，经过反复测试，发现当词库数量超过一定数目时，ik分词器无"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/charles/" class="category-list-link">charles</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/elasticsearch/" class="category-list-link">elasticsearch</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/idea/" class="category-list-link">idea</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/milvus/" class="category-list-link">milvus</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/nginx/" class="category-list-link">nginx</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/rabbitmq/" class="category-list-link">rabbitmq</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-security/" class="category-list-link">spring-security</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">54</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/captcha/" class="tag-list-link">captcha</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/charles/" class="tag-list-link">charles</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/dubbo/" class="tag-list-link">dubbo</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/elasticsearch/" class="tag-list-link">elasticsearch</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/idea/" class="tag-list-link">idea</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/json/" class="tag-list-link">json</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/milvus/" class="tag-list-link">milvus</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nginx/" class="tag-list-link">nginx</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/saas/" class="tag-list-link">saas</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-security/" class="tag-list-link">spring-security</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="tag-list-link">正则表达式</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/07/java%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%BD%ACpdf%E6%96%87%E4%BB%B6/" class="title">JAVA实现图片转PDF文件</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-07-09 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/06/xxljob%E8%B0%83%E7%94%A8%E6%88%90%E5%8A%9F%E5%8D%B4%E6%9C%AA%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/" class="title">xxljob调用成功却&#39;未执行任务&#39;?</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-06-21 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-06-21</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E5%A4%9A%E6%8E%92%E5%BA%8F%E6%9D%A1%E4%BB%B6%E6%90%9C%E7%B4%A2/" class="title">Elasticsearch 多排序条件搜索</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-05-20 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-05-20</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E6%90%9C%E7%B4%A2%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%9D%E7%A6%BB%E5%9B%A0%E7%B4%A0/" class="title">Elasticsearch 搜索优化之距离因素</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-05-15 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-05-15</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/04/ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/" class="title">ik分词器踩坑记录</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-04-12 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-04-12</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2023/04/ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/"
+    >ik分词器踩坑记录</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2023/04/ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/" class="article-date">
+  <time datetime="2023-04-12 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-04-12</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/elasticsearch/"> elasticsearch </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/elasticsearch/"> Elasticsearch </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2023/04/ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1217字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 3分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<h3 id="问题">问题</h3>
+<h4 id="一热词配置过多后失效">一、热词配置过多后失效</h4>
+<blockquote>
+<p>我使用的es版本7.6.2，对应ik分词器版本7.6.2，经过反复测试，发现当词库数量超过一定数目时，ik分词器无法热更新刷新词库。初步判断与返回信息长度相关</p>
+</blockquote>
+<p>1）查看ik分词器拉取远程词库相关源码：</p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/elasticsearch/ik-analysis-problem1.png" alt="ik-analysis-problem1"></p>
+<p>其中 <code>entity.getContentLength() &gt; 0</code>  确实存在文本内容长度判断，但没有 具体长度限制。</p>
+<p>2）继续测试，判断是否由于内容文本过长，导致响应请求头中：<code>Content-Length</code>属性丢失</p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/elasticsearch/ik-analysis-problem2.png" alt="ik-analysis-problem2"></p>
+<p>这里可以看到有<code>Content-Length</code> 这个header属性</p>
+<p>当词库量增多的时候，发现无<code>Content-Length</code></p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/elasticsearch/ik-analysis-problem3.png" alt="ik-analysis-problem3"></p>
+<p>参看相关文章，应该是为了提升传输的效率和对内容进行压缩</p>
+<p>IK插件可能是因为某种原因未对这中情况做支持,只有有Content-Length的时候才能正确的识别。</p>
+<p><strong>解决</strong></p>
+<p>我这里有走nginx，在 nginx进行如下配置</p>
+<pre><code>##### ik分词器热更新接口，关闭gzip、chunked_transfer_encoding #####
+location /test/extDic/hot {
+    proxy_pass http://gateway/test/extDic/hot;
+    chunked_transfer_encoding off;
+    gzip off;
+}
+
+## 更新配置文件后：
+## 使用命令 nginx -t  检查配置文件
+## 使用命令 nginx -s reload 重新加载配置文件
+</code></pre>
+<p>添加词库数据，这时候请求接口就会发现<code>Content-Length</code>  又出现了</p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/elasticsearch/ik-analysis-problem4.png" alt="ik-analysis-problem4"></p>
+<p>参看es控制台，有输出同步日志</p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/elasticsearch/ik-analysis-problem7.png" alt="ik-analysis-problem7"></p>
+<p>kibana分词测试，热词已生效，大功告成</p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/elasticsearch/ik-analysis-problem8.png" alt="ik-analysis-problem8"></p>
+<blockquote>
+<p>参考文章：https://blog.csdn.net/u013200380/article/details/114266789</p>
+</blockquote>
+<hr>
+<p><strong>更新</strong></p>
+<p>这个问题高版本应该已经解决了，[github相关 <a href="https://github.com/medcl/elasticsearch-analysis-ik/issues/780">issues780</a>、<a href="https://github.com/medcl/elasticsearch-analysis-ik/issues/874">issues874</a> ] 大家可以根据需要升级测试</p>
+<blockquote>
+<p>备注： (如果有使用springdata-es的注意版本兼容。 详阅： <a href="https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#preface">https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#preface</a>)</p>
+</blockquote>
+<h4 id="二部分词组无法切分单个词">二、部分词组无法切分单个词</h4>
+<p>场景：用户常常会在搜索时，只输入一个汉字。如果我们使用默认ik分词器的配置，有些短语：比如<code>苹果手机</code>，就只会分为 <code>苹果</code>、<code>手机</code> 这两个词 [使用<code>ik_max_word</code>]。单单输入 <code>苹</code> 这个字无法搜索出对应内容，当然有些单词我们并不希望进行分词，如 <code>的、与、又</code> 。</p>
+<p><strong>解决方案：</strong></p>
+<p>​	<strong>1、把中文的常用的单个汉字作为扩展词组加入到ik扩展词典中</strong></p>
+<p>​	<strong>2、把不需要分词的词库加入到ik扩展停用词典中</strong></p>
+<p>打开 IK 分词器的核心配置文件：IKAnalyzer.cfg.xml，修改如下配置</p>
+<pre><code class="language-xml">&lt;properties&gt;
+        &lt;comment&gt;IK Analyzer 扩展配置&lt;/comment&gt;
+        &lt;!--用户可以在这里配置自己的扩展字典 --&gt;
+        &lt;entry key=&quot;ext_dict&quot;&gt;extra_single_word.dic;&lt;/entry&gt;
+         &lt;!--用户可以在这里配置自己的扩展停止词字典--&gt;
+        &lt;entry key=&quot;ext_stopwords&quot;&gt;extra_stopword.dic;&lt;/entry&gt;
+        &lt;!--用户可以在这里配置远程扩展字典 --&gt;
+        &lt;!-- &lt;entry key=&quot;remote_ext_dict&quot;&gt;words_location&lt;/entry&gt; --&gt;
+        &lt;!--用户可以在这里配置远程扩展停止词字典--&gt;
+        &lt;!-- &lt;entry key=&quot;remote_ext_stopwords&quot;&gt;words_location&lt;/entry&gt; --&gt;
+&lt;/properties&gt;
+</code></pre>
+<p>添加<strong>扩展词典和停用词典</strong>配置,这里就用ik自带的扩展词库 <code>extra_single_word.dic</code>  、<code>extra_stopword.dic</code>为例 ，多个词库使用 分号 区分</p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/elasticsearch/ik-analysis-problem6.png" alt="ik-analysis-problem6"></p>
+<p>重启es，效果如下：</p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/elasticsearch/ik-analysis-problem5.png" alt="ik-analysis-problem5"></p>
+<p>该配置不会与远程词库冲突</p>
+<p><strong>注意：配置完成后，如果存在旧文档需要重新导入，才能生效</strong></p>
+<blockquote>
+<p>参考文章：https://blog.csdn.net/zy158194/article/details/122088661</p>
+</blockquote>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2023/04/%E5%AE%9E%E7%8E%B0ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%AF%8D%E5%BA%93%E7%83%AD%E6%9B%B4%E6%96%B0/" title="实现ik分词器词库热更新"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E6%90%9C%E7%B4%A2%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%9D%E7%A6%BB%E5%9B%A0%E7%B4%A0/"
+                    title="Elasticsearch 搜索优化之距离因素"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2023
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

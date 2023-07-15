@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        Elasticsearch 搜索优化之距离因素 - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="Elasticsearch 搜索优化 概述 ​ 在使用ES一段时间后，发现搜索结果有的时候不太理想，因为默认搜索结果是按分词权重计算排序（关键词命中多且文本内容少的排名往往" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>Elasticsearch 搜索优化之距离因素 - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="Elasticsearch 搜索优化之距离因素" />
+<meta property="og:description" content="Elasticsearch 搜索优化 概述 ​ 在使用ES一段时间后，发现搜索结果有的时候不太理想，因为默认搜索结果是按分词权重计算排序（关键词命中多且文本内容少的排名往往" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2023/05/elasticsearch-%E6%90%9C%E7%B4%A2%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%9D%E7%A6%BB%E5%9B%A0%E7%B4%A0/" />
+<meta property="article:published_time" content="2023-05-15T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-05-15T00:00:00+00:00" />
+<meta itemprop="name" content="Elasticsearch 搜索优化之距离因素">
+<meta itemprop="description" content="Elasticsearch 搜索优化 概述 ​ 在使用ES一段时间后，发现搜索结果有的时候不太理想，因为默认搜索结果是按分词权重计算排序（关键词命中多且文本内容少的排名往往">
+<meta itemprop="datePublished" content="2023-05-15T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2023-05-15T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1206">
+
+
+
+<meta itemprop="keywords" content="Elasticsearch," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Elasticsearch 搜索优化之距离因素"/>
+<meta name="twitter:description" content="Elasticsearch 搜索优化 概述 ​ 在使用ES一段时间后，发现搜索结果有的时候不太理想，因为默认搜索结果是按分词权重计算排序（关键词命中多且文本内容少的排名往往"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/charles/" class="category-list-link">charles</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/elasticsearch/" class="category-list-link">elasticsearch</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/idea/" class="category-list-link">idea</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/milvus/" class="category-list-link">milvus</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/nginx/" class="category-list-link">nginx</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/rabbitmq/" class="category-list-link">rabbitmq</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-security/" class="category-list-link">spring-security</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">54</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/captcha/" class="tag-list-link">captcha</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/charles/" class="tag-list-link">charles</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/dubbo/" class="tag-list-link">dubbo</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/elasticsearch/" class="tag-list-link">elasticsearch</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/idea/" class="tag-list-link">idea</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/json/" class="tag-list-link">json</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/milvus/" class="tag-list-link">milvus</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nginx/" class="tag-list-link">nginx</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/saas/" class="tag-list-link">saas</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-security/" class="tag-list-link">spring-security</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="tag-list-link">正则表达式</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/07/java%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%BD%ACpdf%E6%96%87%E4%BB%B6/" class="title">JAVA实现图片转PDF文件</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-07-09 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/06/xxljob%E8%B0%83%E7%94%A8%E6%88%90%E5%8A%9F%E5%8D%B4%E6%9C%AA%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/" class="title">xxljob调用成功却&#39;未执行任务&#39;?</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-06-21 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-06-21</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E5%A4%9A%E6%8E%92%E5%BA%8F%E6%9D%A1%E4%BB%B6%E6%90%9C%E7%B4%A2/" class="title">Elasticsearch 多排序条件搜索</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-05-20 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-05-20</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E6%90%9C%E7%B4%A2%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%9D%E7%A6%BB%E5%9B%A0%E7%B4%A0/" class="title">Elasticsearch 搜索优化之距离因素</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-05-15 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-05-15</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/04/ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/" class="title">ik分词器踩坑记录</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-04-12 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-04-12</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2023/05/elasticsearch-%E6%90%9C%E7%B4%A2%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%9D%E7%A6%BB%E5%9B%A0%E7%B4%A0/"
+    >Elasticsearch 搜索优化之距离因素</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2023/05/elasticsearch-%E6%90%9C%E7%B4%A2%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%9D%E7%A6%BB%E5%9B%A0%E7%B4%A0/" class="article-date">
+  <time datetime="2023-05-15 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-05-15</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/elasticsearch/"> elasticsearch </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/elasticsearch/"> Elasticsearch </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2023/05/elasticsearch-%E6%90%9C%E7%B4%A2%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%9D%E7%A6%BB%E5%9B%A0%E7%B4%A0/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1206字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 3分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<h3 id="elasticsearch-搜索优化">Elasticsearch 搜索优化</h3>
+<h4 id="概述">概述</h4>
+<p>​	在使用ES一段时间后，发现搜索结果有的时候不太理想，因为默认搜索结果是按分词权重计算排序（关键词命中多且文本内容少的排名往往靠前），而在实际场景中往往需要基于一些业务来影响该得分：<code>就比如需要根据用户输入的关键词获取结果，并按距离进行排序</code></p>
+<h4 id="function_score">function_score</h4>
+<p>在官方文档 - 越近越好这篇文章中，说的就是如何实现通过距离影响计算得分。这里需要使用<strong>function_score</strong>查询，并配置其中 <code>衰减函数（decay functions）</code>。</p>
+<pre><code>function_score查询有三种衰减函数—— linear 、 exp 和 gauss （线性、指数和高斯函数），它们可以操作数值、时间以及经纬度地理坐标点这样的字段。所有三个函数都能接受以下参数：
+
+- origin
+	中心点 或字段可能的最佳值，落在原点 origin 上的文档评分 _score 为满分 1.0 。
+- scale
+	衰减率，即一个文档从原点 origin 下落时，评分 _score 改变的速度。（例如，每 £10 欧元或每 100 米）。
+- decay
+	从原点 origin 衰减到 scale 所得的评分 _score ，默认值为 0.5 。
+- offset
+	以原点 origin 为中心点，为其设置一个非零的偏移量 offset 覆盖一个范围，而不只是单个原点。在范围 -offset &lt;= origin &lt;= +offset 内的所有评分 _score 都是 1.0 。
+</code></pre>
+<p>官方文档写的还是挺详细的，还有一个<strong>衰减函数曲线</strong>图解，这里就不再过多说明了。</p>
+<p>文档地址：https://www.elastic.co/guide/cn/elasticsearch/guide/current/decay-functions.html</p>
+<h5 id="实现">实现</h5>
+<p><strong>构建查询条件</strong></p>
+<pre><code class="language-json">POST /shop/_doc/_search
+{
+  &quot;query&quot;: {
+    &quot;function_score&quot;: {
+      &quot;query&quot;: {
+        &quot;bool&quot;: {
+          &quot;should&quot;: [
+            {
+              &quot;match_phrase&quot;: {
+                &quot;shopName&quot;: {
+                  &quot;query&quot;: &quot;苹果有线耳机&quot;,
+                  &quot;boost&quot;: 50,
+                  &quot;slop&quot;: 5
+                }
+              }
+            },
+            {
+              &quot;match_phrase&quot;: {
+                &quot;goodsName&quot;: {
+                  &quot;query&quot;: &quot;苹果有线耳机&quot;,
+                  &quot;boost&quot;: 30,
+                  &quot;slop&quot;: 5
+                }
+              }
+            },
+            {
+              &quot;multi_match&quot;: {
+                &quot;query&quot;: &quot;苹果有线耳机&quot;,
+                &quot;fields&quot;: [
+                  &quot;shopName^10&quot;,
+                  &quot;goodsName&quot;
+                ]
+              }
+            }
+          ],
+          &quot;minimum_should_match&quot;: 1
+        }
+      },
+      &quot;functions&quot;: [
+        {
+          &quot;exp&quot;: {
+            &quot;location&quot;: {
+              &quot;origin&quot;: {
+                &quot;lat&quot;: 24.480775,
+                &quot;lon&quot;: 118.119374
+              },
+              &quot;offset&quot;: &quot;2km&quot;,
+              &quot;scale&quot;: &quot;10km&quot;
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+</code></pre>
+<blockquote>
+<p>说明：在query中使用 <strong>match_phrase</strong> 和 <strong>match</strong>关键字混合搜索 并设置 <strong>boost</strong>权重参数，可以实现将完整短语匹配的结果更靠前，而这些可能正是用户需要的。一些零散的关键词：&ldquo;苹果&rdquo;、&ldquo;有限&rdquo;、&ldquo;耳机&rdquo;，组合而成的结果将会排在后面</p>
+<p><strong>functions</strong> 中使用到了 <strong>exp</strong> 衰减函数，主要实现的效果是 在中心点 2km 范围内，计算得分不会搜到影响。在 2-10km 范围中 计算得分结果会逐步衰减，而在10km范围外的 会较平缓的衰减。</p>
+<p>衰减速率可参考官方<strong>衰减函数曲线</strong></p>
+</blockquote>
+<p><strong>java代码实现</strong></p>
+<pre><code class="language-java">// spring data es实现
+// 构造FunctionScore
+private FunctionScoreQueryBuilder getFilterFunctionBuilders(BoolQueryBuilder boolQueryBuilder, Double latitude, Double longitude) {
+        FunctionScoreQueryBuilder.FilterFunctionBuilder[] filterFunctionBuilders = new FunctionScoreQueryBuilder.FilterFunctionBuilder[1];
+
+        Map locationMap = new HashMap();
+        locationMap.put(&quot;lat&quot;, latitude);
+        locationMap.put(&quot;lon&quot;, longitude);
+        GaussDecayFunctionBuilder distanceGaussDecayFunctionBuilder = ScoreFunctionBuilders
+                .gaussDecayFunction(&quot;location&quot;, locationMap, &quot;10km&quot;, &quot;2km&quot;);
+        filterFunctionBuilders[0] = new FunctionScoreQueryBuilder.FilterFunctionBuilder(distanceGaussDecayFunctionBuilder);
+
+        FunctionScoreQueryBuilder functionScoreQueryBuilder = QueryBuilders.functionScoreQuery(boolQueryBuilder, filterFunctionBuilders);
+        return functionScoreQueryBuilder;
+} 
+
+// ------------------------------------------
+
+//最后构造完FunctionScore需要放入NativeSearchQueryBuilder中，参数boolQueryBuilder为其它的一些业务查询条件
+
+//组装构建复杂条件查询器
+nativeSearchQueryBuilder.withQuery(functionScoreQueryBuilder);
+//进行数据查询
+SearchHits&lt;ShopESListVO&gt; search = elasticsearchRestTemplate.search(nativeSearchQueryBuilder.build(), ShopESListVO.class);
+</code></pre>
+<blockquote>
+<p>参考文章：<a href="https://my.oschina.net/u/3734816/blog/3105125">elasticsearch 干货：使用 FunctionScore 对文档进行重新打分实例</a></p>
+<p><a href="https://www.gongshengyun.cn/yunying/article-109652-1.html">总是搜不到想要的内容？Elasticsearch搜索排名优化了解一下</a></p>
+</blockquote>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2023/04/ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/" title="ik分词器踩坑记录"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E5%A4%9A%E6%8E%92%E5%BA%8F%E6%9D%A1%E4%BB%B6%E6%90%9C%E7%B4%A2/"
+                    title="Elasticsearch 多排序条件搜索"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2023
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

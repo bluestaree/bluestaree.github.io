@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        Spring Security 使用自带的 formLogin - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="转：原文链接 https://blog.csdn.net/qq_44131750/article/details/115775159 Session、Cookie 登陆认证 就是认证是否为合法用户，简单的说是登录。一般为匹对用户名和密码，即认证成功。 在 Spring Security 认证中，" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>Spring Security 使用自带的 formLogin - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="Spring Security 使用自带的 formLogin" />
+<meta property="og:description" content="转：原文链接 https://blog.csdn.net/qq_44131750/article/details/115775159 Session、Cookie 登陆认证 就是认证是否为合法用户，简单的说是登录。一般为匹对用户名和密码，即认证成功。 在 Spring Security 认证中，" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2022/03/spring-security-%E4%BD%BF%E7%94%A8%E8%87%AA%E5%B8%A6%E7%9A%84-formlogin/" />
+<meta property="article:published_time" content="2022-03-07T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-03-07T00:00:00+00:00" />
+<meta itemprop="name" content="Spring Security 使用自带的 formLogin">
+<meta itemprop="description" content="转：原文链接 https://blog.csdn.net/qq_44131750/article/details/115775159 Session、Cookie 登陆认证 就是认证是否为合法用户，简单的说是登录。一般为匹对用户名和密码，即认证成功。 在 Spring Security 认证中，">
+<meta itemprop="datePublished" content="2022-03-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2022-03-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="4471">
+
+
+
+<meta itemprop="keywords" content="spring-security," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Spring Security 使用自带的 formLogin"/>
+<meta name="twitter:description" content="转：原文链接 https://blog.csdn.net/qq_44131750/article/details/115775159 Session、Cookie 登陆认证 就是认证是否为合法用户，简单的说是登录。一般为匹对用户名和密码，即认证成功。 在 Spring Security 认证中，"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/charles/" class="category-list-link">charles</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/elasticsearch/" class="category-list-link">elasticsearch</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/idea/" class="category-list-link">idea</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/milvus/" class="category-list-link">milvus</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/nginx/" class="category-list-link">nginx</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/rabbitmq/" class="category-list-link">rabbitmq</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-security/" class="category-list-link">spring-security</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">54</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/captcha/" class="tag-list-link">captcha</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/charles/" class="tag-list-link">charles</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/dubbo/" class="tag-list-link">dubbo</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/elasticsearch/" class="tag-list-link">elasticsearch</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/idea/" class="tag-list-link">idea</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/json/" class="tag-list-link">json</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/milvus/" class="tag-list-link">milvus</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nginx/" class="tag-list-link">nginx</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/saas/" class="tag-list-link">saas</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-security/" class="tag-list-link">spring-security</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="tag-list-link">正则表达式</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/07/java%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%BD%ACpdf%E6%96%87%E4%BB%B6/" class="title">JAVA实现图片转PDF文件</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-07-09 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/06/xxljob%E8%B0%83%E7%94%A8%E6%88%90%E5%8A%9F%E5%8D%B4%E6%9C%AA%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/" class="title">xxljob调用成功却&#39;未执行任务&#39;?</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-06-21 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-06-21</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E5%A4%9A%E6%8E%92%E5%BA%8F%E6%9D%A1%E4%BB%B6%E6%90%9C%E7%B4%A2/" class="title">Elasticsearch 多排序条件搜索</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-05-20 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-05-20</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E6%90%9C%E7%B4%A2%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%9D%E7%A6%BB%E5%9B%A0%E7%B4%A0/" class="title">Elasticsearch 搜索优化之距离因素</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-05-15 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-05-15</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/04/ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/" class="title">ik分词器踩坑记录</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-04-12 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-04-12</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2022/03/spring-security-%E4%BD%BF%E7%94%A8%E8%87%AA%E5%B8%A6%E7%9A%84-formlogin/"
+    >Spring Security 使用自带的 formLogin</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2022/03/spring-security-%E4%BD%BF%E7%94%A8%E8%87%AA%E5%B8%A6%E7%9A%84-formlogin/" class="article-date">
+  <time datetime="2022-03-07 00:00:00 &#43;0000 UTC" itemprop="datePublished">2022-03-07</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/spring-security/"> spring-security </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/spring-security/"> spring-security </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2022/03/spring-security-%E4%BD%BF%E7%94%A8%E8%87%AA%E5%B8%A6%E7%9A%84-formlogin/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 4471字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 9分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<blockquote>
+<p>转：原文链接 <a href="https://blog.csdn.net/qq_44131750/article/details/115775159">https://blog.csdn.net/qq_44131750/article/details/115775159</a></p>
+</blockquote>
+<h3 id="sessioncookie-登陆认证">Session、Cookie 登陆认证</h3>
+<p>就是认证是否为合法用户，简单的说是登录。一般为匹对用户名和密码，即认证成功。</p>
+<p>在 Spring Security 认证中，只要解决如下几个问题：</p>
+<ul>
+<li>哪个类表示用户？</li>
+<li>哪个属性表示用户名？</li>
+<li>哪个属性表示密码？</li>
+<li>怎么通过用户名取到对应的用户？</li>
+<li>密码的验证方式是什么？</li>
+</ul>
+<p>所有的自定义行为都是围绕这几个问题展开的</p>
+<p>认证的执行流程就是</p>
+<ol>
+<li>它会拿到用户输入的用户名密码；</li>
+<li>根据用户名通过 UserDetailsService 的 loadUserByUsername(username) 方法获得一个用户对象；</li>
+<li>获得一个 UserDetails 对象，获得内部的成员属性 password；</li>
+<li>通过 PasswordEncoder 的 matchs(s1, s2) 方法对比用户的输入的密码和第3步的密码；</li>
+<li>匹配成功；</li>
+</ol>
+<h4 id="获取用户名和密码">获取用户名和密码</h4>
+<p><a href="https://blog.csdn.net/lichuangcsdn/article/details/94906341">Spring Boot 整合 Spring Security（前后端分离时的json登录方式，解决获取不到用户名密码问题）</a>
+<a href="https://cloud.tencent.com/developer/article/1330625">springboot+security整合2</a></p>
+<p>默认的账户名和密码的参数名分别是 <code>username</code>、<code>password</code> 可以自定义账户和密码的参数名</p>
+<pre><code class="language-java">http
+.formLogin()
+.usernameParameter(&quot;my_username&quot;)
+.passwordParameter(&quot;my_password&quot;)
+</code></pre>
+<p>如果是自己验证用户名密码的话，Spring Security 仅仅支持传统的 form 表单方式（form-data）登录。这是一个比较大的坑点。现在都流行使用前后端分离，前端发送的是 json 格式数据。所以需要自己定制 UsernamePasswordAuthenticationFilter 这个类</p>
+<p>获取用户名密码是在 UsernamePasswordAuthenticationFilter 这个类里面的 attemptAuthentication 方法，如下</p>
+<pre><code class="language-java">public Authentication attemptAuthentication(HttpServletRequest request,
+			HttpServletResponse response) throws AuthenticationException {
+		if (postOnly &amp;&amp; !request.getMethod().equals(&quot;POST&quot;)) {
+			throw new AuthenticationServiceException(
+					&quot;Authentication method not supported: &quot; + request.getMethod());
+		}
+ 
+		String username = obtainUsername(request);
+		String password = obtainPassword(request);
+ 
+		if (username == null) {
+			username = &quot;&quot;;
+		}
+ 
+		if (password == null) {
+			password = &quot;&quot;;
+		}
+ 
+		username = username.trim();
+ 
+		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
+				username, password);
+ 
+		// Allow subclasses to set the &quot;details&quot; property
+		setDetails(request, authRequest);
+ 
+		return this.getAuthenticationManager().authenticate(authRequest);
+	}
+</code></pre>
+<p>再进一步可以看到获取用户名密码的方法</p>
+<pre><code class="language-java">// 这个 passwordParameter 为 password
+// 同理 usernameParameter 为 username
+protected String obtainPassword(HttpServletRequest request) {
+	return request.getParameter(passwordParameter);
+}
+</code></pre>
+<p>所以如果要从 JSON 里取得密码和用户名，需要继承这个 <code>UsernamePasswordAuthenticationFilter</code> 类，重写 <code>attemptAuthentication</code> 方法（例如添加验证码之类的操作也是在这里入手）</p>
+<p>例如这里增加一个验证码操作</p>
+<pre><code class="language-java">public class MyUsernamePasswordAuthentication extends UsernamePasswordAuthenticationFilter{
+    
+    private Logger log = LoggerFactory.getLogger(this.getClass());
+
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+            throws AuthenticationException {
+        //我们可以在这里进行额外的验证，如果验证失败抛出继承AuthenticationException的自定义错误。
+        log.info(&quot;在这里进行验证码判断&quot;);
+        //只要最终的验证是账号密码形式就无需修改后续过程
+        return super.attemptAuthentication(request, response);
+    }
+
+    @Override
+    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+        // TODO Auto-generated method stub
+        super.setAuthenticationManager(authenticationManager);
+    }
+}
+</code></pre>
+<p>将自定义登录配置到 Security 中</p>
+<pre><code class="language-java">@Override
+protected void configure(HttpSecurity http) throws Exception {
+    http
+    .csrf() // 跨站
+    .disable() // 关闭跨站检测
+    // 自定义鉴权过程，无需下面设置
+    // 验证策略
+    .authorizeRequests()
+        // 无需验证路径
+        .antMatchers(&quot;/public/**&quot;).permitAll()
+       .antMatchers(&quot;/user/**&quot;).permitAll()
+       // 放行登录
+       .antMatchers(&quot;/login&quot;).permitAll()
+       .antMatchers(HttpMethod.GET, &quot;/user&quot;).hasAuthority(&quot;getAllUser&quot;) // 拥有权限才可访问
+        // 拥有任一权限即可访问
+        .antMatchers(HttpMethod.GET, &quot;/user&quot;).hasAnyAuthority(&quot;1&quot;,&quot;2&quot;)
+        // 角色类似，hasRole(),hasAnyRole()
+        .anyRequest().authenticated()
+    .and()
+    // 自定义异常处理
+    .exceptionHandling()
+        .authenticationEntryPoint(myAuthenticationEntryPoint) // 未登录处理
+        .accessDeniedHandler(myAccessDeniedHandler)//权限不足处理
+    .and()
+    // 加入自定义登录校验
+    .addFilterBefore(myUsernamePasswordAuthentication(),UsernamePasswordAuthenticationFilter.class)
+    // 默认放在内存中
+    .rememberMe()
+        .rememberMeServices(rememberMeServices())
+        .key(&quot;INTERNAL_SECRET_KEY&quot;)
+//       重写 usernamepasswordauthenticationFilter 后，下面的formLogin()设置将失效，需要手动设置到个性化过滤器中
+//        .and()
+//      .formLogin()
+//          .loginPage(&quot;/public/unlogin&quot;) //未登录跳转页面,设置了authenticationentrypoint后无需设置未登录跳转面
+//          .loginProcessingUrl(&quot;/public/login&quot;)//登录api
+//            .successForwardUrl(&quot;/success&quot;)
+//            .failureForwardUrl(&quot;/failed&quot;)
+//            .usernameParameter(&quot;id&quot;)
+//            .passwordParameter(&quot;password&quot;)
+//          .failureHandler(myAuthFailedHandle) //登录失败处理
+//          .successHandler(myAuthSuccessHandle)//登录成功处理
+//            .usernameParameter(&quot;id&quot;)
+    .and()
+    .logout()//自定义登出
+        .logoutUrl(&quot;/public/logout&quot;)
+        .logoutSuccessUrl(&quot;public/logoutSuccess&quot;)
+        .logoutSuccessHandler(myLogoutSuccessHandle);
+}
+
+// 然后再编写Bean，代码如下：
+@Bean
+public MyUsernamePasswordAuthentication myUsernamePasswordAuthentication(){
+    MyUsernamePasswordAuthentication myUsernamePasswordAuthentication = new MyUsernamePasswordAuthentication();
+    myUsernamePasswordAuthentication.setAuthenticationFailureHandler(myAuthFailedHandle); //设置登录失败处理类
+    myUsernamePasswordAuthentication.setAuthenticationSuccessHandler(myAuthSuccessHandle);//设置登录成功处理类
+    myUsernamePasswordAuthentication.setFilterProcessesUrl(&quot;/public/login&quot;);
+    myUsernamePasswordAuthentication.setRememberMeServices(rememberMeServices()); //设置记住我
+    myUsernamePasswordAuthentication.setUsernameParameter(&quot;id&quot;);
+    myUsernamePasswordAuthentication.setPasswordParameter(&quot;password&quot;);
+    return myUsernamePasswordAuthentication;
+}
+</code></pre>
+<h4 id="userdetails">UserDetails</h4>
+<p>参考资料 <a href="https://link.csdn.net/?target=https%3A%2F%2Fmrbird.cc%2FSpring-Security-Authentication.html">Spring Security自定义用户认证</a></p>
+<p>这个接口就是下面的 UserDetailsService 的返回值，虽然 Spring Security 自带的实现类 org.springframework.security.core.userdetails.User 已经够强大了，但是还有有必要去了解这个接口，以便后续自定义</p>
+<p>该对象也是一个接口，包含一些用于描述用户信息的方法，源码如下：</p>
+<pre><code class="language-java">public interface UserDetails extends Serializable {
+
+    Collection&lt;? extends GrantedAuthority&gt; getAuthorities();
+
+    String getPassword();
+
+    String getUsername();
+
+    boolean isAccountNonExpired();
+
+    boolean isAccountNonLocked();
+
+    boolean isCredentialsNonExpired();
+
+    boolean isEnabled();
+}
+</code></pre>
+<ul>
+<li><code>getAuthorities</code> 获取用户包含的权限，返回权限集合，权限是一个继承了 <code>GrantedAuthority</code> 的对象；</li>
+<li><code>getPassword</code> 和 <code>getUsername</code> 用于获取密码和用户名；</li>
+<li><code>isAccountNonExpired</code> 方法返回 <code>boolean</code> 类型，用于判断账户是否未过期，未过期返回 <code>true</code> 反之返回 <code>false</code>；</li>
+<li><code>isAccountNonLocked</code> 方法用于判断账户是否未锁定；</li>
+<li><code>isCredentialsNonExpired</code> 用于判断用户凭证是否没过期，即密码是否未过期；</li>
+<li><code>isEnabled</code> 方法用于判断用户是否可用。</li>
+</ul>
+<h4 id="userdetailsservice">UserDetailsService</h4>
+<p>怎么通过用户名取到对应的用户？</p>
+<p>只需要去实现这个 <code>UserDetailsService</code> 接口，里面有个 <code>loadUserByUsername</code> 方法就是用来找到用户的</p>
+<pre><code class="language-java">public interface UserDetailsService {
+    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+}
+</code></pre>
+<p>在这个 loadUserByUsername(String username) 里面实现登陆逻辑，如果未找到用户可以抛出一个 UsernameNotFoundException 异常，返回值是一个 UserDetails 接口的实现类，默认会使用 Spring Security 定义的 User 类</p>
+<p>实现 UserDetailsService 接口例</p>
+<pre><code class="language-java">@Service
+public class UserDetailServiceImpl implements UserDetailsService {
+
+    // 懒得连接数据库，这里直接使用 Map 替代
+    private static final Map&lt;String, String&gt; dates;
+
+    static {
+        dates = new HashMap&lt;&gt;();
+        // username, password
+        dates.put(&quot;admin&quot;, &quot;admin&quot;);
+    }
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        String rawPassword = dates.get(username);
+        // 这里模拟去数据库查询
+        if (rawPassword == null) {
+            throw new UsernameNotFoundException(&quot;用户名不存在&quot;);
+        }
+
+        // 匹配成功则用其生成加密后的密文传入 UserDetails
+        String password = passwordEncoder.encode(rawPassword);
+        // 这个 commaSeparatedStringToAuthorityList 就是把输入的字符串根据逗号分割成 List&lt;GrantedAuthority&gt;
+        return new User(username, password, AuthorityUtils
+                .commaSeparatedStringToAuthorityList(&quot;admin,normal&quot;));
+    }
+}
+</code></pre>
+<p>这里 User 对象返回值的第三个参数实际上就是权限列表 Collection&lt;? extends GrantedAuthority&gt; authorities</p>
+<p>这里通过 AuthorityUtils.commaSeparatedStringToAuthorityList() 这个工具类将权限转换成 GrantedAuthority 集合（使用 , 分割不同权限）</p>
+<p>比对权限是否存在的方式</p>
+<pre><code class="language-java">@Override
+public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
+    // 获取主体
+    Object principal = authentication.getPrincipal();
+    log.info(request.getRequestURI());
+    // 判断主体是否属于 UserDetails
+    if (principal instanceof UserDetails) {
+        UserDetails userDetails = (UserDetails) principal;
+        // 获取权限列表
+        Collection&lt;? extends GrantedAuthority&gt; authorities = userDetails.getAuthorities();
+        // 判断请求的 URI 是否在权限里
+        return authorities.contains(new SimpleGrantedAuthority(request.getRequestURI()));
+    }
+    return false;
+}
+</code></pre>
+<h4 id="passwordencoder">PasswordEncoder</h4>
+<p><code>loadUserByUsername</code> 这个方法可以看到只有一个 <code>username</code> 参数，那密码在哪里比较呢？ 密码的比较使用的是 <code>PasswordEncoder</code>；它也是一个接口</p>
+<pre><code class="language-java">public interface PasswordEncoder {
+    // 加密密码
+	String encode(CharSequence rawPassword);
+    // 对密码进行比对
+	boolean matches(CharSequence rawPassword, String encodedPassword);
+    // 对已经加密的密码再次加密
+	default boolean upgradeEncoding(String encodedPassword) {
+		return false;
+	}
+}
+</code></pre>
+<p>不过一般使用自带的实现类 <code>BCryptPasswordEncoder</code> 使用例</p>
+<pre><code class="language-java">@Test
+void testPasswordEncoder() {
+    PasswordEncoder pw = new BCryptPasswordEncoder();
+    // 加密密码
+    // 注意 这个 BCrypt加密算法每次加密得到的密文都是不一样的，所以就算是一样的密码两次加密都不会相同
+    String encode = pw.encode(&quot;12345678&quot;);
+    log.info(encode);
+    // 比对密码
+    boolean matches = pw.matches(&quot;12345678&quot;, encode);
+    log.info(String.valueOf(matches));
+}
+
+/** 输出如下
+ * $2a$10$28sxxWLV85qKIIGK4mR9YuM/JjBGotUnaX8WROHjDV1IcLsmXIhOG
+ * true
+ */
+</code></pre>
+<h4 id="登陆成功处理器">登陆成功处理器</h4>
+<p>就是去实现 <code>AuthenticationSuccessHandler</code> 接口</p>
+<pre><code class="language-java">public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        RespBean ok = RespBean.ok(&quot;登录成功！&quot;, authentication.getPrincipal());
+        response.setContentType(&quot;application/json;charset=utf-8&quot;);
+        PrintWriter out = response.getWriter();
+        out.write(new ObjectMapper().writeValueAsString(ok));
+        out.flush();
+        out.close();
+    }
+}
+</code></pre>
+<p>然后再在配置里使用自定义的处理器就行了</p>
+<pre><code class="language-java">http
+...
+.successHandler(new MyAuthenticationSuccessHandler())
+</code></pre>
+<h4 id="登陆失败处理器">登陆失败处理器</h4>
+<p>去实现 <code>AuthenticationFailureHandler</code> 接口</p>
+<pre><code class="language-java">public class MyAuthenticationFailureHandler implements AuthenticationFailureHandler {
+    @Override
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+        RespBean error = RespBean.error(&quot;登录失败&quot;);
+        response.setContentType(&quot;application/json;charset=utf-8&quot;);
+        PrintWriter out = response.getWriter();
+        out.write(new ObjectMapper().writeValueAsString(error));
+        out.flush();
+        out.close();
+    }
+}
+</code></pre>
+<p>然后再在配置里使用自定义的处理器</p>
+<pre><code class="language-java">http
+...
+.failureHandler(new MyAuthenticationFailureHandler())
+</code></pre>
+<h4 id="自定义-403-处理">自定义 403 处理</h4>
+<p>去实现 <code>AccessDeniedHandler</code> 接口</p>
+<pre><code class="language-java">public class MyAccessDeniedHandler implements AccessDeniedHandler {
+    @Override
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+        RespBean error = RespBean.error(&quot;权限不足，访问失败&quot;);
+        response.setStatus(403);
+        response.setContentType(&quot;application/json;charset=utf-8&quot;);
+        PrintWriter out = response.getWriter();
+        out.write(new ObjectMapper().writeValueAsString(error));
+        out.flush();
+        out.close();
+    }
+}
+</code></pre>
+<p>除了上面那种高度自定义的写法还可以像这样直接调用方法</p>
+<pre><code class="language-java">@Override
+public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
+        response.sendError(403, &quot;权限不足，访问失败&quot;);
+}
+</code></pre>
+<p>注册这个 Handle</p>
+<pre><code class="language-java">http
+.exceptionHandling()
+                // 这个 Http403ForbiddenEntryPoint 是自带的实现类
+                .authenticationEntryPoint(new Http403ForbiddenEntryPoint()) // 未登陆的请求处理
+                .accessDeniedHandler(new MyAccessDeniedHandler()) // 未授权的请求处理
+</code></pre>
+<h4 id="如何判断用户状态的">如何判断用户状态的？</h4>
+<p>用户登陆后 Spring Security 是怎么知道用户已经登陆过了呢？答案就是 Cookie 和 Session，用户登陆后服务端会返回一个 Cookie</p>
+<pre><code>JSESSIONID=41AEFF280BB9BF67CC23E9B9C740B075;
+</code></pre>
+<p>因为每次请求都会带上 Cookie，所以 Spring Security 能基于此完成对用户权限的鉴别</p>
+<blockquote>
+<p>注意：如果使用的是 Ajax 跨域请求，需要配置一下，否则默认是不携带 Cookie 的</p>
+</blockquote>
+<p>这里只讲 axios 的设置，后端的设置参看跨域请求那一篇文章</p>
+<pre><code>// 因为默认 Spring Security 是通过 Cookie 和 Session 来验证身份的，所以需要配置携带 Cookie
+axios.interceptors.request.use(config =&gt; {
+  config.withCredentials = true;
+  return config;
+});
+</code></pre>
+<h3 id="自定义登陆页">自定义登陆页</h3>
+<p>默认 Spring Security 有一个自带的登陆界面，其账户名是 <code>user</code> 密码会在控制台打印出来，用户访问 <code>/login</code> 路径会跳转到这个登陆页，虽然集成了登陆页挺好的，但是一般都是需要各种客制化，所以还是需要掌握如何自定义登陆</p>
+<h4 id="前端分离登陆">前端分离登陆</h4>
+<p>参考资料 <a href="https://blog.csdn.net/u012702547/article/details/99543730">Spring Security登录使用JSON格式数据</a>
+参考资料 <a href="https://www.cnblogs.com/ming-question/p/11165775.html">spring security简单教程以及实现完全前后端分离</a></p>
+<p>现在大部分前后端分离的 Web 程序，尤其是前端普遍使用 Ajax 请求时，Spring Security 自带的登录系统就有一些不满足需求了。</p>
+<p>因为 Spring Security 有自己默认的登录页，自己默认的登录控制器。而登录成功或失败，都会返回一个 302 跳转。登录成功跳转到主页，失败跳转到登录页。如果未认证直接访问也会跳转到登录页。但是如果前端使用 Ajax 请求，Ajax 是无法处理 302 请求的。前后端分离 Web 中，规范是使用 Json 交互。我们希望登录成功或者失败都会返回一个 Json。</p>
+<blockquote>
+<p>注：登录接口和登录页面的区别，登录页面就是浏览器展示出来的页面；登录接口则是提交登录数据的地方，就是登录页面里边的 form 表单的 action 属性对应的值。</p>
+</blockquote>
+<p>在 Spring Security 中，如果我们不做任何配置，默认的登录页面和登录接口的地址都是 <code>/login</code>，也就是说，默认会存在如下两个请求：</p>
+<pre><code>GET http://localhost:8080/login
+POST http://localhost:8080/login
+</code></pre>
+<ul>
+<li>loginProcessingUrl：这个表示配置处理登录请求的接口地址，例如你是表单登录，那么 form 表单中 action 的值就是这里填的值。</li>
+<li>loginPage：这个表示登录页的地址，例如当你访问一个需要登录后才能访问的资源时，系统就会自动给你通过重定向跳转到这个页面上来。（但是这个是前后端不分家时才使用的东西）</li>
+</ul>
+<p>可以自定义 <code>AuthenticationSuccessHandler</code>、<code>AuthenticationFailureHandler</code>、<code>AccessDeniedHandler</code> 来返回不同的 JSON</p>
+<pre><code class="language-java">@Configuration
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Autowired
+    private UserDetailServiceImpl userDetailsService;
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // 使用自定义的 UserDetailService
+        auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                // 验证策略
+                .authorizeRequests()
+                // 放行登录
+                .antMatchers(HttpMethod.POST,&quot;/doLogin&quot;).permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginProcessingUrl(&quot;/doLogin&quot;)
+                // 设置登陆成功后的处理（这个 MyAuthenticationSuccessHandler 是之前自定义的处理器，下面的同理）
+                .successHandler(new MyAuthenticationSuccessHandler())
+                // 设置登陆失败后的处理
+                .failureHandler(new MyAuthenticationFailureHandler())
+                .and()
+                .csrf()// 要关掉这个 csrf
+                .disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(new Http403ForbiddenEntryPoint()) // 未登陆直接请求资源的处理（这里设置为返回 403）
+                .accessDeniedHandler(new MyAccessDeniedHandler())
+                .and().cors();
+
+    }
+}
+</code></pre>
+<blockquote>
+<p>注意这里的坑点！！<code>csrf().disable()</code> 这里的 <code>csrf</code> 一定要关掉，否则会一直显示 “权限不足，访问失败”。在 Security 的默认拦截器里，默认会开启 <code>CSRF</code> 处理，判断请求是否携带了 <code>token</code>，如果没有就拒绝访问。</p>
+</blockquote>
+<p>不要将 <code>CORS</code>(跨站资源共享) 和 <code>CSRF</code>(跨站请求伪造)弄混</p>
+<ul>
+<li>CORS(跨站资源共享) 是局部打破同源策略的限制，使在一定规则下 HTTP 请求可以突破浏览器限制，实现跨站访问。</li>
+<li>CSRF 是一种网络攻击方式，也可以说是一种安全漏洞，这种安全漏洞在 web 开发中广泛存在。</li>
+</ul>
+<h4 id="退出登陆">退出登陆</h4>
+<pre><code class="language-java">http
+  .logout()
+  // 默认是 /logout
+  .logoutUrl(&quot;/doLogout&quot;)
+  //退出成功，返回json
+  .logoutSuccessHandler((request,response,authentication) -&gt; {
+      RespBean ok = RespBean.ok(&quot;退出成功！&quot;, authentication.getPrincipal());
+      response.setContentType(&quot;application/json;charset=utf-8&quot;);
+      PrintWriter out = response.getWriter();
+      out.write(new ObjectMapper().writeValueAsString(ok));
+      out.flush();
+      out.close();
+  }).permitAll();
+</code></pre>
+<h4 id="配置测试环境">配置测试环境</h4>
+<p>使用 Vue 搭建一个测试环境</p>
+<pre><code class="language-js">&lt;body&gt;
+  &lt;div id=&quot;app&quot;&gt;
+    &lt;div&gt;
+      &lt;span&gt;username：&lt;/span&gt;
+      &lt;input type=&quot;text&quot; v-model='username'&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;span&gt;password：&lt;/span&gt;
+      &lt;input type=&quot;text&quot; v-model='password'&gt;
+    &lt;/div&gt;
+    &lt;button @click='sub'&gt;提交&lt;/button&gt;
+    &lt;br&gt;
+    &lt;br&gt;
+    &lt;!-- 登陆成功后再访问这个 api --&gt;
+    &lt;button @click=&quot;sayHello()&quot;&gt;测试访问需要权限的 api&lt;/button&gt;
+    &lt;br&gt;
+    &lt;br&gt;
+    &lt;button @click=&quot;logout()&quot;&gt;退出登陆&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;https://cdn.bootcss.com/qs/6.5.1/qs.min.js&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js&quot;&gt;&lt;/script&gt;
+  &lt;script&gt;
+    const qs = Qs // 引入QS库把请求参数转成表单形式
+    let app = new Vue({
+      el: '#app',
+      created() {
+        axios.defaults.baseURL = 'http://127.0.0.1:8080/'
+        // 因为默认 Spring Security 是通过 Cookie 和 Session 来验证身份的，所以需要配置携带 Cookie
+        axios.interceptors.request.use(config =&gt; {
+          config.withCredentials = true;
+          return config;
+        });
+      },
+      data: {
+        password: 'admin',
+        username: 'admin'
+      },
+      methods: {
+        sub() {
+          axios.post('/doLogin', qs.stringify({
+            username: this.username,
+            password: this.password
+          }), {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          })
+            .then((result) =&gt; {
+              console.log(result.data);
+            }).catch((err) =&gt; {
+              console.log(err);
+            });
+        },
+        sayHello() {
+          axios.get('/hello')
+            .then((result) =&gt; {
+              console.log(result.data);
+            }).catch((err) =&gt; {
+              console.log(err);
+            });
+        },
+        logout() {
+            axios.post('/doLogout')
+                .then((result) =&gt; {
+                    console.log(result.data);
+                }).catch((err) =&gt; {
+                console.log(err);
+            });
+        }
+      },
+    })
+  &lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2022/02/redis-aop%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%AE%9E%E7%8E%B0/" title="redis &#43; AOP分布式锁实现"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2022/03/security%E8%B5%84%E6%BA%90%E6%9C%8D%E5%8A%A1%E7%99%BD%E5%90%8D%E5%8D%95%E8%BF%87%E6%BB%A4%E5%99%A8/"
+                    title="Security资源服务白名单过滤器"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2023
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

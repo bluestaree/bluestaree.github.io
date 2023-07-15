@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        Elasticsearch 常用搜索API - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="Elasticsearch 常用搜索API 1.查看es中有哪些索引 GET /_cat/indices?v es 中会默认存在一个名为.kibana的索引 表头的含义 health green(集群完整) yellow(单点正" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>Elasticsearch 常用搜索API - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="Elasticsearch 常用搜索API" />
+<meta property="og:description" content="Elasticsearch 常用搜索API 1.查看es中有哪些索引 GET /_cat/indices?v es 中会默认存在一个名为.kibana的索引 表头的含义 health green(集群完整) yellow(单点正" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2023/03/elasticsearch-%E5%B8%B8%E7%94%A8%E6%90%9C%E7%B4%A2api/" />
+<meta property="article:published_time" content="2023-03-27T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-03-27T00:00:00+00:00" />
+<meta itemprop="name" content="Elasticsearch 常用搜索API">
+<meta itemprop="description" content="Elasticsearch 常用搜索API 1.查看es中有哪些索引 GET /_cat/indices?v es 中会默认存在一个名为.kibana的索引 表头的含义 health green(集群完整) yellow(单点正">
+<meta itemprop="datePublished" content="2023-03-27T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2023-03-27T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1460">
+
+
+
+<meta itemprop="keywords" content="Elasticsearch," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Elasticsearch 常用搜索API"/>
+<meta name="twitter:description" content="Elasticsearch 常用搜索API 1.查看es中有哪些索引 GET /_cat/indices?v es 中会默认存在一个名为.kibana的索引 表头的含义 health green(集群完整) yellow(单点正"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/charles/" class="category-list-link">charles</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/elasticsearch/" class="category-list-link">elasticsearch</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/idea/" class="category-list-link">idea</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/milvus/" class="category-list-link">milvus</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/nginx/" class="category-list-link">nginx</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/rabbitmq/" class="category-list-link">rabbitmq</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-security/" class="category-list-link">spring-security</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">54</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/captcha/" class="tag-list-link">captcha</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/charles/" class="tag-list-link">charles</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/dubbo/" class="tag-list-link">dubbo</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/elasticsearch/" class="tag-list-link">elasticsearch</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/idea/" class="tag-list-link">idea</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/json/" class="tag-list-link">json</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/milvus/" class="tag-list-link">milvus</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nginx/" class="tag-list-link">nginx</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/saas/" class="tag-list-link">saas</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-security/" class="tag-list-link">spring-security</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="tag-list-link">正则表达式</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/07/java%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%BD%ACpdf%E6%96%87%E4%BB%B6/" class="title">JAVA实现图片转PDF文件</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-07-09 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/06/xxljob%E8%B0%83%E7%94%A8%E6%88%90%E5%8A%9F%E5%8D%B4%E6%9C%AA%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/" class="title">xxljob调用成功却&#39;未执行任务&#39;?</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-06-21 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-06-21</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E5%A4%9A%E6%8E%92%E5%BA%8F%E6%9D%A1%E4%BB%B6%E6%90%9C%E7%B4%A2/" class="title">Elasticsearch 多排序条件搜索</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-05-20 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-05-20</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E6%90%9C%E7%B4%A2%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%9D%E7%A6%BB%E5%9B%A0%E7%B4%A0/" class="title">Elasticsearch 搜索优化之距离因素</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-05-15 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-05-15</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/04/ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/" class="title">ik分词器踩坑记录</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-04-12 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-04-12</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2023/03/elasticsearch-%E5%B8%B8%E7%94%A8%E6%90%9C%E7%B4%A2api/"
+    >Elasticsearch 常用搜索API</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2023/03/elasticsearch-%E5%B8%B8%E7%94%A8%E6%90%9C%E7%B4%A2api/" class="article-date">
+  <time datetime="2023-03-27 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-03-27</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/elasticsearch/"> elasticsearch </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/elasticsearch/"> Elasticsearch </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2023/03/elasticsearch-%E5%B8%B8%E7%94%A8%E6%90%9C%E7%B4%A2api/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1460字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 3分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<h3 id="elasticsearch-常用搜索api">Elasticsearch 常用搜索API</h3>
+<h4 id="1查看es中有哪些索引">1.查看es中有哪些索引</h4>
+<pre><code>GET /_cat/indices?v
+</code></pre>
+<p>es 中会默认存在一个名为.kibana的索引</p>
+<p>表头的含义</p>
+<table>
+<thead>
+<tr>
+<th>health</th>
+<th>green(集群完整) yellow(单点正常、集群不完整) red(单点不正常)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>status</td>
+<td>索引打开、关闭状态</td>
+</tr>
+<tr>
+<td>index</td>
+<td>索引名</td>
+</tr>
+<tr>
+<td>uuid</td>
+<td>索引统一编号</td>
+</tr>
+<tr>
+<td>pri</td>
+<td>主分片数量</td>
+</tr>
+<tr>
+<td>rep</td>
+<td>副本数量</td>
+</tr>
+<tr>
+<td>docs.count</td>
+<td>可用文档数量</td>
+</tr>
+<tr>
+<td>docs.deleted</td>
+<td>文档被删了多少（逻辑删除）</td>
+</tr>
+<tr>
+<td>store.size</td>
+<td>整体（主分片和副分片）占空间大小</td>
+</tr>
+<tr>
+<td>pri.store.size</td>
+<td>主分片占空间大小</td>
+</tr>
+<tr>
+<td>cluster</td>
+<td>整个elasticsearch 默认就是集群状态，整个集群是一份完整、互备的数据。</td>
+</tr>
+<tr>
+<td>node</td>
+<td>集群中的一个节点，一般只一个进程就是一个node</td>
+</tr>
+<tr>
+<td>shard</td>
+<td>分片，即使是一个节点中的数据也会通过hash算法，分成多个片存放，默认是5片。</td>
+</tr>
+<tr>
+<td>index</td>
+<td>相当于rdbms的database, 对于用户来说是一个逻辑数据库，虽然物理上会被分多个shard存放，也可能存放在多个node中。</td>
+</tr>
+<tr>
+<td>type</td>
+<td>类似于rdbms的table，但是与其说像table，其实更像面向对象中的class , 同一Json的格式的数据集合。</td>
+</tr>
+<tr>
+<td>Document(json)</td>
+<td>类似于rdbms的 row、面向对象里的object</td>
+</tr>
+<tr>
+<td>field</td>
+<td>相当于字段、属性</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2增加一个索引库">2.增加一个索引(库）</h4>
+<pre><code>PUT /movie_index
+</code></pre>
+<h4 id="3删除一个索引">3.删除一个索引</h4>
+<pre><code>DELETE /movie_index
+</code></pre>
+<h4 id="4新增文档">4.新增文档</h4>
+<pre><code>// 格式 /索引/类型/id 
+PUT /movie_index/_doc/1
+{
+  &quot;id&quot;: 1,
+  &quot;name&quot;: &quot;operation red sea&quot;,
+  &quot;doubanScore&quot;: 8.5,
+  &quot;actorList&quot;: [
+    {
+      &quot;id&quot;: 1,
+      &quot;name&quot;: &quot;zhang yi&quot;
+    },
+    {
+      &quot;id&quot;: 2,
+      &quot;name&quot;: &quot;hai qing&quot;
+    },
+    {
+      &quot;id&quot;: 3,
+      &quot;name&quot;: &quot;zhang han yu&quot;
+    }
+  ]
+}
+
+PUT /movie_index/_doc/2
+{
+  &quot;id&quot;: 2,
+  &quot;name&quot;: &quot;operation meigong river&quot;,
+  &quot;doubanScore&quot;: 8,
+  &quot;actorList&quot;: [
+    {
+      &quot;id&quot;: 3,
+      &quot;name&quot;: &quot;zhang han yu&quot;
+    }
+  ]
+}
+
+// 也可用POST请求，如果不指定id 将会随机生成
+POST /movie_index/_doc/3
+{
+  &quot;id&quot;: 3,
+  &quot;name&quot;: &quot;incident red sea&quot;,
+  &quot;doubanScore&quot;: 5,
+  &quot;actorList&quot;: [
+    {
+      &quot;id&quot;: 4,
+      &quot;name&quot;: &quot;zhang chen&quot;
+    }
+  ]
+}
+</code></pre>
+<p>如果之前没建过index，es 会自动创建。</p>
+<h4 id="5直接用id查找"><strong>5</strong>.直接用id查找</h4>
+<pre><code>GET /movie_index/_doc/1
+</code></pre>
+<h4 id="6修改整体替换"><strong>6</strong>.修改—整体替换</h4>
+<p>和新增没有区别, 注意返回信息中得_version值</p>
+<pre><code>PUT /movie_index/_doc/3
+{
+  &quot;id&quot;: &quot;3&quot;,
+  &quot;name&quot;: &quot;incident red sea&quot;,
+  &quot;doubanScore&quot;: &quot;5.0&quot;,
+  &quot;actorList&quot;: [
+    {
+      &quot;id&quot;: &quot;1&quot;,
+      &quot;name&quot;: &quot;zhang chen&quot;
+    }
+  ]
+}
+
+// 返回信息
+{
+  &quot;_index&quot; : &quot;movie_index&quot;,
+  &quot;_type&quot; : &quot;_doc&quot;,
+  &quot;_id&quot; : &quot;3&quot;,
+  &quot;_version&quot; : 2,
+  &quot;result&quot; : &quot;updated&quot;,
+  &quot;_shards&quot; : {
+    &quot;total&quot; : 2,
+    &quot;successful&quot; : 1,
+    &quot;failed&quot; : 0
+  },
+  &quot;_seq_no&quot; : 14,
+  &quot;_primary_term&quot; : 1
+}
+</code></pre>
+<h4 id="7修改某个字段">7.修改—某个字段</h4>
+<pre><code>POST /movie_index/_update/3
+{ 
+  &quot;doc&quot;: {
+    &quot;doubanScore&quot;:&quot;7.0&quot;
+  } 
+}
+</code></pre>
+<h4 id="8删除一个document">8.删除一个document</h4>
+<pre><code>DELETE /movie_index/movie/3
+</code></pre>
+<h4 id="9搜索type全部数据">9.搜索type全部数据</h4>
+<pre><code>GET /movie_index/_search
+
+//结果
+{
+  &quot;took&quot;: 2,    //耗费时间 毫秒
+  &quot;timed_out&quot;: false, //是否超时
+  &quot;_shards&quot;: {
+    &quot;total&quot;: 5,   //发送给全部5个分片
+    &quot;successful&quot;: 5,
+    &quot;skipped&quot;: 0,
+    &quot;failed&quot;: 0
+  },
+  &quot;hits&quot;: {
+    &quot;total&quot;: 3,  //命中3条数据
+    &quot;max_score&quot;: 1,   //最大评分
+    &quot;hits&quot;: [  // 结果
+      {
+        &quot;_index&quot;: &quot;movie_index&quot;,
+        &quot;_type&quot;: &quot;_doc&quot;,
+        &quot;_id&quot;: 2,
+        &quot;_score&quot;: 1,
+        &quot;_source&quot;: {
+          &quot;id&quot;: &quot;2&quot;,
+          &quot;name&quot;: &quot;operation meigong river&quot;,
+          &quot;doubanScore&quot;: 8.0,
+          &quot;actorList&quot;: [
+            {
+              &quot;id&quot;: &quot;1&quot;,
+              &quot;name&quot;: &quot;zhang han yu&quot;
+            }
+          ]
+        }
+      },
+      {.........},
+      {.........}
+    ]
+  }
+}    
+</code></pre>
+<h4 id="10按条件查询全部">10.按条件查询(全部)</h4>
+<pre><code>GET /movie_index/_search
+{
+  &quot;query&quot;:{
+    &quot;match_all&quot;: {}
+  }
+}
+</code></pre>
+<h4 id="11多条件查询">11.多条件查询</h4>
+<pre><code>GET /movie_index/_search
+{
+  &quot;query&quot;: {
+    &quot;multi_match&quot;: {
+      &quot;query&quot;: &quot;red&quot;,
+      &quot;fields&quot;: [&quot;name&quot;,&quot;actorList.name&quot;]
+    }
+  }
+}
+</code></pre>
+<h4 id="12按分词查询">12.按分词查询</h4>
+<pre><code>GET /movie_index/_search
+{
+  &quot;query&quot;:{
+    &quot;match&quot;: {&quot;name&quot;:&quot;red&quot;}
+  }
+}
+</code></pre>
+<h4 id="13按分词子属性查询">13.按分词子属性查询</h4>
+<pre><code>GET /movie_index/_search
+{
+  &quot;query&quot;:{
+    &quot;match&quot;: {&quot;actorList.name&quot;:&quot;zhang&quot;}
+  }
+}
+</code></pre>
+<h4 id="14过滤--查询后过滤">14.过滤&ndash;查询后过滤</h4>
+<p>类似having</p>
+<pre><code>GET /movie_index/_search
+{
+    &quot;query&quot;:{
+      &quot;match&quot;: {&quot;name&quot;:&quot;red&quot;}
+    },
+    &quot;post_filter&quot;:{
+      &quot;term&quot;: {
+        &quot;actorList.id&quot;: 3
+      }
+    }
+}
+</code></pre>
+<h4 id="15过滤--查询前过滤推荐">15.过滤&ndash;查询前过滤（推荐）</h4>
+<p>类似where</p>
+<pre><code>GET /movie_index/_search
+{ 
+    &quot;query&quot;:{
+        &quot;bool&quot;:{
+          &quot;filter&quot;:[ {&quot;term&quot;: {  &quot;actorList.id&quot;: &quot;1&quot;  }},
+                     {&quot;term&quot;: {  &quot;actorList.id&quot;: &quot;3&quot;  }}
+           ], 
+           &quot;must&quot;:{&quot;match&quot;:{&quot;name&quot;:&quot;red&quot;}}
+         }
+    }
+}
+</code></pre>
+<h4 id="16过滤--按范围过滤">16.过滤&ndash;按范围过滤</h4>
+<pre><code>GET /movie_index/_search
+{
+   &quot;query&quot;: {
+     &quot;bool&quot;: {
+       &quot;filter&quot;: {
+         &quot;range&quot;: {
+            &quot;doubanScore&quot;: {&quot;gte&quot;: 8}
+         }
+       }
+     }
+   }
+}
+</code></pre>
+<p>关于范围操作符</p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gt</td>
+<td>大于</td>
+</tr>
+<tr>
+<td>lt</td>
+<td>小于</td>
+</tr>
+<tr>
+<td>gte</td>
+<td>大于等于</td>
+</tr>
+<tr>
+<td>lte</td>
+<td>小于等于</td>
+</tr>
+</tbody>
+</table>
+<h4 id="17排序">17.排序</h4>
+<pre><code>GET /movie_index/_search
+{
+  &quot;query&quot;:{
+    &quot;match&quot;: {&quot;name&quot;:&quot;red sea&quot;}
+  }
+  , &quot;sort&quot;: [
+    {
+      &quot;doubanScore&quot;: {
+        &quot;order&quot;: &quot;desc&quot;
+      }
+    }
+  ]
+}
+</code></pre>
+<h4 id="18分页查询">18.分页查询</h4>
+<pre><code>GET /movie_index/_search
+{	
+  &quot;query&quot;: { &quot;match_all&quot;: {} },
+  &quot;from&quot;: 1,
+  &quot;size&quot;: 1
+}
+</code></pre>
+<h4 id="19指定查询的字段">19.指定查询的字段</h4>
+<pre><code>GET /movie_index/_search
+{
+  &quot;query&quot;: { &quot;match_all&quot;: {} },
+  &quot;_source&quot;: [&quot;name&quot;, &quot;doubanScore&quot;]
+}
+</code></pre>
+<h4 id="20高亮">20.高亮</h4>
+<pre><code>GET /movie_index/_search
+{
+    &quot;query&quot;:{
+      &quot;match&quot;: {&quot;name&quot;:&quot;red sea&quot;}
+    },
+    &quot;highlight&quot;: {
+      &quot;fields&quot;: {&quot;name&quot;:{} }
+    }
+}
+</code></pre>
+<h4 id="21match_phrase">21.match_phrase</h4>
+<p>按短语查询</p>
+<p>注意:</p>
+<p>1,match_phrase 会分词</p>
+<p>2,被检索得字段必须包含match_phrase中所有词项并且顺序相同</p>
+<p>3,被检索字段包含得match_phrase中得词项 之间 不能有其他词项</p>
+<pre><code>GET /movie_index/_search
+{
+    &quot;query&quot;:{
+    	&quot;match_phrase&quot;: {&quot;name&quot;:&quot;operation red&quot;}
+    }
+}
+</code></pre>
+<hr>
+<blockquote>
+<p>以下查询性能较低，不推荐使用</p>
+</blockquote>
+<h4 id="22fuzzy-模糊查询">22.fuzzy 模糊查询</h4>
+<p>校正匹配分词，当一个单词都无法准确匹配，es通过一种算法对非常接近的单词也给与一定的评分，能够查询出来，但是消耗更多的性能。</p>
+<p>混淆字符(box -&gt; fox)      							缺少字符(black -&gt; lack)</p>
+<p>多出字符(sic -&gt; sick)       							颠倒顺序(act  -&gt; cat)</p>
+<pre><code>GET /movie_index/_search
+{
+    &quot;query&quot;:{
+      &quot;fuzzy&quot;: {&quot;name&quot;:&quot;rad&quot;}
+    }
+}
+</code></pre>
+<h4 id="23prefix-前缀查询">23.prefix 前缀查询</h4>
+<pre><code>GET /movie_index/_search
+{	
+  &quot;query&quot;: { 
+    &quot;prefix&quot;: {
+      &quot;name&quot;: {
+        &quot;value&quot;: &quot;op&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<h4 id="24wildcard-通配符">24.wildcard 通配符</h4>
+<pre><code>GET /movie_index/_search
+{
+  &quot;query&quot;: {
+    &quot;wildcard&quot;: {
+      &quot;name&quot;: {
+        &quot;value&quot;: &quot;oper*tion&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<h4 id="25regexp-正则">25.regexp 正则</h4>
+<pre><code>GET /movie_index/_search
+{
+  &quot;query&quot;: {
+    &quot;regexp&quot;: {
+      &quot;name&quot;: {
+        &quot;value&quot;: &quot;[\\s\\S]*incident[\\s\\S]*&quot;
+      }
+    }
+  }
+}
+</code></pre>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2023/01/milvus%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%E9%85%8D%E7%BD%AE/" title="Milvus单机部署配置"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2023/03/elasticsearch-%E5%AE%9E%E7%8E%B0%E6%90%9C%E7%B4%A2%E6%8E%A8%E8%8D%90%E7%9B%B8%E5%85%B3api/"
+                    title="Elasticsearch 实现搜索推荐相关API"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2023
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

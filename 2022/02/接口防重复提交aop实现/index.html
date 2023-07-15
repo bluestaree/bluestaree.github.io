@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        接口防重复提交AOP实现 - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="接口防重复提交AOP实现 基本思路： 通过注解形式，对指定接口方法进行标记，使用AOP方式对所有标记了注解的方法进行防重处理 防重处理类型 ： RID" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>接口防重复提交AOP实现 - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="接口防重复提交AOP实现" />
+<meta property="og:description" content="接口防重复提交AOP实现 基本思路： 通过注解形式，对指定接口方法进行标记，使用AOP方式对所有标记了注解的方法进行防重处理 防重处理类型 ： RID" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2022/02/%E6%8E%A5%E5%8F%A3%E9%98%B2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4aop%E5%AE%9E%E7%8E%B0/" />
+<meta property="article:published_time" content="2022-02-16T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-02-16T00:00:00+00:00" />
+<meta itemprop="name" content="接口防重复提交AOP实现">
+<meta itemprop="description" content="接口防重复提交AOP实现 基本思路： 通过注解形式，对指定接口方法进行标记，使用AOP方式对所有标记了注解的方法进行防重处理 防重处理类型 ： RID">
+<meta itemprop="datePublished" content="2022-02-16T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2022-02-16T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2179">
+
+
+
+<meta itemprop="keywords" content="redis," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="接口防重复提交AOP实现"/>
+<meta name="twitter:description" content="接口防重复提交AOP实现 基本思路： 通过注解形式，对指定接口方法进行标记，使用AOP方式对所有标记了注解的方法进行防重处理 防重处理类型 ： RID"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/charles/" class="category-list-link">charles</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/elasticsearch/" class="category-list-link">elasticsearch</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/idea/" class="category-list-link">idea</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/milvus/" class="category-list-link">milvus</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/nginx/" class="category-list-link">nginx</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/rabbitmq/" class="category-list-link">rabbitmq</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-security/" class="category-list-link">spring-security</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">54</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/captcha/" class="tag-list-link">captcha</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/charles/" class="tag-list-link">charles</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/dubbo/" class="tag-list-link">dubbo</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/elasticsearch/" class="tag-list-link">elasticsearch</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/idea/" class="tag-list-link">idea</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/json/" class="tag-list-link">json</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/milvus/" class="tag-list-link">milvus</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nginx/" class="tag-list-link">nginx</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/saas/" class="tag-list-link">saas</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-security/" class="tag-list-link">spring-security</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="tag-list-link">正则表达式</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/07/java%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%BD%ACpdf%E6%96%87%E4%BB%B6/" class="title">JAVA实现图片转PDF文件</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-07-09 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/06/xxljob%E8%B0%83%E7%94%A8%E6%88%90%E5%8A%9F%E5%8D%B4%E6%9C%AA%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/" class="title">xxljob调用成功却&#39;未执行任务&#39;?</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-06-21 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-06-21</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E5%A4%9A%E6%8E%92%E5%BA%8F%E6%9D%A1%E4%BB%B6%E6%90%9C%E7%B4%A2/" class="title">Elasticsearch 多排序条件搜索</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-05-20 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-05-20</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E6%90%9C%E7%B4%A2%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%9D%E7%A6%BB%E5%9B%A0%E7%B4%A0/" class="title">Elasticsearch 搜索优化之距离因素</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-05-15 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-05-15</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/04/ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/" class="title">ik分词器踩坑记录</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-04-12 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-04-12</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2022/02/%E6%8E%A5%E5%8F%A3%E9%98%B2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4aop%E5%AE%9E%E7%8E%B0/"
+    >接口防重复提交AOP实现</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2022/02/%E6%8E%A5%E5%8F%A3%E9%98%B2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4aop%E5%AE%9E%E7%8E%B0/" class="article-date">
+  <time datetime="2022-02-16 00:00:00 &#43;0000 UTC" itemprop="datePublished">2022-02-16</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/redis/"> redis </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/redis/"> redis </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2022/02/%E6%8E%A5%E5%8F%A3%E9%98%B2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4aop%E5%AE%9E%E7%8E%B0/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2179字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<h3 id="接口防重复提交aop实现">接口防重复提交AOP实现</h3>
+<p>基本思路：</p>
+<p>通过注解形式，对指定接口方法进行标记，使用AOP方式对所有标记了注解的方法进行防重处理</p>
+<p><strong>防重处理类型 ：</strong></p>
+<ul>
+<li>RID：需要前端传递32位不带“-”符号的uuid，不传的情况下不生效</li>
+<li>KEY：根据body和query参数md5的唯一性判断，优先采用body参数，两个参数都没有传的情况下不生效。</li>
+<li>ALL：优先判断并使用RID，其次是KEY。</li>
+</ul>
+<h4 id="1枚举类">1.枚举类</h4>
+<pre><code class="language-java">@Getter
+@AllArgsConstructor
+public enum IdeTypeEnum {
+
+   /**
+    * 优先判断并使用RID，其次是KEY。
+    */
+   ALL(0, &quot;ALL&quot;),
+    
+   /**
+    * ruid 是针对每一次请求的
+    */
+   RID(1, &quot;RID&quot;),
+    
+   /**
+    * key+val 是针对相同参数请求
+    */
+   KEY(2, &quot;KEY&quot;);
+
+   private final Integer index;
+   private final String title;
+}
+</code></pre>
+<h4 id="2工具类">2.工具类</h4>
+<p>获取请求携带的 body参数</p>
+<pre><code class="language-java"> public class HttpHelper {
+    private static final Logger LOGGER = LoggerFactory.getLogger(HttpHelper.class);
+
+    public static String getBodyString(ServletRequest request) {
+        StringBuilder sb = new StringBuilder();
+        BufferedReader reader = null;
+        try (InputStream inputStream = request.getInputStream()) {
+            reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName(&quot;UTF-8&quot;)));
+            String line = &quot;&quot;;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (IOException e) {
+            LOGGER.warn(&quot;getBodyString出现问题！&quot;);
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    LOGGER.error(ExceptionUtils.getFullStackTrace(e));
+                }
+            }
+        }
+        return sb.toString();
+    }
+}
+</code></pre>
+<h4 id="3httpservletrequestwrapper装饰模式的应用">3.HttpServletRequestWrapper（装饰模式的应用)</h4>
+<p>构建可重复读取inputStream的request</p>
+<pre><code class="language-java">public class RepeatedlyRequestWrapper extends HttpServletRequestWrapper {
+    private final byte[] body;
+
+    private final String bodyString;
+
+    public RepeatedlyRequestWrapper(HttpServletRequest request, ServletResponse response) throws IOException {
+        super(request);
+        request.setCharacterEncoding(&quot;UTF-8&quot;);
+        response.setCharacterEncoding(&quot;UTF-8&quot;);
+        bodyString = HttpHelper.getBodyString(request);
+        body = bodyString.getBytes(&quot;UTF-8&quot;);
+        request.setAttribute(&quot;bodyString&quot;,bodyString);
+    }
+
+    @Override
+    public BufferedReader getReader() throws IOException {
+        return new BufferedReader(new InputStreamReader(getInputStream()));
+    }
+
+    @Override
+    public ServletInputStream getInputStream() throws IOException {
+
+        final ByteArrayInputStream bais = new ByteArrayInputStream(body);
+
+        return new ServletInputStream() {
+
+            @Override
+            public int read() throws IOException {
+                return bais.read();
+            }
+
+            @Override
+            public boolean isFinished() {
+                return false;
+            }
+
+            @Override
+            public boolean isReady() {
+                return false;
+            }
+
+            @Override
+            public void setReadListener(ReadListener readListener) {
+
+            }
+        };
+    }
+}
+</code></pre>
+<h4 id="4过滤器">4.过滤器</h4>
+<pre><code class="language-java">public class RepeatableFilter implements Filter {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+
+    }
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        ServletRequest requestWrapper = null;
+        System.out.println(&quot;RepeatableFilter&quot;);
+        if (request instanceof HttpServletRequest) {
+            requestWrapper = new RepeatedlyRequestWrapper((HttpServletRequest) request, response);
+        }
+        if (null == requestWrapper) {
+            chain.doFilter(request, response);
+        } else {
+            chain.doFilter(requestWrapper, response);
+        }
+    }
+
+    @Override
+    public void destroy() {
+
+    }
+}
+</code></pre>
+<h4 id="5注册过滤器">5.注册过滤器</h4>
+<p>这里使用@ConditionalOnProperty  可在配置文件中动态开启关闭</p>
+<pre><code class="language-java">@ConditionalOnProperty(name = &quot;ide.enable&quot;, havingValue = &quot;true&quot;)
+@Configuration
+public class IdeConfig {
+
+
+    @Bean
+    public FilterRegistrationBean ideFilterRegistration() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new RepeatableFilter());
+        registration.addUrlPatterns(&quot;/*&quot;);
+        registration.setName(&quot;repeatableFilter&quot;);
+        registration.setOrder(FilterRegistrationBean.LOWEST_PRECEDENCE);
+        return registration;
+    }
+}
+
+</code></pre>
+<h4 id="6redisservie工具类">6.redisServie工具类</h4>
+<pre><code class="language-java">@Component
+public class RedisService {
+
+    @Autowired
+    private RedisTemplate&lt;String, Object&gt; redisTemplate;
+
+    public RedisTemplate getRedisTemplate() {
+        return this.redisTemplate;
+    }
+
+    @Autowired
+    private RedisLockUtil redisLockUtil;
+
+    /**
+     * 分布式锁
+     *
+     * @param key        分布式锁key
+     * @param expireTime 持有锁的最长时间 (redis过期时间) 秒为单位
+     * @return 返回获取锁状态 成功失败
+     */
+    public boolean tryLock(String key, int expireTime) {
+        final JSONObject lock = new JSONObject();
+        lock.put(&quot;id&quot;, key);
+        // startTime
+        lock.put(&quot;st&quot;, System.currentTimeMillis());
+        // keepSeconds
+        lock.put(&quot;ks&quot;, expireTime);
+        return redisLockUtil.tryLock(key, &quot;&quot;, expireTime);
+    }
+
+}
+</code></pre>
+<h4 id="7分布式锁工具">7.分布式锁工具</h4>
+<p>加锁使用SETNX 命令 , 解锁使用lua脚本 保证原子性</p>
+<pre><code class="language-java">public class RedisLockUtil {
+
+   public RedisLockUtil(RedisTemplate&lt;String, Object&gt; redisTemplate) {
+      this.redisTemplate = redisTemplate;
+   }
+
+   private RedisTemplate&lt;String, Object&gt; redisTemplate;
+
+   private static final byte[] SCRIPT_RELEASE_LOCK = &quot;if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end&quot;.getBytes();
+
+   /**
+    * 尝试获取分布式锁
+    *
+    * @param key       键
+    * @param requestId 请求ID
+    * @param expire    锁的有效时间（秒）
+    */
+   public synchronized Boolean tryLock(String key, String requestId, long expire) {
+      return redisTemplate.execute((RedisCallback&lt;Boolean&gt;) redisConnection -&gt; redisConnection.set(key.getBytes(), requestId.getBytes(), Expiration.from(expire, TimeUnit.SECONDS), RedisStringCommands.SetOption.SET_IF_ABSENT));
+   }
+
+   /**
+    * 释放分布式锁
+    *
+    * @param key       键
+    * @param requestId 请求ID
+    */
+   public synchronized Boolean releaseLock(String key, String requestId) {
+      return redisTemplate.execute((RedisCallback&lt;Boolean&gt;) redisConnection -&gt; redisConnection.eval(SCRIPT_RELEASE_LOCK, ReturnType.BOOLEAN, 1, key.getBytes(), requestId.getBytes()));
+   }
+
+}
+</code></pre>
+<h4 id="8切面基础类">8.切面基础类</h4>
+<p>提供公共方法</p>
+<pre><code class="language-java">public abstract class BaseAspect {
+
+   /**
+    * 获取切面方法上包含的指定注解
+    *
+    * @param joinPoint
+    * @param annotationClass
+    * @param &lt;T&gt;
+    * @return
+    */
+   public &lt;T extends Annotation&gt; T getAnnotation(JoinPoint joinPoint, Class&lt;T&gt; annotationClass) {
+      String methodName = joinPoint.getSignature().getName();
+      Object[] arguments = joinPoint.getArgs();
+      Method[] methods = joinPoint.getSignature().getDeclaringType().getMethods();
+      for (Method m : methods) {
+         if (m.getName().equals(methodName)) {
+            if (m.getParameterTypes().length == arguments.length) {
+               return m.getAnnotation(annotationClass);
+            }
+         }
+      }
+      return null;
+   }
+
+   /**
+    * 默认key策略
+    *
+    * @param targetName
+    * @param methodName
+    * @param arguments
+    * @return
+    */
+   public String getCacheKey(String key, String targetName, String methodName,
+                              Object[] arguments) {
+      StringBuilder sb = new StringBuilder();
+      if (key != null &amp;&amp; key.length() &gt; 0) {
+         sb.append(key);
+      } else {
+         sb.append(targetName).append(&quot;.&quot;).append(methodName);
+      }
+      if (arguments != null &amp;&amp; (arguments.length != 0)) {
+         sb.append(&quot;#&quot;).append(JSON.toJSONString(arguments));
+      }
+      return sb.toString().replace(&quot;[&quot;, &quot;&quot;).replace(&quot;\&quot;&quot;, &quot;&quot;).replace(&quot;]&quot;, &quot;&quot;).replace(&quot;com.gofun.&quot;, &quot;&quot;);
+   }
+
+   /**
+    * 获取key
+    * 根据condition
+    *
+    * @param key
+    * @param condition
+    * @param arguments
+    * @return
+    */
+   public String getCacheKey(String key, String condition, Object[] arguments) {
+      StringBuilder sb = new StringBuilder();
+      sb.append(key);
+      String argJson = JSON.toJSONString(arguments);
+      String[] params = null;
+      if (condition != null &amp;&amp; condition.trim().startsWith(&quot;#&quot;)) {
+         condition = condition.trim();
+         params = condition.split(&quot;,&quot;);
+         for (String param : params) {
+            param = param.replace(&quot;#&quot;, &quot;&quot;);
+            JSONObject val = (JSONObject) JSONPath.read(condition, param);
+         }
+      }
+      return sb.toString();
+   }
+}
+</code></pre>
+<h4 id="9切面">9.切面</h4>
+<p>这里注意有个重要参数<strong>LOCK_WAIT_TIME</strong> ，具体重复提交间隔</p>
+<pre><code class="language-java">@Slf4j
+@Aspect
+@Component
+@RequiredArgsConstructor
+@ConditionalOnClass(RedisService.class)
+public class IdeAspect extends BaseAspect {
+
+    /**
+     * 配置注解后 默认开启
+     */
+    @Value(&quot;${ide.enable:false}&quot;)
+    private boolean enable;
+
+    /**
+     * request请求头中的key
+     */
+    private final static String HEADER_RID_KEY = &quot;rid&quot;;
+
+    /**
+     * redis中锁的key前缀
+     */
+    private static final String REDIS_KEY_PREFIX = &quot;rid:&quot;;
+
+    /**
+     * 锁等待时长
+     */
+    private static final int LOCK_WAIT_TIME = 10;
+
+    private final RedisService redisService;
+
+    @Pointcut(&quot;@annotation(com.ide.annotation.Ide)&quot;)
+    public void watchIde() {
+
+    }
+
+    @Before(&quot;watchIde()&quot;)
+    public void doBefore(JoinPoint joinPoint) {
+        Ide ide = getAnnotation(joinPoint, Ide.class);
+
+        if (enable &amp;&amp; null != ide) {
+            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            if (null == attributes) {
+                throw new BizException(&quot;请求数据为空&quot;);
+            }
+            HttpServletRequest request = attributes.getRequest();
+
+            if (ide.ideTypeEnum() == IdeTypeEnum.RID) {
+                //2.1.通过rid模式判断是否属于重复提交
+                String rid = request.getHeader(HEADER_RID_KEY);
+                if (StrUtil.isNotBlank(rid)) {
+                    ideHandle(ide,rid);
+                } else {
+                    log.warn(&quot;Header没有rid,防重复提交功能失效,,remoteHost={}&quot; ,request.getRemoteHost());
+                }
+            } else if (ide.ideTypeEnum() == IdeTypeEnum.KEY) {
+                String uri = request.getRequestURI();
+                String ip = IpUtils.getIpAddr(request);
+                String bodyString = (String) request.getAttribute(&quot;bodyString&quot;);
+                String paramString = request.getQueryString();
+                if (StrUtil.isBlank(bodyString) &amp;&amp; StrUtil.isBlank(paramString)) {
+                    log.warn(&quot;请求参数为空,防重复提交功能失效,,remoteHost={}&quot; + request.getRemoteHost());
+                }else {
+                    String key_rid = Md5Utils.hash(ip + uri + (StrUtil.isNotBlank(bodyString) == true ? bodyString : paramString));
+                    ideHandle(ide,key_rid);
+                }
+            } else {
+                String rid = request.getHeader(HEADER_RID_KEY);
+                if (StrUtil.isNotBlank(rid)) {
+                    ideHandle(ide,rid);
+                } else {
+                    String uri = request.getRequestURI();
+                    String ip = IpUtils.getIpAddr(request);
+                    String bodyString = (String) request.getAttribute(&quot;bodyString&quot;);
+                    String paramString = request.getQueryString();
+                    if (StrUtil.isBlank(bodyString) &amp;&amp; StrUtil.isBlank(paramString)) {
+                        log.warn(&quot;Header没有rid且请求参数为空,防重复提交功能失效,,remoteHost={}&quot; + request.getRemoteHost());
+                    }else {
+                        String key_rid = Md5Utils.hash(ip + uri + (StrUtil.isNotBlank(bodyString) == true ? bodyString : paramString));
+                        ideHandle(ide,key_rid);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 并发锁
+     *
+     * @param ide
+     * @param rid
+     * @return void
+     */
+    private void ideHandle(Ide ide,String rid) {
+        try {
+            Boolean result = redisService.tryLock(REDIS_KEY_PREFIX + ide.perFix() + &quot;:&quot; + rid, LOCK_WAIT_TIME);
+            if (!result) {
+                throw new BizException(&quot;不允许重复提交，请稍后再试...&quot;);
+            }
+            log.debug(&quot;当前请求已成功记录,{}={}&quot;, HEADER_RID_KEY, rid);
+        } catch (BizException e) {
+            throw e;
+        } catch (Exception e) {
+            log.error(&quot;获取redis锁发生异常&quot;, e);
+            throw e;
+        }
+    }
+}
+</code></pre>
+<h4 id="10防重复提交注解">10.防重复提交注解</h4>
+<pre><code class="language-java">@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Ide {
+
+   /**
+    * 自定义key的前缀用来区分业务
+    */
+   String perFix() default &quot;demo&quot;;
+
+   /**
+    * 禁止重复提交的模式
+    * 默认是全部使用
+    */
+   IdeTypeEnum ideTypeEnum() default IdeTypeEnum.ALL;
+}
+</code></pre>
+<h4 id="使用方式">使用方式：</h4>
+<p>1、在<code>application.yml</code>增加如下配置，开启防止重复提交（10秒内不能重复提交[可提取为配置项]）</p>
+<pre><code>ide:
+   enable: true
+</code></pre>
+<p>2、在<code>Controller</code>的方法上面增加注解</p>
+<pre><code class="language-java">@Ide(perFix = &quot;demo&quot;, ideTypeEnum=IdeTypeEnum.RID)
+</code></pre>
+<p><code>perFix</code>：为redis的前缀key，根据业务进行区分（默认为:demo）。</p>
+<p><code>ideTypeEnum</code>：为防重复提交的类型（RID、KEY、ALL，默认为ALL）。</p>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2022/01/springboot-postmapping-%E6%8E%A5%E6%94%B6http-%E8%AF%B7%E6%B1%82%E7%9A%84%E6%B5%81%E6%95%B0%E6%8D%AE%E6%96%B9%E5%BC%8F/" title="SpringBoot @PostMapper 接收HTTP 请求的流数据方式"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2022/02/spring-security-oauth2%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B/"
+                    title="Spring Security Oauth2认证流程"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2023
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

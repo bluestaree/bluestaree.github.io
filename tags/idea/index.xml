@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Idea on AzkeepToo个人博客</title>
+    <link>https://bluestaree.github.io/tags/idea/</link>
+    <description>Recent content in Idea on AzkeepToo个人博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 15 Jun 2022 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://bluestaree.github.io/tags/idea/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>JAVA实现图片转PDF文件</title>
+      <link>https://bluestaree.github.io/2023/07/java%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%BD%ACpdf%E6%96%87%E4%BB%B6/</link>
+      <pubDate>Sun, 09 Jul 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2023/07/java%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%BD%ACpdf%E6%96%87%E4%BB%B6/</guid>
+      <description>JAVA实现图片转PDF文件 转载文章：https://www.freesion.com/article/40861570631/ 今天记录个小</description>
+    </item>
+    
+    <item>
+      <title>xxljob调用成功却&#39;未执行任务&#39;?</title>
+      <link>https://bluestaree.github.io/2023/06/xxljob%E8%B0%83%E7%94%A8%E6%88%90%E5%8A%9F%E5%8D%B4%E6%9C%AA%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</link>
+      <pubDate>Wed, 21 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2023/06/xxljob%E8%B0%83%E7%94%A8%E6%88%90%E5%8A%9F%E5%8D%B4%E6%9C%AA%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</guid>
+      <description>最近在项目测试中发现一个问题，在xxljob 中设置得 0点定时任务，到点后xxljob后台显示调用成功。但服务端后台却&amp;rsquo;未执行&amp;r</description>
+    </item>
+    
+    <item>
+      <title>Elasticsearch 多排序条件搜索</title>
+      <link>https://bluestaree.github.io/2023/05/elasticsearch-%E5%A4%9A%E6%8E%92%E5%BA%8F%E6%9D%A1%E4%BB%B6%E6%90%9C%E7%B4%A2/</link>
+      <pubDate>Sat, 20 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2023/05/elasticsearch-%E5%A4%9A%E6%8E%92%E5%BA%8F%E6%9D%A1%E4%BB%B6%E6%90%9C%E7%B4%A2/</guid>
+      <description>需求 ​ 根据用户输入的关键词进行短语匹配后，全匹配的数据要排在前面，其次是分词后匹配的数据，然后是部分分词匹配的数据（单个字的分词匹配度 需要低</description>
+    </item>
+    
+    <item>
+      <title>Elasticsearch 搜索优化之距离因素</title>
+      <link>https://bluestaree.github.io/2023/05/elasticsearch-%E6%90%9C%E7%B4%A2%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%9D%E7%A6%BB%E5%9B%A0%E7%B4%A0/</link>
+      <pubDate>Mon, 15 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2023/05/elasticsearch-%E6%90%9C%E7%B4%A2%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%9D%E7%A6%BB%E5%9B%A0%E7%B4%A0/</guid>
+      <description>Elasticsearch 搜索优化 概述 ​ 在使用ES一段时间后，发现搜索结果有的时候不太理想，因为默认搜索结果是按分词权重计算排序（关键词命中多且文本内容少的排名往往</description>
+    </item>
+    
+    <item>
+      <title>ik分词器踩坑记录</title>
+      <link>https://bluestaree.github.io/2023/04/ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/</link>
+      <pubDate>Wed, 12 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2023/04/ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/</guid>
+      <description>问题 一、热词配置过多后失效 我使用的es版本7.6.2，对应ik分词器版本7.6.2，经过反复测试，发现当词库数量超过一定数目时，ik分词器无</description>
+    </item>
+    
+    <item>
+      <title>实现ik分词器词库热更新</title>
+      <link>https://bluestaree.github.io/2023/04/%E5%AE%9E%E7%8E%B0ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%AF%8D%E5%BA%93%E7%83%AD%E6%9B%B4%E6%96%B0/</link>
+      <pubDate>Tue, 11 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2023/04/%E5%AE%9E%E7%8E%B0ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%AF%8D%E5%BA%93%E7%83%AD%E6%9B%B4%E6%96%B0/</guid>
+      <description>实现ik分词器词库热更新 ik分词器热更新原理： 1.该 http 请求需要返回两个头部(header)，一个是 Last-Modified，一个是 ETag</description>
+    </item>
+    
+    <item>
+      <title>Elasticsearch 实现搜索推荐相关API</title>
+      <link>https://bluestaree.github.io/2023/03/elasticsearch-%E5%AE%9E%E7%8E%B0%E6%90%9C%E7%B4%A2%E6%8E%A8%E8%8D%90%E7%9B%B8%E5%85%B3api/</link>
+      <pubDate>Wed, 29 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2023/03/elasticsearch-%E5%AE%9E%E7%8E%B0%E6%90%9C%E7%B4%A2%E6%8E%A8%E8%8D%90%E7%9B%B8%E5%85%B3api/</guid>
+      <description>Elasticsearch 搜索推荐 - Suggest 概述 ​ 搜索一般都会要求具有“搜索推荐”或者叫&amp;quot;搜索补全&amp;quot;的功能，即在用户输入搜索的过程中，进行自动补全或者</description>
+    </item>
+    
+    <item>
+      <title>Elasticsearch 常用搜索API</title>
+      <link>https://bluestaree.github.io/2023/03/elasticsearch-%E5%B8%B8%E7%94%A8%E6%90%9C%E7%B4%A2api/</link>
+      <pubDate>Mon, 27 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2023/03/elasticsearch-%E5%B8%B8%E7%94%A8%E6%90%9C%E7%B4%A2api/</guid>
+      <description>Elasticsearch 常用搜索API 1.查看es中有哪些索引 GET /_cat/indices?v es 中会默认存在一个名为.kibana的索引 表头的含义 health green(集群完整) yellow(单点正</description>
+    </item>
+    
+    <item>
+      <title>Milvus单机部署配置</title>
+      <link>https://bluestaree.github.io/2023/01/milvus%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Tue, 10 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2023/01/milvus%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%E9%85%8D%E7%BD%AE/</guid>
+      <description>Milvus单机部署配置 1、配置Milvus日志目录挂载 转载文章：https://www.jianshu.com/p/0c594a5a8f2</description>
+    </item>
+    
+    <item>
+      <title>Milvus向量数据库安装及使用</title>
+      <link>https://bluestaree.github.io/2023/01/milvus%E5%90%91%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Mon, 09 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2023/01/milvus%E5%90%91%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
+      <description>Milvus向量数据库安装及使用 ​ 项目需求包含以图搜人功能，查询目前相关解决方案，milvus热度较高，决定基于milvus进行以图搜人开发</description>
+    </item>
+    
+    <item>
+      <title>爬取高德地图poi数据</title>
+      <link>https://bluestaree.github.io/2022/11/%E7%88%AC%E5%8F%96%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BEpoi%E6%95%B0%E6%8D%AE/</link>
+      <pubDate>Mon, 14 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/11/%E7%88%AC%E5%8F%96%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BEpoi%E6%95%B0%E6%8D%AE/</guid>
+      <description>转发：原文 爬取高德地图poi数据 高德地图搜索poi的api官方文档 ​ 当前想法是爬取目标区域（做者所在小县城）的全部poi数据，存到数据库中做</description>
+    </item>
+    
+    <item>
+      <title>java进程占用系统内存过高分析</title>
+      <link>https://bluestaree.github.io/2022/10/java%E8%BF%9B%E7%A8%8B%E5%8D%A0%E7%94%A8%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E8%BF%87%E9%AB%98%E5%88%86%E6%9E%90/</link>
+      <pubDate>Mon, 17 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/10/java%E8%BF%9B%E7%A8%8B%E5%8D%A0%E7%94%A8%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E8%BF%87%E9%AB%98%E5%88%86%E6%9E%90/</guid>
+      <description>监测正式环境服务内存占用情况时，发现一服务 内存占用 即将超出docker内存限制，开始排查是否出现OOM 查看docker容器内存使用情况 使用如</description>
+    </item>
+    
+    <item>
+      <title>JVM内存泄漏问题排查</title>
+      <link>https://bluestaree.github.io/2022/09/jvm%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/</link>
+      <pubDate>Tue, 13 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/09/jvm%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/</guid>
+      <description>最近服务器上有服务每隔一段时间就会重启一下（20天左右），经过一段时间监控，判断应该是内存逐步提升，导致超过了docker容器的限制，进程被</description>
+    </item>
+    
+    <item>
+      <title>JVM内存调优</title>
+      <link>https://bluestaree.github.io/2022/09/jvm%E5%86%85%E5%AD%98%E8%B0%83%E4%BC%98/</link>
+      <pubDate>Mon, 12 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/09/jvm%E5%86%85%E5%AD%98%E8%B0%83%E4%BC%98/</guid>
+      <description>最近发现服务器在部署一段时间后会自动重启，初步排查为内存原因，肯能存在内存泄漏，需进一步排查。这里记录一下相关学习记录 JVM内存调优 1、JV</description>
+    </item>
+    
+    <item>
+      <title>pagehelper 实现假分页效果</title>
+      <link>https://bluestaree.github.io/2022/08/pagehelper-%E7%9C%9F%E5%81%87%E5%88%86%E9%A1%B5/</link>
+      <pubDate>Thu, 18 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/08/pagehelper-%E7%9C%9F%E5%81%87%E5%88%86%E9%A1%B5/</guid>
+      <description>业务场景：基于以图搜人结果，无法在人脸向量数据库milvus中进行分页查询，只能将匹配的数据按照一定数量限制全部查询出来，再通过手动分页的方</description>
+    </item>
+    
+    <item>
+      <title>mybatis plus自定义sql报错Invalid bound statement解决</title>
+      <link>https://bluestaree.github.io/2022/07/mybatis-plus%E8%87%AA%E5%AE%9A%E4%B9%89sql%E6%8A%A5%E9%94%99invalid-bound-statement%E8%A7%A3%E5%86%B3/</link>
+      <pubDate>Fri, 08 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/07/mybatis-plus%E8%87%AA%E5%AE%9A%E4%B9%89sql%E6%8A%A5%E9%94%99invalid-bound-statement%E8%A7%A3%E5%86%B3/</guid>
+      <description>日常开发中，同事在开发中遇到的一个问题，在使用自定义mapper方法时，出现Invalid bound statement，这里记录下问题及产生原因 自定</description>
+    </item>
+    
+    <item>
+      <title>Rabbitmq 动态队列实现</title>
+      <link>https://bluestaree.github.io/2022/07/rabbitmq-%E5%8A%A8%E6%80%81%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Wed, 06 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/07/rabbitmq-%E5%8A%A8%E6%80%81%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0/</guid>
+      <description>Rabbitmq 动态队列实现 该功能，基于RabbitMq提供的API接口实现，能在项目运行中，动态生成队列及其监听实现 项目目录结构： RabbitConfig 主要配置文件 @Configuration public class RabbitConfig</description>
+    </item>
+    
+    <item>
+      <title>Rabbitmq 延迟队列实现</title>
+      <link>https://bluestaree.github.io/2022/06/rabbitmq-%E5%BB%B6%E8%BF%9F%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Thu, 30 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/06/rabbitmq-%E5%BB%B6%E8%BF%9F%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0/</guid>
+      <description>前言 最近在做项目时遇到一个需求：需要根据用户设定得截止时间，将计划关闭。 因为不可变性，定时任务效率低直接排除，最初考虑通过mq死信交换机得方</description>
+    </item>
+    
+    <item>
+      <title>@PostConstruct 注解方法下的Springutils.getBean时报空指针异常</title>
+      <link>https://bluestaree.github.io/2022/06/postconstruct-%E6%B3%A8%E8%A7%A3%E6%96%B9%E6%B3%95%E4%B8%8B%E7%9A%84springutils.getbean%E6%97%B6%E6%8A%A5%E7%A9%BA%E6%8C%87%E9%92%88%E5%BC%82%E5%B8%B8/</link>
+      <pubDate>Tue, 28 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/06/postconstruct-%E6%B3%A8%E8%A7%A3%E6%96%B9%E6%B3%95%E4%B8%8B%E7%9A%84springutils.getbean%E6%97%B6%E6%8A%A5%E7%A9%BA%E6%8C%87%E9%92%88%E5%BC%82%E5%B8%B8/</guid>
+      <description>最近部署时，遇到此问题 问题 现有服务A,B B服务内 有一个 spring工具类( 这个类主要就是从容器种获取实体类)，代码如下 @Component public final class SpringBeanFactory implements ApplicationContextAware{ private static ApplicationContext context;</description>
+    </item>
+    
+    <item>
+      <title>Idea保存自动格式化插件Save Action配置</title>
+      <link>https://bluestaree.github.io/2022/06/idea%E4%BF%9D%E5%AD%98%E8%87%AA%E5%8A%A8%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6save-action%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Wed, 15 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/06/idea%E4%BF%9D%E5%AD%98%E8%87%AA%E5%8A%A8%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6save-action%E9%85%8D%E7%BD%AE/</guid>
+      <description>概述： 记录下一个很好用的Idea开发工具插件Save Action，它能够再保存时自动格式化代码 一、安装save-action插件 1、安装插件</description>
+    </item>
+    
+  </channel>
+</rss>

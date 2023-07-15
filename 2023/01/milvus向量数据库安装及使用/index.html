@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        Milvus向量数据库安装及使用 - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="Milvus向量数据库安装及使用 ​ 项目需求包含以图搜人功能，查询目前相关解决方案，milvus热度较高，决定基于milvus进行以图搜人开发" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>Milvus向量数据库安装及使用 - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="Milvus向量数据库安装及使用" />
+<meta property="og:description" content="Milvus向量数据库安装及使用 ​ 项目需求包含以图搜人功能，查询目前相关解决方案，milvus热度较高，决定基于milvus进行以图搜人开发" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2023/01/milvus%E5%90%91%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/" />
+<meta property="article:published_time" content="2023-01-09T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-01-09T00:00:00+00:00" />
+<meta itemprop="name" content="Milvus向量数据库安装及使用">
+<meta itemprop="description" content="Milvus向量数据库安装及使用 ​ 项目需求包含以图搜人功能，查询目前相关解决方案，milvus热度较高，决定基于milvus进行以图搜人开发">
+<meta itemprop="datePublished" content="2023-01-09T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2023-01-09T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="5079">
+
+
+
+<meta itemprop="keywords" content="milvus," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Milvus向量数据库安装及使用"/>
+<meta name="twitter:description" content="Milvus向量数据库安装及使用 ​ 项目需求包含以图搜人功能，查询目前相关解决方案，milvus热度较高，决定基于milvus进行以图搜人开发"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/charles/" class="category-list-link">charles</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/elasticsearch/" class="category-list-link">elasticsearch</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/idea/" class="category-list-link">idea</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/milvus/" class="category-list-link">milvus</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/nginx/" class="category-list-link">nginx</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/rabbitmq/" class="category-list-link">rabbitmq</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-security/" class="category-list-link">spring-security</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">54</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/captcha/" class="tag-list-link">captcha</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/charles/" class="tag-list-link">charles</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/dubbo/" class="tag-list-link">dubbo</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/elasticsearch/" class="tag-list-link">elasticsearch</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/idea/" class="tag-list-link">idea</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/json/" class="tag-list-link">json</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/milvus/" class="tag-list-link">milvus</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nginx/" class="tag-list-link">nginx</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/saas/" class="tag-list-link">saas</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-security/" class="tag-list-link">spring-security</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="tag-list-link">正则表达式</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/07/java%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%BD%ACpdf%E6%96%87%E4%BB%B6/" class="title">JAVA实现图片转PDF文件</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-07-09 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/06/xxljob%E8%B0%83%E7%94%A8%E6%88%90%E5%8A%9F%E5%8D%B4%E6%9C%AA%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/" class="title">xxljob调用成功却&#39;未执行任务&#39;?</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-06-21 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-06-21</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E5%A4%9A%E6%8E%92%E5%BA%8F%E6%9D%A1%E4%BB%B6%E6%90%9C%E7%B4%A2/" class="title">Elasticsearch 多排序条件搜索</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-05-20 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-05-20</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E6%90%9C%E7%B4%A2%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%9D%E7%A6%BB%E5%9B%A0%E7%B4%A0/" class="title">Elasticsearch 搜索优化之距离因素</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-05-15 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-05-15</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/04/ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/" class="title">ik分词器踩坑记录</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-04-12 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-04-12</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2023/01/milvus%E5%90%91%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/"
+    >Milvus向量数据库安装及使用</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2023/01/milvus%E5%90%91%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time datetime="2023-01-09 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-01-09</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/milvus/"> milvus </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/milvus/"> milvus </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2023/01/milvus%E5%90%91%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 5079字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 11分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<h2 id="milvus向量数据库安装及使用">Milvus向量数据库安装及使用</h2>
+<p>​		项目需求包含以图搜人功能，查询目前相关解决方案，milvus热度较高，决定基于milvus进行以图搜人开发，原理是结合 虹软4.0 提取图片特征值，将特征值转为<strong>256位特征值向量</strong>， 存入milvus进行距离计算，以此估计图片相似度。通过百万数据测试，<strong>milvus距离大于0.55的，虹软匹配结果相似度在80%左右</strong></p>
+<h3 id="milvus环境搭建">milvus环境搭建</h3>
+<p>mivlus官方文档：<a href="https://milvus.io/docs/v2.1.x/install_standalone-docker.md">https://milvus.io/docs/v2.1.x</a></p>
+<p>这里采用docker方式部署,注意文档中的最低版本要求</p>
+<ul>
+<li>Docker 19.03 or later</li>
+<li>Docker Compose 1.25.1 or later</li>
+</ul>
+<h4 id="docker-cpmpoese方式部署单机版本">docker-cpmpoese方式部署单机版本</h4>
+<p>参考文档，首页拉取 docker-cpmpoese 文件</p>
+<pre><code>wget https://github.com/milvus-io/milvus/releases/download/v2.1.4/milvus-standalone-docker-compose.yml -O docker-compose.yml
+
+使用部署命令 docker-compose up -d
+
+如需停止所有相关组件： docker-compose stop
+
+如需启动所有相关组件： docker-compose start
+
+如需停止并删除容器： docker-compose down
+</code></pre>
+<p>查询容器 信息</p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/milvus/milvus-1.png" alt="milvus-1"></p>
+<h4 id="安装使用工具">安装使用工具</h4>
+<p>根据需要，安装使用工具。这里使用 Aattu (可视化管理)。</p>
+<p>安装流程就不细说了，没什么需要注意的点，按官网文档给出的流程一步步走就ok</p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/milvus/milvus-2.png" alt="milvus-2"></p>
+<p>另外还可以安装Milvus-CLI 命令行工具</p>
+<p>到目前位置milvus相关准备工作已经完成，</p>
+<h3 id="代码接入">代码接入</h3>
+<p>milvus 代码相关文档https://milvus.io/api-reference/java/v2.1.0/About.md</p>
+<h4 id="maven配置">maven配置</h4>
+<pre><code class="language-xml"> &lt;dependency&gt;
+     &lt;groupId&gt;io.milvus&lt;/groupId&gt;
+     &lt;artifactId&gt;milvus-sdk-java&lt;/artifactId&gt;
+     &lt;version&gt;2.1.0&lt;/version&gt;
+ &lt;/dependency&gt;
+</code></pre>
+<p>这里包含的日志实现，如果与当前使用冲突可以排除引用</p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/milvus/milvus-3.png" alt="milvus-3"></p>
+<h4 id="heading"></h4>
+<h4 id="主要配置">主要配置</h4>
+<p><strong>Milvus连接工厂</strong></p>
+<pre><code class="language-java">@Component
+public class MilvusPoolFactory extends BasePooledObjectFactory&lt;MilvusServiceClient&gt; {
+
+    public static MilvusPoolFactory milvusPoolFactory;
+
+    @Autowired
+    private MilvusConfig milvusConfig;
+
+    @PostConstruct
+    public void init() {
+        milvusPoolFactory = this;
+        milvusPoolFactory.milvusConfig = milvusConfig;
+        // 链接预热
+        MilvusServiceClient client = milvusPoolFactory.create();
+        client.hasCollection(HasCollectionParam.newBuilder()
+                .withCollectionName(&quot;test&quot;)
+                .build());
+        client.close();
+    }
+
+    @Override
+    public MilvusServiceClient create() {
+        ConnectParam connectParam = ConnectParam.newBuilder()
+                .withHost(milvusPoolFactory.milvusConfig.getHost())
+                .withPort(milvusPoolFactory.milvusConfig.getPort())
+                .build();
+        MilvusServiceClient client = new MilvusServiceClient(connectParam);
+        return client;
+    }
+
+    @Override
+    public PooledObject&lt;MilvusServiceClient&gt; wrap(MilvusServiceClient milvusServiceClient) {
+        return new DefaultPooledObject&lt;&gt;(milvusServiceClient);
+
+    }
+}
+</code></pre>
+<p><strong>Milvus配置文件</strong></p>
+<pre><code class="language-java">@Data
+@Component
+@ConfigurationProperties(prefix = &quot;aiot.milvus&quot;)
+public class MilvusConfig {
+
+    /**
+     * milvus所在服务器地址
+     */
+    private String host;
+
+    /**
+     * milvus所在服务器端口
+     */
+    private Integer port;
+
+    /**
+     * 以图搜人查询因子 越低查询得数据就越多，计算方式 前端传递相似度 * 查询因子 = milvus - score
+     */
+    private BigDecimal factor;
+
+    @Bean(&quot;milvusServiceClientGenericObjectPool&quot;)
+    public GenericObjectPool milvusServiceClientGenericObjectPool() {
+        MilvusPoolFactory milvusPoolFactory = new MilvusPoolFactory();
+        // 对象池配置
+        GenericObjectPoolConfig&lt;FaceEngine&gt; objectPoolConfig = new GenericObjectPoolConfig&lt;&gt;();
+        objectPoolConfig.setMaxTotal(8);
+        objectPoolConfig.setJmxEnabled(false);
+
+        AbandonedConfig abandonedConfig = new AbandonedConfig();
+
+        // 在Maintenance的时候检查是否有泄漏
+        abandonedConfig.setRemoveAbandonedOnMaintenance(true);
+
+        // borrow 的时候检查泄漏
+        abandonedConfig.setRemoveAbandonedOnBorrow(true);
+
+        // 如果一个对象borrow之后10秒还没有返还给pool，认为是泄漏的对象
+        abandonedConfig.setRemoveAbandonedTimeout(5);
+
+        // 对象池
+        GenericObjectPool&lt;MilvusServiceClient&gt; milvusServiceClientGenericObjectPool = new GenericObjectPool(milvusPoolFactory, objectPoolConfig);
+        milvusServiceClientGenericObjectPool.setAbandonedConfig(abandonedConfig);
+        // 5秒运行一次维护任务
+        milvusServiceClientGenericObjectPool.setTimeBetweenEvictionRunsMillis(5000);
+        return milvusServiceClientGenericObjectPool;
+    }
+}
+</code></pre>
+<p><strong>项目启动配置文件</strong></p>
+<pre><code class="language-yaml">milvus:
+  host: 192.168.1.172
+  port: 19530
+</code></pre>
+<h4 id="方法实现">方法实现</h4>
+<p><strong>Milvus工具类</strong></p>
+<pre><code class="language-java">@Data
+@Component
+@Slf4j
+public class MilvusOperateUtils {
+
+    @Autowired
+    private MilvusConfig milvusConfig;
+
+    @Autowired
+    @Qualifier(value = &quot;milvusServiceClientGenericObjectPool&quot;)
+    private GenericObjectPool&lt;MilvusServiceClient&gt; milvusServiceClientGenericObjectPool;
+
+    /**
+     * 创建集合（库）
+     *
+     * @param collectionName 集合名
+     * @param milvusServiceClient 操作客户端对象
+     * @return void
+     */
+    public boolean createCollection(String collectionName, MilvusServiceClient milvusServiceClient) {
+        // 参数校验
+        if(StrUtil.isEmpty(collectionName)) {
+            log.error(&quot;未输入集合名称&quot;);
+            return false;
+        }
+        boolean needReturn = false;
+        try {
+            if(milvusServiceClient == null) {
+                // 通过对象池管理对象
+                milvusServiceClient = milvusServiceClientGenericObjectPool.borrowObject();
+                needReturn = true;
+            }
+
+            CreateCollectionParam createCollectionReq = null;
+
+            // 判断是否存在集合信息
+            boolean hasCollection = hasCollection(collectionName, milvusServiceClient);
+            if (hasCollection) {
+                // 集合已创建
+                return true;
+            }
+
+            if(StrUtil.equals(collectionName, MilvusConstants.COLLECTION_FACE_NAME)) {
+                FieldType collectionId = FieldType.newBuilder()
+                        .withName(MilvusConstants.FaceArchiveField.COLLECTION_ID)
+                        .withDescription(&quot;集合主键id&quot;)
+                        .withDataType(DataType.Int64)
+                        .withPrimaryKey(true)
+                        .withAutoID(false)
+                        .build();
+                FieldType memberId = FieldType.newBuilder()
+                        .withName(MilvusConstants.FaceArchiveField.MEMBER_ID)
+                        .withDescription(&quot;用户id&quot;)
+                        .withDataType(DataType.Int64)
+                        .build();
+                FieldType timestamp = FieldType.newBuilder()
+                        .withName(MilvusConstants.FaceArchiveField.TIMESTAMP)
+                        .withDescription(&quot;时间戳&quot;)
+                        .withDataType(DataType.Int64)
+                        .build();
+                FieldType faceFeature = FieldType.newBuilder()
+                        .withName(MilvusConstants.FaceArchiveField.FACE_FEATURE)
+                        .withDescription(&quot;人脸特征向量&quot;)
+                        .withDataType(DataType.FloatVector)
+                        .withDimension(MilvusConstants.FEATURE_DIM)
+                        .build();
+                createCollectionReq = CreateCollectionParam.newBuilder()
+                        .withCollectionName(collectionName)
+                        .withDescription(&quot;人脸特征向量库&quot;)
+                        .withShardsNum(MilvusConstants.SHARDS_NUM)
+                        .addFieldType(collectionId)
+                        .addFieldType(memberId)
+                        .addFieldType(timestamp)
+                        .addFieldType(faceFeature)
+                        .build();
+            } else if(collectionName.startsWith(MilvusConstants.COLLECTION_LOG_PREFIX)) {
+                FieldType collectionId = FieldType.newBuilder()
+                        .withName(MilvusConstants.FaceSnapshotField.COLLECTION_ID)
+                        .withDescription(&quot;集合主键id&quot;)
+                        .withDataType(DataType.Int64)
+                        .withPrimaryKey(true)
+                        .withAutoID(false)
+                        .build();
+                FieldType logId = FieldType.newBuilder()
+                        .withName(MilvusConstants.FaceSnapshotField.LOG_ID)
+                        .withDescription(&quot;日志id&quot;)
+                        .withDataType(DataType.Int64)
+                        .build();
+                FieldType logType = FieldType.newBuilder()
+                        .withName(MilvusConstants.FaceSnapshotField.LOG_TYPE)
+                        .withDescription(&quot;日志类型&quot;)
+                        .withDataType(DataType.Int32)
+                        .build();
+                FieldType deviceId = FieldType.newBuilder()
+                        .withName(MilvusConstants.FaceSnapshotField.DEVICE_ID)
+                        .withDescription(&quot;设备id&quot;)
+                        .withDataType(DataType.Int64)
+                        .build();
+                FieldType timestamp = FieldType.newBuilder()
+                        .withName(MilvusConstants.FaceSnapshotField.TIMESTAMP)
+                        .withDescription(&quot;时间戳&quot;)
+                        .withDataType(DataType.Int64)
+                        .build();
+                FieldType faceFeature = FieldType.newBuilder()
+                        .withName(MilvusConstants.FaceSnapshotField.FACE_FEATURE)
+                        .withDescription(&quot;图片特征向量&quot;)
+                        .withDataType(DataType.FloatVector)
+                        .withDimension(MilvusConstants.FEATURE_DIM)
+                        .build();
+                createCollectionReq = CreateCollectionParam.newBuilder()
+                        .withCollectionName(collectionName)
+                        .withDescription(&quot;日志抓拍特征向量库&quot;)
+                        .withShardsNum(MilvusConstants.SHARDS_NUM)
+                        .addFieldType(collectionId)
+                        .addFieldType(logId)
+                        .addFieldType(logType)
+                        .addFieldType(deviceId)
+                        .addFieldType(timestamp)
+                        .addFieldType(faceFeature)
+                        .build();
+            } else {
+                log.error(&quot;预设集合信息不存在&quot;);
+                return false;
+            }
+
+            R&lt;RpcStatus&gt; result = milvusServiceClient.createCollection(createCollectionReq);
+            if (result.getStatus() != 0) {
+                log.error(&quot;Milvus创建集合失败 集合:{}，结果：{}&quot;, collectionName, result);
+                return false;
+            }
+            // 创建索引
+            createIndex(collectionName, MilvusConstants.FaceArchiveField.FACE_FEATURE, &quot;{\&quot;nlist\&quot;:2048}&quot;, milvusServiceClient);
+            return true;
+        } catch (Exception e) {
+            log.error(&quot;创建集合异常 :{}&quot;, e);
+        } finally {
+            // 回收对象到对象池
+            if (milvusServiceClient != null &amp;&amp; needReturn) {
+                milvusServiceClientGenericObjectPool.returnObject(milvusServiceClient);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 创建索引
+     *
+     * @param collectionName 集合名
+     * @param milvusServiceClient 操作客户端对象
+     * @return void
+     */
+    public boolean createIndex(String collectionName, String indexFileName, String extraParam, MilvusServiceClient milvusServiceClient) {
+        boolean needReturn = false;
+        try {
+            if(milvusServiceClient == null) {
+                // 通过对象池管理对象
+                milvusServiceClient = milvusServiceClientGenericObjectPool.borrowObject();
+                needReturn = true;
+            }
+            R&lt;RpcStatus&gt; result = milvusServiceClient.createIndex(
+                    CreateIndexParam.newBuilder()
+                            // 集合名称
+                            .withCollectionName(collectionName)
+                            // 索引字段名称
+                            .withFieldName(indexFileName)
+                            // 索引类型
+                            .withIndexType(IndexType.IVF_FLAT)
+                            .withMetricType(MetricType.IP)
+                            // nlist 建议值为 4 × sqrt(n)，其中 n 指 segment 最多包含的 entity 条数
+                            .withExtraParam(extraParam)
+                            .withSyncMode(Boolean.FALSE)
+                            .build());
+            if (result.getStatus() != 0) {
+                log.error(&quot;Milvus创建集合索失败 集合:{}，结果：{}&quot;, collectionName, result);
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            log.error(&quot;创建集合索引异常 :{}&quot;, e);
+        } finally {
+            // 回收对象到对象池
+            if (milvusServiceClient != null &amp;&amp; needReturn) {
+                milvusServiceClientGenericObjectPool.returnObject(milvusServiceClient);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 创建分区
+     *
+     * @param collectionName 集合名
+     * @param milvusServiceClient 操作客户端对象
+     * @return void
+     */
+    public void createPartition(String collectionName, MilvusServiceClient milvusServiceClient) {
+        boolean needReturn = false;
+        try {
+            if(milvusServiceClient == null) {
+                // 通过对象池管理对象
+                milvusServiceClient = milvusServiceClientGenericObjectPool.borrowObject();
+                needReturn = true;
+            }
+
+            // 根据定义分区数， 循环创建
+            for (int i = 0; i &lt; MilvusConstants.PARTITION_NUM; i++) {
+                String partitionName = MilvusConstants.PARTITION_PREFIX + i;
+                R&lt;RpcStatus&gt; result = milvusServiceClient.createPartition(
+                        CreatePartitionParam.newBuilder()
+                                .withCollectionName(collectionName)
+                                .withPartitionName(partitionName)
+                                .build());
+                if (result.getStatus() != 0) {
+                    log.error(&quot;Milvus创建集合分区失败 集合:{}，分区:{}，结果：{}&quot;, collectionName, partitionName, result);
+                }
+            }
+        } catch (Exception e) {
+            log.error(&quot;创建分区异常 :{}&quot;, e);
+        } finally {
+            // 回收对象到对象池
+            if (milvusServiceClient != null &amp;&amp; needReturn) {
+                milvusServiceClientGenericObjectPool.returnObject(milvusServiceClient);
+            }
+        }
+    }
+
+    /**
+     * 判断是否存在集合
+     *
+     * @param collectionName 集合名
+     * @param milvusServiceClient 操作客户端对象
+     * @return void
+     */
+    public boolean hasCollection(String collectionName, MilvusServiceClient milvusServiceClient) {
+        boolean needReturn = false;
+        try {
+            if(milvusServiceClient == null) {
+                // 通过对象池管理对象
+                milvusServiceClient = milvusServiceClientGenericObjectPool.borrowObject();
+                needReturn = true;
+            }
+            // 判断是否存在集合信息
+            R&lt;Boolean&gt; result = milvusServiceClient.hasCollection(
+                    HasCollectionParam.newBuilder()
+                            .withCollectionName(collectionName)
+                            .build());
+            if (result.getStatus() != 0) {
+                log.error(&quot;Milvus判断是否存在集合失败,原因 :{} &quot;, result);
+                return false;
+            }
+            if (result.getStatus() == 0 &amp;&amp; Boolean.TRUE.booleanValue() == result.getData()) {
+                // 集合已创建
+                return true;
+            }
+        } catch (Exception e) {
+            log.error(&quot;判断集合是否存在异常 :{}&quot;, e);
+        } finally {
+            // 回收对象到对象池
+            if (milvusServiceClient != null &amp;&amp; needReturn) {
+                milvusServiceClientGenericObjectPool.returnObject(milvusServiceClient);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 加载集合
+     *
+     * @param collectionName 集合名
+     * @param milvusServiceClient 操作客户端对象
+     * @return void
+     */
+    public boolean loadingCollection(String collectionName, MilvusServiceClient milvusServiceClient) {
+        boolean needReturn = false;
+        try {
+            if(milvusServiceClient == null) {
+                // 通过对象池管理对象
+                milvusServiceClient = milvusServiceClientGenericObjectPool.borrowObject();
+                needReturn = true;
+            }
+            R&lt;RpcStatus&gt; result = milvusServiceClient.loadCollection(
+                    LoadCollectionParam.newBuilder()
+                            .withCollectionName(collectionName)
+                            .build());
+            if (result.getStatus() != 0) {
+                log.error(&quot;Milvus加载集合失败,原因 :{} &quot;, result);
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            log.error(&quot;加载集合异常 :{}&quot;, e);
+        } finally {
+            // 回收对象到对象池
+            if (milvusServiceClient != null &amp;&amp; needReturn) {
+                milvusServiceClientGenericObjectPool.returnObject(milvusServiceClient);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 释放集合
+     *
+     * @param collectionName 集合名
+     * @param milvusServiceClient 操作客户端对象
+     * @return void
+     */
+    public boolean releaseCollection(String collectionName, MilvusServiceClient milvusServiceClient) {
+        boolean needReturn = false;
+        try {
+            if(milvusServiceClient == null) {
+                // 通过对象池管理对象
+                milvusServiceClient = milvusServiceClientGenericObjectPool.borrowObject();
+                needReturn = true;
+            }
+            R&lt;RpcStatus&gt; result = milvusServiceClient.releaseCollection(
+                    ReleaseCollectionParam.newBuilder()
+                            .withCollectionName(collectionName)
+                            .build());
+            if (result.getStatus() != 0) {
+                log.error(&quot;Milvus释放集合失败,原因 :{} &quot;, result);
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            log.error(&quot;释放集合异常 :{}&quot;, e);
+        } finally {
+            // 回收对象到对象池
+            if (milvusServiceClient != null &amp;&amp; needReturn) {
+                milvusServiceClientGenericObjectPool.returnObject(milvusServiceClient);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 加载集合分区
+     *
+     * @param collectionName 集合名
+     * @param partitionNames 分区名
+     * @param milvusServiceClient 操作客户端对象
+     * @return void
+     */
+    public boolean loadingPartitions(String collectionName, List&lt;String&gt; partitionNames, MilvusServiceClient milvusServiceClient) {
+        boolean needReturn = false;
+        try {
+            if(milvusServiceClient == null) {
+                // 通过对象池管理对象
+                milvusServiceClient = milvusServiceClientGenericObjectPool.borrowObject();
+                needReturn = true;
+            }
+            // 加载Partitions
+            R&lt;RpcStatus&gt; result = milvusServiceClient.loadPartitions(
+                    LoadPartitionsParam.newBuilder()
+                            .withCollectionName(collectionName)
+                            .withPartitionNames(partitionNames)
+                    .build());
+            if (result.getStatus() != 0) {
+                log.error(&quot;Milvus加载集合分区失败,原因 :{} &quot;, result);
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            log.error(&quot;加载集合异常 :{}&quot;, e);
+        } finally {
+            // 回收对象到对象池
+            if (milvusServiceClient != null &amp;&amp; needReturn) {
+                milvusServiceClientGenericObjectPool.returnObject(milvusServiceClient);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 释放集合分区
+     *
+     * @param collectionName 集合名
+     * @param partitionNames 分区名
+     * @param milvusServiceClient 操作客户端对象
+     * @return void
+     */
+    public boolean releasePartitions(String collectionName, List&lt;String&gt; partitionNames, MilvusServiceClient milvusServiceClient) {
+        boolean needReturn = false;
+        try {
+            if(milvusServiceClient == null) {
+                // 通过对象池管理对象
+                milvusServiceClient = milvusServiceClientGenericObjectPool.borrowObject();
+                needReturn = true;
+            }
+            // 释放Partitions
+            R&lt;RpcStatus&gt; result = milvusServiceClient.releasePartitions(
+                    ReleasePartitionsParam.newBuilder()
+                            .withCollectionName(collectionName)
+                            .withPartitionNames(partitionNames)
+                    .build());
+            if (result.getStatus() != 0) {
+                log.error(&quot;Milvus释放集合分区失败,原因 :{} &quot;, result);
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            log.error(&quot;加载集合异常 :{}&quot;, e);
+        } finally {
+            // 回收对象到对象池
+            if (milvusServiceClient != null &amp;&amp; needReturn) {
+                milvusServiceClientGenericObjectPool.returnObject(milvusServiceClient);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 删除集合
+     *
+     * @param collectionName 集合名
+     * @return void
+     */
+    public boolean delCollection(String collectionName) {
+        MilvusServiceClient milvusServiceClient = null;
+        try {
+            // 通过对象池管理对象
+            milvusServiceClient = milvusServiceClientGenericObjectPool.borrowObject();
+            R&lt;RpcStatus&gt; result = milvusServiceClient.dropCollection(
+                    DropCollectionParam.newBuilder()
+                            .withCollectionName(collectionName)
+                            .build());
+
+            if (result.getStatus() != 0) {
+                log.error(&quot;Milvus删除集合失败,原因 :{} &quot;, result);
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            log.error(&quot;删除集合异常 :{}&quot;, e);
+        } finally {
+            // 回收对象到对象池
+            if (milvusServiceClient != null) {
+                milvusServiceClientGenericObjectPool.returnObject(milvusServiceClient);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 删除实体
+     *
+     * @param collectionName 集合名
+     * @param partitionName 分区名
+     * @param expression 表达式
+     * @param milvusServiceClient 操作客户端对象
+     * @return void
+     */
+    public boolean deleteEntity(String collectionName, String partitionName, String expression, MilvusServiceClient milvusServiceClient) {
+        boolean needReturn = false;
+        try {
+            if(milvusServiceClient == null) {
+                // 通过对象池管理对象
+                milvusServiceClient = milvusServiceClientGenericObjectPool.borrowObject();
+                needReturn = true;
+            }
+            // 判断是否存在集合信息
+            R&lt;MutationResult&gt; result = milvusServiceClient.delete(
+                    DeleteParam.newBuilder()
+                            .withCollectionName(collectionName)
+                            .withPartitionName(partitionName)
+                            // 操作表达式
+                            .withExpr(expression)
+                            .build());
+            if (result.getStatus() != 0) {
+                log.error(&quot;Milvus删除集合实体信息失败,原因 :{} &quot;, result);
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            log.error(&quot;删除集合实体信息异常 :{}&quot;, e);
+        } finally {
+            // 回收对象到对象池
+            if (milvusServiceClient != null &amp;&amp; needReturn) {
+                milvusServiceClientGenericObjectPool.returnObject(milvusServiceClient);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 修改用户名密码  v2.2.1版本用
+     *
+     * @param username 用户名
+     * @param oldPassword 旧密码
+     * @param newPassword 新密码
+     * @param milvusServiceClient 操作客户端对象
+     * @return void
+     */
+//    public boolean updateUserPwd(String username, String oldPassword, String newPassword, MilvusServiceClient milvusServiceClient) {
+//        boolean needReturn = false;
+//        try {
+//            if(milvusServiceClient == null) {
+//                // 通过对象池管理对象
+//                milvusServiceClient = milvusServiceClientGenericObjectPool.borrowObject();
+//                needReturn = true;
+//            }
+//            UpdateCredentialParam param = UpdateCredentialParam.newBuilder()
+//                    .withUsername(username)
+//                    .withOldPassword(oldPassword)
+//                    .withNewPassword(newPassword)
+//                    .build();
+//            R&lt;RpcStatus&gt; response = milvusServiceClient.updateCredential(param);
+//            if (response.getStatus() != 0) {
+//                log.error(&quot;Milvus更新用户密码失败,原因 :{} &quot;, response);
+//                return false;
+//            }
+//            return true;
+//        } catch (Exception e) {
+//            log.error(&quot;更新用户密码异常 :{}&quot;, e);
+//        } finally {
+//            // 回收对象到对象池
+//            if (milvusServiceClient != null &amp;&amp; needReturn) {
+//                milvusServiceClientGenericObjectPool.returnObject(milvusServiceClient);
+//            }
+//        }
+//        return false;
+//    }
+
+    /**
+     * 插入数据
+     *
+     * @param faceArchiveDto 传输数据
+     * @return void
+     */
+    public long insert(MilvusFaceArchiveDTO faceArchiveDto) {
+        MilvusServiceClient milvusServiceClient = null;
+        try {
+            // 获取插入集合信息
+            String collectionName = MilvusConstants.getCollectionName(faceArchiveDto.getCollectionPrefix(), new Date());
+
+            // 获取插入集合分区信息
+            String partitionName = MilvusConstants.getPartitionName(faceArchiveDto.getTenantId());
+
+            // 参数校验
+            if(StrUtil.isEmpty(collectionName) || StrUtil.isEmpty(partitionName)) {
+                log.error(&quot;插入数据失败： 无法获取集合名称或分区名称&quot;);
+                return 0;
+            }
+
+            // 通过对象池管理对象
+            milvusServiceClient = milvusServiceClientGenericObjectPool.borrowObject();
+
+            // 组装字段数据
+            List&lt;InsertParam.Field&gt; fields = new ArrayList&lt;&gt;();
+            if(StrUtil.equals(collectionName, MilvusConstants.COLLECTION_FACE_NAME)) {
+                fields.add(new InsertParam.Field(MilvusConstants.FaceArchiveField.COLLECTION_ID, faceArchiveDto.getCollectionIdList()));
+                fields.add(new InsertParam.Field(MilvusConstants.FaceArchiveField.MEMBER_ID, faceArchiveDto.getMemberIdList()));
+                fields.add(new InsertParam.Field(MilvusConstants.FaceArchiveField.TIMESTAMP,  faceArchiveDto.getTimestampList()));
+                fields.add(new InsertParam.Field(MilvusConstants.FaceArchiveField.FACE_FEATURE,  faceArchiveDto.getFeatureList()));
+            } else if(collectionName.startsWith(MilvusConstants.COLLECTION_LOG_PREFIX)) {
+                fields.add(new InsertParam.Field(MilvusConstants.FaceSnapshotField.COLLECTION_ID, faceArchiveDto.getCollectionIdList()));
+                fields.add(new InsertParam.Field(MilvusConstants.FaceSnapshotField.LOG_ID, faceArchiveDto.getLogIdList()));
+                fields.add(new InsertParam.Field(MilvusConstants.FaceSnapshotField.LOG_TYPE, faceArchiveDto.getLogTypeList()));
+                fields.add(new InsertParam.Field(MilvusConstants.FaceSnapshotField.DEVICE_ID,  faceArchiveDto.getDeviceIdList()));
+                fields.add(new InsertParam.Field(MilvusConstants.FaceSnapshotField.TIMESTAMP,  faceArchiveDto.getTimestampList()));
+                fields.add(new InsertParam.Field(MilvusConstants.FaceSnapshotField.FACE_FEATURE,  faceArchiveDto.getFeatureList()));
+            } else {
+                log.error(&quot;预设集合信息不存在&quot;);
+                return 0;
+            }
+
+            // 判断是否存在集合信息
+            boolean hasCollection = hasCollection(collectionName, milvusServiceClient);
+            if (!hasCollection) {
+                // 创建集合
+                boolean b = createCollection(collectionName, milvusServiceClient);
+                if(b) {
+                    // 创建分区
+                    createPartition(collectionName, milvusServiceClient);
+                } else{
+                    log.error(&quot;Milvus数据上传失败,未成功创建集合&quot;);
+                    return 0;
+                }
+            }
+
+            InsertParam insertParam = InsertParam.newBuilder()
+                    .withCollectionName(collectionName)
+                    .withPartitionName(partitionName)
+                    .withFields(fields)
+                    .build();
+            R&lt;MutationResult&gt; insertResult = milvusServiceClient.insert(insertParam);
+
+            if (insertResult.getStatus() == 0) {
+//                log.info(&quot;Milvus数据上传成功,结果 :{} &quot;, insertResult.getData().getIDs().getIntId());
+                return insertResult.getData().getIDs().getIntId().getData(0);
+            } else {
+                log.error(&quot;Milvus数据上传失败,原因 :{} &quot;, insertResult);
+            }
+        } catch (Exception e) {
+            log.error(&quot;插入集合数据异常 :{}&quot;, e);
+        } finally {
+            // 回收对象到对象池
+            if (milvusServiceClient != null) {
+                milvusServiceClientGenericObjectPool.returnObject(milvusServiceClient);
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * 根据向量搜索数据
+     *
+     * @param faceSearchVO 查询信息
+     * @return void
+     */
+    public List&lt;MilvusSearchResultVO&gt; searchByFeature(MilvusFaceSearchVO faceSearchVO) {
+        return searchByFeature(faceSearchVO, null, null);
+    }
+
+    /**
+     * 根据向量搜索数据
+     *
+     * @param faceSearchVO 查询信息
+     * @param builder 查询条件
+     * @param milvusServiceClient 操作客户端对象
+     * @return void
+     */
+    public List&lt;MilvusSearchResultVO&gt; searchByFeature(MilvusFaceSearchVO faceSearchVO, SearchParam.Builder builder, MilvusServiceClient milvusServiceClient) {
+        boolean needReturn = false;
+        List&lt;MilvusSearchResultVO&gt; resultVOS = new ArrayList&lt;&gt;();
+        try {
+            if(milvusServiceClient == null) {
+                // 通过对象池管理对象
+                milvusServiceClient = milvusServiceClientGenericObjectPool.borrowObject();
+                needReturn = true;
+            }
+
+            String collectionName = faceSearchVO.getCollectionName();
+
+            // 参数校验
+            if(StrUtil.isEmpty(collectionName)) {
+                return resultVOS;
+            }
+
+            if(builder == null &amp;&amp; (builder = getSearchBuilder(faceSearchVO)) == null) {
+                return resultVOS;
+            }
+
+            // 查询前加载集合进入缓存
+            loadingCollection(collectionName, milvusServiceClient);
+
+            // 发起搜索请求
+            R&lt;SearchResults&gt; respSearch = milvusServiceClient.search(builder.build());
+
+            // 组装结果数据
+            if (respSearch.getStatus() == 0 &amp;&amp; !StrUtil.equals(respSearch.getData().getStatus().getReason(), MilvusConstants.EMPTY_REASON)){
+                SearchResultsWrapper wrapperSearch = new SearchResultsWrapper(respSearch.getData().getResults());
+                // 获取查询结果
+                List&lt;SearchResultsWrapper.IDScore&gt; idScore = wrapperSearch.getIDScore(0);
+//                log.info(&quot;查询结果：{}&quot;, idScore);
+            }
+            // 释放集合
+//            releaseCollection(collectionName, milvusServiceClient);
+        } catch (Exception e) {
+            log.error(&quot;数据查询异常 :{}&quot;, e);
+        } finally {
+            // 回收对象到对象池
+            if (milvusServiceClient != null &amp;&amp; needReturn) {
+                milvusServiceClientGenericObjectPool.returnObject(milvusServiceClient);
+            }
+        }
+        return resultVOS;
+    }
+
+    /**
+     * 构建milvus查询条件
+     *
+     * @param faceSearchVO
+     * @return Builder
+     */
+    private SearchParam.Builder getSearchBuilder(MilvusFaceSearchVO faceSearchVO) {
+        boolean timeScope = false;
+        String collectionName = faceSearchVO.getCollectionName();
+
+        // 定义输出字段
+        List&lt;String&gt; searchOutputFields = new ArrayList&lt;&gt;();
+        if(StrUtil.equals(collectionName, MilvusConstants.COLLECTION_FACE_NAME)) {
+            searchOutputFields.add(MilvusConstants.FaceArchiveField.COLLECTION_ID);
+            searchOutputFields.add(MilvusConstants.FaceArchiveField.MEMBER_ID);
+        } else if(collectionName.startsWith(MilvusConstants.COLLECTION_LOG_PREFIX)) {
+            searchOutputFields.add(MilvusConstants.FaceSnapshotField.COLLECTION_ID);
+            searchOutputFields.add(MilvusConstants.FaceSnapshotField.LOG_ID);
+            searchOutputFields.add(MilvusConstants.FaceSnapshotField.LOG_TYPE);
+            searchOutputFields.add(MilvusConstants.FaceSnapshotField.DEVICE_ID);
+            searchOutputFields.add(MilvusConstants.FaceSnapshotField.TIMESTAMP);
+            timeScope = true;
+        } else {
+            log.info(&quot;查询失败：集合不存在&quot;);
+            return null;
+        }
+
+        List&lt;String&gt; partitionList = new ArrayList&lt;&gt;();
+        // 获取租户id
+        String tenantId = faceSearchVO.getTenantId();
+        if (StrUtil.isNotEmpty(tenantId)) {
+            // 计算当前租户查询分区
+            String partitionName = MilvusConstants.getPartitionName(tenantId);
+            partitionList.add(partitionName);
+        }
+
+        // 构建查询参数
+        SearchParam.Builder builder = SearchParam.newBuilder()
+                // 查询集合
+                .withCollectionName(collectionName)
+                // 查询分区
+                .withPartitionNames(partitionList)
+                // 计算方式
+                .withMetricType(MetricType.IP)
+                // 输出字段
+                .withOutFields(searchOutputFields)
+                // 查询数据量
+                .withTopK(faceSearchVO.getTopK())
+                // 查询向量
+                .withVectors(faceSearchVO.getSearchVectors())
+                // 向量字段
+                .withVectorFieldName(MilvusConstants.FaceArchiveField.FACE_FEATURE)
+                // 查询参数
+                .withParams(faceSearchVO.getParam());
+
+        // 构建查询条件
+        StringBuffer sb = new StringBuffer();
+        // 设备id
+        if (StrUtil.isNotEmpty(faceSearchVO.getDeviceId())) {
+            String[] split = faceSearchVO.getDeviceId().split(StrUtil.COMMA);
+            sb.append(&quot; ( &quot;);
+            for (int i = 0; i &lt; split.length; i++) {
+                sb.append(MilvusConstants.FaceSnapshotField.DEVICE_ID);
+                sb.append(&quot; == &quot;);
+                sb.append(split[i]);
+                if(i != split.length - 1) {
+                    sb.append(&quot; || &quot;);
+                }
+            }
+            sb.append(&quot; ) &quot;);
+            sb.append(&quot; &amp;&amp; &quot;);
+        }
+        // 搜索范围
+        Integer searchType = faceSearchVO.getSearchType();
+        if(searchType != null) {
+            sb.append(MilvusConstants.FaceSnapshotField.LOG_TYPE);
+            sb.append(&quot; == &quot;);
+            sb.append(searchType);
+            sb.append(&quot; &amp;&amp; &quot;);
+        }
+        // 时间范围
+        if(timeScope) {
+            String beginTime = faceSearchVO.getBeginTime();
+            String endTime = faceSearchVO.getEndTime();
+            long begin = 0L;
+            long end = 0L;
+            if (StrUtil.isNotEmpty(beginTime) &amp;&amp; StrUtil.isNotEmpty(endTime)) {
+                begin = DateUtil.parseDateTime(beginTime).getTime();
+                end = DateUtil.parseDateTime(endTime).getTime();
+            } else {
+                // 默认查询范围 30天
+                Date now = new Date();
+                end = now.getTime();
+                begin = DateUtil.offsetMonth(now, -1).getTime();
+            }
+            sb.append(MilvusConstants.FaceSnapshotField.TIMESTAMP);
+            sb.append(&quot; &gt;= &quot;);
+            sb.append(begin);
+            sb.append(&quot; &amp;&amp; &quot;);
+            sb.append(MilvusConstants.FaceSnapshotField.TIMESTAMP);
+            sb.append(&quot; &lt;= &quot;);
+            sb.append(end);
+            sb.append(&quot; &amp;&amp; &quot;);
+        }
+        if(sb.length() &gt; 0) {
+            builder
+                    .withExpr(sb.substring(0, sb.length() - 4));
+        }
+        return builder;
+    }
+}
+</code></pre>
+<h4 id="附虹软40特征向量转换方法">附：虹软4.0特征向量转换方法</h4>
+<p>虹软4.0特征值 共2056个字节， 前8个字节固定是浮点数类型的2004,78（可能用于区别SDK的不同版本），后面的2048个字节是512个浮点数的且前256个是0。可以忽略。只需要把后256个特征向量复制出来就可以了。</p>
+<p>参考：https://blog.csdn.net/Memory2414/article/details/116583985</p>
+<pre><code class="language-java">/**
+* 虹软byte[]特征值转List&lt;Float&gt;
+* @param bytes
+* @return
+*/
+public static List&lt;Float&gt; arcsoftToFloat(byte[] bytes) {
+	List&lt;Float&gt; list = Lists.newArrayList();
+	for (int i = 1024 + 8; i &lt; bytes.length; i += 4) {
+		byte[] bytes1 = {bytes[i], bytes[i + 1], bytes[i + 2], bytes[i + 3]};
+		list.add(byte2float(bytes1, 0));
+	}
+	return list;
+}
+
+</code></pre>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2022/11/%E7%88%AC%E5%8F%96%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BEpoi%E6%95%B0%E6%8D%AE/" title="爬取高德地图poi数据"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2023/01/milvus%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%E9%85%8D%E7%BD%AE/"
+                    title="Milvus单机部署配置"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2023
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

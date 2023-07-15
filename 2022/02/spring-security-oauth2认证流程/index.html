@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        Spring Security Oauth2认证流程 - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="转载文章： Spring Security Oauth2 认证（获取token/刷新token）流程（password模式） Spring Security 解析(七) —— Spring Security Oauth2 源码解析 这两篇文章都写得挺详细得，" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>Spring Security Oauth2认证流程 - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="Spring Security Oauth2认证流程" />
+<meta property="og:description" content="转载文章： Spring Security Oauth2 认证（获取token/刷新token）流程（password模式） Spring Security 解析(七) —— Spring Security Oauth2 源码解析 这两篇文章都写得挺详细得，" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2022/02/spring-security-oauth2%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B/" />
+<meta property="article:published_time" content="2022-02-17T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-02-17T00:00:00+00:00" />
+<meta itemprop="name" content="Spring Security Oauth2认证流程">
+<meta itemprop="description" content="转载文章： Spring Security Oauth2 认证（获取token/刷新token）流程（password模式） Spring Security 解析(七) —— Spring Security Oauth2 源码解析 这两篇文章都写得挺详细得，">
+<meta itemprop="datePublished" content="2022-02-17T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2022-02-17T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="3230">
+
+
+
+<meta itemprop="keywords" content="spring-security," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Spring Security Oauth2认证流程"/>
+<meta name="twitter:description" content="转载文章： Spring Security Oauth2 认证（获取token/刷新token）流程（password模式） Spring Security 解析(七) —— Spring Security Oauth2 源码解析 这两篇文章都写得挺详细得，"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/charles/" class="category-list-link">charles</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/elasticsearch/" class="category-list-link">elasticsearch</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/idea/" class="category-list-link">idea</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/milvus/" class="category-list-link">milvus</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/nginx/" class="category-list-link">nginx</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/rabbitmq/" class="category-list-link">rabbitmq</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-security/" class="category-list-link">spring-security</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">54</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/captcha/" class="tag-list-link">captcha</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/charles/" class="tag-list-link">charles</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/dubbo/" class="tag-list-link">dubbo</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/elasticsearch/" class="tag-list-link">elasticsearch</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/idea/" class="tag-list-link">idea</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/json/" class="tag-list-link">json</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/milvus/" class="tag-list-link">milvus</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nginx/" class="tag-list-link">nginx</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/saas/" class="tag-list-link">saas</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-security/" class="tag-list-link">spring-security</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="tag-list-link">正则表达式</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/07/java%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%BD%ACpdf%E6%96%87%E4%BB%B6/" class="title">JAVA实现图片转PDF文件</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-07-09 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/06/xxljob%E8%B0%83%E7%94%A8%E6%88%90%E5%8A%9F%E5%8D%B4%E6%9C%AA%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/" class="title">xxljob调用成功却&#39;未执行任务&#39;?</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-06-21 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-06-21</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E5%A4%9A%E6%8E%92%E5%BA%8F%E6%9D%A1%E4%BB%B6%E6%90%9C%E7%B4%A2/" class="title">Elasticsearch 多排序条件搜索</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-05-20 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-05-20</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E6%90%9C%E7%B4%A2%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%9D%E7%A6%BB%E5%9B%A0%E7%B4%A0/" class="title">Elasticsearch 搜索优化之距离因素</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-05-15 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-05-15</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/04/ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/" class="title">ik分词器踩坑记录</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-04-12 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-04-12</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2022/02/spring-security-oauth2%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B/"
+    >Spring Security Oauth2认证流程</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2022/02/spring-security-oauth2%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B/" class="article-date">
+  <time datetime="2022-02-17 00:00:00 &#43;0000 UTC" itemprop="datePublished">2022-02-17</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/spring-security/"> spring-security </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/spring-security/"> spring-security </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2022/02/spring-security-oauth2%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 3230字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 7分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<blockquote>
+<p>转载文章：</p>
+<p><a href="https://blog.csdn.net/bluuusea/article/details/80284458">Spring Security Oauth2 认证（获取token/刷新token）流程（password模式）</a></p>
+<p><a href="https://www.cnblogs.com/bug9/p/11584816.html">Spring Security 解析(七) —— Spring Security Oauth2 源码解析</a></p>
+<p>这两篇文章都写得挺详细得，对还不太清楚security认证流程得小伙伴会有很大得帮助</p>
+</blockquote>
+<h3 id="1token认证会用到的相关请求">1.token认证会用到的相关请求</h3>
+<p>注：所有请求均为post请求。</p>
+<ul>
+<li>
+<p><strong>获取access_token请求（/oauth/token）</strong>
+请求所需参数：client_id、client_secret、grant_type、username、password</p>
+<pre><code>http://localhost/oauth/token?client_id=demoClientId&amp;client_secret=demoClientSecret&amp;grant_type=password&amp;username=demoUser&amp;password=50575tyL86xp29O380t1
+</code></pre>
+</li>
+<li>
+<p><strong>检查头肯是否有效请求（/oauth/check_token）</strong>
+请求所需参数：token</p>
+<pre><code>http://localhost/oauth/check_token?token=f57ce129-2d4d-4bd7-1111-f31ccc69d4d1
+</code></pre>
+</li>
+<li>
+<p>刷新token请求（/oauth/token）
+请求所需参数：grant_type、refresh_token、client_id、client_secret
+其中grant_type为固定值：grant_type=refresh_token</p>
+<pre><code>http://localhost/oauth/token?grant_type=refresh_token&amp;refresh_token=fbde81ee-f419-42b1-1234-9191f1f95be9&amp;client_id=demoClientId&amp;client_secret=demoClientSecret
+</code></pre>
+</li>
+</ul>
+<h3 id="2认证核心流程">2.认证核心流程</h3>
+<blockquote>
+<p>注：文中介绍的认证服务器端token存储在Reids，用户信息存储使用数据库，文中会包含相关的部分代码。</p>
+</blockquote>
+<h4 id="21获取token的主要流程">2.1.获取token的主要流程：</h4>
+<p>加粗内容为每一步的重点，不想细看的可以只看加粗内容：</p>
+<ol>
+<li>用户发起获取token的请求。</li>
+<li>过滤器会<strong>验证path</strong>是否是认证的请求/oauth/token，如果为false，则直接返回没有后续操作。</li>
+<li>过滤器通过clientId查询<strong>生成一个Authentication对象</strong>。</li>
+<li>然后会通过username和生成的Authentication对象<strong>生成一个UserDetails对象</strong>，并检查用户是否存在。</li>
+<li><strong>以上全部通过会进入地址/oauth/token</strong>，即TokenEndpoint的postAccessToken方法中。</li>
+<li>postAccessToken方法中会<strong>验证Scope</strong>，然后<strong>验证是否是refreshToken请求</strong>等。</li>
+<li>之后调用AbstractTokenGranter中的grant方法。</li>
+<li>grant方法中调用AbstractUserDetailsAuthenticationProvider的authenticate方法，<strong>通过username和Authentication对象来检索用户是否存在</strong>。</li>
+<li>然后通过DefaultTokenServices类<strong>从tokenStore中获取OAuth2AccessToken对象</strong>。</li>
+<li>然后将<strong>OAuth2AccessToken对象包装进响应流返回</strong>。</li>
+</ol>
+<h4 id="22刷新tokenrefresh-token的流程">2.2.刷新token（refresh token）的流程</h4>
+<p>刷新token（refresh token）的流程与获取token的流程只有⑨有所区别：</p>
+<ul>
+<li>获取token调用的是AbstractTokenGranter中的getAccessToken方法，然后调用tokenStore中的getAccessToken方法获取token。</li>
+<li>刷新token调用的是RefreshTokenGranter中的getAccessToken方法，然后使用tokenStore中的refreshAccessToken方法获取token。</li>
+</ul>
+<h4 id="23tokenstore的特点">2.3.tokenStore的特点</h4>
+<p>tokenStore通常情况为自定义实现，一般放置在缓存或者数据库中。此处可以利用自定义tokenStore来实现多种需求，如：</p>
+<ul>
+<li>同已用户每次获取token，获取到的都是同一个token，只有token失效后才会获取新token。</li>
+<li>同一用户每次获取token都生成一个完成周期的token并且保证每次生成的token都能够使用（多点登录）。</li>
+<li>同一用户每次获取token都保证只有最后一个token能够使用，之前的token都设为无效（单点token）。</li>
+</ul>
+<h3 id="3获取token的详细流程代码截图">3.获取token的详细流程（代码截图）</h3>
+<h4 id="31代码截图梳理流程">3.1.代码截图梳理流程</h4>
+<p><strong>1.一个比较重要的过滤器</strong></p>
+<p><img src="https://img-blog.csdn.net/2018051122213623" alt="这里写图片描述"></p>
+<p><strong>2.此处是①中的attemptAuthentication方法</strong></p>
+<p><img src="https://img-blog.csdn.net/20180511222224707" alt="这里写图片描述"></p>
+<p><strong>3.此处是②中调用的authenticate方法</strong></p>
+<p><img src="https://img-blog.csdn.net/20180511222330493" alt="这里写图片描述"></p>
+<p><strong>4.此处是③中调用的AbstractUserDetailsAuthenticationProvider类的authenticate方法</strong></p>
+<p><img src="https://img-blog.csdn.net/20180511222451388" alt="这里写图片描述"></p>
+<p><strong>5.此处是④中调用的DaoAuthenticationProvider类的retrieveUser方法</strong></p>
+<p><img src="https://img-blog.csdn.net/20180511222706410" alt="这里写图片描述"></p>
+<p><strong>6.此处为⑤中调用的ClientDetailsUserDetailsService类的loadUserByUsername方法，执行完后接着返回执行④之后的方法</strong></p>
+<p><img src="https://img-blog.csdn.net/20180511222844956" alt="这里写图片描述"></p>
+<p><strong>7.此处为④中调用的DaoAuthenticationProvider类的additionalAuthenticationChecks方法，此处执行完则主要过滤器执行完毕，后续会进入/oauth/token映射的方法。</strong></p>
+<p><img src="https://img-blog.csdn.net/20180511222944638" alt="这里写图片描述"></p>
+<p><strong>8.此处进入/oauth/token映射的TokenEndpoint类的postAccessToken方法</strong></p>
+<p><img src="https://img-blog.csdn.net/20180511223311632" alt="这里写图片描述"></p>
+<p><strong>9.此处为⑧中调用的AbstractTokenGranter类的grant方法</strong></p>
+<p><img src="https://img-blog.csdn.net/20180511223622691" alt="这里写图片描述"></p>
+<p><strong>10.此处为⑨中调用的ResourceOwnerPasswordTokenGranter类中的getOAuth2Authentication方法</strong></p>
+<p><img src="https://img-blog.csdn.net/20180511223727144" alt="这里写图片描述"></p>
+<p><strong>11.此处为⑩中调用的自定义的CustomUserAuthenticationProvider类中的authenticate方法，此处校验用户密码是否正确，此处执行完则返回⑨执行后续方法。</strong></p>
+<p><img src="https://img-blog.csdn.net/20180511223854515" alt="这里写图片描述"></p>
+<p><strong>12.此处为⑨中调用的DefaultTokenServices中的createAccessToken方法</strong></p>
+<p><img src="https://img-blog.csdn.net/20180511224049265" alt="这里写图片描述"></p>
+<p><strong>13.此处为12中调用的RedisTokenStore中的getAccessToken方法等，此处执行完，则一直向上返回到⑧中执行后续方法。</strong></p>
+<p><img src="https://img-blog.csdn.net/20180511224258633" alt="这里写图片描述"></p>
+<p><strong>14.此处为⑧中获取到token后需要包装返回流操作</strong></p>
+<p><img src="https://img-blog.csdn.net/20180511224758841" alt="这里写图片描述"></p>
+<h3 id="4oauth2authenticationprocessingfilter-资源服务器认证解析">4.OAuth2AuthenticationProcessingFilter （资源服务器认证）解析</h3>
+<p>​	通过前面的解析我们最终获取到了token，但获取token 不是我们最终目的，我们最终的目的时拿到资源信息，所以我们还得通过获取到的token去调用资源服务器接口获取资源数据。那么接下来我们就来解析资源服务器是如何通过传入token去辨别用户并允许返回资源信息的。我们知道资源服务器在过滤器链新增了 OAuth2AuthenticationProcessingFilter 来拦截请求并认证，那就这个过滤器的实现</p>
+<pre><code class="language-java"> public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
+ 		ServletException {
+
+ 	final boolean debug = logger.isDebugEnabled();
+ 	final HttpServletRequest request = (HttpServletRequest) req;
+ 	final HttpServletResponse response = (HttpServletResponse) res;
+
+ 	try {
+         // 1、 调用 tokenExtractor.extract() 方法从请求中解析出token信息并存放到 authentication 的  principal 字段 中
+ 		Authentication authentication = tokenExtractor.extract(request);
+ 		
+ 		if (authentication == null) {
+ 			if (stateless &amp;&amp; isAuthenticated()) {
+ 				if (debug) {
+ 					logger.debug(&quot;Clearing security context.&quot;);
+ 				}
+ 				SecurityContextHolder.clearContext();
+ 			}
+ 			if (debug) {
+ 				logger.debug(&quot;No token in request, will continue chain.&quot;);
+ 			}
+ 		}
+ 		else {
+ 			request.setAttribute(OAuth2AuthenticationDetails.ACCESS_TOKEN_VALUE, authentication.getPrincipal());
+ 			if (authentication instanceof AbstractAuthenticationToken) {
+ 				AbstractAuthenticationToken needsDetails = (AbstractAuthenticationToken) authentication;
+ 				needsDetails.setDetails(authenticationDetailsSource.buildDetails(request));
+ 			}
+ 			// 2、 调用  authenticationManager.authenticate() 认证过程： 注意此时的  authenticationManager 是 OAuth2AuthenticationManager 
+ 			Authentication authResult = authenticationManager.authenticate(authentication);
+
+ 			if (debug) {
+ 				logger.debug(&quot;Authentication success: &quot; + authResult);
+ 			}
+
+ 			eventPublisher.publishAuthenticationSuccess(authResult);
+ 			SecurityContextHolder.getContext().setAuthentication(authResult);
+
+ 		}
+ 	}
+ 	catch (OAuth2Exception failed) {
+ 		SecurityContextHolder.clearContext();
+ 		eventPublisher.publishAuthenticationFailure(new BadCredentialsException(failed.getMessage(), failed),
+ 				new PreAuthenticatedAuthenticationToken(&quot;access-token&quot;, &quot;N/A&quot;));
+ 				
+ 		authenticationEntryPoint.commence(request, response,
+ 				new InsufficientAuthenticationException(failed.getMessage(), failed));
+
+ 		return;
+ 	}
+     
+ 	chain.doFilter(request, response);
+ }
+</code></pre>
+<pre><code>整个filter步骤最核心的是下面2个：
+</code></pre>
+<ul>
+<li>1、 调用 tokenExtractor.extract() 方法从请求中解析出token信息并存放到 authentication 的 principal 字段 中</li>
+<li>**2、 调用 authenticationManager.authenticate() 认证过程： 注意此时的 authenticationManager 是 OAuth2AuthenticationManager **</li>
+</ul>
+<p>​	在解析@EnableResourceServer 时我们讲过 OAuth2AuthenticationManager 与 OAuth2AuthenticationProcessingFilter 的关系，这里不再重述，我们直接看下 OAuth2AuthenticationManager 的 authenticate() 方法实现：</p>
+<pre><code class="language-java"> public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+
+ 	if (authentication == null) {
+ 		throw new InvalidTokenException(&quot;Invalid token (token not found)&quot;);
+ 	}
+ 	// 1、 从 authentication 中获取 token
+ 	String token = (String) authentication.getPrincipal();
+ 	// 2、 调用 tokenServices.loadAuthentication() 方法  通过 token 参数获取到 OAuth2Authentication 对象 ，这里的tokenServices 就是我们资源服务器配置的。
+ 	OAuth2Authentication auth = tokenServices.loadAuthentication(token);
+ 	if (auth == null) {
+ 		throw new InvalidTokenException(&quot;Invalid token: &quot; + token);
+ 	}
+
+ 	Collection&lt;String&gt; resourceIds = auth.getOAuth2Request().getResourceIds();
+ 	if (resourceId != null &amp;&amp; resourceIds != null &amp;&amp; !resourceIds.isEmpty() &amp;&amp; !resourceIds.contains(resourceId)) {
+ 		throw new OAuth2AccessDeniedException(&quot;Invalid token does not contain resource id (&quot; + resourceId + &quot;)&quot;);
+ 	}
+     // 3、 检测客户端信息，由于我们采用授权服务器和资源服务器分离的设计，所以这个检测方法实际没有检测
+ 	checkClientDetails(auth);
+
+ 	if (authentication.getDetails() instanceof OAuth2AuthenticationDetails) {
+ 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
+ 		// Guard against a cached copy of the same details
+ 		if (!details.equals(auth.getDetails())) {
+ 			// Preserve the authentication details from the one loaded by token services
+ 			details.setDecodedDetails(auth.getDetails());
+ 		}
+ 	}
+ 	// 4、 设置认证成功标识并返回
+ 	auth.setDetails(authentication.getDetails());
+ 	auth.setAuthenticated(true);
+ 	return auth;
+ }
+</code></pre>
+<p>整个 认证逻辑分4步：</p>
+<ul>
+<li>1、 从 authentication 中获取 token</li>
+<li>2、 调用 tokenServices.loadAuthentication() 方法 通过 token 参数获取到 OAuth2Authentication 对象 ，这里的tokenServices 就是我们资源服务器配置的。</li>
+<li>3、 检测客户端信息，由于我们采用授权服务器和资源服务器分离的设计，所以这个检测方法实际没有检测</li>
+<li>4、 设置认证成功标识并返回 ，注意返回的是 OAuth2Authentication （Authentication 子类）。</li>
+</ul>
+<p>  后面的授权过程就是原汁原味的Security授权，所以至此整个资源服务器 通过获取到的token去调用接口获取资源数据 的解析完成。</p>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2022/02/%E6%8E%A5%E5%8F%A3%E9%98%B2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4aop%E5%AE%9E%E7%8E%B0/" title="接口防重复提交AOP实现"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2022/02/redis-aop%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%AE%9E%E7%8E%B0/"
+                    title="redis &#43; AOP分布式锁实现"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2023
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

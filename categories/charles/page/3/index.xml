@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>charles on AzkeepToo个人博客</title>
+    <link>https://bluestaree.github.io/categories/charles/</link>
+    <description>Recent content in charles on AzkeepToo个人博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 08 Nov 2021 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://bluestaree.github.io/categories/charles/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Dubbo处理业务异常配置</title>
+      <link>https://bluestaree.github.io/2021/05/dubbo%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%9A%E5%8A%A1%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/</link>
+      <pubDate>Mon, 24 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2021/05/dubbo%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%9A%E5%8A%A1%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/</guid>
+      <description>前言 我们在开发应用系统时，不可避免的要使用到我们自己定义的异常，所以我们一般通常会用到自定义的业务异常类BusinessException，</description>
+    </item>
+    
+    <item>
+      <title>免费ip地址解析api</title>
+      <link>https://bluestaree.github.io/2021/05/%E5%85%8D%E8%B4%B9ip%E5%9C%B0%E5%9D%80%E8%A7%A3%E6%9E%90api/</link>
+      <pubDate>Tue, 18 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2021/05/%E5%85%8D%E8%B4%B9ip%E5%9C%B0%E5%9D%80%E8%A7%A3%E6%9E%90api/</guid>
+      <description>免费ip地址解析api 百度 http://opendata.baidu.com/api.php?query=120.204.100.171&amp;amp;co=&amp;amp;resource_id=6006&amp;amp;oe=utf8 http://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php?query=120.204.100.171&amp;amp;co=&amp;amp;resource_id=6006&amp;amp;oe=utf8 其中请求路径中的 query 参数即为要解析的IP地址</description>
+    </item>
+    
+    <item>
+      <title>Java 比较两个版本号的大小</title>
+      <link>https://bluestaree.github.io/2021/04/java-%E6%AF%94%E8%BE%83%E4%B8%A4%E4%B8%AA%E7%89%88%E6%9C%AC%E5%8F%B7%E7%9A%84%E5%A4%A7%E5%B0%8F/</link>
+      <pubDate>Wed, 21 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2021/04/java-%E6%AF%94%E8%BE%83%E4%B8%A4%E4%B8%AA%E7%89%88%E6%9C%AC%E5%8F%B7%E7%9A%84%E5%A4%A7%E5%B0%8F/</guid>
+      <description>最近业务上有需求，需要比较当前版本与最新版本，以此判断是否可进行更新升级 代码： public class VersionNoUtil { /** * * @date 2020/7/22 15:47 * @param version1 版本号1 * @param version2 版本号2 * @return version1&amp;gt;version2 : 1 ；v</description>
+    </item>
+    
+    <item>
+      <title>Mybatis踩坑记录</title>
+      <link>https://bluestaree.github.io/2021/03/mybatis-%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/</link>
+      <pubDate>Tue, 23 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2021/03/mybatis-%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/</guid>
+      <description>最近在自测是发现了不少与mybatis相关错误，虽然解决起来不是很困难，但还是特地记录一下，主要原因还是太粗心了。 问题1：整数类型if语句判</description>
+    </item>
+    
+    <item>
+      <title>Docker容器安装及使用</title>
+      <link>https://bluestaree.github.io/2021/03/docker%E5%AE%B9%E5%99%A8%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Mon, 15 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2021/03/docker%E5%AE%B9%E5%99%A8%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
+      <description>Docker容器安装及使用 一、非docker-ce版本卸载 yum remove docker \ docker-client \ docker-client-latest \ docker-common \ docker-latest \ docker-latest-logrotate \ docker-logrotate \ docker-engine rm -rf /etc/systemd/system/docker.service.d rm -rf /var/lib/docker rm -rf /var/run/docker 二、docker-ce版本卸载</description>
+    </item>
+    
+    <item>
+      <title>VirtualBox虚拟机网络模式</title>
+      <link>https://bluestaree.github.io/2021/01/virtualbox%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Mon, 25 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2021/01/virtualbox%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F/</guid>
+      <description>转载 · 原文链接：https://www.douban.com/group/topic/15558388/ 前言 最近在捣鼓VirtualBox，</description>
+    </item>
+    
+    <item>
+      <title>Mybatis Plus实现多租户解析的应用</title>
+      <link>https://bluestaree.github.io/2021/01/mybatis-plus%E7%A7%9F%E6%88%B7%E8%A7%A3%E6%9E%90%E7%9A%84%E5%BA%94%E7%94%A8/</link>
+      <pubDate>Fri, 08 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2021/01/mybatis-plus%E7%A7%9F%E6%88%B7%E8%A7%A3%E6%9E%90%E7%9A%84%E5%BA%94%E7%94%A8/</guid>
+      <description>转载 · 原文链接：https://www.jianshu.com/p/a80b88b7076b， https://blog.csdn.net/weixin_42284052/article/details/114543215 前提介绍 一般的程序应用当使用者访问不同，并且</description>
+    </item>
+    
+    <item>
+      <title>保留首尾字符，中间全部变为星号</title>
+      <link>https://bluestaree.github.io/2021/01/%E4%BF%9D%E7%95%99%E9%A6%96%E5%B0%BE%E5%AD%97%E7%AC%A6%E5%85%B6%E4%BD%99%E5%85%A8%E9%83%A8%E5%8F%98%E4%B8%BA%E6%98%9F%E5%8F%B7/</link>
+      <pubDate>Tue, 05 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2021/01/%E4%BF%9D%E7%95%99%E9%A6%96%E5%B0%BE%E5%AD%97%E7%AC%A6%E5%85%B6%E4%BD%99%E5%85%A8%E9%83%A8%E5%8F%98%E4%B8%BA%E6%98%9F%E5%8F%B7/</guid>
+      <description>因业务需要对手机号进行保密操作，对金额显示加上分隔符 代码如下： public class StringReplaceUtils { /** * 对字符加星号处理：根据字符串长度替换 * @param content 传入的字符串 * @return 带星号的</description>
+    </item>
+    
+    <item>
+      <title>Mybatis plus的多数据源@DS事务问题</title>
+      <link>https://bluestaree.github.io/2020/12/mybatis-plus%E7%9A%84%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90ds%E4%BA%8B%E5%8A%A1%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Fri, 25 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/12/mybatis-plus%E7%9A%84%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90ds%E4%BA%8B%E5%8A%A1%E9%97%AE%E9%A2%98/</guid>
+      <description>转载 · 原文链接：https://baijiahao.baidu.com/s?id=1685490934094994913&amp;amp;wfr=s</description>
+    </item>
+    
+    <item>
+      <title>anji-plus-captcha行为验证码集成</title>
+      <link>https://bluestaree.github.io/2020/12/anji-plus-captcha%E8%A1%8C%E4%B8%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E9%9B%86%E6%88%90/</link>
+      <pubDate>Fri, 18 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/12/anji-plus-captcha%E8%A1%8C%E4%B8%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E9%9B%86%E6%88%90/</guid>
+      <description>本文介绍开源项目：anji-plus-captcha开源项目集成流程 github地址: https://github.com/anji-plus/captcha/ 码云地址: https://gitee.com/xiweicheng/captcha 第一步： 加入pom文件依赖 &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.anji-plus&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;captcha&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; 第二步</description>
+    </item>
+    
+    <item>
+      <title>fastjson序列化之WRITE_ONLY 与 READ_ONLY</title>
+      <link>https://bluestaree.github.io/2020/10/fastjson%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bwrite_only-%E4%B8%8E-read_only/</link>
+      <pubDate>Mon, 05 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/10/fastjson%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bwrite_only-%E4%B8%8E-read_only/</guid>
+      <description>前言 在项目开发中，经常会遇到这样的场景：对于参数较多的接口，一般是定义参数VO类的方式进行接收，同时根据需要定义返回的VO类。这样做项目结构</description>
+    </item>
+    
+    <item>
+      <title>正则表达式实现字符串模板替换</title>
+      <link>https://bluestaree.github.io/2020/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%9D%BF%E6%9B%BF%E6%8D%A2/</link>
+      <pubDate>Mon, 28 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%9D%BF%E6%9B%BF%E6%8D%A2/</guid>
+      <description>场景： 最近开发项目中，有这样一个功能:管理人可自定义消息模板， 可在模板中插入动态参数，由后台进行替换，考虑了下，可以采用正则实现，参考文章 ：</description>
+    </item>
+    
+    <item>
+      <title>枚举类转为集合数据</title>
+      <link>https://bluestaree.github.io/2020/09/%E6%9E%9A%E4%B8%BE%E7%B1%BB%E8%BD%AC%E4%B8%BA%E9%9B%86%E5%90%88%E6%95%B0%E6%8D%AE/</link>
+      <pubDate>Wed, 23 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/09/%E6%9E%9A%E4%B8%BE%E7%B1%BB%E8%BD%AC%E4%B8%BA%E9%9B%86%E5%90%88%E6%95%B0%E6%8D%AE/</guid>
+      <description>转载 · 原文链接：https://blog.csdn.net/weixin_43906974/article/details/10751595</description>
+    </item>
+    
+    <item>
+      <title>后端Long类型传到前端精度丢失的正确解决方式</title>
+      <link>https://bluestaree.github.io/2020/09/long%E7%B1%BB%E5%9E%8B%E7%B2%BE%E5%BA%A6%E4%B8%A2%E5%A4%B1/</link>
+      <pubDate>Thu, 17 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/09/long%E7%B1%BB%E5%9E%8B%E7%B2%BE%E5%BA%A6%E4%B8%A2%E5%A4%B1/</guid>
+      <description>最近在项目开发中遇到了个bug，排查后发现Long类型主键字段作为参数返回后，前端接收时出现精度丢失问题 原因：前端js对Long类型支持的精</description>
+    </item>
+    
+    <item>
+      <title>Java中Volatile关键字</title>
+      <link>https://bluestaree.github.io/2020/08/java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8Bvolatile%E5%85%B3%E9%94%AE%E5%AD%97%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Fri, 28 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/08/java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8Bvolatile%E5%85%B3%E9%94%AE%E5%AD%97%E8%A7%A3%E6%9E%90/</guid>
+      <description>转载:https://www.jianshu.com/p/157279e6efdb 1. volatile简介 在上一篇文章中我们深入理解了java</description>
+    </item>
+    
+    <item>
+      <title>高并发下保证服务稳定性-Sentinel</title>
+      <link>https://bluestaree.github.io/2020/08/springcloud-alibaba-sentinel/</link>
+      <pubDate>Sat, 22 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/08/springcloud-alibaba-sentinel/</guid>
+      <description>简介：Sentinel-哨兵，是Spring Cloud Alibaba 的开源项目，是面向微服务的轻量级流量控制框架，从流量控制、熔断降级、系统负载保护等多个维度保</description>
+    </item>
+    
+    <item>
+      <title>接口幂等性问题与解决方案</title>
+      <link>https://bluestaree.github.io/2020/08/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/</link>
+      <pubDate>Mon, 10 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/08/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/</guid>
+      <description>概述 接口幂等性 接口幂等性就是用户对于同一操作发起的一次请求或者多次请求的结果是一致的， 不会因为多次点击而产生了副作用;比如说支付场景，用户购</description>
+    </item>
+    
+    <item>
+      <title>分布式解决方案-Seata</title>
+      <link>https://bluestaree.github.io/2020/08/springcloud-alibaba-seata/</link>
+      <pubDate>Tue, 04 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/08/springcloud-alibaba-seata/</guid>
+      <description>简介：Seata是一款阿里巴巴开源的分布式事务解决方案，致力于提供高性能和简单易用的分布式事务服务。Seata 将为用户提供了AT、TCC、S</description>
+    </item>
+    
+    <item>
+      <title>本地事务与分布式事务</title>
+      <link>https://bluestaree.github.io/2020/08/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/</link>
+      <pubDate>Mon, 03 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/08/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/</guid>
+      <description>本地事务 事务的基本性质 数据库事务的几个特性:原子性(Atomicity)、一致性( Consistency )、隔离性或独立性( Isolation )和持久性( Durabilily )，简称就是ACID</description>
+    </item>
+    
+    <item>
+      <title>Spring Session与Redis整合</title>
+      <link>https://bluestaree.github.io/2020/07/spring-session%E4%B8%8Eredis%E6%95%B4%E5%90%88/</link>
+      <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/07/spring-session%E4%B8%8Eredis%E6%95%B4%E5%90%88/</guid>
+      <description>概述：在一些应用场景下，服务端也需要返回完整的页面信息给客户端，比如有利于SEO的主页，搜索页面等，都需要服务端渲染。当然使用Nuxt或Ne</description>
+    </item>
+    
+  </channel>
+</rss>

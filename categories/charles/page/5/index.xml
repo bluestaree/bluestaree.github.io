@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>charles on AzkeepToo个人博客</title>
+    <link>https://bluestaree.github.io/categories/charles/</link>
+    <description>Recent content in charles on AzkeepToo个人博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 08 Nov 2021 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://bluestaree.github.io/categories/charles/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>hashCode和equals的相关问题</title>
+      <link>https://bluestaree.github.io/2020/05/hashcode%E5%92%8Cequals%E7%9A%84%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Mon, 11 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/hashcode%E5%92%8Cequals%E7%9A%84%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/</guid>
+      <description>转载 · 原文链接：https://blog.csdn.net/CSDN_Ty/article/details/98877883 本文的内容主要想</description>
+    </item>
+    
+    <item>
+      <title>Feign的一些使用问题</title>
+      <link>https://bluestaree.github.io/2020/05/feign%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6/</link>
+      <pubDate>Fri, 08 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/feign%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6/</guid>
+      <description>Feign调用流程 构造请求对象，将对象转为json 发送执行请求(执行成功会解码响应得数据) 获取结果 从代码中可以看出，如何请求出现异常，就会执</description>
+    </item>
+    
+    <item>
+      <title>Maven,Gradle依赖</title>
+      <link>https://bluestaree.github.io/2020/05/mavengradle%E4%BE%9D%E8%B5%96/</link>
+      <pubDate>Sat, 02 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/mavengradle%E4%BE%9D%E8%B5%96/</guid>
+      <description>最近在学习中遇到了新的包管理工具 - Gradle 。 上网查询了下Gradle 的依赖方式，方便与Maven区分对比 。 转载 · 原文链接：https://blog</description>
+    </item>
+    
+    <item>
+      <title>Mybatis中Mapper标签总结大全</title>
+      <link>https://bluestaree.github.io/2020/04/mybatis%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E6%B1%87%E6%80%BB/</link>
+      <pubDate>Thu, 30 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/mybatis%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E6%B1%87%E6%80%BB/</guid>
+      <description>转载 · 原文链接：https://blog.csdn.net/qw463800202/article/details/103221651 一、动</description>
+    </item>
+    
+    <item>
+      <title>JDK 8 的那些新特性</title>
+      <link>https://bluestaree.github.io/2020/04/jdk-8%E7%9A%84%E9%82%A3%E4%BA%9B%E6%96%B0%E7%89%B9%E6%80%A7/</link>
+      <pubDate>Tue, 28 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/jdk-8%E7%9A%84%E9%82%A3%E4%BA%9B%E6%96%B0%E7%89%B9%E6%80%A7/</guid>
+      <description>转载 · 原文链接：https://www.runoob.com/java/java8-new-features.html java 8 新特性 Java8 新增了非常</description>
+    </item>
+    
+    <item>
+      <title>原码、反码和补码</title>
+      <link>https://bluestaree.github.io/2020/04/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/</link>
+      <pubDate>Tue, 28 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81/</guid>
+      <description>原反补的相互转换 今天在学习算法时遇到了这个问题，然后大脑就突然宕机。什么情况w(ﾟДﾟ)w！ 在此上网查询资料后记录下， 转载 · 原文链接：htt</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot应用程序启动过程</title>
+      <link>https://bluestaree.github.io/2020/04/springboot%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/</link>
+      <pubDate>Sun, 19 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/springboot%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/</guid>
+      <description>转载 · 原文链接：https://www.codesheep.cn/2018/09/04/springboot-startup-process</description>
+    </item>
+    
+    <item>
+      <title>@SpringBootApplication注解</title>
+      <link>https://bluestaree.github.io/2020/04/springbootapplication%E6%B3%A8%E8%A7%A3/</link>
+      <pubDate>Sat, 18 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/springbootapplication%E6%B3%A8%E8%A7%A3/</guid>
+      <description>转载 · 原文链接：https://www.codesheep.cn/2018/07/30/at-SpringBootApplication-z</description>
+    </item>
+    
+    <item>
+      <title>Docker常用命令</title>
+      <link>https://bluestaree.github.io/2020/04/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Sat, 18 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+      <description>查看当前所有镜像 docker images 查看所有容器 docker ps -a 根据一个镜像创建一个容器并运行 (windows环境) docker run -d &amp;ndash;name mysql_3308 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=tdt123 -p 3307:3306 -v //f/docker/mysql_3308:/var/lib/mysql mysql:5.5 &amp;ndash;name mysql_3308 &amp;hellip; mysql:5.5 设置容器名，及</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot应用部署于外置Tomcat容器</title>
+      <link>https://bluestaree.github.io/2020/04/springboot%E5%BA%94%E7%94%A8%E9%83%A8%E7%BD%B2%E4%BA%8E%E5%A4%96%E7%BD%AEtomcat%E5%AE%B9%E5%99%A8/</link>
+      <pubDate>Fri, 17 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/04/springboot%E5%BA%94%E7%94%A8%E9%83%A8%E7%BD%B2%E4%BA%8E%E5%A4%96%E7%BD%AEtomcat%E5%AE%B9%E5%99%A8/</guid>
+      <description>转载 · 原文链接：SpringBoot应用部署于外置Tomcat容器 0x01. 概述 SpringBoot平时我们用的爽歪歪，爽到它自己连Tomcat都自</description>
+    </item>
+    
+    <item>
+      <title>关于我</title>
+      <link>https://bluestaree.github.io/about/</link>
+      <pubDate>Sun, 05 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/about/</guid>
+      <description>本人90后小白一枚，code，从hello开始。慢慢的，谈不上热爱，但也能渐渐体会到其中的乐趣 目前的主要学习方向：java后端开发 博客内容以</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        Security之HttpSecurity常用方法详解 - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="参考文章：HttpSecurity常用方法详解 ，并补充一些个人见解 antMatcher() 该方法配置题解原理可参考文章：WebSecurityConfigurer" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>Security之HttpSecurity常用方法详解 - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="Security之HttpSecurity常用方法详解" />
+<meta property="og:description" content="参考文章：HttpSecurity常用方法详解 ，并补充一些个人见解 antMatcher() 该方法配置题解原理可参考文章：WebSecurityConfigurer" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2022/03/security%E4%B9%8Bhttpsecurity%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/" />
+<meta property="article:published_time" content="2022-03-28T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-03-28T00:00:00+00:00" />
+<meta itemprop="name" content="Security之HttpSecurity常用方法详解">
+<meta itemprop="description" content="参考文章：HttpSecurity常用方法详解 ，并补充一些个人见解 antMatcher() 该方法配置题解原理可参考文章：WebSecurityConfigurer">
+<meta itemprop="datePublished" content="2022-03-28T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2022-03-28T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2829">
+
+
+
+<meta itemprop="keywords" content="spring-security," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Security之HttpSecurity常用方法详解"/>
+<meta name="twitter:description" content="参考文章：HttpSecurity常用方法详解 ，并补充一些个人见解 antMatcher() 该方法配置题解原理可参考文章：WebSecurityConfigurer"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/charles/" class="category-list-link">charles</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/elasticsearch/" class="category-list-link">elasticsearch</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/idea/" class="category-list-link">idea</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/milvus/" class="category-list-link">milvus</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/nginx/" class="category-list-link">nginx</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/rabbitmq/" class="category-list-link">rabbitmq</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-security/" class="category-list-link">spring-security</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">54</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/captcha/" class="tag-list-link">captcha</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/charles/" class="tag-list-link">charles</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/dubbo/" class="tag-list-link">dubbo</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/elasticsearch/" class="tag-list-link">elasticsearch</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/idea/" class="tag-list-link">idea</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/json/" class="tag-list-link">json</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/milvus/" class="tag-list-link">milvus</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nginx/" class="tag-list-link">nginx</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/saas/" class="tag-list-link">saas</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-security/" class="tag-list-link">spring-security</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="tag-list-link">正则表达式</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/07/java%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%BD%ACpdf%E6%96%87%E4%BB%B6/" class="title">JAVA实现图片转PDF文件</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-07-09 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/06/xxljob%E8%B0%83%E7%94%A8%E6%88%90%E5%8A%9F%E5%8D%B4%E6%9C%AA%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/" class="title">xxljob调用成功却&#39;未执行任务&#39;?</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-06-21 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-06-21</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E5%A4%9A%E6%8E%92%E5%BA%8F%E6%9D%A1%E4%BB%B6%E6%90%9C%E7%B4%A2/" class="title">Elasticsearch 多排序条件搜索</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-05-20 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-05-20</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E6%90%9C%E7%B4%A2%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%9D%E7%A6%BB%E5%9B%A0%E7%B4%A0/" class="title">Elasticsearch 搜索优化之距离因素</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-05-15 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-05-15</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/04/ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/" class="title">ik分词器踩坑记录</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-04-12 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-04-12</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2022/03/security%E4%B9%8Bhttpsecurity%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/"
+    >Security之HttpSecurity常用方法详解</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2022/03/security%E4%B9%8Bhttpsecurity%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/" class="article-date">
+  <time datetime="2022-03-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">2022-03-28</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/spring-security/"> spring-security </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/spring-security/"> spring-security </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2022/03/security%E4%B9%8Bhttpsecurity%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2829字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 6分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<blockquote>
+<p>参考文章：<a href="https://blog.csdn.net/qq_30641461/article/details/120698487">HttpSecurity常用方法详解</a> ，并补充一些个人见解</p>
+</blockquote>
+<h2 id="antmatcher">antMatcher()</h2>
+<p>该方法配置题解原理可参考文章：<a href="https://blog.csdn.net/tales522/article/details/101180570">WebSecurityConfigurerAdapter与ResourceServerConfigurerAdapter使用</a></p>
+<p><strong>这里用一个官方的例子，记一下个人理解</strong></p>
+<pre><code class="language-java">@EnableWebSecurity
+public class MultiHttpSecurityConfig {
+  @Autowired
+  public void configureGlobal(AuthenticationManagerBuilder auth) { 1
+      //  配置默认登录用户信息，一般用不上
+      auth
+          .inMemoryAuthentication()
+              .withUser(&quot;user&quot;).password(&quot;password&quot;).roles(&quot;USER&quot;).and()
+              .withUser(&quot;admin&quot;).password(&quot;password&quot;).roles(&quot;USER&quot;, &quot;ADMIN&quot;);
+  }
+
+  // 注意，下面配置的两个类 都实现了 WebSecurityConfigurerAdapter
+  // 这种情况下有两个HttpSecurity配置，未定义@Order就默认最后，多个未定义或者相同Order就按照定义顺序
+  @Configuration
+  @Order(1)                                                        2
+  public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
+      protected void configure(HttpSecurity http) throws Exception {
+
+		//.antMatcher(&quot;/api/**&quot;) 表示此HttpSecurity配置 只会在匹配/api/开头的请求时生效，而且匹配优先度高，如果不用antMatcher，所有请求都会匹配
+        // 进入的请求只有两条路，拥有角色权限ADMIN 的User。
+		// 或者导向login(authenticated)，但这里未开启，需要时可以加上.formLogin()配置
+          http
+              .antMatcher(&quot;/api/**&quot;)                               3
+              .authorizeRequests()
+                  .anyRequest().hasRole(&quot;ADMIN&quot;)
+                  .and()
+              .httpBasic();
+      }
+  }    
+
+  @Configuration                                                   4
+  public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+
+      @Override
+      protected void configure(HttpSecurity http) throws Exception {
+          // 没有配置.antMatcher(&quot;/xxx&quot;), 表示所有请求都会经过该配置
+          // 接下来，所有请求需求登录认证
+          // 又因为该配置order默认值为100 比上面一个配置要低， 所以该过滤器优先级较低， 如果请求/api/** 就会被上面一个拦截器处理
+          http
+              .authorizeRequests()
+                  .anyRequest().authenticated()
+                  .and()
+              .formLogin();
+      }
+  }
+}
+</code></pre>
+<p>其中需要注意 如果配置多个HttpSecurity规则，需求考虑到order顺序</p>
+<h1 id="heading"></h1>
+<h2 id="antmatchers">antMatchers()</h2>
+<p>为方便理解直接看两个例子把：</p>
+<p>例子1：</p>
+<pre><code class="language-java">http
+    .antMatcher(&quot;/xxx&quot;)
+    .authorizeRequests()
+    .anyRequest()
+    .authenticated();
+</code></pre>
+<p>例子2：</p>
+<pre><code class="language-java">http
+    .requestMatchers()
+    .antMatchers(&quot;/xxx&quot;)
+    .and()
+    .authorizeRequests()
+    .anyRequest()
+    .authenticated();
+</code></pre>
+<p>​	上述两个例子实现的效果是一样的，区别在于     <strong>.requestMatchers().antMatchers()</strong>，可以配置多个生效入口 如 ：  <strong>.requestMatchers().antMatchers(&quot;/aaa&rdquo;,&quot;/xxx&rdquo;)</strong></p>
+<p>​	注意 在同一个HttpSecurity实例上两次调用<strong>antMatcher()<strong>只会替换原始的</strong>antMatcher()</strong>。要将相同的HttpSecurity配置应用于多个antMatchers，需使用http.requestMatchers().antMatchers(&quot;/aaa&rdquo;,&quot;/xxx&rdquo;)。</p>
+<p>另一种方法是使用各自的antMatcher创建多个SecurityConfigurer，然后使用@order对其进行批注，以确保spring可以全部加载(<code>参考文章头部 官方演示例子</code>)。</p>
+<h2 id="requestmatchers">requestMatchers()</h2>
+<p>取得RequestMatcherConfigurer对象并配置允许过滤的路由；
+如requestMatchers().anyRequest()等同于http.authorizeRequests().anyRequest().access(“permitAll”)；
+如下面两个例子：</p>
+<p>例1:</p>
+<pre><code class="language-java">@Override
+public void configure(HttpSecurity http) throws Exception {	
+        //requestMatchers().anyRequest()即表示该配置拦截所有接口请求（/**），并且只允许路由test开头的需要进行权限认证，其他的接口不需要权限认证；	
+	http.requestMatchers().anyRequest().and().authorizeRequests().antMatchers(&quot;/test/*&quot;).authenticated();
+}
+</code></pre>
+<p>例2:</p>
+<pre><code class="language-java">@Override
+public void configure(HttpSecurity http) throws Exception {
+	//只有以/test 开头的路由需要进行权限认证；其他路由不需要权限认证
+	http.requestMatchers().antMatchers(&quot;/test/**&quot;).and().authorizeRequests().antMatchers(&quot;/**&quot;).authenticated();
+}
+</code></pre>
+<p>例3:</p>
+<pre><code class="language-java">// 存在两个.requestMatchers()相当于 配置两个URL匹配规则入口
+http
+    // 1、以下对所有/rest2/**请求生效
+    .requestMatchers()
+        .antMatchers(&quot;/rest2/**&quot;)
+        .and()
+    // 请求的路径 通过/rest2/** 校验后，配置两个特殊路由处理 /rest/v1/test/hello以及/rest/v1/test/**，
+    // 不过很明显，此处分叉规则均不会生效，因为入口前提是，请求的路径匹配/rest2/**
+    // 当请求路径没有被规则匹配到时，默认放行，不需要权限认证，即.permitAll()
+    .authorizeRequests()
+        .antMatchers(&quot;/rest/v1/test/hello&quot;).permitAll()
+        .antMatchers(&quot;/rest/v1/test/**&quot;).denyAll()
+        .and()
+    // ----上述配置结束----
+    // 2、以下对所有/rest/**请求生效
+    .requestMatchers()
+        .antMatchers(&quot;/rest/**&quot;)
+        .and()
+    .authorizeRequests()
+        .antMatchers(&quot;/rest/v1/test/hello&quot;).permitAll();
+	// ----上述配置结束----
+</code></pre>
+<p>上述例子中配置1 的结果就相当于 所有 /rest2/**  接口请求 全部放行</p>
+<p>配置2的结果就相当于 所有 /rest/**  接口请求 全部放行</p>
+<h2 id="authorizerequests">authorizeRequests()</h2>
+<p>授权管理控制的方法（），这个方法返回一个ExpressionUrlAuthorizationConfigurer.ExpressionInterceptUrlRegistry对象。Security所有的权限控制都基于这个类进行控制。
+如：http.authorizeRequests().anyRequest().authenticated();要求所有接口都需要进行权限认证，这个类中的anyRequest()即所有接口， 等同于 http.authorizeRequests().antMatchers(&quot;/&quot;).authenticated() ;</p>
+<pre><code class="language-java">//所有接口都不需要权限认证
+http.authorizeRequests().antMatchers(&quot;/**&quot;).permitAll();
+//所有接口都不需要进行权限认证
+http.authorizeRequests().antMatchers(&quot;/**&quot;).authenticated();
+//只有以test开头的接口需要进行权限认证
+http.authorizeRequests().antMatchers(&quot;/test/**&quot;).authenticated();
+</code></pre>
+<p>http.authorizeRequests().antMatchers(&quot;/test/&quot;).hasRole(“user”).antMatchers(&quot;/&quot;).authenticated();在这个代码中要求以/test开头的路由需要进行角色认证（这里要求user角色），而其他接口只要登录即可访问。当我们需要配置多个角色时可以通过hasAnyRole方法配置多个角色的访问权限，如</p>
+<pre><code class="language-java">// 在这个代码中要求以/test开头的路由需要进行角色认证（这里要求user角色），而其他接口只要登录即可访问
+http.authorizeRequests().antMatchers(&quot;/test/**&quot;).hasAnyRole(&quot;user&quot;,&quot;admin&quot;).antMatchers(&quot;/**&quot;).authenticated();
+</code></pre>
+<h2 id="匹配规则">匹配规则</h2>
+<h3 id="url匹配">URL匹配</h3>
+<ul>
+<li>requestMatchers() 配置一个request Mather数组，参数为RequestMatcher 对象，其match 规则自定义,需要的时候放在最前面，对需要匹配的的规则进行自定义与过滤</li>
+<li>authorizeRequests() URL权限配置</li>
+<li>antMatchers() 配置一个request Mather 的 string数组，参数为 ant 路径格式， 直接匹配url</li>
+<li>anyRequest 匹配任意url，无参 ,最好放在最后面</li>
+</ul>
+<h3 id="保护url">保护URL</h3>
+<ul>
+<li>authenticated() 保护UrL，需要用户登录</li>
+<li>permitAll() 指定URL无需保护，一般应用与静态资源文件</li>
+<li>hasRole(String role) 限制单个角色访问，角色将被增加 “ROLE_” .所以”ADMIN” 将和 “ROLE_ADMIN”进行比较. 另一个方法是hasAuthority(String authority)</li>
+<li>hasAnyRole(String… roles) 允许多个角色访问. 另一个方法是hasAnyAuthority(String… authorities)</li>
+<li>access(String attribute) 该方法使用 SPEL, 所以可以创建复杂的限制 例如如access(“permitAll”),</li>
+<li>access(“hasRole(‘ADMIN’) and hasIpAddress(‘123.123.123.123’)”)</li>
+<li>hasIpAddress(String ipaddressExpression) 限制IP地址或子网</li>
+</ul>
+<h3 id="登录login">登录login</h3>
+<ul>
+<li>formLogin() 基于表单登录</li>
+<li>loginPage() 登录页</li>
+<li>defaultSuccessUrl 登录成功后的默认处理页</li>
+<li>failuerHandler登录失败之后的处理器</li>
+<li>successHandler登录成功之后的处理器</li>
+<li>failuerUrl登录失败之后系统转向的url，默认是this.loginPage + “?error”</li>
+</ul>
+<h3 id="登出logout">登出logout</h3>
+<ul>
+<li>logoutUrl 登出url ， 默认是/logout， 它可以是一个ant path url</li>
+<li>logoutSuccessUrl 登出成功后跳转的 url 默认是&rdquo;/login?logout&rdquo;</li>
+<li>logoutSuccessHandler 登出成功处理器，设置后会把logoutSuccessUrl 置为null</li>
+</ul>
+<h2 id="多个antmatchers顺序配置">多个antMatchers顺序配置</h2>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/security/Security%E4%B9%8BHttpSecurity%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3-1.png" alt="Security之HttpSecurity常用方法详解-1"></p>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2022/03/security%E8%B5%84%E6%BA%90%E6%9C%8D%E5%8A%A1%E7%99%BD%E5%90%8D%E5%8D%95%E8%BF%87%E6%BB%A4%E5%99%A8/" title="Security资源服务白名单过滤器"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2022/04/nginx-%E8%BD%AC%E5%8F%91%E5%90%8E-%E8%8E%B7%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9C%9F%E5%AE%9Eip%E5%9C%B0%E5%9D%80/"
+                    title="Nginx 转发后 获取客户端真实ip地址"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2023
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

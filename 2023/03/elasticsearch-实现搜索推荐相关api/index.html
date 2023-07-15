@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        Elasticsearch 实现搜索推荐相关API - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="Elasticsearch 搜索推荐 - Suggest 概述 ​ 搜索一般都会要求具有“搜索推荐”或者叫&amp;quot;搜索补全&amp;quot;的功能，即在用户输入搜索的过程中，进行自动补全或者" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>Elasticsearch 实现搜索推荐相关API - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="Elasticsearch 实现搜索推荐相关API" />
+<meta property="og:description" content="Elasticsearch 搜索推荐 - Suggest 概述 ​ 搜索一般都会要求具有“搜索推荐”或者叫&quot;搜索补全&quot;的功能，即在用户输入搜索的过程中，进行自动补全或者" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2023/03/elasticsearch-%E5%AE%9E%E7%8E%B0%E6%90%9C%E7%B4%A2%E6%8E%A8%E8%8D%90%E7%9B%B8%E5%85%B3api/" />
+<meta property="article:published_time" content="2023-03-29T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-03-29T00:00:00+00:00" />
+<meta itemprop="name" content="Elasticsearch 实现搜索推荐相关API">
+<meta itemprop="description" content="Elasticsearch 搜索推荐 - Suggest 概述 ​ 搜索一般都会要求具有“搜索推荐”或者叫&quot;搜索补全&quot;的功能，即在用户输入搜索的过程中，进行自动补全或者">
+<meta itemprop="datePublished" content="2023-03-29T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2023-03-29T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="4419">
+
+
+
+<meta itemprop="keywords" content="Elasticsearch," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Elasticsearch 实现搜索推荐相关API"/>
+<meta name="twitter:description" content="Elasticsearch 搜索推荐 - Suggest 概述 ​ 搜索一般都会要求具有“搜索推荐”或者叫&quot;搜索补全&quot;的功能，即在用户输入搜索的过程中，进行自动补全或者"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/charles/" class="category-list-link">charles</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/elasticsearch/" class="category-list-link">elasticsearch</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/idea/" class="category-list-link">idea</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/milvus/" class="category-list-link">milvus</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/nginx/" class="category-list-link">nginx</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/rabbitmq/" class="category-list-link">rabbitmq</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-security/" class="category-list-link">spring-security</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">54</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/captcha/" class="tag-list-link">captcha</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/charles/" class="tag-list-link">charles</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/dubbo/" class="tag-list-link">dubbo</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/elasticsearch/" class="tag-list-link">elasticsearch</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/idea/" class="tag-list-link">idea</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/json/" class="tag-list-link">json</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/milvus/" class="tag-list-link">milvus</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nginx/" class="tag-list-link">nginx</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/saas/" class="tag-list-link">saas</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-security/" class="tag-list-link">spring-security</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="tag-list-link">正则表达式</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/07/java%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%BD%ACpdf%E6%96%87%E4%BB%B6/" class="title">JAVA实现图片转PDF文件</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-07-09 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-07-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/06/xxljob%E8%B0%83%E7%94%A8%E6%88%90%E5%8A%9F%E5%8D%B4%E6%9C%AA%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/" class="title">xxljob调用成功却&#39;未执行任务&#39;?</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-06-21 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-06-21</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E5%A4%9A%E6%8E%92%E5%BA%8F%E6%9D%A1%E4%BB%B6%E6%90%9C%E7%B4%A2/" class="title">Elasticsearch 多排序条件搜索</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-05-20 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-05-20</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/05/elasticsearch-%E6%90%9C%E7%B4%A2%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%9D%E7%A6%BB%E5%9B%A0%E7%B4%A0/" class="title">Elasticsearch 搜索优化之距离因素</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-05-15 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-05-15</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/04/ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/" class="title">ik分词器踩坑记录</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-04-12 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-04-12</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2023/03/elasticsearch-%E5%AE%9E%E7%8E%B0%E6%90%9C%E7%B4%A2%E6%8E%A8%E8%8D%90%E7%9B%B8%E5%85%B3api/"
+    >Elasticsearch 实现搜索推荐相关API</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2023/03/elasticsearch-%E5%AE%9E%E7%8E%B0%E6%90%9C%E7%B4%A2%E6%8E%A8%E8%8D%90%E7%9B%B8%E5%85%B3api/" class="article-date">
+  <time datetime="2023-03-29 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-03-29</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/elasticsearch/"> elasticsearch </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/elasticsearch/"> Elasticsearch </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2023/03/elasticsearch-%E5%AE%9E%E7%8E%B0%E6%90%9C%E7%B4%A2%E6%8E%A8%E8%8D%90%E7%9B%B8%E5%85%B3api/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 4419字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 9分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<h3 id="elasticsearch-搜索推荐---suggest">Elasticsearch 搜索推荐 - Suggest</h3>
+<h4 id="概述">概述</h4>
+<p>​	搜索一般都会要求具有“搜索推荐”或者叫&quot;搜索补全&quot;的功能，即在用户输入搜索的过程中，进行自动补全或者纠错。以此来提高搜索文档的匹配精准度，进而提升用户的搜索体验，这就是Suggest。</p>
+<h4 id="1term-suggester">1.Term Suggester</h4>
+<blockquote>
+<p>官方文档: <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.2/search-suggesters.html">https://www.elastic.co/guide/en/elasticsearch/reference/7.2/search-suggesters.html</a></p>
+</blockquote>
+<p>正如其名，只基于tokenizer之后的单个term匹配建议词，并不会者虑多个term之间的关系</p>
+<h5 id="语法格式如下">语法格式如下</h5>
+<pre><code class="language-json">POST &lt;index&gt;/_search
+{
+	&quot;suggest&quot;: {
+		&quot;&lt;suggest_name&gt;&quot;: {
+			&quot;text&quot;:&quot;&lt;search_content&gt;&quot;,
+			&quot;term&quot;:{
+				&quot;suggest_mode&quot;:&quot;&lt;suggest_mode&gt;&quot;,
+				&quot;field&quot;:&quot;&lt;field_name&gt;&quot;
+			}
+		}
+	}
+}
+</code></pre>
+<p><strong>Options:</strong></p>
+<ul>
+<li>
+<p><code>text</code>:  用户搜索的文本</p>
+</li>
+<li>
+<p><code>field</code>:  要从哪个字段选取推荐数据</p>
+</li>
+<li>
+<p><code>analyzer</code>: 使用哪种分词器</p>
+</li>
+<li>
+<p><code>size</code>: 每个建议返回的最大结果数</p>
+</li>
+<li>
+<p><code>sort</code>:  如何按照提示词项排序，参数值只可以是以下两个枚举:</p>
+<ol>
+<li><code>score</code>: 分数&gt;词频&gt;词项本身</li>
+<li><code>frequency</code>: 词频&gt;分数&gt;词项本身</li>
+</ol>
+</li>
+<li>
+<p><code>suggest_mode</code>: 搜索推荐的推荐模式，参数值亦是枚举:</p>
+<ol>
+<li><code>missing</code>: 默认值，仅为不在索引中的词项生成建议词</li>
+<li><code>popular</code>: 仅返回与搜索词文档词频或文档词频更高的建议词</li>
+<li><code>always</code>: 根据建议文本中的词项推荐任何匹配的建议词</li>
+</ol>
+</li>
+<li>
+<p><code>max_edits</code>: 可以具有最大偏移距离候选建议以便被认为是建议。只能是1到2之间的值。任何其他值都将导致引发错误的请求错误。默认为2</p>
+</li>
+<li>
+<p><code>prefix_length</code>: 前缀匹配的时候，必须满足的最少字符</p>
+</li>
+<li>
+<p><code>min_word_length</code>: 最少包含的单词数量</p>
+</li>
+<li>
+<p><code>min_doc_freq</code>: 最少的文档频率</p>
+</li>
+<li>
+<p><code>max_term_freq</code>: 最大的词频</p>
+</li>
+</ul>
+<p>测试示例：</p>
+<pre><code class="language-json">#term suggest
+
+DELETE news
+POST _bulk
+{ &quot;index&quot; : { &quot;_index&quot; : &quot;news&quot;,&quot;_id&quot;:1 } }
+{ &quot;title&quot;: &quot;baoqiang bought a new hat with the same color of this font, which is very beautiful baoqiangba baoqiangda baoqiangdada baoqian baoqia&quot;}
+{ &quot;index&quot; : { &quot;_index&quot; : &quot;news&quot;,&quot;_id&quot;:2 } }
+{ &quot;title&quot;: &quot;baoqiangge gave birth to two children, one is upstairs, one is downstairs baoqiangba baoqiangda baoqiangdada baoqian baoqia&quot;}
+{ &quot;index&quot; : { &quot;_index&quot; : &quot;news&quot;,&quot;_id&quot;:3} }
+{ &quot;title&quot;: &quot;baoqiangge 's money was rolled away baoqiangba baoqiangda baoqiangdada baoqian baoqia&quot;}
+{ &quot;index&quot; : { &quot;_index&quot; : &quot;news&quot;,&quot;_id&quot;:4} }
+{ &quot;title&quot;: &quot;baoqiangda baoqiangda baoqiangda baoqiangda baoqiangda baoqian baoqia&quot;}
+
+GET news/_mapping
+
+POST _analyze
+{
+  &quot;text&quot;: [
+    &quot;BaoQiang bought a new hat with the same color of this font, which is very beautiful&quot;,
+    &quot;BaoQiangGe gave birth to two children, one is upstairs, one is downstairs&quot;,
+    &quot;BaoQiangGe 's money was rolled away&quot;
+  ]
+}
+
+POST /news/_search
+{
+  &quot;suggest&quot;: {
+    &quot;my-suggestion&quot;: {
+      &quot;text&quot;: &quot;baoqing baoqiang&quot;,
+      &quot;term&quot;: {
+        &quot;suggest_mode&quot;:&quot;always&quot;,
+        &quot;field&quot;: &quot;title&quot;,
+        &quot;min_doc_freq&quot;: 3
+      }
+    }
+  }
+}
+
+
+GET /news/_search
+{ 
+  &quot;suggest&quot;: {
+    &quot;my-suggestion&quot;: {
+      &quot;text&quot;: &quot;baoqing baoqiang&quot;,
+      &quot;term&quot;: {
+        &quot;suggest_mode&quot;: &quot;popular&quot;,
+        &quot;field&quot;: &quot;title&quot;
+      }
+    }
+  }
+}
+
+GET /news/_search
+{ 
+  &quot;suggest&quot;: {
+    &quot;my-suggestion&quot;: {
+      &quot;text&quot;: &quot;baoqing baoqiang&quot;,
+      &quot;term&quot;: {
+        &quot;suggest_mode&quot;: &quot;popular&quot;,
+        &quot;field&quot;: &quot;title&quot;,
+        &quot;max_edits&quot;:2,
+        &quot;max_term_freq&quot;:1
+      }
+    }
+  }
+}
+
+GET /news/_search
+{ 
+  &quot;suggest&quot;: {
+    &quot;my-suggestion&quot;: {
+      &quot;text&quot;: &quot;baoqing baoqiang&quot;,
+      &quot;term&quot;: {
+        &quot;suggest_mode&quot;: &quot;always&quot;,
+        &quot;field&quot;: &quot;title&quot;,
+        &quot;max_edits&quot;:2
+      }
+    }
+  }
+}
+
+DELETE news2
+POST _bulk
+{ &quot;index&quot; : { &quot;_index&quot; : &quot;news2&quot;,&quot;_id&quot;:1 } }
+{ &quot;title&quot;: &quot;baoqiang4&quot;}
+{ &quot;index&quot; : { &quot;_index&quot; : &quot;news2&quot;,&quot;_id&quot;:2 } }
+{ &quot;title&quot;: &quot;baoqiang4 baoqiang3&quot;}
+{ &quot;index&quot; : { &quot;_index&quot; : &quot;news2&quot;,&quot;_id&quot;:3 } }
+{ &quot;title&quot;: &quot;baoqiang4 baoqiang3 baoqiang2&quot;}
+{ &quot;index&quot; : { &quot;_index&quot; : &quot;news2&quot;,&quot;_id&quot;:4 } }
+{ &quot;title&quot;: &quot;baoqiang4 baoqiang3 baoqiang2  baoqiang&quot;}
+POST /news2/_search
+{ 
+  &quot;suggest&quot;: {
+    &quot;second-suggestion&quot;: {
+      &quot;text&quot;: &quot;baoqian baoqiang baoqiang2 baoqiang3&quot;,
+      &quot;term&quot;: {
+        &quot;suggest_mode&quot;: &quot;popular&quot;,
+        &quot;field&quot;: &quot;title&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<h4 id="2phrase-suggester">2.Phrase Suggester</h4>
+<p><code>term_suggester</code>可以对单个<code>term</code>进行建议或者纠错，不会考虑多个<code>term</code>之间的关系，但是<code>phrase_suggester</code>在<code>term_suggester</code>的基础上，考虑多个term之间的关系，比如是否同时出现一个索引原文中，相邻程度以及词频等等</p>
+<p><strong>前置条件，需要在创建索引映射时进行配置，以下为官方示例：</strong></p>
+<pre><code class="language-json">PUT test
+{
+  &quot;settings&quot;: {
+    &quot;index&quot;: {
+      &quot;number_of_shards&quot;: 1,
+      &quot;analysis&quot;: {
+        &quot;analyzer&quot;: {
+          &quot;trigram&quot;: {
+            &quot;type&quot;: &quot;custom&quot;,
+            &quot;tokenizer&quot;: &quot;standard&quot;,
+            &quot;filter&quot;: [&quot;lowercase&quot;,&quot;shingle&quot;]
+          },
+          &quot;reverse&quot;: {
+            &quot;type&quot;: &quot;custom&quot;,
+            &quot;tokenizer&quot;: &quot;standard&quot;,
+            &quot;filter&quot;: [&quot;lowercase&quot;,&quot;reverse&quot;]
+          }
+        },
+        &quot;filter&quot;: {
+          &quot;shingle&quot;: {
+            &quot;type&quot;: &quot;shingle&quot;,
+            &quot;min_shingle_size&quot;: 2,
+            &quot;max_shingle_size&quot;: 3
+          }
+        }
+      }
+    }
+  },
+  &quot;mappings&quot;: {
+    &quot;properties&quot;: {
+      &quot;title&quot;: {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;fields&quot;: {
+          &quot;trigram&quot;: {
+            &quot;type&quot;: &quot;text&quot;,
+            &quot;analyzer&quot;: &quot;trigram&quot;
+          },
+          &quot;reverse&quot;: {
+            &quot;type&quot;: &quot;text&quot;,
+            &quot;analyzer&quot;: &quot;reverse&quot;
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>real_word_error_likelihood</code>: 此选项的默认值为 0.95。此选项告诉 Elasticsearch 索引中 5%的术语拼写错误。这意味着随着这个参数的值越来越低Elasticsearch 会将越来越多存在于索引中的术语视为拼写错误，即使它们是正确的</li>
+<li><code>max_errors</code>: 为了形成更正，最多被认为是拼写错误的术语的最大百分比。默认值为 1</li>
+<li><code>confidence</code>: 默认值是1.0，最大值也是。该值用作与建议得分相关的阈值。仅显示分数超过此值的那些建议。例如，置信度为1.0只会返回得分高于输入短语的建议。</li>
+<li><code>highlight</code>: 高亮功能是最有用的搜索功能之一。也可以在短语建议程序中启用它。更正的单词将使用此关键字突出显示。如以上查询所示，我们还可以采用哪个标签来突出显示（这里我们使用了<!-- raw HTML omitted -->标签）。</li>
+<li><code>collate</code>: 告诉 Elasticsearch 根据指定的查询来检查每个建议，以删除索引中不存在匹配文档的建议。在这种情况下，它是一个匹配查询。由于此查询是模板查询，因此搜索查询是当前建议，位于查询的参数下。可以在查询下的 “params”对象中添加更多字段。同样，当参数 “prune” 设置为 true 时，响应中将有一个附加字段 “collate_match”，指示建议结果中是否所有校正后的关键字都匹配。</li>
+<li><code>direct_generator</code>: phrase suggester使用候选生成器生成给定文本中每个项可能的项的列表。单个候选生成器类似于为文本中的每个单独的调用term suggester。生成器的输出随后与建议候选项中的候选项结合打分。目前只支持一种候选生成器，即direct_generator。建议API接受密钥直接生成器下的生成器列表;列表中的每个生成器都按原始文本中的每个项调用</li>
+</ul>
+<p>测试示例：</p>
+<pre><code class="language-json">#phrase suggester
+DELETE test
+PUT test
+{
+  &quot;settings&quot;: {
+    &quot;index&quot;: {
+      &quot;number_of_shards&quot;: 1,
+      &quot;number_of_replicas&quot;: 0,
+      &quot;analysis&quot;: {
+        &quot;analyzer&quot;: {
+          &quot;trigram&quot;: {
+            &quot;type&quot;: &quot;custom&quot;,
+            &quot;tokenizer&quot;: &quot;standard&quot;,
+            &quot;filter&quot;: [
+              &quot;lowercase&quot;,
+              &quot;shingle&quot;
+            ]
+          }
+        },
+        &quot;filter&quot;: {
+          &quot;shingle&quot;: {
+            &quot;type&quot;: &quot;shingle&quot;,
+            &quot;min_shingle_size&quot;: 2,
+            &quot;max_shingle_size&quot;: 3
+          }
+        }
+      }
+    }
+  },
+  &quot;mappings&quot;: {
+    &quot;properties&quot;: {
+      &quot;title&quot;: {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;fields&quot;: {
+          &quot;trigram&quot;: {
+            &quot;type&quot;: &quot;text&quot;,
+            &quot;analyzer&quot;: &quot;trigram&quot;
+          }
+        }
+      }
+    }
+  }
+}
+
+GET /_analyze
+{
+  &quot;tokenizer&quot;: &quot;standard&quot;,
+  &quot;filter&quot;: [
+    {
+      &quot;type&quot;: &quot;shingle&quot;,
+      &quot;min_shingle_size&quot;: 2,
+      &quot;max_shingle_size&quot;: 3
+    }
+  ],
+  &quot;text&quot;: &quot;lucene and elasticsearch&quot;
+}
+
+
+# &quot;min_shingle_size&quot;: 2,
+# &quot;max_shingle_size&quot;: 3
+GET test/_analyze
+{
+  &quot;analyzer&quot;: &quot;trigram&quot;, 
+  &quot;text&quot; : &quot;lucene and elasticsearch&quot;
+}
+DELETE test
+POST test/_bulk
+{ &quot;index&quot; : { &quot;_id&quot;:1} }
+{&quot;title&quot;: &quot;lucene and elasticsearch&quot;}
+{ &quot;index&quot; : {&quot;_id&quot;:2} }
+{&quot;title&quot;: &quot;lucene and elasticsearhc&quot;}
+{ &quot;index&quot; : { &quot;_id&quot;:3} }
+{&quot;title&quot;: &quot;luceen and elasticsearch&quot;}
+
+POST test/_search
+GET test/_mapping
+POST test/_search
+{
+  &quot;suggest&quot;: {
+    &quot;text&quot;: &quot;Luceen and elasticsearhc&quot;,
+    &quot;simple_phrase&quot;: {
+      &quot;phrase&quot;: {
+        &quot;field&quot;: &quot;title.trigram&quot;,
+        &quot;max_errors&quot;: 2,
+        &quot;gram_size&quot;: 1,
+        &quot;confidence&quot;:0,
+        &quot;direct_generator&quot;: [
+          {
+            &quot;field&quot;: &quot;title.trigram&quot;,
+            &quot;suggest_mode&quot;: &quot;always&quot;
+          }
+        ],
+        &quot;highlight&quot;: {
+          &quot;pre_tag&quot;: &quot;&lt;em&gt;&quot;,
+          &quot;post_tag&quot;: &quot;&lt;/em&gt;&quot;
+        }
+      }
+    }
+  }
+}
+
+</code></pre>
+<h4 id="3completion-suggester">3.Completion Suggester</h4>
+<p>自动补全，目动完成。支持3种查询查询【前缀查询 prefix) 模糊查询 (fuzzy) 正则表达式查询 (regex)】 ，主要针对的应用场景就是&quot;Auto Completion&rdquo;。此场景下用户每输入一个字符的时候，就需要即时发送一次查询请求到后端查找匹配项，在用户输入速度较高的情况下对后端响应速度要求比较苛刻。因此实现上它和前面两个Suggester采用了不同的数据结构，索引并非通过倒排来完成，而是将analyze通过的数据编码成FST和索引一起存放。对于一个open状态的索引，FST会被ES整个装载到内存里的，进行前缀查找速度极快。但是FST只能用于前缀查找，这也是Completion Suggester的局限所在</p>
+<p>基于内存而非索引，性能强悍。需要结合特定的 completion 类型。</p>
+<blockquote>
+<p>1:内存代价太大，原话是:性能高是通过大量的内存换来的</p>
+<p>2: 只能前缀搜索,假如用户输入的不是前缀 召回率可能很低</p>
+</blockquote>
+<p><strong>前置条件，需要在创建索引映射时进行配置，以下为官方示例：</strong></p>
+<pre><code class="language-json">PUT music
+{
+    &quot;mappings&quot;: {
+        &quot;properties&quot; : {
+            &quot;suggest&quot; : {
+                &quot;type&quot; : &quot;completion&quot;
+            },
+            &quot;title&quot; : {
+                &quot;type&quot;: &quot;keyword&quot;
+            }
+        }
+    }
+}
+</code></pre>
+<p><code>completion</code>: es的一种特有类型，专门为suggest提供，基于内存，性能很高</p>
+<hr>
+<ul>
+<li><code>prefix query</code>: 基于前缀查询的搜索提示，是最常用的一种搜索推荐查询。
+<ul>
+<li><code>prefix</code>: 客户端搜索词</li>
+<li><code>field</code>: 建议词字</li>
+<li><code>size</code>: 需要返回的建议词数量 (默认5)</li>
+<li><code>skip_duplicates</code>: 是否过滤掉重复建议，默认false</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-json">GET test/_search
+{
+  &quot;suggest&quot;: {
+    &quot;your_suggest_name&quot;: {
+      &quot;prefix&quot;: &quot;your_search_prefix_content&quot;,
+      &quot;completion&quot;: {
+        &quot;field&quot;: &quot;title.suggest&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<ul>
+<li><code>fuzzy query</code>:</li>
+<li><code>fuzziness</code>: 允许的偏移量，默认auto</li>
+<li><code>transpositions</code>: 如果设置为true，则换位计为一次更改而不是两次更改，默认为true。</li>
+<li><code>min_length</code>: 返回模糊建议之前的最小输入长度，默认3</li>
+<li><code>prefix_length</code>: 输入的最小长度 (不检查模糊替代项) , 默认为1</li>
+<li><code>unicode_aware</code>: 如果为true，则所有度量 (如模糊编辑距离，换位和长度)均以Unicode代码点而不是以字节为单位。这比原始字节略慢，因此默认情况下将其设置为false。</li>
+</ul>
+<pre><code class="language-json">GET test/_search
+{
+  &quot;suggest&quot;: {
+    &quot;your_suggest_name&quot;: {
+      &quot;prefix&quot;: &quot;your_search_content&quot;,
+      &quot;completion&quot;: {
+        &quot;field&quot;: &quot;title.suggest&quot;,
+        &quot;skip_duplicates&quot;: true,
+        &quot;fuzzy&quot;: {
+          &quot;fuzziness&quot;: 2
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<ul>
+<li><code>regex query</code>: 可以用正则表示前缀，不建议使用</li>
+</ul>
+<pre><code class="language-json">GET test/_search
+{
+  &quot;suggest&quot;: {
+    &quot;your_suggest_name&quot;: {
+      &quot;regex&quot;: &quot;your_regex_expressions&quot;,
+      &quot;completion&quot;: {
+        &quot;field&quot;: &quot;title.suggest&quot;,
+        &quot;size&quot;: 10
+      }
+    }
+  }
+}
+</code></pre>
+<p>测试示例：</p>
+<pre><code class="language-json">#complate suggester
+DELETE suggest_carinfo
+PUT suggest_carinfo
+{
+  &quot;mappings&quot;: {
+    &quot;properties&quot;: {
+        &quot;title&quot;: {
+          &quot;type&quot;: &quot;text&quot;,
+          &quot;analyzer&quot;: &quot;ik_max_word&quot;,
+          &quot;fields&quot;: {
+            &quot;suggest&quot;: {
+              &quot;type&quot;: &quot;completion&quot;,
+              &quot;analyzer&quot;: &quot;ik_max_word&quot;
+            }
+          }
+        },
+        &quot;content&quot;: {
+          &quot;type&quot;: &quot;text&quot;,
+          &quot;analyzer&quot;: &quot;ik_max_word&quot;
+        }
+      }
+  }
+}
+
+POST _bulk
+{&quot;index&quot;:{&quot;_index&quot;:&quot;suggest_carinfo&quot;,&quot;_id&quot;:1}}
+{&quot;title&quot;:&quot;宝马X5 两万公里准新车&quot;,&quot;content&quot;:&quot;这里是宝马X5图文描述&quot;}
+{&quot;index&quot;:{&quot;_index&quot;:&quot;suggest_carinfo&quot;,&quot;_id&quot;:2}}
+{&quot;title&quot;:&quot;宝马5系&quot;,&quot;content&quot;:&quot;这里是奥迪A6图文描述&quot;}
+{&quot;index&quot;:{&quot;_index&quot;:&quot;suggest_carinfo&quot;,&quot;_id&quot;:3}}
+{&quot;title&quot;:&quot;宝马3系&quot;,&quot;content&quot;:&quot;这里是奔驰图文描述&quot;}
+{&quot;index&quot;:{&quot;_index&quot;:&quot;suggest_carinfo&quot;,&quot;_id&quot;:4}}
+{&quot;title&quot;:&quot;奥迪Q5 两万公里准新车&quot;,&quot;content&quot;:&quot;这里是宝马X5图文描述&quot;}
+{&quot;index&quot;:{&quot;_index&quot;:&quot;suggest_carinfo&quot;,&quot;_id&quot;:5}}
+{&quot;title&quot;:&quot;奥迪A6 无敌车况&quot;,&quot;content&quot;:&quot;这里是奥迪A6图文描述&quot;}
+{&quot;index&quot;:{&quot;_index&quot;:&quot;suggest_carinfo&quot;,&quot;_id&quot;:6}}
+{&quot;title&quot;:&quot;奥迪双钻&quot;,&quot;content&quot;:&quot;这里是奔驰图文描述&quot;}
+{&quot;index&quot;:{&quot;_index&quot;:&quot;suggest_carinfo&quot;,&quot;_id&quot;:7}}
+{&quot;title&quot;:&quot;奔驰AMG 两万公里准新车&quot;,&quot;content&quot;:&quot;这里是宝马X5图文描述&quot;}
+{&quot;index&quot;:{&quot;_index&quot;:&quot;suggest_carinfo&quot;,&quot;_id&quot;:8}}
+{&quot;title&quot;:&quot;奔驰大G 无敌车况&quot;,&quot;content&quot;:&quot;这里是奥迪A6图文描述&quot;}
+{&quot;index&quot;:{&quot;_index&quot;:&quot;suggest_carinfo&quot;,&quot;_id&quot;:9}}
+{&quot;title&quot;:&quot;奔驰C260&quot;,&quot;content&quot;:&quot;这里是奔驰图文描述&quot;}
+{&quot;index&quot;:{&quot;_index&quot;:&quot;suggest_carinfo&quot;,&quot;_id&quot;:10}}
+{&quot;title&quot;:&quot;nir奔驰C260&quot;,&quot;content&quot;:&quot;这里是奔驰图文描述&quot;}
+</code></pre>
+<h4 id="4completion-suggester">4.Completion Suggester</h4>
+<p>完成建议者会考虑索引中的所有文档，但是通常来说，我们在进行智能推荐的时候最好通过某些条件过滤，并且有可能会针对某些特性提升权重。</p>
+<ul>
+<li><code>contexts</code>：上下文对象，可以定义多个
+<ul>
+<li><code>name</code>：context的名字，用于区分同一个索引中不同的context对象。需要在查询的时候指定当前name</li>
+<li><code>type</code>：context对象的类型，目前支持两种：category和geo，分别用于对suggest item分类和指定地理位置。</li>
+<li><code>boost</code>：权重值，用于提升排名</li>
+</ul>
+</li>
+<li><code>path</code>：如果没有path，相当于在PUT数据的时候需要指定context.name字段，如果在Mapping中指定了path，在PUT数据的时候就不需要了，因为 Mapping是一次性的，而PUT数据是频繁操作，这样就简化了代码。这段解释有木有很牛逼，网上搜到的都是官方文档的翻译，觉悟雷同。</li>
+</ul>
+<p>测试示例：</p>
+<pre><code class="language-json"># context suggester
+# 定义一个名为 place_type 的类别上下文，其中类别必须与建议一起发送。
+# 定义一个名为 location 的地理上下文，类别必须与建议一起发送
+DELETE place
+PUT place
+{
+  &quot;mappings&quot;: {
+    &quot;properties&quot;: {
+      &quot;suggest&quot;: {
+        &quot;type&quot;: &quot;completion&quot;,
+        &quot;contexts&quot;: [
+          {
+            &quot;name&quot;: &quot;place_type&quot;,
+            &quot;type&quot;: &quot;category&quot;
+          },
+          {
+            &quot;name&quot;: &quot;location&quot;,
+            &quot;type&quot;: &quot;geo&quot;,
+            &quot;precision&quot;: 4
+          }
+        ]
+      }
+    }
+  }
+}
+
+PUT place/_doc/1
+{
+  &quot;suggest&quot;: {
+    &quot;input&quot;: [ &quot;timmy's&quot;, &quot;starbucks&quot;, &quot;dunkin donuts&quot; ],
+    &quot;contexts&quot;: {
+      &quot;place_type&quot;: [ &quot;cafe&quot;, &quot;food&quot; ]                    
+    }
+  }
+}
+PUT place/_doc/2
+{
+  &quot;suggest&quot;: {
+    &quot;input&quot;: [ &quot;monkey&quot;, &quot;timmy's&quot;, &quot;Lamborghini&quot; ],
+    &quot;contexts&quot;: {
+      &quot;place_type&quot;: [ &quot;money&quot;]                    
+    }
+  }
+}
+
+
+GET place/_search
+POST place/_search?pretty
+{
+  &quot;suggest&quot;: {
+    &quot;place_suggestion&quot;: {
+      &quot;prefix&quot;: &quot;sta&quot;,
+      &quot;completion&quot;: {
+        &quot;field&quot;: &quot;suggest&quot;,
+        &quot;size&quot;: 10,
+        &quot;contexts&quot;: {
+          &quot;place_type&quot;: [ &quot;cafe&quot;, &quot;restaurants&quot; ]
+        }
+      }
+    }
+  }
+}
+# 某些类别的建议可以比其他类别提升得更高。以下按类别过滤建议，并额外提升与某些类别相关的建议
+GET place/_search
+POST place/_search?pretty
+{
+  &quot;suggest&quot;: {
+    &quot;place_suggestion&quot;: {
+      &quot;prefix&quot;: &quot;tim&quot;,
+      &quot;completion&quot;: {
+        &quot;field&quot;: &quot;suggest&quot;,
+        &quot;contexts&quot;: {
+          &quot;place_type&quot;: [                             
+            { &quot;context&quot;: &quot;cafe&quot; },
+            { &quot;context&quot;: &quot;money&quot;, &quot;boost&quot;: 2 }
+          ]
+        }
+      }
+    }
+  }
+}
+
+# 地理位置筛选器
+PUT place/_doc/3
+{
+  &quot;suggest&quot;: {
+    &quot;input&quot;: &quot;timmy's&quot;,
+    &quot;contexts&quot;: {
+      &quot;location&quot;: [
+        {
+          &quot;lat&quot;: 43.6624803,
+          &quot;lon&quot;: -79.3863353
+        },
+        {
+          &quot;lat&quot;: 43.6624718,
+          &quot;lon&quot;: -79.3873227
+        }
+      ]
+    }
+  }
+}
+POST place/_search
+{
+  &quot;suggest&quot;: {
+    &quot;place_suggestion&quot;: {
+      &quot;prefix&quot;: &quot;tim&quot;,
+      &quot;completion&quot;: {
+        &quot;field&quot;: &quot;suggest&quot;,
+        &quot;contexts&quot;: {
+          &quot;location&quot;: {
+            &quot;lat&quot;: 43.662,
+            &quot;lon&quot;: -79.380
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+# 定义一个名为 place_type 的类别上下文，其中类别是从 cat 字段中读取的。
+# 定义一个名为 location 的地理上下文，其中的类别是从 loc 字段中读取的
+DELETE place_path_category
+PUT place_path_category
+{
+  &quot;mappings&quot;: {
+    &quot;properties&quot;: {
+      &quot;suggest&quot;: {
+        &quot;type&quot;: &quot;completion&quot;,
+        &quot;contexts&quot;: [
+          {
+            &quot;name&quot;: &quot;place_type&quot;,
+            &quot;type&quot;: &quot;category&quot;,
+            &quot;path&quot;: &quot;cat&quot;
+          },
+          {
+            &quot;name&quot;: &quot;location&quot;,
+            &quot;type&quot;: &quot;geo&quot;,
+            &quot;precision&quot;: 4,
+            &quot;path&quot;: &quot;loc&quot;
+          }
+        ]
+      },
+      &quot;loc&quot;: {
+        &quot;type&quot;: &quot;geo_point&quot;
+      }
+    }
+  }
+}
+# 如果映射有路径，那么以下索引请求就足以添加类别
+# 这些建议将与咖啡馆和食品类别相关联
+# 如果上下文映射引用另一个字段并且类别被明确索引，则建议将使用两组类别进行索引
+PUT place_path_category/_doc/1
+{
+  &quot;suggest&quot;: [&quot;timmy's&quot;, &quot;starbucks&quot;, &quot;dunkin donuts&quot;],
+  &quot;cat&quot;: [&quot;cafe&quot;, &quot;food&quot;] 
+}
+POST place_path_category/_search?pretty
+{
+  &quot;suggest&quot;: {
+    &quot;place_suggestion&quot;: {
+      &quot;prefix&quot;: &quot;tim&quot;,
+      &quot;completion&quot;: {
+        &quot;field&quot;: &quot;suggest&quot;,
+        &quot;contexts&quot;: {
+          &quot;place_type&quot;: [                             
+            { &quot;context&quot;: &quot;cafe&quot; }
+          ]
+        }
+      }
+    }
+  }
+}
+
+</code></pre>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2023/03/elasticsearch-%E5%B8%B8%E7%94%A8%E6%90%9C%E7%B4%A2api/" title="Elasticsearch 常用搜索API"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2023/04/%E5%AE%9E%E7%8E%B0ik%E5%88%86%E8%AF%8D%E5%99%A8%E8%AF%8D%E5%BA%93%E7%83%AD%E6%9B%B4%E6%96%B0/"
+                    title="实现ik分词器词库热更新"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2023
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>
