@@ -5,10 +5,55 @@
     <link>https://bluestaree.github.io/categories/</link>
     <description>Recent content in Categories on AzkeepToo个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 09 Jul 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 Mar 2024 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://bluestaree.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Spring Authorization Server授权码模式流程梳理</title>
+      <link>https://bluestaree.github.io/2024/03/spring-authorization-server%E6%8E%88%E6%9D%83%E7%A0%81%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B/</link>
+      <pubDate>Fri, 22 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2024/03/spring-authorization-server%E6%8E%88%E6%9D%83%E7%A0%81%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B/</guid>
+      <description>Spring Authorization Server ​ Spring authorization server是由社区推动的一个项目，在Spring security团队的领导下基于Nimbus库重头编写，其目的主要是为 Spring 社区提</description>
+    </item>
+    
+    <item>
+      <title>sentinel网关流控规则配置</title>
+      <link>https://bluestaree.github.io/2024/01/sentinel%E7%BD%91%E5%85%B3%E6%B5%81%E6%8E%A7%E8%A7%84%E5%88%99%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Sat, 20 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2024/01/sentinel%E7%BD%91%E5%85%B3%E6%B5%81%E6%8E%A7%E8%A7%84%E5%88%99%E9%85%8D%E7%BD%AE/</guid>
+      <description>sentinel网关流控规则配置 官网地址：https://github.com/alibaba/Sentinel/wiki/网关限流 mave</description>
+    </item>
+    
+    <item>
+      <title>Elasticsearch painless脚本教程</title>
+      <link>https://bluestaree.github.io/2023/12/elasticsearch-painless%E8%84%9A%E6%9C%AC%E6%95%99%E7%A8%8B/</link>
+      <pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2023/12/elasticsearch-painless%E8%84%9A%E6%9C%AC%E6%95%99%E7%A8%8B/</guid>
+      <description>转载文章：Elasticsearch painless脚本教程（包含Java API和SpringDataElasticsearch调用脚本） 最</description>
+    </item>
+    
+    <item>
+      <title>nginx黑名单设置</title>
+      <link>https://bluestaree.github.io/2023/11/nginx%E9%BB%91%E5%90%8D%E5%8D%95%E8%AE%BE%E7%BD%AE/</link>
+      <pubDate>Wed, 15 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2023/11/nginx%E9%BB%91%E5%90%8D%E5%8D%95%E8%AE%BE%E7%BD%AE/</guid>
+      <description>nginx黑名单设置 nginx之allow、deny allow和deny这两个指令的意思是指，允许ip和限制ip 在此之前不得不提一下，这两个</description>
+    </item>
+    
+    <item>
+      <title>mysql让指定多个id优先排序</title>
+      <link>https://bluestaree.github.io/2023/09/mysql%E8%AE%A9%E6%8C%87%E5%AE%9A%E5%A4%9A%E4%B8%AAid%E4%BC%98%E5%85%88%E6%8E%92%E5%BA%8F/</link>
+      <pubDate>Sun, 24 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2023/09/mysql%E8%AE%A9%E6%8C%87%E5%AE%9A%E5%A4%9A%E4%B8%AAid%E4%BC%98%E5%85%88%E6%8E%92%E5%BA%8F/</guid>
+      <description>mysql让指定的多个id优先排序 方法一： SELECT * FROM shop ORDER BY FIELD(shop_id, 13, 14, 15) DESC , shop_id ASC LIMIT 0,10; 方法二： SELECT * FROM shop ORDER BY shop_id=13 DESC,shop_id=14 DESC,shop_id=15 DESC,shop_id ASC LIMIT 0,10; 会先让13,14,15这三条数据</description>
+    </item>
     
     <item>
       <title>JAVA实现图片转PDF文件</title>
@@ -17,15 +62,6 @@
       
       <guid>https://bluestaree.github.io/2023/07/java%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%BD%ACpdf%E6%96%87%E4%BB%B6/</guid>
       <description>JAVA实现图片转PDF文件 转载文章：https://www.freesion.com/article/40861570631/ 今天记录个小</description>
-    </item>
-    
-    <item>
-      <title>xxljob调用成功却&#39;未执行任务&#39;?</title>
-      <link>https://bluestaree.github.io/2023/06/xxljob%E8%B0%83%E7%94%A8%E6%88%90%E5%8A%9F%E5%8D%B4%E6%9C%AA%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</link>
-      <pubDate>Wed, 21 Jun 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2023/06/xxljob%E8%B0%83%E7%94%A8%E6%88%90%E5%8A%9F%E5%8D%B4%E6%9C%AA%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</guid>
-      <description>最近在项目测试中发现一个问题，在xxljob 中设置得 0点定时任务，到点后xxljob后台显示调用成功。但服务端后台却&amp;rsquo;未执行&amp;r</description>
     </item>
     
     <item>
@@ -101,6 +137,15 @@
     </item>
     
     <item>
+      <title>xxljob调用成功却&#39;未执行任务&#39;?</title>
+      <link>https://bluestaree.github.io/2022/12/xxljob%E8%B0%83%E7%94%A8%E6%88%90%E5%8A%9F%E5%8D%B4%E6%9C%AA%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</link>
+      <pubDate>Wed, 21 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/12/xxljob%E8%B0%83%E7%94%A8%E6%88%90%E5%8A%9F%E5%8D%B4%E6%9C%AA%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</guid>
+      <description>最近在项目测试中发现一个问题，在xxljob 中设置得 0点定时任务，到点后xxljob后台显示调用成功。但服务端后台却&amp;rsquo;未执行&amp;r</description>
+    </item>
+    
+    <item>
       <title>爬取高德地图poi数据</title>
       <link>https://bluestaree.github.io/2022/11/%E7%88%AC%E5%8F%96%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BEpoi%E6%95%B0%E6%8D%AE/</link>
       <pubDate>Mon, 14 Nov 2022 00:00:00 +0000</pubDate>
@@ -143,51 +188,6 @@
       
       <guid>https://bluestaree.github.io/2022/08/pagehelper-%E7%9C%9F%E5%81%87%E5%88%86%E9%A1%B5/</guid>
       <description>业务场景：基于以图搜人结果，无法在人脸向量数据库milvus中进行分页查询，只能将匹配的数据按照一定数量限制全部查询出来，再通过手动分页的方</description>
-    </item>
-    
-    <item>
-      <title>mybatis plus自定义sql报错Invalid bound statement解决</title>
-      <link>https://bluestaree.github.io/2022/07/mybatis-plus%E8%87%AA%E5%AE%9A%E4%B9%89sql%E6%8A%A5%E9%94%99invalid-bound-statement%E8%A7%A3%E5%86%B3/</link>
-      <pubDate>Fri, 08 Jul 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2022/07/mybatis-plus%E8%87%AA%E5%AE%9A%E4%B9%89sql%E6%8A%A5%E9%94%99invalid-bound-statement%E8%A7%A3%E5%86%B3/</guid>
-      <description>日常开发中，同事在开发中遇到的一个问题，在使用自定义mapper方法时，出现Invalid bound statement，这里记录下问题及产生原因 自定</description>
-    </item>
-    
-    <item>
-      <title>Rabbitmq 动态队列实现</title>
-      <link>https://bluestaree.github.io/2022/07/rabbitmq-%E5%8A%A8%E6%80%81%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0/</link>
-      <pubDate>Wed, 06 Jul 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2022/07/rabbitmq-%E5%8A%A8%E6%80%81%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0/</guid>
-      <description>Rabbitmq 动态队列实现 该功能，基于RabbitMq提供的API接口实现，能在项目运行中，动态生成队列及其监听实现 项目目录结构： RabbitConfig 主要配置文件 @Configuration public class RabbitConfig</description>
-    </item>
-    
-    <item>
-      <title>Rabbitmq 延迟队列实现</title>
-      <link>https://bluestaree.github.io/2022/06/rabbitmq-%E5%BB%B6%E8%BF%9F%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0/</link>
-      <pubDate>Thu, 30 Jun 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2022/06/rabbitmq-%E5%BB%B6%E8%BF%9F%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0/</guid>
-      <description>前言 最近在做项目时遇到一个需求：需要根据用户设定得截止时间，将计划关闭。 因为不可变性，定时任务效率低直接排除，最初考虑通过mq死信交换机得方</description>
-    </item>
-    
-    <item>
-      <title>@PostConstruct 注解方法下的Springutils.getBean时报空指针异常</title>
-      <link>https://bluestaree.github.io/2022/06/postconstruct-%E6%B3%A8%E8%A7%A3%E6%96%B9%E6%B3%95%E4%B8%8B%E7%9A%84springutils.getbean%E6%97%B6%E6%8A%A5%E7%A9%BA%E6%8C%87%E9%92%88%E5%BC%82%E5%B8%B8/</link>
-      <pubDate>Tue, 28 Jun 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2022/06/postconstruct-%E6%B3%A8%E8%A7%A3%E6%96%B9%E6%B3%95%E4%B8%8B%E7%9A%84springutils.getbean%E6%97%B6%E6%8A%A5%E7%A9%BA%E6%8C%87%E9%92%88%E5%BC%82%E5%B8%B8/</guid>
-      <description>最近部署时，遇到此问题 问题 现有服务A,B B服务内 有一个 spring工具类( 这个类主要就是从容器种获取实体类)，代码如下 @Component public final class SpringBeanFactory implements ApplicationContextAware{ private static ApplicationContext context;</description>
-    </item>
-    
-    <item>
-      <title>Idea保存自动格式化插件Save Action配置</title>
-      <link>https://bluestaree.github.io/2022/06/idea%E4%BF%9D%E5%AD%98%E8%87%AA%E5%8A%A8%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6save-action%E9%85%8D%E7%BD%AE/</link>
-      <pubDate>Wed, 15 Jun 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2022/06/idea%E4%BF%9D%E5%AD%98%E8%87%AA%E5%8A%A8%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6save-action%E9%85%8D%E7%BD%AE/</guid>
-      <description>概述： 记录下一个很好用的Idea开发工具插件Save Action，它能够再保存时自动格式化代码 一、安装save-action插件 1、安装插件</description>
     </item>
     
   </channel>

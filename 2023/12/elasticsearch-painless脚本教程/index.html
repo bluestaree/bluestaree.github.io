@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        Elasticsearch painless脚本教程 - AzkeepToo个人博客
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="转载文章：Elasticsearch painless脚本教程（包含Java API和SpringDataElasticsearch调用脚本） 最" />
+    <meta name="generator" content="Hugo 0.69.2 with theme pure" />
+    <title>Elasticsearch painless脚本教程 - AzkeepToo个人博客</title>
+    
+    
+    <link rel="stylesheet" href="https://bluestaree.github.io/css/style.min.06fbaa72257ed699120e00925d277105b1a5264eafe68569fc288d3492f0d036.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="Elasticsearch painless脚本教程" />
+<meta property="og:description" content="转载文章：Elasticsearch painless脚本教程（包含Java API和SpringDataElasticsearch调用脚本） 最" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bluestaree.github.io/2023/12/elasticsearch-painless%E8%84%9A%E6%9C%AC%E6%95%99%E7%A8%8B/" />
+<meta property="article:published_time" content="2023-12-13T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-12-13T00:00:00+00:00" />
+<meta itemprop="name" content="Elasticsearch painless脚本教程">
+<meta itemprop="description" content="转载文章：Elasticsearch painless脚本教程（包含Java API和SpringDataElasticsearch调用脚本） 最">
+<meta itemprop="datePublished" content="2023-12-13T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2023-12-13T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2553">
+
+
+
+<meta itemprop="keywords" content="Elasticsearch," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Elasticsearch painless脚本教程"/>
+<meta name="twitter:description" content="转载文章：Elasticsearch painless脚本教程（包含Java API和SpringDataElasticsearch调用脚本） 最"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/bluestaree" target="_blank">
+            <img class="img-circle img-rotate" src="https://bluestaree.github.io/avatar.jpg" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">bluestaree</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">某超自然事件研究学徒</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>龙岩, 福建</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p> No BUG No Life ! </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/charles/" class="category-list-link">charles</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/elasticsearch/" class="category-list-link">elasticsearch</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/idea/" class="category-list-link">idea</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/milvus/" class="category-list-link">milvus</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/netty/" class="category-list-link">netty</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/nginx/" class="category-list-link">nginx</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/rabbitmq/" class="category-list-link">rabbitmq</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-authorization-server/" class="category-list-link">spring-authorization-server</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-boot/" class="category-list-link">spring-boot</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-cloud-alibaba/" class="category-list-link">spring-cloud-alibaba</a><span class="category-list-count">6</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/spring-security/" class="category-list-link">spring-security</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://bluestaree.github.io/categories/%E7%AC%94%E8%AE%B0/" class="category-list-link">笔记</a><span class="category-list-count">57</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/captcha/" class="tag-list-link">captcha</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/charles/" class="tag-list-link">charles</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/docker/" class="tag-list-link">docker</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/dubbo/" class="tag-list-link">dubbo</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/elasticsearch/" class="tag-list-link">elasticsearch</a><span
+                    class="tag-list-count">7</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/equals/" class="tag-list-link">equals</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/gradle/" class="tag-list-link">gradle</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hashcode/" class="tag-list-link">hashcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/hibernate/" class="tag-list-link">hibernate</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/idea/" class="tag-list-link">idea</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jdk8/" class="tag-list-link">jdk8</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/json/" class="tag-list-link">json</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/maven/" class="tag-list-link">maven</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/milvus/" class="tag-list-link">milvus</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nacos/" class="tag-list-link">nacos</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">6</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/nginx/" class="tag-list-link">nginx</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/redisson/" class="tag-list-link">redisson</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/saas/" class="tag-list-link">saas</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/seata/" class="tag-list-link">seata</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/sentinel/" class="tag-list-link">sentinel</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-authorization-server/" class="tag-list-link">spring-authorization-server</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-boot/" class="tag-list-link">spring-boot</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-cache/" class="tag-list-link">spring-cache</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/spring-security/" class="tag-list-link">spring-security</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="tag-list-link">正则表达式</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://bluestaree.github.io/tags/%E7%BC%93%E5%AD%98/" class="tag-list-link">缓存</a><span
+                    class="tag-list-count">3</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2024/03/spring-authorization-server%E6%8E%88%E6%9D%83%E7%A0%81%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B/" class="title">Spring Authorization Server授权码模式流程梳理</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2024-03-22 00:00:00 &#43;0000 UTC" itemprop="datePublished">2024-03-22</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2024/01/sentinel%E7%BD%91%E5%85%B3%E6%B5%81%E6%8E%A7%E8%A7%84%E5%88%99%E9%85%8D%E7%BD%AE/" class="title">sentinel网关流控规则配置</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2024-01-20 00:00:00 &#43;0000 UTC" itemprop="datePublished">2024-01-20</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/12/elasticsearch-painless%E8%84%9A%E6%9C%AC%E6%95%99%E7%A8%8B/" class="title">Elasticsearch painless脚本教程</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-12-13 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-12-13</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/11/nginx%E9%BB%91%E5%90%8D%E5%8D%95%E8%AE%BE%E7%BD%AE/" class="title">nginx黑名单设置</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-11-15 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-11-15</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bluestaree.github.io/2023/09/mysql%E8%AE%A9%E6%8C%87%E5%AE%9A%E5%A4%9A%E4%B8%AAid%E4%BC%98%E5%85%88%E6%8E%92%E5%BA%8F/" class="title">mysql让指定多个id优先排序</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2023-09-24 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-09-24</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2023/12/elasticsearch-painless%E8%84%9A%E6%9C%AC%E6%95%99%E7%A8%8B/"
+    >Elasticsearch painless脚本教程</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bluestaree.github.io/2023/12/elasticsearch-painless%E8%84%9A%E6%9C%AC%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2023-12-13 00:00:00 &#43;0000 UTC" itemprop="datePublished">2023-12-13</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E7%AC%94%E8%AE%B0/"> 笔记 </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/elasticsearch/"> Elasticsearch </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2023/12/elasticsearch-painless%E8%84%9A%E6%9C%AC%E6%95%99%E7%A8%8B/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2553字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 6分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <hr>
+<blockquote>
+<p>转载文章：<a href="https://blog.csdn.net/qq_29864051/article/details/130250460">Elasticsearch painless脚本教程（包含Java API和SpringDataElasticsearch调用脚本）</a></p>
+<p>最近有批量更新ES文档中的某个字段得场景，期间也查阅了很多资料，上述文章写的挺好得，也解决得问题，这里记录下</p>
+</blockquote>
+<h3 id="1什么是painless">1.什么是painless</h3>
+<p>​	painless是ElasticStack在升级到5.0版本之后新增的脚本语言，而且针对性的优化了Elasticsearch的场景。由于支持了java的静态类型和Java的lambda表达式，对于Elasticsearch数据的操作更轻量和快速，而且painless脚本因此更加简单安全。 painless脚本分为inline script(api请求时使用)和stored script(存储使用)，可类比如SQL查询语句和存储过程。</p>
+<p>​	es的版本与脚本的演化过程：</p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/elasticsearch/es-script-1.png" alt="ik-analysis-problem3"></p>
+<p>​	本文仅介绍常用的es脚本操作语句可以快速入手，如果需要深入的学习，官方文档才是最好的学习资料
+官方文档地址：https://www.elastic.co/guide/en/elasticsearch/painless/7.9/painless-guide.html</p>
+<h3 id="2painless的特性">2.painless的特性</h3>
+<ul>
+<li>
+<p>快速性能：painless脚本的运行速度是其他脚本的数倍</p>
+</li>
+<li>
+<p>安全性：具有方法调用/字段粒度的细粒度allowlist。有关可用类和方法的完整列表，请参阅Painless API参考</p>
+</li>
+<li>
+<p>可选类型：变量和参数可以使用显式类型或动态定义类型</p>
+</li>
+<li>
+<p>语法：painless就继承自java8，是扩展Java语法的一个子集，以提供额外的脚本语言功能</p>
+</li>
+<li>
+<p>优化：专门为Elasticsearch脚本设计</p>
+</li>
+</ul>
+<h3 id="3使用kibana进行准备操作">3.使用kibana进行准备操作</h3>
+<h4 id="31-使用kibana创建索引和映射">3.1 使用kibana创建索引和映射</h4>
+<p>​	如果你对于kibana不是很理解，可以参考我之前的文章：<a href="https://blog.csdn.net/qq_29864051/article/details/124891365">使用kibana对Elasticsearch索引创建删除和文档的CRUD操作命令</a></p>
+<p><strong>建立测试索引</strong></p>
+<pre><code>PUT /painless_test
+</code></pre>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/elasticsearch/es-script-2.png" alt="ik-analysis-problem3"></p>
+<p><strong>建立mapping属性映射</strong></p>
+<pre><code>#建立mapping属性映射
+PUT /painless_test/_mapping
+{
+  &quot;properties&quot;: {
+    &quot;author&quot;: {
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;analyzer&quot;: &quot;ik_max_word&quot;,
+      &quot;fields&quot;: {
+        &quot;keyword&quot;: {
+          &quot;type&quot;: &quot;keyword&quot;
+        }
+      }
+    },
+    &quot;age&quot;: {
+      &quot;type&quot;: &quot;integer&quot;
+    },
+    &quot;paperCount&quot;: {
+      &quot;type&quot;: &quot;integer&quot;
+    },
+    &quot;coreJournal&quot;: {
+      &quot;type&quot;: &quot;keyword&quot;
+    }
+  }
+}
+</code></pre>
+<h4 id="32-使用kibana添加测试数据">3.2 使用kibana添加测试数据</h4>
+<pre><code>PUT /painless_test/_doc/1001
+{
+  &quot;author&quot;: &quot;阿刘慈欣&quot;,
+  &quot;paperCount&quot;: [15,20,56],
+  &quot;age&quot;: 45,
+  &quot;coreJournal&quot;: [
+    &quot;MED&quot;,
+    &quot; JCR&quot;,
+    &quot; EI&quot;,
+    &quot; SCIE&quot;
+  ]
+}
+
+
+PUT /painless_test/_doc/1002
+{
+  &quot;author&quot;: &quot;王晋康&quot;,
+  &quot;paperCount&quot;: [23,7,32],
+   &quot;age&quot;: 63,
+  &quot;coreJournal&quot;: [
+    &quot; EI&quot;,
+    &quot; SCIE&quot;
+  ]
+}
+
+PUT /painless_test/_doc/1003
+{
+ &quot;author&quot;: &quot;周全&quot;,
+ &quot;paperCount&quot;: [57,9,34],
+  &quot;age&quot;: 18,
+  &quot;coreJournal&quot;: [
+    &quot; JCR&quot;,
+    &quot; EI&quot;
+  ]
+}
+</code></pre>
+<h3 id="4使用painless执行查询操作">4.使用painless执行查询操作</h3>
+<h4 id="关于脚本查询须知">关于脚本查询须知</h4>
+<p>​	_search操作的query的查询结果会输出为字段脚本（script_fields）或排序脚本（sort）中的输入。因此在脚本中的操作通过Map类型的变量doc获取值，但是search操作不会改变document的值，就像sql中的select语句。</p>
+<h4 id="41-字段查询脚本">4.1 字段查询脚本</h4>
+<p>​	字段查询操作：将所有作者的作品数量数组（paperCount字段）累加后查询出来</p>
+<pre><code>GET painless_test/_search
+{
+  &quot;query&quot;: {
+    &quot;match_all&quot;: {}
+  },
+  &quot;script_fields&quot;: {
+    &quot;total_goals&quot;: {
+      &quot;script&quot;: {
+        &quot;lang&quot;: &quot;painless&quot;,
+        &quot;inline&quot;: &quot;int total = 0; for (int i = 0; i &lt; doc['paperCount'].length; ++i) { total += doc['paperCount'][i]; } return total;&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<p>脚本查询结果如下：</p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/elasticsearch/es-script-3.png" alt="ik-analysis-problem3"></p>
+<h4 id="42排序查询脚本">4.2排序查询脚本</h4>
+<p>​	自定义排序操作：通过作者的名称和年龄相加进行排序（仅作示例，不考虑有无意义）</p>
+<pre><code>#排序脚本执行
+POST painless_test/_search
+{
+  &quot;query&quot;: {
+    &quot;match_all&quot;: {}
+  },
+   &quot;sort&quot;: {
+    &quot;_script&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;order&quot;: &quot;desc&quot;,
+      &quot;script&quot;: {
+        &quot;lang&quot;: &quot;painless&quot;,
+        &quot;inline&quot;: &quot;doc['author.keyword'].value+doc['age']&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/elasticsearch/es-script-4.png" alt="ik-analysis-problem3"></p>
+<h3 id="5如何使用painless执行更新操作">5.如何使用painless执行更新操作</h3>
+<h4 id="关于脚本查询须知-1">关于脚本查询须知</h4>
+<p>​	脚本更新操作推荐使用update_by_query的API，该API首先通过query语句（可以使用各种query语句）查询出满足条件的记录，再根据脚本中的操作更新查询出来的记录。需要注意的是，相对于查询使用doc访问文档的内容，更新使用的是ctx。</p>
+<h4 id="51-字段更新脚本">5.1 字段更新脚本</h4>
+<p><strong>需求描述</strong>：原始文档中的coreJournal字段中值存在空格，现在要求将空格去除
+<strong>实现步骤</strong>：首先根据查询条件为存在coreJournal字段的文档，然后再对coreJournal中的值进行遍历去除空格操作</p>
+<pre><code>POST cqu_dev_journal_paper/_update_by_query
+{
+  &quot;script&quot;: {
+    &quot;source&quot;: &quot; for (int i = 0; i &lt; ctx._source.coreJournal.length; i++) {   
+    			ctx._source.coreJournal[i]=ctx._source.coreJournal[i].trim(); }&quot;,
+    &quot;lang&quot;: &quot;painless&quot;
+  },
+  &quot;query&quot;: {
+    &quot;bool&quot;: {
+      &quot;must&quot;: [
+        {
+          &quot;exists&quot;: {
+            &quot;field&quot;: &quot;coreJournal&quot;
+          }
+        }
+      ],
+      &quot;must_not&quot;: [],
+      &quot;should&quot;: []
+    }
+  }
+}
+</code></pre>
+<p>执行效果如下：</p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/elasticsearch/es-script-5.png" alt="ik-analysis-problem3"></p>
+<h4 id="52-带参数字段更新脚本">5.2 带参数字段更新脚本</h4>
+<p><strong>需求描述</strong>：原始文档中年龄在30岁以上的作者字段都要以&quot;科幻作家”开头
+<strong>实现步骤</strong>：首先根据查询条件为年龄在30岁以上的文档，然后再对作者字段进行更新</p>
+<pre><code>POST painless_test/_update_by_query
+{
+  &quot;script&quot;: {
+    &quot;source&quot;: &quot; ctx._source.author=params.prefix+ctx._source.author&quot;,
+    &quot;lang&quot;: &quot;painless&quot;
+    , &quot;params&quot;: {
+        &quot;prefix&quot;:&quot;科幻作家&quot;
+    }
+  },
+  &quot;query&quot;: {
+    &quot;bool&quot;: {
+      &quot;must&quot;: [
+        {
+          &quot;range&quot;: {
+            &quot;age&quot;: {
+              &quot;from&quot;: 30
+            }
+          }
+        }
+      ],
+      &quot;must_not&quot;: [],
+      &quot;should&quot;: []
+    }
+  }
+}
+</code></pre>
+<p>执行效果如下：</p>
+<p><img src="https://raw.githubusercontent.com/bluestaree/bluestaree.github.io/master/image/elasticsearch/es-script-6.png" alt="ik-analysis-problem3"></p>
+<h3 id="6stored-script存储使用">6.stored script(存储使用)</h3>
+<pre><code># 创建单独的脚本
+POST _scripts/add-age
+{
+  &quot;script&quot;: {
+    &quot;lang&quot;: &quot;painless&quot;,
+    &quot;source&quot;: &quot;doc['age'].value + params.myage&quot;
+  }
+}
+
+# 获取脚本
+GET _scripts/add-age
+
+# 通过指定scriptid进行调用查询
+GET painless_test/_search
+{
+  &quot;query&quot;: {
+    &quot;match_all&quot;: {}
+  },
+  &quot;script_fields&quot;: {
+    &quot;addage&quot;: {
+      &quot;script&quot;: {
+       &quot;id&quot;: &quot;add-age&quot;, 
+        &quot;params&quot;: {
+          &quot;myage&quot;: 15
+        }
+      }
+    }
+  }
+}
+
+# 删除脚本
+DELETE _scripts/calculate-score
+
+</code></pre>
+<h3 id="7使用java-api-更新es">7.使用Java API 更新ES</h3>
+<p>通过Java API实现 5.1章节的需求</p>
+<p><strong>需求描述</strong>：原始文档中的coreJournal字段中值存在空格，现在要求将空格去除
+<strong>实现步骤</strong>：首先根据查询条件为存在coreJournal字段的文档，然后再对coreJournal中的值进行遍历去除空格操作</p>
+<pre><code> public static BulkByScrollResponse updateByQuery() {
+        BulkByScrollResponse bulkResponse = null;
+        try {
+            UpdateByQueryRequest request = new UpdateByQueryRequest(&quot;painless_test&quot;);
+            request.setConflicts(&quot;proceed&quot;);
+            request.setQuery(QueryBuilders.existsQuery(&quot;coreJournal&quot;));
+
+            String strScript = &quot;for (int i = 0; i &lt; ctx._source.coreJournal.length; i++) {ctx._source.coreJournal[i]=ctx._source.coreJournal[i].trim(); }&quot;；
+
+            Script script = new Script(
+                    ScriptType.INLINE, &quot;painless&quot;,
+                    strScript,
+                    Collections.emptyMap());
+            request.setScript(script);
+
+            bulkResponse = restHighLevelClient.updateByQuery(request, RequestOptions.DEFAULT);
+
+        } catch (IOException e) {
+            log.error(&quot;ES更新异常&quot;, e.getMessage());
+        }
+        return bulkResponse;
+    }
+</code></pre>
+<h3 id="8使用springdataelasticsearch执行脚本">8.使用SpringDataElasticsearch执行脚本</h3>
+<p>通过SpringDataElaticsearch实现 5.1章节的需求</p>
+<p><strong>需求描述</strong>：原始文档中的coreJournal字段中值存在空格，现在要求将空格去除
+<strong>实现步骤</strong>：首先根据查询条件为存在coreJournal字段的文档，然后再对coreJournal中的值进行遍历去除空格操作</p>
+<pre><code> public AjaxResult updateESScript() {
+        
+        int updatedCount = 0;
+        try {
+            //构建布尔查询语句，存在coreJournal字段的值
+            BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+            boolQueryBuilder.must(QueryBuilders.existsQuery(&quot;coreJournal&quot;));
+
+            NativeSearchQuery query = new NativeSearchQueryBuilder()
+                    .withQuery(boolQueryBuilder)
+                    .build();
+
+            //构建查询更新语句
+            UpdateQuery updateQuery = UpdateQuery.builder(query)
+                    .withScriptType(ScriptType.INLINE)
+                    .withScript(&quot;for (int i = 0; i &lt; ctx._source.coreJournal.length; i++) {ctx._source.coreJournal[i]=ctx._source.coreJournal[i].trim(); }&quot;)
+                    .withLang(&quot;painless&quot;)
+                    .withAbortOnVersionConflict(false)
+                    .build();
+
+            /**
+             * 使用ElasticsearchOperations.updateByQuery()方法执行脚本更新
+             *  param: updateQuery 要执行的查询更新语句
+             *  param: IndexCoordinates.of(&quot;painless_test&quot;) 获取要执行的索引
+             */
+            ByQueryResponse byQueryResponse = elasticsearchOperations.updateByQuery
+                    (updateQuery, IndexCoordinates.of(&quot;painless_test&quot;));
+
+            long updated = byQueryResponse.getUpdated();
+            System.out.println(&quot;本次共更新es文档数量：&quot; + updated);
+
+        } catch (Exception e) {
+            log.info(&quot;==============es更新报错===========&quot;);
+            e.printStackTrace();
+            return AjaxResultGenerator.error(e.getMessage());
+        }
+        return AjaxResultGenerator.success(updatedCount);
+    }
+</code></pre>
+
+    </div>
+    <div class="article-footer">
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bluestaree.github.io/2023/11/nginx%E9%BB%91%E5%90%8D%E5%8D%95%E8%AE%BE%E7%BD%AE/" title="nginx黑名单设置"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://bluestaree.github.io/2024/01/sentinel%E7%BD%91%E5%85%B3%E6%B5%81%E6%8E%A7%E8%A7%84%E5%88%99%E9%85%8D%E7%BD%AE/"
+                    title="sentinel网关流控规则配置"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/bluestaree" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bluestaree.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2019  -
+    2024
+    <div class="publishby">
+        &bluestaree Powered by <a href="https://gohugo.io/" target="_blank"> hugo </a> <br>theme by <a href="https://themes.gohugo.io/" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bluestaree.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bluestaree.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/bluestaree.github.io\/',
+            CONTENT_URL: 'https:\/\/bluestaree.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bluestaree.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

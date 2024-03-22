@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>spring-authorization-server on AzkeepToo个人博客</title>
+    <link>https://bluestaree.github.io/categories/spring-authorization-server/</link>
+    <description>Recent content in spring-authorization-server on AzkeepToo个人博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 22 Mar 2024 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://bluestaree.github.io/categories/spring-authorization-server/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>mybatis plus自定义sql报错Invalid bound statement解决</title>
+      <link>https://bluestaree.github.io/2022/07/mybatis-plus%E8%87%AA%E5%AE%9A%E4%B9%89sql%E6%8A%A5%E9%94%99invalid-bound-statement%E8%A7%A3%E5%86%B3/</link>
+      <pubDate>Fri, 08 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/07/mybatis-plus%E8%87%AA%E5%AE%9A%E4%B9%89sql%E6%8A%A5%E9%94%99invalid-bound-statement%E8%A7%A3%E5%86%B3/</guid>
+      <description>日常开发中，同事在开发中遇到的一个问题，在使用自定义mapper方法时，出现Invalid bound statement，这里记录下问题及产生原因 自定</description>
+    </item>
+    
+    <item>
+      <title>Rabbitmq 动态队列实现</title>
+      <link>https://bluestaree.github.io/2022/07/rabbitmq-%E5%8A%A8%E6%80%81%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Wed, 06 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/07/rabbitmq-%E5%8A%A8%E6%80%81%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0/</guid>
+      <description>Rabbitmq 动态队列实现 该功能，基于RabbitMq提供的API接口实现，能在项目运行中，动态生成队列及其监听实现 项目目录结构： RabbitConfig 主要配置文件 @Configuration public class RabbitConfig</description>
+    </item>
+    
+    <item>
+      <title>Rabbitmq 延迟队列实现</title>
+      <link>https://bluestaree.github.io/2022/06/rabbitmq-%E5%BB%B6%E8%BF%9F%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Thu, 30 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/06/rabbitmq-%E5%BB%B6%E8%BF%9F%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0/</guid>
+      <description>前言 最近在做项目时遇到一个需求：需要根据用户设定得截止时间，将计划关闭。 因为不可变性，定时任务效率低直接排除，最初考虑通过mq死信交换机得方</description>
+    </item>
+    
+    <item>
+      <title>@PostConstruct 注解方法下的Springutils.getBean时报空指针异常</title>
+      <link>https://bluestaree.github.io/2022/06/postconstruct-%E6%B3%A8%E8%A7%A3%E6%96%B9%E6%B3%95%E4%B8%8B%E7%9A%84springutils.getbean%E6%97%B6%E6%8A%A5%E7%A9%BA%E6%8C%87%E9%92%88%E5%BC%82%E5%B8%B8/</link>
+      <pubDate>Tue, 28 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/06/postconstruct-%E6%B3%A8%E8%A7%A3%E6%96%B9%E6%B3%95%E4%B8%8B%E7%9A%84springutils.getbean%E6%97%B6%E6%8A%A5%E7%A9%BA%E6%8C%87%E9%92%88%E5%BC%82%E5%B8%B8/</guid>
+      <description>最近部署时，遇到此问题 问题 现有服务A,B B服务内 有一个 spring工具类( 这个类主要就是从容器种获取实体类)，代码如下 @Component public final class SpringBeanFactory implements ApplicationContextAware{ private static ApplicationContext context;</description>
+    </item>
+    
+    <item>
+      <title>Idea保存自动格式化插件Save Action配置</title>
+      <link>https://bluestaree.github.io/2022/06/idea%E4%BF%9D%E5%AD%98%E8%87%AA%E5%8A%A8%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6save-action%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Wed, 15 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/06/idea%E4%BF%9D%E5%AD%98%E8%87%AA%E5%8A%A8%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6save-action%E9%85%8D%E7%BD%AE/</guid>
+      <description>概述： 记录下一个很好用的Idea开发工具插件Save Action，它能够再保存时自动格式化代码 一、安装save-action插件 1、安装插件</description>
+    </item>
+    
+    <item>
+      <title>Idea热部署插件（JRebel 和 XRebel）</title>
+      <link>https://bluestaree.github.io/2022/06/idea%E7%83%AD%E9%83%A8%E7%BD%B2%E6%8F%92%E4%BB%B6jrebel-%E5%92%8C-xrebel/</link>
+      <pubDate>Sat, 11 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/06/idea%E7%83%AD%E9%83%A8%E7%BD%B2%E6%8F%92%E4%BB%B6jrebel-%E5%92%8C-xrebel/</guid>
+      <description>转载文章：Idea（JRebel 和 XRebel） Idea（JRebel 和 XRebel） 1：JRebel 和 XRebel的作用 JRebel：修改</description>
+    </item>
+    
+    <item>
+      <title>Idea注释模板配置</title>
+      <link>https://bluestaree.github.io/2022/06/idea%E6%B3%A8%E9%87%8A%E6%A8%A1%E6%9D%BF%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Fri, 10 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/06/idea%E6%B3%A8%E9%87%8A%E6%A8%A1%E6%9D%BF%E9%85%8D%E7%BD%AE/</guid>
+      <description>概述： 记录下Idea开发工具注释模板配置及使用，当前使用idea版本为2019.3.4，不同版本中配置可能无法共用 一、创建注释模板 1、Jav</description>
+    </item>
+    
+    <item>
+      <title>linux防火墙打开对外开放端口号</title>
+      <link>https://bluestaree.github.io/2022/05/linux%E9%98%B2%E7%81%AB%E5%A2%99%E6%89%93%E5%BC%80%E5%AF%B9%E5%A4%96%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3%E5%8F%B7/</link>
+      <pubDate>Wed, 11 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/05/linux%E9%98%B2%E7%81%AB%E5%A2%99%E6%89%93%E5%BC%80%E5%AF%B9%E5%A4%96%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3%E5%8F%B7/</guid>
+      <description>linux防火墙打开对外开放端口号 （1）查看对外开放的端口状态 查询已开放的端口 netstat -ntulp | grep 端口号：可以具体查看某一个端口号 查询指定端口是否已开 firewall-cmd</description>
+    </item>
+    
+    <item>
+      <title>Nginx之try_files指令</title>
+      <link>https://bluestaree.github.io/2022/04/nginx-%E8%BD%AC%E5%8F%91try_files%E6%8C%87%E4%BB%A4/</link>
+      <pubDate>Fri, 15 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/04/nginx-%E8%BD%AC%E5%8F%91try_files%E6%8C%87%E4%BB%A4/</guid>
+      <description>配置时注意 root 与 alias 配置的区别 第一种 root location /images/ { root /opt/html/; index index.html index.htm; try_files $uri $uri/ /images/default.png; } 比如 请求 127.0.0.1/images/test.gif 会依次查找 文件 /opt/html/images/test.gif ( try_files $uri) 检查文件夹 /opt/html/images/test.gif/ 下是否存在index.html 或者 index.htm</description>
+    </item>
+    
+    <item>
+      <title>Nginx 转发后 获取客户端真实ip地址</title>
+      <link>https://bluestaree.github.io/2022/04/nginx-%E8%BD%AC%E5%8F%91%E5%90%8E-%E8%8E%B7%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9C%9F%E5%AE%9Eip%E5%9C%B0%E5%9D%80/</link>
+      <pubDate>Wed, 13 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/04/nginx-%E8%BD%AC%E5%8F%91%E5%90%8E-%E8%8E%B7%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9C%9F%E5%AE%9Eip%E5%9C%B0%E5%9D%80/</guid>
+      <description>Nginx 转发后 获取客户端真实ip地址 ​ 通过 proxy_set_header 设置自定义参数 X-Real-IP，将客户端IP传递给服务器，服务端通过request.getHeade</description>
+    </item>
+    
+    <item>
+      <title>Security之HttpSecurity常用方法详解</title>
+      <link>https://bluestaree.github.io/2022/03/security%E4%B9%8Bhttpsecurity%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Mon, 28 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/03/security%E4%B9%8Bhttpsecurity%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/</guid>
+      <description>参考文章：HttpSecurity常用方法详解 ，并补充一些个人见解 antMatcher() 该方法配置题解原理可参考文章：WebSecurityConfigurer</description>
+    </item>
+    
+    <item>
+      <title>Security资源服务白名单过滤器</title>
+      <link>https://bluestaree.github.io/2022/03/security%E8%B5%84%E6%BA%90%E6%9C%8D%E5%8A%A1%E7%99%BD%E5%90%8D%E5%8D%95%E8%BF%87%E6%BB%A4%E5%99%A8/</link>
+      <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/03/security%E8%B5%84%E6%BA%90%E6%9C%8D%E5%8A%A1%E7%99%BD%E5%90%8D%E5%8D%95%E8%BF%87%E6%BB%A4%E5%99%A8/</guid>
+      <description>Security资源服务白名单过滤器 问题 最近在项目中，引入了security认证框架，由于我们项目的认证服务与资源服务是分开的，因此在资源服</description>
+    </item>
+    
+    <item>
+      <title>Spring Security 使用自带的 formLogin</title>
+      <link>https://bluestaree.github.io/2022/03/spring-security-%E4%BD%BF%E7%94%A8%E8%87%AA%E5%B8%A6%E7%9A%84-formlogin/</link>
+      <pubDate>Mon, 07 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/03/spring-security-%E4%BD%BF%E7%94%A8%E8%87%AA%E5%B8%A6%E7%9A%84-formlogin/</guid>
+      <description>转：原文链接 https://blog.csdn.net/qq_44131750/article/details/115775159 Session、Cookie 登陆认证 就是认证是否为合法用户，简单的说是登录。一般为匹对用户名和密码，即认证成功。 在 Spring Security 认证中，</description>
+    </item>
+    
+    <item>
+      <title>redis &#43; AOP分布式锁实现</title>
+      <link>https://bluestaree.github.io/2022/02/redis-aop%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Fri, 18 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/02/redis-aop%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%AE%9E%E7%8E%B0/</guid>
+      <description>Redis + AOP分布式锁实现 基本思路： 加锁基于Redis得setnx命令； 释放锁基于lua脚本，可以避免由于方法执行时间过长而redis锁自动过期</description>
+    </item>
+    
+    <item>
+      <title>Spring Security Oauth2认证流程</title>
+      <link>https://bluestaree.github.io/2022/02/spring-security-oauth2%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B/</link>
+      <pubDate>Thu, 17 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/02/spring-security-oauth2%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B/</guid>
+      <description>转载文章： Spring Security Oauth2 认证（获取token/刷新token）流程（password模式） Spring Security 解析(七) —— Spring Security Oauth2 源码解析 这两篇文章都写得挺详细得，</description>
+    </item>
+    
+    <item>
+      <title>接口防重复提交AOP实现</title>
+      <link>https://bluestaree.github.io/2022/02/%E6%8E%A5%E5%8F%A3%E9%98%B2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4aop%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Wed, 16 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/02/%E6%8E%A5%E5%8F%A3%E9%98%B2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4aop%E5%AE%9E%E7%8E%B0/</guid>
+      <description>接口防重复提交AOP实现 基本思路： 通过注解形式，对指定接口方法进行标记，使用AOP方式对所有标记了注解的方法进行防重处理 防重处理类型 ： RID</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot @PostMapper 接收HTTP 请求的流数据方式</title>
+      <link>https://bluestaree.github.io/2022/01/springboot-postmapping-%E6%8E%A5%E6%94%B6http-%E8%AF%B7%E6%B1%82%E7%9A%84%E6%B5%81%E6%95%B0%E6%8D%AE%E6%96%B9%E5%BC%8F/</link>
+      <pubDate>Tue, 04 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2022/01/springboot-postmapping-%E6%8E%A5%E6%94%B6http-%E8%AF%B7%E6%B1%82%E7%9A%84%E6%B5%81%E6%95%B0%E6%8D%AE%E6%96%B9%E5%BC%8F/</guid>
+      <description>SpringBoot @PostMapping 接收HTTP 请求的流数据方式 @PostMapping(&amp;quot;/test&amp;quot;) public String pushMessage(@RequestBody byte[] data) { String json = new String(data, CharsetUtil.CHARSET_UTF_8); log.info(&amp;quot;&amp;gt;&amp;gt;&amp;gt; 接收CP推送的消息：{}&amp;quot;, json); JSONObject jsonObject = JacksonUtils.jsonToBean(json, JSONObject.class); System.out.println(jsonObject.get(&amp;quot;key&amp;quot;)); return “success” }</description>
+    </item>
+    
+    <item>
+      <title>阿里云语音通知Api接入实现</title>
+      <link>https://bluestaree.github.io/2021/12/%E9%98%BF%E9%87%8C%E4%BA%91%E8%AF%AD%E9%9F%B3%E9%80%9A%E7%9F%A5api%E6%8E%A5%E5%85%A5%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Fri, 17 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2021/12/%E9%98%BF%E9%87%8C%E4%BA%91%E8%AF%AD%E9%9F%B3%E9%80%9A%E7%9F%A5api%E6%8E%A5%E5%85%A5%E5%AE%9E%E7%8E%B0/</guid>
+      <description>官方文档地址：https://help.aliyun.com/document_detail/112503.html 阿里云语音通知Api接入</description>
+    </item>
+    
+    <item>
+      <title>抓包工具charles安装和使用</title>
+      <link>https://bluestaree.github.io/2021/11/%E6%8A%93%E5%8C%85%E5%B7%A5%E5%85%B7charles%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Mon, 08 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2021/11/%E6%8A%93%E5%8C%85%E5%B7%A5%E5%85%B7charles%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/</guid>
+      <description>概述： 在开发中涉及到APP应用服务开发，其自测时难免需要一款调试工具参看接口参数信息，就好比浏览器F12调式模式一样，以便定位问题。这里就简</description>
+    </item>
+    
+    <item>
+      <title>大事务业务处理优化</title>
+      <link>https://bluestaree.github.io/2021/10/%E5%A4%A7%E4%BA%8B%E5%8A%A1%E4%B8%9A%E5%8A%A1%E5%A4%84%E7%90%86%E4%BC%98%E5%8C%96/</link>
+      <pubDate>Thu, 14 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2021/10/%E5%A4%A7%E4%BA%8B%E5%8A%A1%E4%B8%9A%E5%8A%A1%E5%A4%84%E7%90%86%E4%BC%98%E5%8C%96/</guid>
+      <description>概述：起因是测试时遇到一个业务响应异常缓慢问题，排查后发现时mysql链接等待导致业务超时，定位到具体业务逻辑，初步判断应该是事务问题。这个</description>
+    </item>
+    
+  </channel>
+</rss>

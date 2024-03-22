@@ -5,10 +5,55 @@
     <link>https://bluestaree.github.io/tags/elasticsearch/</link>
     <description>Recent content in Elasticsearch on AzkeepToo个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 20 May 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 Dec 2023 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://bluestaree.github.io/tags/elasticsearch/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>高并发下保证服务稳定性-Sentinel</title>
+      <link>https://bluestaree.github.io/2020/08/springcloud-alibaba-sentinel/</link>
+      <pubDate>Sat, 22 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/08/springcloud-alibaba-sentinel/</guid>
+      <description>简介：Sentinel-哨兵，是Spring Cloud Alibaba 的开源项目，是面向微服务的轻量级流量控制框架，从流量控制、熔断降级、系统负载保护等多个维度保</description>
+    </item>
+    
+    <item>
+      <title>接口幂等性问题与解决方案</title>
+      <link>https://bluestaree.github.io/2020/08/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/</link>
+      <pubDate>Mon, 10 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/08/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/</guid>
+      <description>概述 接口幂等性 接口幂等性就是用户对于同一操作发起的一次请求或者多次请求的结果是一致的， 不会因为多次点击而产生了副作用;比如说支付场景，用户购</description>
+    </item>
+    
+    <item>
+      <title>分布式解决方案-Seata</title>
+      <link>https://bluestaree.github.io/2020/08/springcloud-alibaba-seata/</link>
+      <pubDate>Tue, 04 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/08/springcloud-alibaba-seata/</guid>
+      <description>简介：Seata是一款阿里巴巴开源的分布式事务解决方案，致力于提供高性能和简单易用的分布式事务服务。Seata 将为用户提供了AT、TCC、S</description>
+    </item>
+    
+    <item>
+      <title>本地事务与分布式事务</title>
+      <link>https://bluestaree.github.io/2020/08/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/</link>
+      <pubDate>Mon, 03 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/08/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/</guid>
+      <description>本地事务 事务的基本性质 数据库事务的几个特性:原子性(Atomicity)、一致性( Consistency )、隔离性或独立性( Isolation )和持久性( Durabilily )，简称就是ACID</description>
+    </item>
+    
+    <item>
+      <title>Spring Session与Redis整合</title>
+      <link>https://bluestaree.github.io/2020/07/spring-session%E4%B8%8Eredis%E6%95%B4%E5%90%88/</link>
+      <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/07/spring-session%E4%B8%8Eredis%E6%95%B4%E5%90%88/</guid>
+      <description>概述：在一些应用场景下，服务端也需要返回完整的页面信息给客户端，比如有利于SEO的主页，搜索页面等，都需要服务端渲染。当然使用Nuxt或Ne</description>
+    </item>
     
     <item>
       <title>CompletableFuture-异步编排</title>
@@ -143,51 +188,6 @@
       
       <guid>https://bluestaree.github.io/2020/06/netty%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/</guid>
       <description>前言 不同的线程模型，对程序的性能有很大的影响，Netty线程模型主要基于主从Reactor多线程模型做了一定的改进 目前存在的线程模型有： 传统</description>
-    </item>
-    
-    <item>
-      <title>正向代理与方向代理</title>
-      <link>https://bluestaree.github.io/2020/06/%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%8E%E6%96%B9%E5%90%91%E4%BB%A3%E7%90%86/</link>
-      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/06/%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%8E%E6%96%B9%E5%90%91%E4%BB%A3%E7%90%86/</guid>
-      <description>所谓的正向与反向，都是对于我们自己的电脑来说 正向代理：帮助客户端访问外部资源的， 举个例子：如科学上网。如果我们需要访问谷歌，就需要代理服务器</description>
-    </item>
-    
-    <item>
-      <title>Object划分</title>
-      <link>https://bluestaree.github.io/2020/06/object%E5%88%92%E5%88%86/</link>
-      <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/06/object%E5%88%92%E5%88%86/</guid>
-      <description>1.PO(Persistant Object) 持久对象 PO就是对应数据库中某个表中的一条记录,多个记录可以用PO的集合。PO中应该不包含任何对数据库的操作。 2.DO(Domain object) 领域对象 就是从现实世界</description>
-    </item>
-    
-    <item>
-      <title>使用JSR303规范标准进行数据校验</title>
-      <link>https://bluestaree.github.io/2020/05/%E4%BD%BF%E7%94%A8jsr303%E8%A7%84%E8%8C%83%E6%A0%87%E5%87%86%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C/</link>
-      <pubDate>Thu, 28 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/05/%E4%BD%BF%E7%94%A8jsr303%E8%A7%84%E8%8C%83%E6%A0%87%E5%87%86%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C/</guid>
-      <description>前言 现在的项目大多都是前后端分离的项目，那么对于一些重要数据的校验，单单使用前端控制是不行的，我们可以使用一些http请求工具如 Postman ，就可以轻</description>
-    </item>
-    
-    <item>
-      <title>Hibernate常见问题</title>
-      <link>https://bluestaree.github.io/2020/05/hibernate%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</link>
-      <pubDate>Sat, 23 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/05/hibernate%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</guid>
-      <description>转载 · 原文链接：https://blog.csdn.net/wu1317581750/java/article/details/816629</description>
-    </item>
-    
-    <item>
-      <title>Navicat连接MySQL出现1251错误</title>
-      <link>https://bluestaree.github.io/2020/05/navicat-1251%E9%94%99%E8%AF%AF/</link>
-      <pubDate>Sat, 16 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://bluestaree.github.io/2020/05/navicat-1251%E9%94%99%E8%AF%AF/</guid>
-      <description>记录一个坑，我现在所用的MySQL数据库的版本是8.019，在尝试使用Navicat连接数据库时，出现1251错误 解决方法： 进入docker</description>
     </item>
     
   </channel>

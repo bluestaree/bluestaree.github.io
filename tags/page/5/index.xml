@@ -5,10 +5,55 @@
     <link>https://bluestaree.github.io/tags/</link>
     <description>Recent content in Tags on AzkeepToo个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 20 May 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 Mar 2024 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://bluestaree.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>正向代理与方向代理</title>
+      <link>https://bluestaree.github.io/2020/06/%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%8E%E6%96%B9%E5%90%91%E4%BB%A3%E7%90%86/</link>
+      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/06/%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%8E%E6%96%B9%E5%90%91%E4%BB%A3%E7%90%86/</guid>
+      <description>所谓的正向与反向，都是对于我们自己的电脑来说 正向代理：帮助客户端访问外部资源的， 举个例子：如科学上网。如果我们需要访问谷歌，就需要代理服务器</description>
+    </item>
+    
+    <item>
+      <title>Object划分</title>
+      <link>https://bluestaree.github.io/2020/06/object%E5%88%92%E5%88%86/</link>
+      <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/06/object%E5%88%92%E5%88%86/</guid>
+      <description>1.PO(Persistant Object) 持久对象 PO就是对应数据库中某个表中的一条记录,多个记录可以用PO的集合。PO中应该不包含任何对数据库的操作。 2.DO(Domain object) 领域对象 就是从现实世界</description>
+    </item>
+    
+    <item>
+      <title>使用JSR303规范标准进行数据校验</title>
+      <link>https://bluestaree.github.io/2020/05/%E4%BD%BF%E7%94%A8jsr303%E8%A7%84%E8%8C%83%E6%A0%87%E5%87%86%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C/</link>
+      <pubDate>Thu, 28 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/%E4%BD%BF%E7%94%A8jsr303%E8%A7%84%E8%8C%83%E6%A0%87%E5%87%86%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C/</guid>
+      <description>前言 现在的项目大多都是前后端分离的项目，那么对于一些重要数据的校验，单单使用前端控制是不行的，我们可以使用一些http请求工具如 Postman ，就可以轻</description>
+    </item>
+    
+    <item>
+      <title>Hibernate常见问题</title>
+      <link>https://bluestaree.github.io/2020/05/hibernate%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Sat, 23 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/hibernate%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</guid>
+      <description>转载 · 原文链接：https://blog.csdn.net/wu1317581750/java/article/details/816629</description>
+    </item>
+    
+    <item>
+      <title>Navicat连接MySQL出现1251错误</title>
+      <link>https://bluestaree.github.io/2020/05/navicat-1251%E9%94%99%E8%AF%AF/</link>
+      <pubDate>Sat, 16 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://bluestaree.github.io/2020/05/navicat-1251%E9%94%99%E8%AF%AF/</guid>
+      <description>记录一个坑，我现在所用的MySQL数据库的版本是8.019，在尝试使用Navicat连接数据库时，出现1251错误 解决方法： 进入docker</description>
+    </item>
     
     <item>
       <title>hashCode和equals的相关问题</title>
